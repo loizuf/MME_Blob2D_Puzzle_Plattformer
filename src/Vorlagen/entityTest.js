@@ -5,6 +5,7 @@ appTest.entityTest = (function() {
 		return that;
 	},
 	
+	/*hierhin kommt unser konzipiertes klassenmodell ausm wiki/aus der vorarbeit*/
 	spawn = function() {
 		var entityBMP = new createjs.Bitmap("res/img/blob.png");
 		entityBMP.x= Math.round(Math.random()*795);
