@@ -3,6 +3,8 @@
 */
 BlobApp.ModelController = (function() {
 	var that = {},
+	//_blobPlayerOne = BlobApp.BlobOne.init();
+	//_blobPlayerTwo = BlobApp.BlobTwo.init();
 
 	init = function() {
 		_registerListener();
@@ -27,35 +29,35 @@ BlobApp.ModelController = (function() {
 	},
 
 	_onP1ArrowUp = function() {
-		
+		//_blobPlayerOne.onUpPressed();
 	},
 
 	_onP1ArrowRightStarted = function() {
-		
+		//_blobPlayerOne.onRightPressed();	
 	},
 
 	_onP1ArrowLeftStarted = function() {
-		
+		//_blobPlayerOne.onLeftPressed();		
 	},
 
 	_onP1ArrowDown = function() {
-		
+		//_blobPlayerOne.onDownPressed();
 	},
 
 	_onP2ArrowUp = function() {
-		
+		//_blobPlayerTwo.onUpPressed();
 	},
 
 	_onP2ArrowRightStarted = function() {
-		
+		//_blobPlayerTwo.onRightPressed();
 	},
 
 	_onP2ArrowLeftStarted = function() {
-		
+		//_blobPlayerTwo.onLeftPressed();
 	},
 
 	_onP2ArrowDown = function() {
-		
+		//_blobPlayerTwo.onDownPressed();
 	},
 
 	_onP1ArrowRightStopped = function() {
