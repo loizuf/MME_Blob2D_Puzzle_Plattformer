@@ -11,9 +11,11 @@ appTest.physicsTest = (function() {
 	var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
 
 	var that = {},
+	
 	SCALE = 30, STEP = 20, TIMESTEP = 1/20;
+	
 	var world;
-	var lastTimestamp = Date.now;
+	var lastTimestamp = Date.now();
 	var fixedTimestepAccumulator = 0;
 	var bodiesToRemove = [];
 	var actors = [];
@@ -21,17 +23,18 @@ appTest.physicsTest = (function() {
 	
 	setup = function() {
 		_setupPhysics();
-		console.log("phys init");
 		return that;
 	},
 
 	applyEntity = function(skin) {
 		var fixture = new b2FixtureDef;
+
 		fixture.density = 1;
 		fixture.restitution = 0.6;
 		fixture.shape = new b2CircleShape(24 / SCALE);
 
 		var bodyDef = new b2BodyDef;
+
 		bodyDef.type = b2Body.b2_dynamicBody;
 		bodyDef.position.x = skin.x / SCALE;
 		bodyDef.position.y = skin.y / SCALE;
@@ -64,7 +67,7 @@ appTest.physicsTest = (function() {
 
 			fixedTimestepAccumulator -= STEP;
 			world.ClearForces();
-   			world.m_debugDraw.m_sprite.graphics.clear();
+   			//world.m_debugDraw.m_sprite.graphics.clear();
    			world.DrawDebugData();
 		}	
 	},

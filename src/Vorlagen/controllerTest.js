@@ -5,7 +5,6 @@ appTest.controllerTest = (function() {
 	entityTest = null,
 
 	init = function() {
-		console.log("controller init");
 		_initModules();
 		_registerListeners();
 	},

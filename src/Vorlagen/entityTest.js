@@ -6,7 +6,6 @@ appTest.entityTest = (function() {
 	},
 	
 	spawn = function() {
-		console.log("blah");
 		var entityBMP = new createjs.Bitmap("res/img/blob.png");
 		entityBMP.x= Math.round(Math.random()*795);
 		entityBMP.y = Math.round(Math.random()*595);
@@ -14,7 +13,6 @@ appTest.entityTest = (function() {
 		entityBMP.regY = 12;
 		entityBMP.snapToPixel = true;
 		entityBMP.mouseEnabled = false;
-		console.log(entityBMP);
 		var onSpawnRequest = $.Event('onSpawnRequested');
 		$(that).trigger(onSpawnRequest, entityBMP);
 		return that;

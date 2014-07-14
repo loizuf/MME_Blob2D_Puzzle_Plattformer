@@ -25,7 +25,6 @@ appTest.viewTest = (function() {
 	},
 
 	_initView = function() {
-		console.log("view init");
 		canvas = document.getElementById('gameCanvas');
 		debugCanvas = document.getElementById('debugCanvas');
 		context = canvas.getContext("2d");
