@@ -1,3 +1,6 @@
+/*
+	This Controller handles the Interaction with all modules of the Model and initializes them.
+*/
 BlobApp.ModelController = (function() {
 	var that = {},
 
