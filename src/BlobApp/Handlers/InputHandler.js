@@ -85,4 +85,3 @@ BlobApp.InputHandler = (function() {
     that.init = init;
     return that;
 })();
- No newline at end of file
