@@ -26,15 +26,20 @@ appTest.physicsTest = (function() {
 		return that;
 	},
 
+	/*  anpassen an die einzelnen elementen mit static/dynamic body und der shape*/
 	applyEntity = function(skin) {
 		var fixture = new b2FixtureDef;
-
+		console.log(skin);
 		fixture.density = 1;
 		fixture.restitution = 0.6;
-		fixture.shape = new b2CircleShape(24 / SCALE);
+
+		/*shape anpassen*/
+		fixture.shape = new b2CircleShape(13 / SCALE);
 
 		var bodyDef = new b2BodyDef;
 
+
+		/*dynamic/static body*/
 		bodyDef.type = b2Body.b2_dynamicBody;
 		bodyDef.position.x = skin.x / SCALE;
 		bodyDef.position.y = skin.y / SCALE;
@@ -73,6 +78,9 @@ appTest.physicsTest = (function() {
 	},
 
 	_setupPhysics = function() {
+		/* die borders noch schöner gestalten?! */
+
+
 		world = new b2World(new b2Vec2(0,10), true);
 		_addDebug();
 		// boundaries - floor
@@ -80,12 +88,12 @@ appTest.physicsTest = (function() {
 		floorFixture.density = 1;
 		floorFixture.restitution = 1;
 		floorFixture.shape = new b2PolygonShape;
-		floorFixture.shape.SetAsBox(550 / SCALE, 10 / SCALE);
+		floorFixture.shape.SetAsBox(850 / SCALE, 10 / SCALE);
 
 		var floorBodyDef = new b2BodyDef;
 		floorBodyDef.type = b2Body.b2_staticBody;
 		floorBodyDef.position.x = -25 / SCALE;
-		floorBodyDef.position.y = 509 / SCALE;
+		floorBodyDef.position.y = 600 / SCALE;
 
 		var floor = world.CreateBody(floorBodyDef);
 		floor.CreateFixture(floorFixture);
@@ -93,7 +101,7 @@ appTest.physicsTest = (function() {
 		// boundaries - left
 		var leftFixture = new b2FixtureDef;
 		leftFixture.shape = new b2PolygonShape;
-		leftFixture.shape.SetAsBox(10 / SCALE, 550 / SCALE);
+		leftFixture.shape.SetAsBox(10 / SCALE, 600 / SCALE);
 
 		var leftBodyDef = new b2BodyDef;
 		leftBodyDef.type = b2Body.b2_staticBody;
@@ -106,11 +114,11 @@ appTest.physicsTest = (function() {
 		// boundaries - right
 		var rightFixture = new b2FixtureDef;
 		rightFixture.shape = new b2PolygonShape;
-		rightFixture.shape.SetAsBox(10 / SCALE, 550 / SCALE);
+		rightFixture.shape.SetAsBox(10 / SCALE, 800 / SCALE);
 
 		var rightBodyDef = new b2BodyDef;
 		rightBodyDef.type = b2Body.b2_staticBody;
-		rightBodyDef.position.x = 509 / SCALE;
+		rightBodyDef.position.x = 800 / SCALE;
 		rightBodyDef.position.y = -25 / SCALE;
 
 		var right = world.CreateBody(rightBodyDef);

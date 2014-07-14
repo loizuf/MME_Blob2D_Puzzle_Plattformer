@@ -18,7 +18,14 @@ appTest.controllerTest = (function() {
 	_registerListeners = function(event, data) {
 		$(entityTest).on('onSpawnRequested', _spawnEntity);
 		$(viewTest).on('onTick', _fetchEntity);
+		$('body').on('keyup', _spawnOnThingy);
 	},
+	_spawnOnThingy = function(){
+		console.log("thingy");
+		/*levelloader ruft entity spawn mit parameter auf und bestimmt, welche entity gezeichnet werden soll*/
+		entityTest.spawn();
+	}
+
 
 	_spawnEntity = function(event, data) {
 		viewTest.applyEntity(data);
@@ -28,7 +35,7 @@ appTest.controllerTest = (function() {
 	_fetchEntity = function() {
 		physicsTest.update();
 		viewTest.update();
-		entityTest.spawn();
+		//entityTest.spawn();
 	};
 
 	that.init = init;
