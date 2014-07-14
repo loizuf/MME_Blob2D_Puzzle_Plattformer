@@ -2,17 +2,34 @@ appTest.controllerTest = (function() {
 	var that = {},
 	viewTest = null,
 	physicsTest = null,
-
-	$body = null,
+	entityTest = null,
 
 	init = function() {
-		$body = $('body');
+		console.log("controller init");
 		_initModules();
+		_registerListeners();
 	},
 
 	_initModules = function() {
-		physicsTest = appTest.physicsTest.init();
 		viewTest = appTest.viewTest.init();
+		physicsTest = appTest.physicsTest.setup();
+		entityTest = appTest.entityTest.init();
+	},
+
+	_registerListeners = function(event, data) {
+		$(entityTest).on('onSpawnRequested', _spawnEntity);
+		$(viewTest).on('onTick', _fetchEntity);
+	},
+
+	_spawnEntity = function(event, data) {
+		viewTest.applyEntity(data);
+		physicsTest.applyEntity(data);
+	},
+
+	_fetchEntity = function() {
+		physicsTest.update();
+		viewTest.update();
+		entityTest.spawn();
 	};
 
 	that.init = init;
