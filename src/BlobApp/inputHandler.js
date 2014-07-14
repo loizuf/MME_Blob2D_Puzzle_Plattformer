@@ -24,7 +24,7 @@ BlobApp.InputHandler = (function() {
         $body.on('keyUp',_onKeyUp);
     },
     /*fire callback for thingy*/
-    _onKeyUp = function(event e){
+    _onKeyUp = function(e){
         switch(e.keyCode){
             case keyMap.p1Jump:
             
