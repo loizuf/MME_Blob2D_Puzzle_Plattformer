@@ -31,7 +31,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/img\/Tileset.png",
+         "image":"\/res\/img\/Tileset.png",
          "imageheight":500,
          "imagewidth":500,
          "margin":0,
