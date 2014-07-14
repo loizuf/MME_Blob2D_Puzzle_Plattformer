@@ -20,9 +20,44 @@ BlobApp.InputHandler = (function() {
     },
 
     init = function() {
+        $body = $('body');
+        $body.on('keyUp',_onKeyUp);
+    },
+    /*fire callback for thingy*/
+    _onKeyUp = function(event e){
+        switch(e.keyCode){
+            case keyMap.p1Jump:
+            
+            break;
 
+            case keyMap.p1Left:
 
+            break;
 
+            case keyMap.p1Right:
+
+            break;
+
+            case keyMap.p1Trigger:
+
+            break;
+
+            case keyMap.p2Jump:
+
+            break;
+
+            case keyMapp.p2Left:
+
+            break;
+
+            case keyMap.p2Right:
+
+            break;
+
+            case keyMap.p2Trigger:
+
+            break;
+        }
     };
 
 
