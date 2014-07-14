@@ -28,35 +28,35 @@ BlobApp.InputHandler = (function() {
     _onKeyUp = function(e){
         switch(e.keyCode){
             case keyMap.p1Jump:
-                $(that).trigger('p1Jumped');
+                $(that).trigger('p1ArrowUp');
             break;
 
             case keyMap.p1Left:
-                $(that).trigger('p1leftStarted');
+                $(that).trigger('p1ArrowLeftStarted');
             break;
 
             case keyMap.p1Right:
-                $(that).trigger('p1rightStarted');
+                $(that).trigger('p1ArrowRightStarted');
             break;
 
             case keyMap.p1Trigger:
-                $(that).trigger('p1Trigger');
+                $(that).trigger('p1ArrowDown');
             break;
 
             case keyMap.p2Jump:
-                $(that).trigger('p2Jumped');
+                $(that).trigger('p2ArrowUp');
             break;
 
             case keyMapp.p2Left:
-                $(that).trigger('p2leftStarted');
+                $(that).trigger('p2ArrowLeftStarted');
             break;
 
             case keyMap.p2Right:
-                $(that).trigger('p2rightStarted');
+                $(that).trigger('p2ArrowRightStarted');
             break;
 
             case keyMap.p2Trigger:
-                $(that).trigger('p2Trigger');
+                $(that).trigger('p2ArrowDown');
             break;
         }
     },
@@ -64,19 +64,19 @@ BlobApp.InputHandler = (function() {
     _onKeyDown = function(e){
         switch(e.keyCode){
             case keyMap.p1Left:
-                $(that).trigger('p1leftStopped');
+                $(that).trigger('p1ArrowLeftStopped');
             break;
 
             case keyMap.p1Right:
-                $(that).trigger('p1rightStopped');
+                $(that).trigger('p1ArrowRightStopped');
             break;
 
             case keyMapp.p2Left:
-                $(that).trigger('p2leftStopped');
+                $(that).trigger('p2ArrowLeftStopped');
             break;
 
             case keyMap.p2Right:
-                $(that).trigger('p2rightStopped');
+                $(that).trigger('p2ArrowRightStopped');
             break;
         }
     };

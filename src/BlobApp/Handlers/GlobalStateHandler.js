@@ -27,6 +27,8 @@ BlobApp.GlobalState = (function() {
 
 	init = function() {
 		_load();
+
+		return that;
 	},
 
 	_load = function() {

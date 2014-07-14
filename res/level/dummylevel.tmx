@@ -3,14 +3,14 @@
  <tileset firstgid="1" name="Tileset" tilewidth="25" tileheight="25">
   <image source="../img/Tileset.png" width="500" height="500"/>
  </tileset>
- <layer name="Kachelebene 1" width="33" height="25">
-  <data encoding="base64" compression="zlib">
-   eJxbyMDAoDWAeBEQizMMLBAddcOoG0bdMOqGUTeMumHUDaNuoKMbmEjEtHADtcCoG0bdgO6GrQykp3Fq4m1ADACd4gwP
-  </data>
- </layer>
  <layer name="Kachelebene 2" width="33" height="25">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIJRMApwA96BdgAQKA6w/YxAzATE2wbYHaNgFIyCwQ+4oTQ7khgnnd0gj0VMlgb2VKLhwQQAzPIDIw==
+   eJxbyMDAoEUlHEWGnkVALM5APRBGhh7RUTfQxA2TBoEbyAGD3Q1NQJwzwG7Al76cBoEbyEn/+NzgBsTZWPB0OrqBnDRJiRtA6QzZr9ED4IY6ND454ZABxFkMmHFHbB6ihhtAgJzykNpuoAQMBjdMY0CNt8FeVo+6Yei7gdT6jBZuILUMHSxu2ArETFTE7iSq3wbEAO44HX4=
+  </data>
+ </layer>
+ <layer name="ObjectLayer" width="33" height="25">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUEAsqoXgUjAzAO9AOAALFgXYAFQA/Gn8w5KFsIM4ZaEcMMTAY4o1eIINheKYRkL8yGSB+g+HB6sehnN640ficA+AGeSjNDqVl6WDnYGsjAQAHlQh4
   </data>
  </layer>
 </map>
