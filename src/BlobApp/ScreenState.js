@@ -19,11 +19,7 @@ BlobApp.ScreenState = ( function() {
 
 	/* 
 		all of the elements in the array have to follow this scheme:
-		ID, position [, state] (i.e. state is optional)
-
-		TODO
-		The state can be a complex object itself, the possible states are defined in the constants.
-		For moving objects, the state contains the starting and ending points, the speed etc.
+		ID/Key, Object
 	*/
 	_objects = [],
 
