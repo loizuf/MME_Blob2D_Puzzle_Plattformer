@@ -12,65 +12,65 @@ BlobApp.ModelController = (function() {
 	},
 
 	_registerListener = function() {
-		$(that).on("p1Jumped",_onP1Jumped);
-		$(that).on("p1RightStarted",_onP1RightStarted);
-		$(that).on("p1LeftStarted",_onP1LeftStarted);
-		$(that).on("p1Trigger",_onP1Trigger);
-		$(that).on("p2Jumped",_onP2Jumped);
-		$(that).on("p2RightStarted",_onP2RightStarted);
-		$(that).on("p2LeftStarted",_onP2LeftStarted);
-		$(that).on("p2Trigger",_onP2Trigger);
-		$(that).on("p1RightStopped",_onP1RightStopped);
-		$(that).on("p1LeftStopped",_onP1LeftStopped);
-		$(that).on("p2RightStopped",_onP2RightStopped);
-		$(that).on("p2LeftStopped",_onP2LeftStopped);
+		$(that).on("p1ArrowUp",_onP1ArrowUp);
+		$(that).on("p1ArrowRightStarted",_onP1ArrowRightStarted);
+		$(that).on("p1ArrowLeftStarted",_onP1ArrowLeftStarted);
+		$(that).on("p1ArrowDown",_onP1ArrowDown);
+		$(that).on("p2ArrowUp",_onP2ArrowUp);
+		$(that).on("p2ArrowRightStarted",_onP2ArrowRightStarted);
+		$(that).on("p2ArrowLeftStarted",_onP2ArrowLeftStarted);
+		$(that).on("p2ArrowDown",_onP2ArrowDown);
+		$(that).on("p1ArrowRightStopped",_onP1ArrowRightStopped);
+		$(that).on("p1ArrowLeftStopped",_onP1ArrowLeftStopped);
+		$(that).on("p2ArrowRightStopped",_onP2ArrowRightStopped);
+		$(that).on("p2ArrowLeftStopped",_onP2ArrowLeftStopped);
 	},
 
-	_onP1Jumped = function() {
+	_onP1ArrowUp = function() {
 		
 	},
 
-	_onP1RightStarted = function() {
+	_onP1ArrowRightStarted = function() {
 		
 	},
 
-	_onP1LeftStarted = function() {
+	_onP1ArrowLeftStarted = function() {
 		
 	},
 
-	_onP1Trigger = function() {
+	_onP1ArrowDown = function() {
 		
 	},
 
-	_onP2Jumped = function() {
+	_onP2ArrowUp = function() {
 		
 	},
 
-	_onP2RightStarted = function() {
+	_onP2ArrowRightStarted = function() {
 		
 	},
 
-	_onP2LeftStarted = function() {
+	_onP2ArrowLeftStarted = function() {
 		
 	},
 
-	_onP2Trigger = function() {
+	_onP2ArrowDown = function() {
 		
 	},
 
-	_onP1RightStopped = function() {
+	_onP1ArrowRightStopped = function() {
 		
 	},
 
-	_onP1LeftStopped = function() {
+	_onP1ArrowLeftStopped = function() {
 		
 	},
 
-	_onP2RightStarted = function() {
+	_onP2ArrowRightStarted = function() {
 		
 	},
 
-	_onP2LeftStopped = function() {
+	_onP2ArrowLeftStopped = function() {
 		
 	},
 
