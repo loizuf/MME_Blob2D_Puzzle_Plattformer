@@ -22,40 +22,61 @@ BlobApp.InputHandler = (function() {
     init = function() {
         $body = $('body');
         $body.on('keyUp',_onKeyUp);
+        $body.on('keyDown',_onKeyDown);
     },
-    /*fire callback for thingy*/
+    /*start movement left/right, trigger jump/trigger effect*/
     _onKeyUp = function(e){
         switch(e.keyCode){
             case keyMap.p1Jump:
-            
+                $(that).trigger('p1Jumped');
             break;
 
             case keyMap.p1Left:
-
+                $(that).trigger('p1leftStarted');
             break;
 
             case keyMap.p1Right:
-
+                $(that).trigger('p1rightStarted');
             break;
 
             case keyMap.p1Trigger:
-
+                $(that).trigger('p1Trigger');
             break;
 
             case keyMap.p2Jump:
-
+                $(that).trigger('p2Jumped');
             break;
 
             case keyMapp.p2Left:
-
+                $(that).trigger('p2leftStarted');
             break;
 
             case keyMap.p2Right:
-
+                $(that).trigger('p2rightStarted');
             break;
 
             case keyMap.p2Trigger:
+                $(that).trigger('p2Trigger');
+            break;
+        }
+    },
+    /*stopMovement left/right*/
+    _onKeyDown = function(e){
+        switch(e.keyCode){
+            case keyMap.p1Left:
+                $(that).trigger('p1leftStopped');
+            break;
 
+            case keyMap.p1Right:
+                $(that).trigger('p1rightStopped');
+            break;
+
+            case keyMapp.p2Left:
+                $(that).trigger('p2leftStopped');
+            break;
+
+            case keyMap.p2Right:
+                $(that).trigger('p2rightStopped');
             break;
         }
     };
