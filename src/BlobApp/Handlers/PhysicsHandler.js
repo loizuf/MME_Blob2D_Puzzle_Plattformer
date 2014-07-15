@@ -149,7 +149,7 @@ BlobApp.PhysicsHandler = (function() {
 	};
 
 	_registerListener = function() {
-		$(this).on("applyEntity", applyEntity);
+		$(this).on("entityRequested", applyEntity);
 	};
 
 	that.init = init;

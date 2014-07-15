@@ -21,6 +21,7 @@ BlobApp.ViewController = (function() {
 		createjs.Ticker.setFPS(30);
 		createjs.Ticker.useRAF = true;
 		createjs.Ticker.addEventListener("tick", _tick);
+		createjs.Ticker.addEventListener("entityRequested", applyEntity);
 	},
 
 	_initView = function() {

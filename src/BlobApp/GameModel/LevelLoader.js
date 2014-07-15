@@ -50,7 +50,7 @@ BlobApp.LevelLoader = (function() {
 				var idx = x + y * layerData.width;
 				switch(layerData.data[idx]-1){
 					case REDBLOB:
-					_createRedBlob(layerData);
+					_createRedBlob();
 					break;
 					case GREENBLOB:
 					_createGreenBlob();
@@ -81,6 +81,15 @@ BlobApp.LevelLoader = (function() {
 	},
 
 
+	_createRedBlob = function(){
+
+	},
+	_createGreenBlob = function(){
+
+	},
+	_createSpike = function() {
+
+	},
 	// utility function for loading assets from server
 	_httpGet = function(theUrl) {
 		var xmlHttp = null;
