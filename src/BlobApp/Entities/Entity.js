@@ -5,10 +5,6 @@ BlobApp.Entity = (function Entity(x_pos, y_pos, sizeX, sizeY, shapeIndicator) {
 	this.sizeY = sizeY;
 	this.shapeIndicator = shapeIndicator;
 
-	this.onCollision = function() {
-		//callback
-	};
-
 	//intended for overríde
 	this.applyPhysicsBody = function() {};
 });
