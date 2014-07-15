@@ -11,6 +11,9 @@ appTest.physicsTest = (function() {
 	var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
 
 	var that = {},
+
+	jumpP1Allowed,
+	jumpP2Allowed,
 	
 	SCALE = 30, STEP = 20, TIMESTEP = 1/20;
 	
@@ -36,7 +39,7 @@ appTest.physicsTest = (function() {
 
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
-		fixture.shape.SetAsBox(25 / SCALE, 25 / SCALE);
+		fixture.shape.SetAsBox(12 / SCALE, 12 / SCALE);
 
 		var bodyDef = new b2BodyDef;
 
@@ -131,9 +134,12 @@ appTest.physicsTest = (function() {
 
 		var listener = new Box2D.Dynamics.b2ContactListener;
 		listener.BeginContact = function(contact){
-		//	console.log("hoot");
-			console.log(contact.GetFixtureB().GetBody().GetUserData());
-			console.log(contact.GetFixtureA().GetBody().GetUserData());
+			console.log(contact.GetFixtureA().GetBody().GetUserData(), contact.GetFixtureB().GetBody().GetUserData());
+			console.log(contact);
+			// TODO
+			if(bodies[0] == contact.GetFixtureA().GetBody()) jumpP1Allowed = true;
+			if(bodies[1] == contact.GetFixtureA().GetBody()) jumpP2Allowed = true;
+
 		}
 		world.SetContactListener(listener);
 	},
@@ -152,7 +158,7 @@ appTest.physicsTest = (function() {
 		this.body = body;
 		this.skin = skin;
 		this.update = function() {
-			this.skin.rotation = this.body.GetAngle() * (180 / Math.PI);
+			//this.skin.rotation = this.body.GetAngle() * (180 / Math.PI);
 			this.skin.x = this.body.GetWorldCenter().x * SCALE;
 			this.skin.y = this.body.GetWorldCenter().y * SCALE;
 		}
@@ -160,24 +166,38 @@ appTest.physicsTest = (function() {
 	},	
 	moveLeft = function() {
 		if(bodies[0].m_linearVelocity.x>-5){
-		bodies[0].ApplyImpulse(new b2Vec2(-2, 0), bodies[0].GetPosition());
+		bodies[0].ApplyImpulse(new b2Vec2(-1, 0), bodies[0].GetPosition());
 		}
 	},
 
 	moveRight = function() {
 		if(bodies[0].m_linearVelocity.x<5){
-		bodies[0].ApplyImpulse(new b2Vec2(2, 0), bodies[0].GetPosition());
+		bodies[0].ApplyImpulse(new b2Vec2(1, 0), bodies[0].GetPosition());
 		}
 	},
 	moveLeft2 = function() {
 		if(bodies[1].m_linearVelocity.x>-5){
-		bodies[1].ApplyImpulse(new b2Vec2(-2, 0), bodies[1].GetPosition());
+		bodies[1].ApplyImpulse(new b2Vec2(-1, 0), bodies[1].GetPosition());
 		}
 	},
 
 	moveRight2 = function() {
 		if(bodies[1].m_linearVelocity.x<5){
-		bodies[1].ApplyImpulse(new b2Vec2(2, 0), bodies[1].GetPosition());
+		bodies[1].ApplyImpulse(new b2Vec2(1, 0), bodies[1].GetPosition());
+		}
+	},
+
+	jumpP1 = function() {
+		if(jumpP1Allowed != false) {
+			bodies[0].ApplyImpulse(new b2Vec2(0, -5), bodies[0].GetPosition());
+			jumpP1Allowed = false;
+		}
+	},
+
+	jumpP2 = function() {
+		if(jumpP2Allowed != false) {
+			bodies[1].ApplyImpulse(new b2Vec2(0, -5), bodies[1].GetPosition());
+			jumpP2Allowed = false;
 		}
 	};
 
@@ -185,6 +205,9 @@ appTest.physicsTest = (function() {
 	that.moveRight = moveRight;
 	that.moveLeft2 = moveLeft2;
 	that.moveRight2 = moveRight2;
+
+	that.jumpP1 = jumpP1;
+	that.jumpP2 = jumpP2;
 
 
 	that.setup = setup;
