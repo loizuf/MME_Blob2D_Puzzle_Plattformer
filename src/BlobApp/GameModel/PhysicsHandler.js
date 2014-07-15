@@ -19,7 +19,7 @@ BlobApp.PhysicsHandler = (function() {
 	var bodies =[];
 
 	init = function(){
-		setupPhysics();
+		_setupPhysics();
 		return that;
 	};
 
@@ -149,6 +149,7 @@ BlobApp.PhysicsHandler = (function() {
 
 	that.init = init;
 	that.SCALE = SCALE;
+	that.update = update;
 
 	return that;
 })();

@@ -59,7 +59,7 @@ BlobApp.BlobSuperClass = (function() {
 					case SPIKES:
 					_createSpike();
 					break;
-					case default:
+					default:
 					_loadGenericData(layerData, tilewidth, tileheight);
 					break;
 				}
