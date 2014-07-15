@@ -1,5 +1,5 @@
-BlobApp.DynamicEntity = (function DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY, shapeIndicator) {
-	this.prototype = new Entity(x_pos, y_pos, sizeX, sizeY, shapeIndicator);
+BlobApp.DynamicEntity = (function DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY) {
+	this.prototype = new Entity(x_pos, y_pos, sizeX, sizeY);
 	this.prototype.applyPhysicsBody = function() { 
 
 	};
