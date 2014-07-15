@@ -9,26 +9,44 @@
 <canvas width="800" height="600" id="gameCanvas"></canvas>
 <canvas width="800" height="600" id="debugCanvas"></canvas>
 
+<!-- engines and jQuery -->
 <script type="text/javascript" src="libs/Box2dWeb-2.1.a.3.min.js"></script>
 <script type="text/javascript" src="libs/easeljs-0.7.1.min.js"></script>
 <script type="text/javascript" src="libs/jquery-2.1.1.min.js"></script>
 
+<!-- test environment -->
 <script type="text/javascript" src="src/Vorlagen/appTest.js"></script>
 <script type="text/javascript" src="src/Vorlagen/controllerTest.js"></script>
 <script type="text/javascript" src="src/Vorlagen/physicsTest.js"></script>
 <script type="text/javascript" src="src/Vorlagen/viewTest.js"></script>
 <script type="text/javascript" src="src/Vorlagen/entityTest.js"></script>
 
+<!-- actual app -->
 <script type="text/javascript" src="src/BlobApp/BlobApp.js"></script>
+
 <script type="text/javascript" src="src/BlobApp/Controllers/MainController.js"></script>
 <script type="text/javascript" src="src/BlobApp/Controllers/ModelController.js"></script>
 <script type="text/javascript" src="src/BlobApp/Controllers/ViewController.js"></script>
+
 <script type="text/javascript" src="src/BlobApp/Entities/Entity.js"></script>
+<script type="text/javascript" src="src/BlobApp/Entities/DynamicEntity.js"></script>
+<script type="text/javascript" src="src/BlobApp/Entities/StaticEntity.js"></script>
+<script type="text/javascript" src="src/BlobApp/Entities/StaticEntities/Platform.js"></script>
+<script type="text/javascript" src="src/BlobApp/Entities/StaticEntities/StaticDoor.js"></script>
+<script type="text/javascript" src="src/BlobApp/Entities/DynamicEntities/Blob.js"></script>
+<script type="text/javascript" src="src/BlobApp/Entities/DynamicEntities/CooperationTrigger.js"></script>
+<script type="text/javascript" src="src/BlobApp/Entities/DynamicEntities/DynamicDoor.js"></script>
+<script type="text/javascript" src="src/BlobApp/Entities/DynamicEntities/HintBubble.js"></script>
+<script type="text/javascript" src="src/BlobApp/Entities/DynamicEntities/Key.js"></script>
+<script type="text/javascript" src="src/BlobApp/Entities/DynamicEntities/Switch.js"></script>
+<script type="text/javascript" src="src/BlobApp/Entities/DynamicEntities/Trap.js"></script>
+
 <script type="text/javascript" src="src/BlobApp/GameModel/Blob.js"></script>
 <script type="text/javascript" src="src/BlobApp/GameModel/BlobPlayer1.js"></script>
 <script type="text/javascript" src="src/BlobApp/GameModel/BlobPlayer2.js"></script>
 <script type="text/javascript" src="src/BlobApp/GameModel/LevelLoader.js"></script>
 <script type="text/javascript" src="src/BlobApp/GameModel/PhysicsHandler.js"></script>
+
 <script type="text/javascript" src="src/BlobApp/Handlers/GlobalStateHandler.js"></script>
 <script type="text/javascript" src="src/BlobApp/Handlers/InputHandler.js"></script>
 <script type="text/javascript" src="src/BlobApp/Handlers/ScreenStateHandler.js"></script>
