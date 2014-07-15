@@ -64,16 +64,17 @@ BlobApp.BlobSuperClass = function() {
 	},
 
 
-	// Manipulaes the movement direction so that the blob moves to the left
+	// Manipulates the movement direction so that the blob moves to the left
 	_moveLeft = function() {
 
 	},
 
-	// Ma
+	// Manipulates the movement direction so that the blob moves to the right
 	_moveRight = function() {
 
 	},
 
+	// Makes the Blob jump
 	_jump = function() {
 
 	},
@@ -86,6 +87,7 @@ BlobApp.BlobSuperClass = function() {
 
 	},
 
+	// These functions are called when a button is pressed
 	this.onLeftPressed = function() {
 		_currentLeft();
 	},
@@ -102,6 +104,7 @@ BlobApp.BlobSuperClass = function() {
 		_currentDown();
 	},
 
+	// These functions can be called from outside(?) to change what happens when a button is pressed
 	this.setCurrentDown = function(currentDown) {
 		_currentDown = currentDown;
 	},
