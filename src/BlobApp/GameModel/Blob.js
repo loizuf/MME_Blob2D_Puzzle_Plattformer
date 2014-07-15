@@ -4,9 +4,8 @@
 
 	The blob gets most of the user input and tells the model / controller how to react.
 */
-BlobApp.BlobSuperClass = (function() {
-	var that = {},
-	_positionX = null,
+BlobApp.BlobSuperClass = function() {
+	var _positionX = null,
 	_positionY = null,
 	// box2d? value
 	_velocity = null,
@@ -17,10 +16,7 @@ BlobApp.BlobSuperClass = (function() {
 	_jumpAllowed,
 	// Waiting for other blob to trigger a special interaction: No interaction allowed
 	_waitingForOtherBlob,
-//!	 !Must be overriden by subclass!
-	specialSkills,
-	// If the blobs are currently doing some fancy interaction
-	specialInteractionActive,
+
 
 	/* 
 		current<Direction>: Function that is called when the key is pressed
@@ -30,11 +26,17 @@ BlobApp.BlobSuperClass = (function() {
 	_currentLeft,
 	_currentRight,
 	_currentUp,
-	_currentDown,
+	_currentDown;
+
+//!	 !Must be overriden by subclass!
+	this.specialSkills = null,
+	// If the blobs are currently doing some fancy interaction
+	this.specialInteractionActive = null,
 
 
 
-	init = function(pX, pY, v, dir){
+
+	this.init = function(pX, pY, v, dir){
 		_setPropertiesOfBlob(pX, pY, v, dir);
 
 		_setupMovementFunctions();
@@ -56,7 +58,7 @@ BlobApp.BlobSuperClass = (function() {
 		_currentDown = _triggerSpecial;
 	}
 
-	killBlob = function(startpX, startpY){
+	this.killBlob = function(startpX, startpY){
 		//_setPropertiesOfBlob(startpX, startpY, 0, 0);
 		// Trigger something to kill other blob, wait some time, reset positions
 	},
@@ -84,52 +86,37 @@ BlobApp.BlobSuperClass = (function() {
 
 	},
 
-	onLeftPressed = function() {
+	this.onLeftPressed = function() {
 		_currentLeft();
 	},
 
-	onRightPressed = function() {
+	this.onRightPressed = function() {
 		_currentRight();	
 	},
 
-	onUpPressed = function() {
+	this.onUpPressed = function() {
 		_currentUp();
 	},
 
-	onDownPressed = function() {
+	this.onDownPressed = function() {
 		_currentDown();
 	},
 
-	setCurrentDown = function(currentDown) {
+	this.setCurrentDown = function(currentDown) {
 		_currentDown = currentDown;
 	},
 
-	setCurrentUp = function(currentUp) {
+	this.setCurrentUp = function(currentUp) {
 		_currentUp = currentUp;
 	},
 
-	setCurrentLeft = function(currentLeft) {
+	this.setCurrentLeft = function(currentLeft) {
 		_currentLeft = currentLeft;
 	},
 
-	setCurrentRight = function(currentRight) {
+	this.ssetCurrentRight = function(currentRight) {
 		_currentRight = currentRight;
-	},
+	};
 
-	// 
-	that.setCurrentDown = setCurrentDown;
-	that.setCurrentUp = setCurrentUp;
-	that.setCurrentLeft = setCurrentDown;
-	that.setCurrentRight = setCurrentRight;
-
-	that.specialSkills = specialSkills;
-	that.specialInteractionActive = specialInteractionActive;
-
-	that.onLeftPressed = onLeftPressed;
-	that.onRightPressed = onRightPressed;
-	that.onUpPressed = onUpPressed;
-	that.onDownPressed = onDownPressed;
-	that.init = init;
-
-	return that;
-});
+	return this;
+};
