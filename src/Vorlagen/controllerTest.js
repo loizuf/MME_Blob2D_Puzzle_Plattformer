@@ -33,6 +33,9 @@ appTest.controllerTest = (function() {
       			//console.log("1left");
 	      		_moveEntityLeft(); 
 	      		break;
+	      	case 38:
+	      		_jumpP1();
+	      		break;
       		case 39: 
       			//console.log("1right");
       			_moveEntityRight(); 
@@ -40,6 +43,9 @@ appTest.controllerTest = (function() {
       		case 65: 
       			//console.log("2left");
       			_moveEntity2Left(); 
+      			break;
+      		case 87:
+      			_jumpP2();
       			break;
       		case 68: 
       			//console.log("2right");
@@ -55,6 +61,14 @@ appTest.controllerTest = (function() {
 
 	_moveEntityLeft = function() {
 		physicsTest.moveLeft();
+	},
+
+	_jumpP2 = function() {
+		physicsTest.jumpP2();
+	},
+
+	_jumpP1 = function() {
+		physicsTest.jumpP1();
 	},
 
 	_moveEntityRight = function() {
