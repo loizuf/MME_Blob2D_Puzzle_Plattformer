@@ -1,4 +1,4 @@
-BlobApp.BlobSuperClass = (function() {
+BlobApp.LevelLoader = (function() {
 	var that = {},
 	tileset,
 	stage,
