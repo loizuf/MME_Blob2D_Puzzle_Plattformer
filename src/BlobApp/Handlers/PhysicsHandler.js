@@ -80,7 +80,7 @@ BlobApp.PhysicsHandler = (function() {
 
 
 	/*das muss vom levelloader aufgerufen werden!*/
-	applyEntity = function(sprite, userData) {
+	applyEntity = function(event, sprite, userData) {
 		var fixture = new b2FixtureDef;
 		//console.log(skin);
 		fixture.density = 1;

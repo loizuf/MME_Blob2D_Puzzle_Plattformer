@@ -5,15 +5,18 @@ BlobApp.ViewController = (function() {
 	init = function() {
 		_initView();
 		_ticker();
+		_listener();
 
 		return that;
-	};
+	},
 
-	applyEntity = function(data) {
+	applyEntity = function(event, data, wurst) {
+		console.log("applied entity", data);
 		stage.addChild(data);
 	},
 
 	update = function() {
+		console.log("hoot");
 		stage.update();
 	},
 
@@ -21,7 +24,6 @@ BlobApp.ViewController = (function() {
 		createjs.Ticker.setFPS(30);
 		createjs.Ticker.useRAF = true;
 		createjs.Ticker.addEventListener("tick", _tick);
-		createjs.Ticker.addEventListener("entityRequested", applyEntity);
 	},
 
 	_initView = function() {
@@ -34,7 +36,12 @@ BlobApp.ViewController = (function() {
 
 	_tick = function() {
 		var onTickRequest = $.Event('onTick');
+		update();
 		$(that).trigger(onTickRequest);
+	},
+
+	_listener = function(){
+		$('body').on('entityRequested',applyEntity);
 	};
 
 	that.init = init;

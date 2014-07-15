@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="33" height="25" tilewidth="25" tileheight="25">
+ <properties>
+  <property name="mapBackground" value="res/img/levelBackground.png"/>
+ </properties>
  <tileset firstgid="1" name="Tileset" tilewidth="25" tileheight="25">
   <image source="../img/Tileset.png" width="500" height="500"/>
  </tileset>
@@ -10,7 +13,11 @@
  </layer>
  <layer name="ObjectLayer" width="33" height="25">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUEAsqoXgUjAzAO9AOAALFgXYAFQA/Gn8w5KFsIM4ZaEcMMTAY4o1eIINheKYRkL8yGSB+g+HB6sehnN640ficA+AGeSjNDqVl6WDnYGsjAQAHlQh4
+   eJxjYBgFo2AUEAsqoXgUjAzAO9AOAALFgXYAFQA/Gn8w5KFsIM4ZaEcMMTAY4o1eIINheKYRkL8yGSB+g+HB6sehnN64B9oBQCA/AHYOtjYSANfGCEs=
   </data>
  </layer>
+ <objectgroup name="Objektebene 1" width="33" height="25">
+  <object name="GreenBlob" gid="7" x="93" y="594"/>
+  <object name="RedBlob" gid="29" x="129" y="597"/>
+ </objectgroup>
 </map>
