@@ -15,27 +15,22 @@
 BlobApp.ScreenState = ( function() {
 	var that = {},
 
-
-
-	/* 
-		all of the elements in the array have to follow this scheme:
-		ID/Key, Object
-
-		Brauchen wir das??
-	*/
-	_objects = [],
-
 	// Object, currentPosition (x, y), stopPositions[](x, y, waittime), movingToPosition (index of next position in stopPositions[] array)
 	_movingObjects = [],
 	// Object1, Object2, Status
 	// e.g. lever object, door object, status
 	_triggerConnections = [],
 
+	_traps = [],
+
+
 
 	// Nicht aufgenommen / Aufgenommen
-	keyState,
+	keyPickedUp,
 
-	PLAYER_STATES = ["dead", "res_wait", "alive", "goal"];
+	PLAYER_STATES = ["dead", "alive", "goal"],
+	PLAYER_1_NAME = "p1";
+	PLAYER_2_NAME = "p2";
 	// Tot / Wartet auf wiederbelebung / Lebendig / fertig
 	player1State,
 	// Wie player1State
@@ -43,7 +38,34 @@ BlobApp.ScreenState = ( function() {
 
 
 	init = function() {
+		player1State = PLAYER_STATES[1];
+		player2State = PLAYER_STATES[1];
+		keyPickedUp = false;
+	},
 
+	onPlayerDead = function(player) {
+		if(player == PLAYER_1_NAME) {
+			player1State = PLAYER_STATES[0];
+		} else {
+			player2Sate = PLAYER_STATES[0];
+		}
+	},
+
+	onPlayerReachGoal = function(player) {
+		if(player == PLAYER_1_NAME) {
+			player1State = PLAYER_STATES[2];
+		} else {
+			player2State = PLAYER_STATES[2];
+		}
+
+		if(player1State == PLAYER_STATES[2] && player2State == PLAYER_STATES[2]) {
+			// trigger success
+		}
+	},
+
+
+	onPickupKey = function() {
+		keyPickedUp=true;
 	};
 
 
