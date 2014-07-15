@@ -8,7 +8,7 @@ appTest.entityTest = (function() {
 	/*hierhin kommt unser konzipiertes klassenmodell ausm wiki/aus der vorarbeit*/
 	spawn = function() {
 		/* hier wird ausgewählt ob bmp, sprite, animated sprite etc */
-		var entityBMP = new createjs.Bitmap("res/img/blob.png");
+		var entityBMP = new createjs.Bitmap("../../res/img/blob.png");
 
 		/* koordinaten kommen aus dem levelloader */
 		entityBMP.x= Math.round(Math.random()*795);
