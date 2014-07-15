@@ -18,13 +18,55 @@ appTest.controllerTest = (function() {
 	_registerListeners = function(event, data) {
 		$(entityTest).on('onSpawnRequested', _spawnEntity);
 		$(viewTest).on('onTick', _fetchEntity);
-		$('body').on('keyup', _spawnOnThingy);
+		$('body').on('keydown', _spawnOnThingy);
 	},
-	_spawnOnThingy = function(){
+	_spawnOnThingy = function(e){
 		/*levelloader ruft entity spawn mit parameter auf und bestimmt, welche entity gezeichnet werden soll*/
-		entityTest.spawn();
-	}
 
+		switch(e.keyCode) {
+			 //       p2Jump : 38,
+      //  p2Left : 37,
+     //   p2Right : 39,
+      //  p2Trigger : 40 
+
+      		case 37: 
+      			//console.log("1left");
+	      		_moveEntityLeft(); 
+	      		break;
+      		case 39: 
+      			//console.log("1right");
+      			_moveEntityRight(); 
+      			break;
+      		case 65: 
+      			//console.log("2left");
+      			_moveEntity2Left(); 
+      			break;
+      		case 68: 
+      			//console.log("2right");
+      			_moveEntity2Right(); 
+      			break;
+      			
+      		case 13: entityTest.spawn();
+      			//console.log("spawn");
+				break;
+		}
+
+	},
+
+	_moveEntityLeft = function() {
+		physicsTest.moveLeft();
+	},
+
+	_moveEntityRight = function() {
+		physicsTest.moveRight();
+	},
+	
+	_moveEntity2Left = function() {
+		physicsTest.moveLeft2();
+	},
+	_moveEntity2Right = function() {
+		physicsTest.moveRight2();
+	},
 
 	_spawnEntity = function(event, data) {
 		viewTest.applyEntity(data);

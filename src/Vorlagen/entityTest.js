@@ -23,8 +23,18 @@ appTest.entityTest = (function() {
 		var onSpawnRequest = $.Event('onSpawnRequested');
 		$(that).trigger(onSpawnRequest, entityBMP);
 		return that;
+	},
+	moveLeft = function() {
+		bodies[0].ApplyForce(new b2Vec2(-2, 0), bodies[0].GetPosition());
+
+	},
+
+	moveRight = function() {
+		bodies[0].ApplyForce(new b2Vec2(2, 0), bodies[0].GetPosition());
 	};
 
+	that.moveLeft = moveLeft;
+	that.moveRight = moveRight;
 	that.init = init;
 	that.spawn = spawn;
 	return that;

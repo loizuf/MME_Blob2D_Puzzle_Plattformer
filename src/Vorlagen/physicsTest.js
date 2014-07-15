@@ -32,9 +32,11 @@ appTest.physicsTest = (function() {
 		//console.log(skin);
 		fixture.density = 1;
 		fixture.restitution = 0;
+		fixture.friction = 0.1;
 
 		/*shape anpassen*/
-		fixture.shape = new b2CircleShape(13 / SCALE);
+		fixture.shape = new b2PolygonShape;
+		fixture.shape.SetAsBox(25 / SCALE, 25 / SCALE);
 
 		var bodyDef = new b2BodyDef;
 
@@ -48,7 +50,7 @@ appTest.physicsTest = (function() {
 		entity.CreateFixture(fixture);
 
 		// assign actor
-		entity.SetUserData("hoot");  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		entity.SetUserData(bodies.length);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		var actor = new _actorObject(entity, skin);
 		bodies.push(entity);
 		
@@ -87,6 +89,8 @@ appTest.physicsTest = (function() {
 		var floorFixture = new b2FixtureDef;
 		floorFixture.density = 1;
 		floorFixture.restitution = 0;
+		floorFixture.friction = 0.2;
+		console.log(floorFixture);
 		floorFixture.shape = new b2PolygonShape;
 		floorFixture.shape.SetAsBox(850 / SCALE, 10 / SCALE);
 
@@ -153,7 +157,35 @@ appTest.physicsTest = (function() {
 			this.skin.y = this.body.GetWorldCenter().y * SCALE;
 		}
 		actors.push(this);
-	}
+	},	
+	moveLeft = function() {
+		if(bodies[0].m_linearVelocity.x>-5){
+		bodies[0].ApplyImpulse(new b2Vec2(-2, 0), bodies[0].GetPosition());
+		}
+	},
+
+	moveRight = function() {
+		if(bodies[0].m_linearVelocity.x<5){
+		bodies[0].ApplyImpulse(new b2Vec2(2, 0), bodies[0].GetPosition());
+		}
+	},
+	moveLeft2 = function() {
+		if(bodies[1].m_linearVelocity.x>-5){
+		bodies[1].ApplyImpulse(new b2Vec2(-2, 0), bodies[1].GetPosition());
+		}
+	},
+
+	moveRight2 = function() {
+		if(bodies[1].m_linearVelocity.x<5){
+		bodies[1].ApplyImpulse(new b2Vec2(2, 0), bodies[1].GetPosition());
+		}
+	};
+
+	that.moveLeft = moveLeft;
+	that.moveRight = moveRight;
+	that.moveLeft2 = moveLeft2;
+	that.moveRight2 = moveRight2;
+
 
 	that.setup = setup;
 	that.update = update;
