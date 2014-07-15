@@ -3,9 +3,9 @@
 */
 BlobApp.ModelController = (function() {
 	var that = {},
-	var _blobPlayerOne,
-	var _blobPlayerTwo,
-	var _screenStateHandler,
+	_blobPlayerOne,
+	_blobPlayerTwo,
+	_screenStateHandler,
 
 	init = function() {
 		_registerListener();
@@ -15,7 +15,7 @@ BlobApp.ModelController = (function() {
 
 		//_blobPlayerOne = BlobApp.BlobOne.init();
 		//_blobPlayerTwo = BlobApp.BlobTwo.init();
-		_screenStateHandler = BlobApp.ScreenState.init();
+		//_screenStateHandler = BlobApp.ScreenState.init();
 
 		bla = new BlobApp.BlobPlayer1();
 	},
