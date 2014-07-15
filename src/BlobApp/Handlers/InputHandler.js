@@ -7,7 +7,7 @@ BlobApp.InputHandler = (function() {
     var that = {},
 
     // Contains key codes for the two blobs for the basic interaction: Movement, Triggers
-    var keyMap = {
+    keyMap = {
         p1Jump : 87,
         p1Left : 65,
         p1Right : 68,
@@ -16,7 +16,7 @@ BlobApp.InputHandler = (function() {
         p2Jump : 38,
         p2Left : 37,
         p2Right : 39,
-        p2Trigger 40: 
+        p2Trigger : 40 
     },
 
     init = function() {

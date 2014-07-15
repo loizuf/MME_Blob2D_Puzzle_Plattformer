@@ -20,10 +20,25 @@ BlobApp.BlobSuperClass = (function() {
 //!	 !Must be overriden by subclass!
 	specialSkills,
 	// If the blobs are currently doing some fancy interaction
-	specialInteractionActive
+	specialInteractionActive,
+
+	/* 
+		current<Direction>: Function that is called when the key is pressed
+	 	default<Direction>: Move/Jump/Trigger
+	 	can & will be overriden by subclass implementations
+	 */
+	_currentLeft,
+	_currentRight,
+	_currentUp,
+	_currentDown,
+
+
 
 	init = function(pX, pY, v, dir){
 		_setPropertiesOfBlob(pX, pY, v, dir);
+
+		_setupMovementFunctions();
+
 		return that;
 	},
 
@@ -34,11 +49,28 @@ BlobApp.BlobSuperClass = (function() {
 		_direction = dir;
 	},
 
+	_setupMovementFunctions = function() {
+		_currentLeft = _moveLeft;
+		_currentRight = _moveRight;
+		_currentUp = _jump;
+		_currentDown = _triggerSpecial;
+	}
+
 	killBlob = function(startpX, startpY){
 		//_setPropertiesOfBlob(startpX, startpY, 0, 0);
 		// Trigger something to kill other blob, wait some time, reset positions
 	},
 
+
+	// Manipulaes the movement direction so that the blob moves to the left
+	_moveLeft = function() {
+
+	},
+
+	// Ma
+	_moveRight = function() {
+
+	},
 
 	_jump = function() {
 
@@ -47,8 +79,6 @@ BlobApp.BlobSuperClass = (function() {
 	/*
 		Tries to trigger a special event. 
 		If the other blob is ready, it might work; otherwhise, the other player is informed via a bubble-y-thing
-
-
 	*/
 	_triggerSpecial = function() {
 
@@ -56,40 +86,22 @@ BlobApp.BlobSuperClass = (function() {
 
 	// This if/else thing probably could be overriden in a better way. TODO
 	onLeftPressed = function() {
-		if(!specialInteractionActive) {
-			// move to the left
-		} else {
-
-		}
+		_currentLeft();
 	},
 
 		// This if/else thing probably could be overriden in a better way. TODO
 	onRightPressed = function() {
-		if(!specialInteractionActive) {
-			// move to the right
-		} else {
-			
-		}	
+		_currentRight();	
 	},
 
 	// if jumpAllowed is true: Jump, else: if specialInteraction: do stuff, else: do nothing
 	onUpPressed = function() {
-	/*	if(specialInteraction) {
-
-		} else if(jumpAllowed) {
-
-		} else {
-
-		} */
+		_currentUp();
 	},
 
 	onDownPressed = function() {
-	/*	if(specialInteraction) {
-
-		} else {
-			_triggerSpecial();
-		}*/
-	};
+		_currentDown();
+	},
 
 
 	that.onLeftPressed = onLeftPressed;

@@ -13,9 +13,9 @@ BlobApp.MainController = (function() {
 
 	_initModules = function() {
 		_modelController = BlobApp.ModelController;
-		_viewController = BlobApp.ViewController;
+		//_viewController = BlobApp.ViewController;
 		_modelController.init();
-		_viewController.init();
+		//_viewController.init();
 	};
 
 	that.init = init;

@@ -11,6 +11,8 @@ BlobApp.ModelController = (function() {
 		//Initialize all Modules from Model
 		//Initialize Box2D Engine
 		//Inform Maincontroller when finished
+
+		bla = new BlobApp.BlobPlayer1();
 	},
 
 	_registerListener = function() {
@@ -72,9 +74,13 @@ BlobApp.ModelController = (function() {
 		
 	},
 
-	_onP2ArrowLeftStopped = function() {
+	_onP2ArrowRightStopped = function() {
 		
 	},
+
+	_onP2ArrowLeftStopped = function() {
+		
+	};
 
 	that.init = init;
 	return that;
