@@ -1,0 +1,24 @@
+body {
+	background-image: url(img/BackgroundImage.png);
+	background-repeat: repeat;
+}
+
+#titleImage {
+	background-image: url(img/GameTitle.png);
+	background-repeat: no-repeat;
+
+	width: 400px;
+	height: 100px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#canvas-container {
+  	width: 100%;
+   	text-align:center;
+}
+
+#gameCanvas {
+	background-color: #ffffff;
+   display: inline;
+}

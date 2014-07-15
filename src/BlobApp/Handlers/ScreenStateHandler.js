@@ -20,11 +20,26 @@ BlobApp.ScreenState = ( function() {
 	/* 
 		all of the elements in the array have to follow this scheme:
 		ID/Key, Object
+
+		Brauchen wir das??
 	*/
 	_objects = [],
 
+	// Object, currentPosition (x, y), stopPositions[](x, y, waittime), movingToPosition (index of next position in stopPositions[] array)
+	_movingObjects = [],
+	// Object1, Object2, Status
+	// e.g. lever object, door object, status
+	_triggerConnections = [],
+
+
+	// Nicht aufgenommen / Aufgenommen
 	keyState,
 
+	PLAYER_STATES = ["dead", "res_wait", "alive", "goal"];
+	// Tot / Wartet auf wiederbelebung / Lebendig / fertig
+	player1State,
+	// Wie player1State
+	player2State,
 
 
 	init = function() {
