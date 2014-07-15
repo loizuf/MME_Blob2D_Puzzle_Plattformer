@@ -95,7 +95,7 @@ BlobApp.PhysicsHandler = (function() {
 
 
 		/*dynamic/static body*/
-		bodyDef.type = b2Body.b2_dynamicBody;
+		bodyDef.type = b2Body.b2_staticBody;
 		bodyDef.position.x = sprite.x / SCALE;
 		bodyDef.position.y = sprite.y / SCALE;
 		
@@ -105,7 +105,7 @@ BlobApp.PhysicsHandler = (function() {
 		// assign actor
 		entity.SetUserData(userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		var actor = new _actorObject(entity, sprite);
-		bodies.push(entity);
+		bodies.push(entity); 
 		
 	},
 

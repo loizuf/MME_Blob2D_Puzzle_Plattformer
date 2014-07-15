@@ -45,6 +45,7 @@ BlobApp.LevelLoader = (function() {
 
 	// layer initialization
 	_initLayer = function(layerData, tilesetSheet, tilewidth, tileheight) {
+		console.log(layerData.height, layerData.width);
 		for ( var y = 0; y < layerData.height; y++) {
 			for ( var x = 0; x < layerData.width; x++) {
 				//get tile id
@@ -65,8 +66,9 @@ BlobApp.LevelLoader = (function() {
 					case DOOR:
 
 					break;*/
+					case -1: break;
 					default:
-					_loadGenericData(layerData, tilewidth, tileheight, idx);
+					_loadGenericData(layerData, tilesetSheet, tilewidth, tileheight, idx);
 					break;
 				}
 	
@@ -74,17 +76,17 @@ BlobApp.LevelLoader = (function() {
 		}
 	},
 
-	_loadGenericData = function(layerData, tilesetSheet,tilewidth, tileheight, idx){
+	_loadGenericData = function(layerData, tilesetSheet, tilewidth, tileheight, idx){
 		var cellBitmap = new createjs.Sprite(tilesetSheet);
 		// layer data has single dimension array
-		console.log("i work fine atm");
+
 		// tilemap data uses 1 as first value, EaselJS uses 0 (sub 1 to load correct tile)
 		cellBitmap.gotoAndStop(layerData.data[idx] - 1);
 		// isometrix tile positioning based on X Y order from Tiled
 		cellBitmap.x = tilewidth;
 		cellBitmap.y = tileheight;
 		// add bitmap to stage
-		$(this).trigger('entityRequested',cellBitmap);
+		$(this).trigger('entityRequested',cellBitmap, null);
 	},
 
 
