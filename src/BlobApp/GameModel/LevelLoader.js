@@ -1,15 +1,16 @@
 BlobApp.LevelLoader = (function() {
 	var that = {},
 	tileset,
-	stage,
 	mapData;
+	/* need to be extracted from json!*/
 	var REDBLOB = 150;
+	var GREENBLOB = 10;
+	var SPIKES = 12;
 
 
 	init = function(){
 		mapData = mapDataJson;
 
-		stage = new createjs.Stage("canvas");
 		// create EaselJS image for tileset
 		tileset = new Image();
 		// getting imagefile from first tileset
@@ -29,7 +30,7 @@ BlobApp.LevelLoader = (function() {
 				height : h
 			}
 		};
-		// create spritesheet
+		// create spritesheet for generic objects (ground e.g.)
 		var tilesetSheet = new createjs.SpriteSheet(imageData);
 		
 		// loading each layer at a time
@@ -39,8 +40,6 @@ BlobApp.LevelLoader = (function() {
 				initLayer(layerData, tilesetSheet, mapData.tilewidth, mapData.tileheight);
 		}
 		// stage updates (not really used here)
-		createjs.Ticker.setFPS(20);
-		createjs.Ticker.addListener(stage);
 	}
 
 	// layer initialization
@@ -78,7 +77,7 @@ BlobApp.LevelLoader = (function() {
 		cellBitmap.x = tilewidth;
 		cellBitmap.y = tileheight;
 		// add bitmap to stage
-		stage.addChild(cellBitmap);
+		$(this).trigger('entityRequested',cellBitmap);
 	},
 
 
