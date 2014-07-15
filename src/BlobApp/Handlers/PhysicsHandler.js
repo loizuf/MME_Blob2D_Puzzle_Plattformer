@@ -20,6 +20,7 @@ BlobApp.PhysicsHandler = (function() {
 
 	init = function(){
 		_setupPhysics();
+		_registerListener();
 		return that;
 	};
 
@@ -145,6 +146,10 @@ BlobApp.PhysicsHandler = (function() {
 			this.skin.y = this.body.GetWorldCenter().y * SCALE;
 		}
 		actors.push(this);
+	};
+
+	_registerListener = function() {
+		$(this).on("applyEntity", applyEntity);
 	};
 
 	that.init = init;
