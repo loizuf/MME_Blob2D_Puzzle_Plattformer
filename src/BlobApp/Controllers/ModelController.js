@@ -3,14 +3,19 @@
 */
 BlobApp.ModelController = (function() {
 	var that = {},
-	//_blobPlayerOne = BlobApp.BlobOne.init();
-	//_blobPlayerTwo = BlobApp.BlobTwo.init();
+	_blobPlayerOne,
+	_blobPlayerTwo,
+	_screenStateHandler,
 
 	init = function() {
 		_registerListener();
 		//Initialize all Modules from Model
 		//Initialize Box2D Engine
 		//Inform Maincontroller when finished
+
+		//_blobPlayerOne = BlobApp.BlobOne.init();
+		//_blobPlayerTwo = BlobApp.BlobTwo.init();
+		//_screenStateHandler = BlobApp.ScreenState.init();
 
 		bla = new BlobApp.BlobPlayer1();
 	},
@@ -28,6 +33,8 @@ BlobApp.ModelController = (function() {
 		$(that).on("p1ArrowLeftStopped",_onP1ArrowLeftStopped);
 		$(that).on("p2ArrowRightStopped",_onP2ArrowRightStopped);
 		$(that).on("p2ArrowLeftStopped",_onP2ArrowLeftStopped);
+		$(that).on("p1blobDeath",_onP1BlobDeath);
+		$(that).on("p2blobDeath",_onP2BlobDeath);
 	},
 
 	_onP1ArrowUp = function() {
@@ -80,6 +87,14 @@ BlobApp.ModelController = (function() {
 
 	_onP2ArrowLeftStopped = function() {
 		
+	},
+
+	_onP1BlobDeath = function() {
+		_screenStateHandler.onPlayerDead("p1");
+	},
+
+	_onP2BlobDeath = function() {
+		_screenStateHandler.onPlayerDead("p2");
 	};
 
 	that.init = init;
