@@ -14,9 +14,9 @@ BlobApp.BlobSuperClass = (function() {
 	_direction = null,
 
 	// As the name suggests, 
-	jumpAllowed,
+	_jumpAllowed,
 	// Waiting for other blob to trigger a special interaction: No interaction allowed
-	waitingForOtherBlob,
+	_waitingForOtherBlob,
 //!	 !Must be overriden by subclass!
 	specialSkills,
 	// If the blobs are currently doing some fancy interaction
@@ -84,17 +84,14 @@ BlobApp.BlobSuperClass = (function() {
 
 	},
 
-	// This if/else thing probably could be overriden in a better way. TODO
 	onLeftPressed = function() {
 		_currentLeft();
 	},
 
-		// This if/else thing probably could be overriden in a better way. TODO
 	onRightPressed = function() {
 		_currentRight();	
 	},
 
-	// if jumpAllowed is true: Jump, else: if specialInteraction: do stuff, else: do nothing
 	onUpPressed = function() {
 		_currentUp();
 	},
@@ -103,6 +100,30 @@ BlobApp.BlobSuperClass = (function() {
 		_currentDown();
 	},
 
+	setCurrentDown = function(currentDown) {
+		_currentDown = currentDown;
+	},
+
+	setCurrentUp = function(currentUp) {
+		_currentUp = currentUp;
+	},
+
+	setCurrentLeft = function(currentLeft) {
+		_currentLeft = currentLeft;
+	},
+
+	setCurrentRight = function(currentRight) {
+		_currentRight = currentRight;
+	},
+
+	// 
+	that.setCurrentDown = setCurrentDown;
+	that.setCurrentUp = setCurrentUp;
+	that.setCurrentLeft = setCurrentDown;
+	that.setCurrentRight = setCurrentRight;
+
+	that.specialSkills = specialSkills;
+	that.specialInteractionActive = specialInteractionActive;
 
 	that.onLeftPressed = onLeftPressed;
 	that.onRightPressed = onRightPressed;
@@ -111,4 +132,4 @@ BlobApp.BlobSuperClass = (function() {
 	that.init = init;
 
 	return that;
-})();
+});
