@@ -6,4 +6,5 @@ BlobApp.Entity = (function Entity(x_pos, y_pos, sizeX, sizeY) {
 
 	//intended for overríde
 	this.applyPhysicsBody = function() {};
+	this.init = function(){};
 });

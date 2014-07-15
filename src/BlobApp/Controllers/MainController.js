@@ -20,6 +20,8 @@ BlobApp.MainController = (function() {
 		_modelController.init();
 		_viewController.init();
 		_physicsHandler.init();
+		_levelloader = BlobApp.LevelLoader;
+		_levelloader.init();
 	},
 
 	_registerListeners = function(){

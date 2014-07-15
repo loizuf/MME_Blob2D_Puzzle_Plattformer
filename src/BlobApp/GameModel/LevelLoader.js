@@ -3,20 +3,21 @@ BlobApp.LevelLoader = (function() {
 	tileset,
 	mapData;
 	/* need to be extracted from json!*/
-	var REDBLOB = 150;
-	var GREENBLOB = 10;
-	var SPIKES = 12;
+	var REDBLOB = 2000;
+	var GREENBLOB = 2000;
+	var SPIKES = 2000;
 
 
 	init = function(){
+		console.log("levelloader started");
 		mapData = mapDataJson;
 
 		// create EaselJS image for tileset
 		tileset = new Image();
 		// getting imagefile from first tileset
-		tileset.src = mapData.tilesets[0].image;
+		tileset.src = "res/img/Tileset.png"//mapData.tilesets[0].image;
 		// callback for loading layers after tileset is loaded
-		tileset.onLoad = initLayers();
+		tileset.onLoad = _initLayers();
 		return that;
 	},
 
@@ -37,7 +38,7 @@ BlobApp.LevelLoader = (function() {
 		for (var idx = 0; idx < mapData.layers.length; idx++) {
 			var layerData = mapData.layers[idx];
 			if (layerData.type == 'tilelayer')
-				initLayer(layerData, tilesetSheet, mapData.tilewidth, mapData.tileheight);
+				_initLayer(layerData, tilesetSheet, mapData.tilewidth, mapData.tileheight);
 		}
 		// stage updates (not really used here)
 	}
@@ -58,8 +59,14 @@ BlobApp.LevelLoader = (function() {
 					case SPIKES:
 					_createSpike();
 					break;
+					/*case DOORTRIGGER:
+					
+					break;
+					case DOOR:
+
+					break;*/
 					default:
-					_loadGenericData(layerData, tilewidth, tileheight);
+					_loadGenericData(layerData, tilewidth, tileheight, idx);
 					break;
 				}
 	
@@ -67,10 +74,10 @@ BlobApp.LevelLoader = (function() {
 		}
 	},
 
-	_loadGenericData = function(layerData, tilewidth, tileheight){
+	_loadGenericData = function(layerData, tilesetSheet,tilewidth, tileheight, idx){
 		var cellBitmap = new createjs.Sprite(tilesetSheet);
 		// layer data has single dimension array
-		
+		console.log("i work fine atm");
 		// tilemap data uses 1 as first value, EaselJS uses 0 (sub 1 to load correct tile)
 		cellBitmap.gotoAndStop(layerData.data[idx] - 1);
 		// isometrix tile positioning based on X Y order from Tiled
@@ -82,6 +89,8 @@ BlobApp.LevelLoader = (function() {
 
 
 	_createRedBlob = function(){
+		var blob = new BlobbApp.Blob();
+		//$(this).trigger()
 
 	},
 	_createGreenBlob = function(){

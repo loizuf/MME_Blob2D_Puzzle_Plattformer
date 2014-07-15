@@ -75,17 +75,12 @@ BlobApp.PhysicsHandler = (function() {
 		var right = world.CreateBody(rightBodyDef);
 		right.CreateFixture(rightFixture);
 
-		var listener = new Box2D.Dynamics.b2ContactListener;
-		listener.BeginContact = function(contact){
-		//	console.log("hoot");
-			console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
-		}
-		world.SetContactListener(listener);
+	
 	},
 
 
 	/*das muss vom levelloader aufgerufen werden!*/
-	applyEntity = function(skin) {
+	applyEntity = function(sprite, userData) {
 		var fixture = new b2FixtureDef;
 		//console.log(skin);
 		fixture.density = 1;
@@ -101,15 +96,15 @@ BlobApp.PhysicsHandler = (function() {
 
 		/*dynamic/static body*/
 		bodyDef.type = b2Body.b2_dynamicBody;
-		bodyDef.position.x = skin.x / SCALE;
-		bodyDef.position.y = skin.y / SCALE;
+		bodyDef.position.x = sprite.x / SCALE;
+		bodyDef.position.y = sprite.y / SCALE;
 		
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
 
 		// assign actor
-		//entity.SetUserData(bodies.length);  // set the actor as user data of the body so we can use it later: body.GetUserData()
-		var actor = new _actorObject(entity, skin);
+		entity.SetUserData(userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		var actor = new _actorObject(entity, sprite);
 		bodies.push(entity);
 		
 	},
@@ -150,6 +145,17 @@ BlobApp.PhysicsHandler = (function() {
 
 	_registerListener = function() {
 		$(this).on("entityRequested", applyEntity);
+		_registerCollisionHandler();
+	},
+
+	_registerCollisionHandler = function(){
+		var listener = new Box2D.Dynamics.b2ContactListener;
+		listener.BeginContact = function(contact){
+		//	console.log("hoot");
+			console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
+
+		}
+		world.SetContactListener(listener);
 	};
 
 	that.init = init;
