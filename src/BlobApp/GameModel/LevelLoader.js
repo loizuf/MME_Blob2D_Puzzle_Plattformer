@@ -49,14 +49,19 @@ BlobApp.BlobSuperClass = (function() {
 			for ( var x = 0; x < layerData.width; x++) {
 				//get tile id
 				var idx = x + y * layerData.width;
-
-
 				switch(layerData.data[idx]-1){
 					case REDBLOB:
 					_createRedBlob(layerData);
 					break;
+					case GREENBLOB:
+					_createGreenBlob();
+					break;
+					case SPIKES:
+					_createSpike();
+					break;
 					case default:
 					_loadGenericData(layerData, tilewidth, tileheight);
+					break;
 				}
 	
 			}
