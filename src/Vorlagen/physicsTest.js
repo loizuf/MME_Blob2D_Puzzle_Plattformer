@@ -29,9 +29,9 @@ appTest.physicsTest = (function() {
 	/*  anpassen an die einzelnen elementen mit static/dynamic body und der shape*/
 	applyEntity = function(skin) {
 		var fixture = new b2FixtureDef;
-		console.log(skin);
+		//console.log(skin);
 		fixture.density = 1;
-		fixture.restitution = 0.6;
+		fixture.restitution = 0;
 
 		/*shape anpassen*/
 		fixture.shape = new b2CircleShape(13 / SCALE);
@@ -48,8 +48,8 @@ appTest.physicsTest = (function() {
 		entity.CreateFixture(fixture);
 
 		// assign actor
+		entity.SetUserData("hoot");  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		var actor = new _actorObject(entity, skin);
-		entity.SetUserData(actor);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		bodies.push(entity);
 		
 	},
@@ -86,7 +86,7 @@ appTest.physicsTest = (function() {
 		// boundaries - floor
 		var floorFixture = new b2FixtureDef;
 		floorFixture.density = 1;
-		floorFixture.restitution = 1;
+		floorFixture.restitution = 0;
 		floorFixture.shape = new b2PolygonShape;
 		floorFixture.shape.SetAsBox(850 / SCALE, 10 / SCALE);
 
@@ -96,6 +96,7 @@ appTest.physicsTest = (function() {
 		floorBodyDef.position.y = 600 / SCALE;
 
 		var floor = world.CreateBody(floorBodyDef);
+		floor.SetUserData("floor");
 		floor.CreateFixture(floorFixture);
 
 		// boundaries - left
@@ -123,6 +124,14 @@ appTest.physicsTest = (function() {
 
 		var right = world.CreateBody(rightBodyDef);
 		right.CreateFixture(rightFixture);
+
+		var listener = new Box2D.Dynamics.b2ContactListener;
+		listener.BeginContact = function(contact){
+		//	console.log("hoot");
+			console.log(contact.GetFixtureB().GetBody().GetUserData());
+			console.log(contact.GetFixtureA().GetBody().GetUserData());
+		}
+		world.SetContactListener(listener);
 	},
 
 	_addDebug = function() {
@@ -138,7 +147,6 @@ appTest.physicsTest = (function() {
 	_actorObject = function(body, skin) {
 		this.body = body;
 		this.skin = skin;
-
 		this.update = function() {
 			this.skin.rotation = this.body.GetAngle() * (180 / Math.PI);
 			this.skin.x = this.body.GetWorldCenter().x * SCALE;

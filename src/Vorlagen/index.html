@@ -1,0 +1,39 @@
+<!doctype HTML>
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>test</title>
+</head>
+<body>
+
+<canvas width="800" height="600" id="gameCanvas"></canvas>
+<canvas width="800" height="600" id="debugCanvas"></canvas>
+
+<script type="text/javascript" src="../../libs/Box2dWeb-2.1.a.3.min.js"></script>
+<script type="text/javascript" src="../../libs/easeljs-0.7.1.min.js"></script>
+<script type="text/javascript" src="../../libs/jquery-2.1.1.min.js"></script>
+
+<script type="text/javascript" src="../Vorlagen/appTest.js"></script>
+<script type="text/javascript" src="../Vorlagen/controllerTest.js"></script>
+<script type="text/javascript" src="../Vorlagen/physicsTest.js"></script>
+<script type="text/javascript" src="../Vorlagen/viewTest.js"></script>
+<script type="text/javascript" src="../Vorlagen/entityTest.js"></script>
+
+<script type="text/javascript" src="../BlobApp/BlobApp.js"></script>
+<script type="text/javascript" src="../BlobApp/Controllers/MainController.js"></script>
+<script type="text/javascript" src="../BlobApp/Controllers/ModelController.js"></script>
+<script type="text/javascript" src="../BlobApp/Entities/Entity.js"></script>
+<script type="text/javascript" src="../BlobApp/GameModel/Blob.js"></script>
+<script type="text/javascript" src="../BlobApp/GameModel/BlobPlayer1.js"></script>
+<script type="text/javascript" src="../BlobApp/GameModel/BlobPlayer2.js"></script>
+<script type="text/javascript" src="../BlobApp/Handlers/GlobalStateHandler.js"></script>
+<script type="text/javascript" src="../BlobApp/Handlers/InputHandler.js"></script>
+<script type="text/javascript" src="../BlobApp/Handlers/ScreenStateHandler.js"></script>
+
+<script>
+	$(function() {
+		appTest.init();
+	});
+</script>
+</body>
+</html>
