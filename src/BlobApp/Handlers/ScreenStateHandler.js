@@ -29,8 +29,8 @@ BlobApp.ScreenState = ( function() {
 	keyPickedUp,
 
 	PLAYER_STATES = ["dead", "alive", "goal"],
-	PLAYER_1_NAME = "p1";
-	PLAYER_2_NAME = "p2";
+	PLAYER_1_NAME = "p1",
+	PLAYER_2_NAME = "p2",
 	// Tot / Wartet auf wiederbelebung / Lebendig / fertig
 	player1State,
 	// Wie player1State
