@@ -6,4 +6,4 @@ BlobApp.DynamicEntity = (function DynamicEntity(sprite, x_pos, y_pos, sizeX, siz
 	this.sprite = sprite;
 	
 	return this;
-})();
+});
