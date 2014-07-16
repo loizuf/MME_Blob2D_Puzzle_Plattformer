@@ -43,55 +43,52 @@ BlobApp.ModelController = (function() {
 	},
 
 	_onP1ArrowUp = function() {
-		_blobPlayerOne.prototype.onUpPressed();
+		_blobPlayerOne.prototype.onUpPressed(true);
 	},
 
 	_onP1ArrowRightStarted = function() {
-		_blobPlayerOne.prototype.onRightPressed();
-	},
-
-	_onP1ArrowLeftStarted = function() {
-		_blobPlayerOne.prototype.onLeftPressed();
-	},
-
-	_onP1ArrowDown = function() {
-		_blobPlayerOne.prototype.onDownPressed();
-	},
-
-	_onP2ArrowUp = function() {
-		_blobPlayerTwo.prototype.onUpPressed();
-	},
-
-	_onP2ArrowRightStarted = function() {
-		_blobPlayerTwo.prototype.onRightPressed();
-	},
-
-	_onP2ArrowLeftStarted = function() {
-		_blobPlayerTwo.prototype.onLeftPressed();
-	},
-
-	_onP2ArrowDown = function() {
-		_blobPlayerTwo.prototype.onDownPressed();
+		_blobPlayerOne.prototype.onRightPressed(true);
 	},
 
 	_onP1ArrowRightStopped = function() {
-		
+		_blobPlayerOne.prototype.onRightPressed(false);
+	},
+
+	_onP1ArrowLeftStarted = function() {
+		_blobPlayerOne.prototype.onLeftPressed(true);
 	},
 
 	_onP1ArrowLeftStopped = function() {
-		
+		_blobPlayerOne.prototype.onLeftPressed(false);
+	},
+
+	_onP1ArrowDown = function() {
+		_blobPlayerOne.prototype.onDownPressed(true);
+	},
+
+
+	_onP2ArrowUp = function() {
+//		_blobPlayerTwo.prototype.onUpPressed(true);
 	},
 
 	_onP2ArrowRightStarted = function() {
-		
+//		_blobPlayerTwo.prototype.onRightPressed(true);
+	},
+	
+	_onP2ArrowRightStopped = function() {
+//		_blobPlayerTwo.prototype.onRightPressed(false);
 	},
 
-	_onP2ArrowRightStopped = function() {
-		
+	_onP2ArrowLeftStarted = function() {
+//		_blobPlayerTwo.prototype.onLeftPressed(true);
 	},
 
 	_onP2ArrowLeftStopped = function() {
-		
+//		_blobPlayerTwo.prototype.onLeftPressed(false);
+	},
+
+	_onP2ArrowDown = function() {
+//		_blobPlayerTwo.prototype.onDownPressed(true);
 	},
 
 	_onP1BlobDeath = function() {

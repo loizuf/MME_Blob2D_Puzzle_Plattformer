@@ -31,8 +31,12 @@ BlobApp.BlobSuperClass = function() {
 	_currentLeft,
 	_currentRight,
 	_currentUp,
-	_currentDown;
+	_currentDown,
 
+	keyUpPressed,
+	keyDownPressed,
+	keyLeftPressed,
+	keyRightPressed;
 
 //!	 !Must be overriden by subclass!
 	this.specialSkills = null,
@@ -46,6 +50,9 @@ BlobApp.BlobSuperClass = function() {
 		_setPropertiesOfBlob(pX, pY, v, dir);
 
 		_setupMovementFunctions();
+
+		// listener methods
+		$("body").on("onTick", _callDirections);
 	},
 
 	_setPropertiesOfBlob = function(pX, pY, v, dir){
@@ -99,22 +106,49 @@ BlobApp.BlobSuperClass = function() {
 		_jumpAllowed = true;
 	},
 
+	_callDirections = function() {
+		if(keyLeftPressed) _currentLeft();
+		if(keyRightPressed) _currentRight();
+		if(keyUpPressed) _currentUp();
+		if(keyDownPressed) _currentDown();
+
+	},
+
 	// These functions are called when a button is pressed
-	this.onLeftPressed = function() {
-		console.log("onLeftPressed");
-		_currentLeft();
+	this.onLeftPressed = function(pressed) {
+		if(pressed) {
+			keyLeftPressed = true;
+			keyRightPressed = false;
+		} else {
+			keyLeftPressed = false;
+		}
 	},
 
-	this.onRightPressed = function() {
-		_currentRight();	
+	this.onRightPressed = function(pressed) {
+		if(pressed) {
+			keyRightPressed = true;
+			keyLeftPressed = false;
+		} else {
+			keyRightPressed = false;
+		}
 	},
 
-	this.onUpPressed = function() {
-		_currentUp();
+	this.onUpPressed = function(pressed) {
+		if(pressed) {
+			keyUpPressed = true;
+			keyDownPressed = false;
+		} else {
+			keyUpPressed = false;
+		}
 	},
 
-	this.onDownPressed = function() {
-		_currentDown();
+	this.onDownPressed = function(pressed) {
+		if(pressed) {
+			keyDownPressed = true;
+			keyUpPressed = false;
+		} else {
+			keyDownPressed = false;
+		}
 	},
 
 	// These functions can be called from outside(?) to change what happens when a button is pressed
