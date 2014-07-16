@@ -95,7 +95,12 @@ BlobApp.PhysicsHandler = (function() {
 
 
 	/*das muss vom levelloader aufgerufen werden!*/
-	applyEntity = function(event, sprite) {
+	applyEntity = function(event, spriteAndNumber) {
+		console.log(spriteAndNumber);
+
+		sprite = spriteAndNumber["sprite"];
+		userData = spriteAndNumber["number"];
+
 		var fixture = new b2FixtureDef;
 		//console.log(skin);
 		fixture.density = 1;
@@ -120,13 +125,18 @@ BlobApp.PhysicsHandler = (function() {
 		entity.CreateFixture(fixture);
 
 		// assign actor
-		entity.SetUserData("staticEntity");  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		entity.SetUserData(userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		var actor = new _actorObject(entity, sprite);
 		bodies.push(entity); 
 		
 	},
 
-	applyBlobEntity = function(event, sprite) {
+	applyBlobEntity = function(event, spriteAndNumber) {
+
+
+		sprite = spriteAndNumber["sprite"];
+		userData = spriteAndNumber["number"];
+
 		var fixture = new b2FixtureDef;
 		//console.log(skin);
 		fixture.density = 1;
@@ -137,7 +147,6 @@ BlobApp.PhysicsHandler = (function() {
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
 
-		var userData = 5;
 		fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY / SCALE);
 		/*if(userData == EntityConfig.REDBLOBID){
 			

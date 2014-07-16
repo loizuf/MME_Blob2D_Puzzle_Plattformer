@@ -1,9 +1,12 @@
 BlobApp.LevelLoader = (function() {
 	var that = {},
 	tileset,
-	mapData;
+	mapData,
 	/* need to be extracted from json!*/
-
+	_createRequestObject = {
+		"sprite" : undefined,
+		"number" : undefined
+	},
 
 	init = function(){
 		console.log("levelloader started");
@@ -92,7 +95,11 @@ BlobApp.LevelLoader = (function() {
 		cellBitmap.regX = 12;
 		cellBitmap.regY = 12;
 		// add bitmap to stage
-		$('body').trigger('entityRequested',cellBitmap);
+
+		_createRequestObject["sprite"] = cellBitmap;
+		_createRequestObject["number"] = idx;
+
+		$('body').trigger('entityRequested',_createRequestObject);
 	},
 
 
@@ -104,7 +111,11 @@ BlobApp.LevelLoader = (function() {
 	_createGreenBlob = function(x, y){
 		console.log(x,y)
 		var blob = new BlobApp.Blob(x, y, 25, 25, EntityConfig.GREENBLOBID);
-		$('body').trigger('blobRequested',blob.sprite);
+
+		_createRequestObject["sprite"] = blob.sprite;
+		_createRequestObject["number"] = EntityConfig.GREENBLOBID;
+
+		$('body').trigger('blobRequested', _createRequestObject);
 	},
 
 	_createSpike = function() {
