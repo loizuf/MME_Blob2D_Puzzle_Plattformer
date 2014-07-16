@@ -153,7 +153,16 @@ BlobApp.PhysicsHandler = (function() {
 		listener.BeginContact = function(contact){
 		//	console.log("hoot");
 			console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
+			a = contact.GetFixtureA().GetBody().GetUserData();
+			b = contact.GetFixtureB().GetBody().GetUserData();
+			switch(a){
+				case EntityConfig.GREENBLOBID: 
 
+				break;
+				case EntityConfig.REDBLOBID: 
+
+				break;
+			}
 		}
 		world.SetContactListener(listener);
 	};
