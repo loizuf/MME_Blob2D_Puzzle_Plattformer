@@ -11,11 +11,11 @@ BlobApp.ViewController = (function() {
 	},
 
 	applyEntity = function(event, data, wurst) {
-		stage.addChild(data.sprite);
+		//stage.addChild(data.sprite);
 	},
 
 	update = function() {
-		stage.update();
+		//stage.update();
 	},
 
 	_ticker = function() {

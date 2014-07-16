@@ -104,7 +104,7 @@ BlobApp.ModelController = (function() {
 
 	_reAllowJump = function(event, entity) {
 		console.log(entity.GetUserData());
-		if(entity.GetUserData() == 5) {
+		if(entity.GetUserData() == EntityConfig.GREENBLOBID) {
 			_blobPlayerOne.prototype.allowJump();
 		} else {
 			console.log("Fail");
