@@ -38,6 +38,9 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		/* koordinaten kommen aus dem levelloader */
 		sprite.x = x_pos;
 		sprite.y = y_pos;
+
+		sprite.regX = 12;
+		sprite.regY = 12;
 		/* setzen auf höhe/2, breite /2 */
 		sprite.regX = imageData.frames.width/2;
 		sprite.regY = imageData.frames.height/2;

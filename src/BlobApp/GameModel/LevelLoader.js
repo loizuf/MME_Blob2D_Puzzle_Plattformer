@@ -45,8 +45,8 @@ BlobApp.LevelLoader = (function() {
 			for ( var x = 0; x < layerData.width; x++) {
 				//get tile id
 				var idx = x + y * layerData.width;
-				xcoords = x*25-12;
-				ycoords = y*25-12;
+				xcoords = x*25+12;
+				ycoords = y*25+12;
 				switch(layerData.data[idx]){
 					case EntityConfig.REDBLOBID:
 					_createRedBlob(xcoords,ycoords);
@@ -62,7 +62,6 @@ BlobApp.LevelLoader = (function() {
 					case EntityConfig.SPIKESID:
 					_createSpike();
 					break;
-
 					/*case DOORTRIGGER:
 					
 					break;
@@ -85,20 +84,25 @@ BlobApp.LevelLoader = (function() {
 
 		// tilemap data uses 1 as first value, EaselJS uses 0 (sub 1 to load correct tile)
 		cellBitmap.gotoAndStop(layerData.data[idx]-1);
-		// isometrix tile positioning based on X Y order from Tiled
+		// isometrix tile positioning based on X Y order from Tile
+
 		cellBitmap.x = x;
 		cellBitmap.y = y;
+
+		cellBitmap.regX = 12;
+		cellBitmap.regY = 12;
 		// add bitmap to stage
-		$('body').trigger('entityRequested',cellBitmap, null);
+		$('body').trigger('entityRequested',cellBitmap);
 	},
 
 
 	_createRedBlob = function(x,y){
-		var blob = new BlobApp.Blob(x, y, 25, 25, EntityConfig.REDBLOBID);
-		$('body').trigger('blobRequested',blob.sprite);
+		//var blob = new BlobApp.Blob(x, y, 25, 25, EntityConfig.REDBLOBID);
+		//$('body').trigger('blobRequested',blob.sprite);
 	},
 
 	_createGreenBlob = function(x, y){
+		console.log(x,y)
 		var blob = new BlobApp.Blob(x, y, 25, 25, EntityConfig.GREENBLOBID);
 		$('body').trigger('blobRequested',blob.sprite);
 	},

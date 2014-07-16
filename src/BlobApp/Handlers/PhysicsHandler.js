@@ -20,7 +20,8 @@ BlobApp.PhysicsHandler = (function() {
 
 	var greenBlob;
 
-	var TILESIZE = 12;
+	var TILESIZEX = 12;
+	var TILESIZEY = 12;
 
 
 	init = function(){
@@ -32,9 +33,16 @@ BlobApp.PhysicsHandler = (function() {
 	
 	_setupPhysics = function() {
 		/* die borders noch schöner gestalten?! */
-
+		var debugDraw = new b2DebugDraw();
+        debugDraw.SetSprite(document.getElementById("gameCanvas").getContext("2d"));
+        debugDraw.SetDrawScale(30.0);
+        debugDraw.SetFillAlpha(0.5);
+        debugDraw.SetLineThickness(1.0);
+        debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+        
 
 		world = new b2World(new b2Vec2(0,10), true);
+		world.SetDebugDraw(debugDraw);
 
 		/* "floor" fixture erstellen(irgend wo unterhalb des canvas, wenn contact TOT!*/
 		/*
@@ -81,7 +89,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		var right = world.CreateBody(rightBodyDef);
 		right.CreateFixture(rightFixture);
-		
+		*/
 	
 	},
 
@@ -96,7 +104,7 @@ BlobApp.PhysicsHandler = (function() {
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
 
-		fixture.shape.SetAsBox(TILESIZE / SCALE, TILESIZE / SCALE);
+		fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY / SCALE);
 
 
 		var bodyDef = new b2BodyDef;
@@ -104,8 +112,9 @@ BlobApp.PhysicsHandler = (function() {
 
 		/*dynamic/static body*/
 		bodyDef.type = b2Body.b2_staticBody;
-		bodyDef.position.x = sprite.x / SCALE;
-		bodyDef.position.y = sprite.y / SCALE;
+
+		bodyDef.position.x = (sprite.x) / SCALE;
+		bodyDef.position.y = (sprite.y) / SCALE;
 		
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
@@ -129,12 +138,14 @@ BlobApp.PhysicsHandler = (function() {
 		fixture.shape = new b2PolygonShape;
 
 		var userData = 5;
-
-		if(userData == EntityConfig.REDBLOBID){
-			fixture.shape.SetAsBox(TILESIZE / SCALE, 15 / SCALE);
+		fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY / SCALE);
+		/*if(userData == EntityConfig.REDBLOBID){
+			
+			redblob = wurstbrot;
 		}else{
-			fixture.shape.SetAsBox(TILESIZE / SCALE, TILESIZE / SCALE);
-		}
+			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY / SCALE);
+			greenBlob = entity;
+		}*/
 		
 
 
@@ -145,6 +156,7 @@ BlobApp.PhysicsHandler = (function() {
 		bodyDef.type = b2Body.b2_dynamicBody;
 		bodyDef.position.x = (sprite.x) / SCALE;
 		bodyDef.position.y = (sprite.y) / SCALE;
+		console.log(bodyDef.position.x*SCALE,bodyDef.position.y*SCALE);
 		
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
@@ -183,8 +195,9 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_applyForce = function(event) {
+		console.log(greenBlob.m_xf.position.x,greenBlob.m_xf.position.y);
 		if(greenBlob.m_linearVelocity.x>-1){
-			greenBlob.ApplyImpulse(new b2Vec2(-0.01, 0), greenBlob.GetPosition());
+			greenBlob.ApplyImpulse(new b2Vec2(-1, 0), greenBlob.GetPosition());
 		}
 	},
 
@@ -193,8 +206,8 @@ BlobApp.PhysicsHandler = (function() {
 		this.skin = skin;
 		this.update = function() {
 			//this.skin.rotation = this.body.GetAngle() * (180 / Math.PI);
-			this.skin.x = this.body.GetWorldCenter().x * SCALE;
-			this.skin.y = this.body.GetWorldCenter().y * SCALE;
+			this.skin.x = (this.body.GetWorldCenter().x * SCALE)-12;
+			this.skin.y = (this.body.GetWorldCenter().y * SCALE)-12;
 		}
 		actors.push(this);
 	},
