@@ -11,11 +11,11 @@ BlobApp.ViewController = (function() {
 	},
 
 	applyEntity = function(event, data, wurst) {
-		//stage.addChild(data.sprite);
+		stage.addChild(data.sprite);
 	},
 
 	update = function() {
-		//stage.update();
+		stage.update();
 	},
 
 	_ticker = function() {
@@ -40,7 +40,7 @@ BlobApp.ViewController = (function() {
 
 	_listener = function(){
 		$('body').on('entityRequested',applyEntity);
-		$('body').on("blobRequested", applyEntity);
+		$('body').on('blobRequested', applyEntity);
 	};
 
 	that.init = init;

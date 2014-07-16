@@ -14,6 +14,8 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 			tileset.src = "res/img/redBlobMoveRight.png"//mapData.tilesets[0].image;
 			height = sizeY;
 		}else{
+
+			console.log("greenblob sprite");
 			tileset.src = "res/img/blob.png"//mapData.tilesets[0].image;
 			height = sizeY;
 		}
@@ -49,7 +51,6 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		sprite.regY = imageData.frames.height/2;
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
-
 	},
 
 	_listeners = function(){

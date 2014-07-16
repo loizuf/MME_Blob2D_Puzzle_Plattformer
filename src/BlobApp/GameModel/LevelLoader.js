@@ -39,8 +39,11 @@ BlobApp.LevelLoader = (function() {
 			var layerData = mapData.layers[idx];
 			if (layerData.type == 'tilelayer')
 				_initLayer(layerData, tilesetSheet, mapData.tilewidth, mapData.tileheight);
+			else if(layerData.type == 'objectgroup'){
+				_initBorders(layerData);
+			}
 		}
-	}
+	},
 
 	// layer initialization
 	_initLayer = function(layerData, tilesetSheet, tilewidth, tileheight) {
@@ -80,6 +83,13 @@ BlobApp.LevelLoader = (function() {
 		}
 	},
 
+	_initBorders = function(layerData){
+		var objects = layerData.objects;
+		for(var i =0, k = objects.length;i<k;i++){
+			$('body').trigger('borderRequested', objects[i]);
+		}
+	},
+
 	_loadGenericData = function(layerData, tilesetSheet, x, y, idx){
 		var cellBitmap = new createjs.Sprite(tilesetSheet);
 		// layer data has single dimension array
@@ -116,7 +126,7 @@ BlobApp.LevelLoader = (function() {
 
 		_createRequestObject["sprite"] = blob.sprite;
 		_createRequestObject["number"] = EntityConfig.GREENBLOBID;
-
+		console.log("greenblob anyone?");
 		$('body').trigger('blobRequested', _createRequestObject);
 	},
 

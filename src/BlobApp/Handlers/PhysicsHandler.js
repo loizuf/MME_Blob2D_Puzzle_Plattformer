@@ -204,6 +204,37 @@ BlobApp.PhysicsHandler = (function() {
 		}
 	},
 
+	_applyBorder = function(event, borderData){
+		var fixture = new b2FixtureDef;
+		fixture.density = 1;
+		fixture.restitution = 0;
+		fixture.friction = 0.1;
+		/*shape anpassen*/
+		fixture.shape = new b2PolygonShape;
+		fixture.shape.SetAsBox(borderData.width/SCALE, borderData.height/SCALE);
+
+		var bodyDef = new b2BodyDef;
+
+		/*dynamic/static body*/
+		bodyDef.type = b2Body.b2_staticBody;
+
+		if(borderData.x>400||borderData.y>300){
+			bodyDef.position.x = (borderData.x+6) / SCALE;
+			bodyDef.position.y = (borderData.y+6) / SCALE;
+		}else{
+			bodyDef.position.x = (borderData.x-6) / SCALE;
+			bodyDef.position.y = (borderData.y-6) / SCALE;
+		}
+		
+		var entity = world.CreateBody(bodyDef);
+		entity.CreateFixture(fixture);
+		// assign actor
+		entity.SetUserData(0);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		//var actor = new _actorObject(entity, sprite);
+		//bodies.push(entity); 
+
+	}
+
 	_actorObject = function(body, skin) {
 		this.body = body;
 		this.skin = skin;
@@ -216,9 +247,10 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_registerListener = function() {
-		$(this).on("entityRequested", applyEntity);
-		$(this).on("blobRequested", applyBlobEntity);
-		$(this).on('onInputRecieved', _applyForce)
+		//$(this).on("entityRequested", applyEntity);
+		$('body').on("blobRequested", applyBlobEntity);
+		$('body').on('onInputRecieved', _applyForce);
+		$('body').on('borderRequested',_applyBorder);
 		_registerCollisionHandler();
 	},
 
