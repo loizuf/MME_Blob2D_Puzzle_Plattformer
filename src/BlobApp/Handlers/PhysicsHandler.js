@@ -17,7 +17,11 @@ BlobApp.PhysicsHandler = (function() {
 	var bodiesToRemove = [];
 	var actors = [];
 	var bodies =[];
+<<<<<<< HEAD
 	var greenBlob;
+=======
+	var TILESIZE = 6;
+>>>>>>> cc1ea9f5872fae9cc260effa618ec1b00e7f8d36
 
 	init = function(){
 		_setupPhysics();
@@ -32,6 +36,11 @@ BlobApp.PhysicsHandler = (function() {
 
 		world = new b2World(new b2Vec2(0,10), true);
 		
+<<<<<<< HEAD
+=======
+		/* "floor" fixture erstellen(irgend wo unterhalb des canvas, wenn contact TOT!*/
+		/*
+>>>>>>> cc1ea9f5872fae9cc260effa618ec1b00e7f8d36
 		// boundaries - floor
 		var floorFixture = new b2FixtureDef;
 		floorFixture.density = 1;
@@ -90,7 +99,11 @@ BlobApp.PhysicsHandler = (function() {
 
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
+<<<<<<< HEAD
 		fixture.shape.SetAsBox(12 / SCALE, 12 / SCALE);
+=======
+		fixture.shape.SetAsBox(TILESIZE / SCALE, TILESIZE / SCALE);
+>>>>>>> cc1ea9f5872fae9cc260effa618ec1b00e7f8d36
 
 		var bodyDef = new b2BodyDef;
 
@@ -119,20 +132,29 @@ BlobApp.PhysicsHandler = (function() {
 
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
+<<<<<<< HEAD
 		fixture.shape.SetAsBox(1 / SCALE, 1 / SCALE);
+=======
+		if(userData == EntityConfig.REDBLOBID){
+			fixture.shape.SetAsBox(TILESIZE / SCALE, 15 / SCALE);
+		}else{
+			fixture.shape.SetAsBox(TILESIZE / SCALE, TILESIZE / SCALE);
+		}
+		
+>>>>>>> cc1ea9f5872fae9cc260effa618ec1b00e7f8d36
 
 		var bodyDef = new b2BodyDef;
 
 
 		/*dynamic/static body*/
 		bodyDef.type = b2Body.b2_dynamicBody;
-		bodyDef.position.x = (sprite.x)/ SCALE;
+		bodyDef.position.x = (sprite.x) / SCALE;
 		bodyDef.position.y = (sprite.y) / SCALE;
 		
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
 		// assign actor
-		entity.SetUserData(7);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		entity.SetUserData(userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		var actor = new _actorObject(entity, sprite);
 
 		//entity muss in das blob Model. Debug lösung über Event
