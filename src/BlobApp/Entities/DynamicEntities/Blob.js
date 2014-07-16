@@ -1,37 +1,38 @@
-BlobApp.Blob = (function Blob(sprt, x_pos, y_pos, sizeX, sizeY, blobID) {
+BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 
-	var that = this;
+	var that = this,
+	sprite, tilesetSheet;
 
 
-	this.prototype = new BlobApp.DynamicEntity(sprt, x_pos, y_pos, sizeX, sizeY);
-	this.prototype.applyPhysicsBody = function(sprite) { 
-		$("body").trigger('blobRequested', sprite, null);
-	
-	};
+	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
 	
 	this.prototype.init =function(){
-	/*	if(blobID == 1){
-			sprite = new createjs.Bitmap("/res/img/greenblob.png");
-		}else{
-			sprite = new createjs.Bitmap("/res/img/redblob.png");
-		} */
 		tileset = new Image();
+		var height;
+		if(blobID == EntityConfig.REDBLOBID){
+			tileset.src = "res/img/redblob.png"//mapData.tilesets[0].image;
+			height = 50;
+		}else{
+			tileset.src = "res/img/blob.png"//mapData.tilesets[0].image;
+			height = 25;
+		}
 		// getting imagefile from first tileset
-		tileset.src = "res/img/blob.png"//mapData.tilesets[0].image;
+		
 		// callback for loading layers after tileset is loaded
-		tileset.onLoad = _initSprite(tileset);		
+		tileset.onLoad = _initSprite(tileset, height);		
 	}
 
-	_initSprite = function(tileset){
+	_initSprite = function(tileset, h){
+		console.log(tileset);
 		var imageData = {
 			images : [ tileset ],
 			frames : {
 				width : 25,
-				height : 25
+				height : h
 			}
 		};
 		// create spritesheet for generic objects (ground e.g.)
-		var tilesetSheet = new createjs.SpriteSheet(imageData);
+		tilesetSheet = new createjs.SpriteSheet(imageData);
 
 		sprite = new createjs.Sprite(tilesetSheet);
 
@@ -39,16 +40,15 @@ BlobApp.Blob = (function Blob(sprt, x_pos, y_pos, sizeX, sizeY, blobID) {
 		sprite.x = x_pos;
 		sprite.y = y_pos;
 		/* setzen auf höhe/2, breite /2 */
-		sprite.regX = 12;
-		sprite.regY = 12;
+		sprite.regX = imageData.frames.width/2;
+		sprite.regY = imageData.frames.height/2;
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
-		that.prototype.applyPhysicsBody(sprite);
 	}
 
 
 	this.prototype.init();
 
-
+	this.sprite = sprite;
 	this.blobID = blobID;
 });
