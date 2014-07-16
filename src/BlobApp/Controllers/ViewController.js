@@ -28,6 +28,7 @@ BlobApp.ViewController = (function() {
 		canvas = document.getElementById('gameCanvas');
 		debugCanvas = document.getElementById('debugCanvas');
 		context = canvas.getContext("2d");
+
 		stage = new createjs.Stage(canvas);
 		stage.snapPixelsEnabled = true;
 	},

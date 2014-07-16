@@ -31,7 +31,6 @@ BlobApp.PhysicsHandler = (function() {
 
 
 		world = new b2World(new b2Vec2(0,10), true);
-		
 		/* "floor" fixture erstellen(irgend wo unterhalb des canvas, wenn contact TOT!*/
 		/*
 		// boundaries - floor
@@ -83,13 +82,12 @@ BlobApp.PhysicsHandler = (function() {
 
 
 	/*das muss vom levelloader aufgerufen werden!*/
-	applyEntity = function(event, sprite, userData) {
+	applyEntity = function(event, sprite) {
 		var fixture = new b2FixtureDef;
 		//console.log(skin);
 		fixture.density = 1;
 		fixture.restitution = 0;
 		fixture.friction = 0.1;
-
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
 		fixture.shape.SetAsBox(TILESIZE / SCALE, TILESIZE / SCALE);
@@ -112,15 +110,17 @@ BlobApp.PhysicsHandler = (function() {
 		
 	},
 
-	applyBlobEntity = function(event, sprite, userData) {
+	applyBlobEntity = function(event, sprite) {
 		var fixture = new b2FixtureDef;
 		//console.log(skin);
 		fixture.density = 1;
 		fixture.restitution = 0;
 		fixture.friction = 0.1;
-
+		console.log("userdata given...",sprite);	
+	
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
+		var userData = 5;
 		if(userData == EntityConfig.REDBLOBID){
 			fixture.shape.SetAsBox(TILESIZE / SCALE, 15 / SCALE);
 		}else{

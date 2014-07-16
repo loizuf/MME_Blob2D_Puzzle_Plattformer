@@ -23,7 +23,6 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 	}
 
 	_initSprite = function(tileset, h){
-		console.log(tileset);
 		var imageData = {
 			images : [ tileset ],
 			frames : {
