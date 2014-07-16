@@ -215,8 +215,8 @@ BlobApp.PhysicsHandler = (function() {
 		this.skin = skin;
 		this.update = function() {
 			//this.skin.rotation = this.body.GetAngle() * (180 / Math.PI);
-			this.skin.x = (this.body.GetWorldCenter().x * SCALE)-12;
-			this.skin.y = (this.body.GetWorldCenter().y * SCALE)-12;
+			this.skin.x = (this.body.GetWorldCenter().x * SCALE);
+			this.skin.y = (this.body.GetWorldCenter().y * SCALE);
 		}
 		actors.push(this);
 	},

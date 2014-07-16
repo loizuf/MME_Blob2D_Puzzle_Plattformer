@@ -44,16 +44,12 @@ BlobApp.LevelLoader = (function() {
 
 	// layer initialization
 	_initLayer = function(layerData, tilesetSheet, tilewidth, tileheight) {
-		lastIdx = 0;
-		sametileCounter;
 		for ( var y = 0; y < layerData.height; y++) {
 			for ( var x = 0; x < layerData.width; x++) {
 				//get tile id
-	
-					createPhysicsFromLastTiles(lastTile);
 					var idx = x + y * layerData.width;
-					xcoords = x*25+12;
-					ycoords = y*25+12;
+					xcoords = x*25;
+					ycoords = y*25;
 					switch(layerData.data[idx]){
 					case EntityConfig.REDBLOBID:
 					_createRedBlob(xcoords,ycoords);

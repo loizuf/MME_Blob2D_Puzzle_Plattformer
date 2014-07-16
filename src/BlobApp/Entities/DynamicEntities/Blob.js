@@ -1,7 +1,7 @@
 BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 
 	var that = this,
-	this.blobID = blobID,
+	blobID = blobID,
 	sprite, tilesetSheet;
 
 
@@ -20,21 +20,18 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		// getting imagefile from first tileset
 		_listeners();
 		// callback for loading layers after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, height);		
+		tileset.onLoad = _initSprite(tileset, 25,height);		
 	}
 
-	_initSprite = function(tileset, h){
+	_initSprite = function(tileset, w,h){
 		var imageData = {
 			images : [ tileset ],
 			frames : {
-				width : 25,
+				width : w,
 				height : h,
 				count: 20,
-				regX: width/2,
-				regY: height/2
-			}
-			animations: {
-
+				regX: w/2,
+				regY: h/2
 			}
 		};
 		// create spritesheet for generic objects (ground e.g.)
@@ -42,7 +39,7 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 
 		sprite = new createjs.Sprite(tilesetSheet);
 
-		cellBitmap.gotoAndStop(0);
+		sprite.gotoAndStop(0);
 		/* koordinaten kommen aus dem levelloader */
 		sprite.x = x_pos;
 		sprite.y = y_pos;
