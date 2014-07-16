@@ -71,20 +71,20 @@ BlobApp.BlobSuperClass = function() {
 
 	// Manipulates the movement direction so that the blob moves to the left
 	_moveLeft = function() {
-		/*if(_blobEntity.m_linearVelocity.x>-5){
-		_blobEntity.ApplyImpulse(new b2Vec2(-1, 0), _blobEntity.GetPosition());
-		}*/
-
+		$('body').trigger('onInputRecieved', { directionX: -1, directionY: 0});
 	},
 
 	// Manipulates the movement direction so that the blob moves to the right
 	_moveRight = function() {
-
+		$('body').trigger('onInputRecieved',{ directionX: 1, directionY: 0});
 	},
 
 	// Makes the Blob jump
 	_jump = function() {
-
+		if(_jumpAllowed != false) {
+			$('body').trigger('onInputRecieved',{ directionX: 0, directionY: -5});
+			_jumpAllowed = false;
+		}
 	},
 
 	/*
@@ -93,6 +93,10 @@ BlobApp.BlobSuperClass = function() {
 	*/
 	_triggerSpecial = function() {
 
+	},
+
+	this.allowJump = function() {
+		_jumpAllowed = true;
 	},
 
 	// These functions are called when a button is pressed
