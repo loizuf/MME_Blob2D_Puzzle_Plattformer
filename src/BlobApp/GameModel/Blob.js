@@ -5,6 +5,9 @@
 	The blob gets most of the user input and tells the model / controller how to react.
 */
 BlobApp.BlobSuperClass = function() {
+
+	//var b2Vec2 = Box2D.Common.Math.b2Vec2;
+
 	var _positionX = null,
 	_positionY = null,
 	// box2d? value
@@ -16,6 +19,8 @@ BlobApp.BlobSuperClass = function() {
 	_jumpAllowed,
 	// Waiting for other blob to trigger a special interaction: No interaction allowed
 	_waitingForOtherBlob,
+	// Box2D Entity
+	_blobEntity,
 
 
 	/* 
@@ -27,6 +32,7 @@ BlobApp.BlobSuperClass = function() {
 	_currentRight,
 	_currentUp,
 	_currentDown;
+
 
 //!	 !Must be overriden by subclass!
 	this.specialSkills = null,
@@ -40,8 +46,6 @@ BlobApp.BlobSuperClass = function() {
 		_setPropertiesOfBlob(pX, pY, v, dir);
 
 		_setupMovementFunctions();
-
-		return that;
 	},
 
 	_setPropertiesOfBlob = function(pX, pY, v, dir){
@@ -56,6 +60,7 @@ BlobApp.BlobSuperClass = function() {
 		_currentRight = _moveRight;
 		_currentUp = _jump;
 		_currentDown = _triggerSpecial;
+		console.log(_currentLeft);
 	}
 
 	this.killBlob = function(startpX, startpY){
@@ -66,6 +71,9 @@ BlobApp.BlobSuperClass = function() {
 
 	// Manipulates the movement direction so that the blob moves to the left
 	_moveLeft = function() {
+		/*if(_blobEntity.m_linearVelocity.x>-5){
+		_blobEntity.ApplyImpulse(new b2Vec2(-1, 0), _blobEntity.GetPosition());
+		}*/
 
 	},
 
@@ -89,6 +97,7 @@ BlobApp.BlobSuperClass = function() {
 
 	// These functions are called when a button is pressed
 	this.onLeftPressed = function() {
+		console.log("onLeftPressed");
 		_currentLeft();
 	},
 
@@ -117,9 +126,15 @@ BlobApp.BlobSuperClass = function() {
 		_currentLeft = currentLeft;
 	},
 
-	this.ssetCurrentRight = function(currentRight) {
+	this.setCurrentRight = function(currentRight) {
 		_currentRight = currentRight;
+	},
+
+	this.setEntity = function(entity){
+		_blobEntity = entity;
 	};
+
+	this.init();
 
 	return this;
 };
