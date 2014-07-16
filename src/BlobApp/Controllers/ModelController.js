@@ -39,6 +39,7 @@ BlobApp.ModelController = (function() {
 		$(_inputHandler).on("p1blobDeath",_onP1BlobDeath);
 		$(_inputHandler).on("p2blobDeath",_onP2BlobDeath);
 		$('body').on("blobEntityCreated",_onBlobEntityCreated);
+		$('body').on('onReAllowJump', _reAllowJump);
 	},
 
 	_onP1ArrowUp = function() {
@@ -46,13 +47,11 @@ BlobApp.ModelController = (function() {
 	},
 
 	_onP1ArrowRightStarted = function() {
-		_blobPlayerOne.prototype.onRightPressed();	
+		_blobPlayerOne.prototype.onRightPressed();
 	},
 
 	_onP1ArrowLeftStarted = function() {
-		console.log("leftEvent in controller");
 		_blobPlayerOne.prototype.onLeftPressed();
-		$('body').trigger('onInputRecieved');
 	},
 
 	_onP1ArrowDown = function() {
@@ -101,6 +100,15 @@ BlobApp.ModelController = (function() {
 
 	_onP2BlobDeath = function() {
 		_screenStateHandler.onPlayerDead("p2");
+	},
+
+	_reAllowJump = function(event, entity) {
+		console.log(entity.GetUserData());
+		if(entity.GetUserData() == 5) {
+			_blobPlayerOne.prototype.allowJump();
+		} else {
+			console.log("Fail");
+		}
 	},
 
 	_onBlobEntityCreated = function(event, entity) {

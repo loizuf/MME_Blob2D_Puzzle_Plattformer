@@ -198,10 +198,9 @@ BlobApp.PhysicsHandler = (function() {
 		}	
 	},
 
-	_applyForce = function(event) {
-		console.log(greenBlob.m_xf.position.x,greenBlob.m_xf.position.y);
-		if(greenBlob.m_linearVelocity.x>-1){
-			greenBlob.ApplyImpulse(new b2Vec2(-1, 0), greenBlob.GetPosition());
+	_applyForce = function(event, direction) {
+		if((greenBlob.m_linearVelocity.x > -3) && (greenBlob.m_linearVelocity.x < 3)) {
+			greenBlob.ApplyImpulse(new b2Vec2(direction.directionX, direction.directionY), greenBlob.GetPosition());
 		}
 	},
 
@@ -238,6 +237,10 @@ BlobApp.PhysicsHandler = (function() {
 
 				break;
 			} 
+
+			if(greenBlob == contact.GetFixtureA().GetBody()) {
+				$('body').trigger('onReAllowJump', greenBlob);
+			}
 		}
 		world.SetContactListener(listener);
 	};
