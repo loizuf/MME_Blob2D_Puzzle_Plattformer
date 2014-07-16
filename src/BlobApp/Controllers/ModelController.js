@@ -51,7 +51,8 @@ BlobApp.ModelController = (function() {
 
 	_onP1ArrowLeftStarted = function() {
 		console.log("leftEvent in controller");
-		_blobPlayerOne.prototype.onLeftPressed();		
+		_blobPlayerOne.prototype.onLeftPressed();
+		$('body').trigger('onInputRecieved');
 	},
 
 	_onP1ArrowDown = function() {

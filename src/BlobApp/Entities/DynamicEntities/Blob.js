@@ -43,6 +43,7 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		sprite.regY = imageData.frames.height/2;
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
+
 	}
 
 

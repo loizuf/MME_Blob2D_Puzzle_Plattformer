@@ -17,7 +17,11 @@ BlobApp.PhysicsHandler = (function() {
 	var bodiesToRemove = [];
 	var actors = [];
 	var bodies =[];
-	var TILESIZE = 6;
+
+	var greenBlob;
+
+	var TILESIZE = 12;
+
 
 	init = function(){
 		_setupPhysics();
@@ -31,6 +35,7 @@ BlobApp.PhysicsHandler = (function() {
 
 
 		world = new b2World(new b2Vec2(0,10), true);
+
 		/* "floor" fixture erstellen(irgend wo unterhalb des canvas, wenn contact TOT!*/
 		/*
 		// boundaries - floor
@@ -76,7 +81,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		var right = world.CreateBody(rightBodyDef);
 		right.CreateFixture(rightFixture);
-		*/
+		
 	
 	},
 
@@ -90,7 +95,9 @@ BlobApp.PhysicsHandler = (function() {
 		fixture.friction = 0.1;
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
+
 		fixture.shape.SetAsBox(TILESIZE / SCALE, TILESIZE / SCALE);
+
 
 		var bodyDef = new b2BodyDef;
 
@@ -120,13 +127,16 @@ BlobApp.PhysicsHandler = (function() {
 	
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
+
 		var userData = 5;
+
 		if(userData == EntityConfig.REDBLOBID){
 			fixture.shape.SetAsBox(TILESIZE / SCALE, 15 / SCALE);
 		}else{
 			fixture.shape.SetAsBox(TILESIZE / SCALE, TILESIZE / SCALE);
 		}
 		
+
 
 		var bodyDef = new b2BodyDef;
 
@@ -145,8 +155,8 @@ BlobApp.PhysicsHandler = (function() {
 		//entity muss in das blob Model. Debug lösung über Event
 		var blobEntityCreated = $.Event('blobEntityCreated');
 		$("body").trigger(blobEntityCreated, entity);
-		
-		bodies.push(entity); 	
+		greenBlob = entity;
+		//bodies.push(entity); 	
 	},
 
 	update = function() {
@@ -172,6 +182,12 @@ BlobApp.PhysicsHandler = (function() {
 		}	
 	},
 
+	_applyForce = function(event) {
+		if(greenBlob.m_linearVelocity.x>-1){
+			greenBlob.ApplyImpulse(new b2Vec2(-0.01, 0), greenBlob.GetPosition());
+		}
+	},
+
 	_actorObject = function(body, skin) {
 		this.body = body;
 		this.skin = skin;
@@ -186,6 +202,7 @@ BlobApp.PhysicsHandler = (function() {
 	_registerListener = function() {
 		$(this).on("entityRequested", applyEntity);
 		$(this).on("blobRequested", applyBlobEntity);
+		$(this).on('onInputRecieved', _applyForce)
 		_registerCollisionHandler();
 	},
 
@@ -193,7 +210,7 @@ BlobApp.PhysicsHandler = (function() {
 		var listener = new Box2D.Dynamics.b2ContactListener;
 		listener.BeginContact = function(contact){
 		//	console.log("hoot");
-			console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
+		//	console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
 			a = contact.GetFixtureA().GetBody().GetUserData();
 			b = contact.GetFixtureB().GetBody().GetUserData();
 			switch(a){
