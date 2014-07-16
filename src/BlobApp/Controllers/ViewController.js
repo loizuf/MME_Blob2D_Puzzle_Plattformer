@@ -11,7 +11,7 @@ BlobApp.ViewController = (function() {
 	},
 
 	applyEntity = function(event, data, wurst) {
-		stage.addChild(data);
+		stage.addChild(data.sprite);
 	},
 
 	update = function() {
