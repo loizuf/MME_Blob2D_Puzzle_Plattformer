@@ -133,6 +133,11 @@ BlobApp.PhysicsHandler = (function() {
 		// assign actor
 		entity.SetUserData(7);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		var actor = new _actorObject(entity, sprite);
+
+		//entity muss in das blob Model. Debug lösung über Event
+		var blobEntityCreated = $.Event('blobEntityCreated');
+		$("body").trigger(blobEntityCreated, entity);
+		
 		bodies.push(entity); 	
 	},
 
