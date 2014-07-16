@@ -36,8 +36,7 @@ BlobApp.ViewController = (function() {
 
 	_tick = function() {
 		var onTickRequest = $.Event('onTick');
-		update();
-		$(that).trigger(onTickRequest);
+		$("body").trigger(onTickRequest);		
 	},
 
 	_listener = function(){

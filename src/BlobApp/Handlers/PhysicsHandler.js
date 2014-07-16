@@ -30,7 +30,7 @@ BlobApp.PhysicsHandler = (function() {
 
 
 		world = new b2World(new b2Vec2(0,10), true);
-
+		
 		// boundaries - floor
 		var floorFixture = new b2FixtureDef;
 		floorFixture.density = 1;
@@ -74,7 +74,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		var right = world.CreateBody(rightBodyDef);
 		right.CreateFixture(rightFixture);
-
+		
 	
 	},
 
@@ -130,7 +130,6 @@ BlobApp.PhysicsHandler = (function() {
 		
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
-		console.log(entity);
 		// assign actor
 		entity.SetUserData(userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		var actor = new _actorObject(entity, sprite);
@@ -160,16 +159,16 @@ BlobApp.PhysicsHandler = (function() {
 		}	
 	},
 
-	ActorObject = function(body, skin) {
+	_actorObject = function(body, skin) {
 		this.body = body;
 		this.skin = skin;
 		this.update = function() {
-			this.skin.rotation = this.body.GetAngle() * (180 / Math.PI);
+			//this.skin.rotation = this.body.GetAngle() * (180 / Math.PI);
 			this.skin.x = this.body.GetWorldCenter().x * SCALE;
 			this.skin.y = this.body.GetWorldCenter().y * SCALE;
 		}
 		actors.push(this);
-	};
+	},
 
 	_registerListener = function() {
 		$(this).on("entityRequested", applyEntity);
@@ -184,14 +183,14 @@ BlobApp.PhysicsHandler = (function() {
 			console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
 			a = contact.GetFixtureA().GetBody().GetUserData();
 			b = contact.GetFixtureB().GetBody().GetUserData();
-			switch(a){
+			/*switch(a){
 				case EntityConfig.GREENBLOBID: 
 
 				break;
 				case EntityConfig.REDBLOBID: 
 
 				break;
-			}
+			} */
 		}
 		world.SetContactListener(listener);
 	};

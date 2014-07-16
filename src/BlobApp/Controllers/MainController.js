@@ -17,15 +17,17 @@ BlobApp.MainController = (function() {
 		_modelController = BlobApp.ModelController;
 		_viewController = BlobApp.ViewController;
 		_physicsHandler = BlobApp.PhysicsHandler;
+
 		_modelController.init();
 		_viewController.init();
 		_physicsHandler.init();
+
 		_levelloader = BlobApp.LevelLoader;
 		_levelloader.init();
 	},
 
 	_registerListeners = function(){
-		$(_viewController).on('onTick', _sceneUpdate());
+		$("body").on('onTick', _sceneUpdate);
 	},
 
 	_sceneUpdate = function(){
