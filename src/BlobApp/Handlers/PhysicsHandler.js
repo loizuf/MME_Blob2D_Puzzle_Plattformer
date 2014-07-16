@@ -130,8 +130,6 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	applyBlobEntity = function(event, spriteAndNumber) {
-
-
 		sprite = spriteAndNumber["sprite"];
 		userData = spriteAndNumber["number"];
 
@@ -152,8 +150,6 @@ BlobApp.PhysicsHandler = (function() {
 			greenBlob = entity;
 		}
 		
-
-
 		var bodyDef = new b2BodyDef;
 
 
@@ -162,6 +158,8 @@ BlobApp.PhysicsHandler = (function() {
 		bodyDef.position.x = (sprite.x) / SCALE;
 		bodyDef.position.y = (sprite.y) / SCALE;
 		
+		bodyDef.fixedRotation = true;
+
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
 		// assign actor
@@ -218,13 +216,9 @@ BlobApp.PhysicsHandler = (function() {
 		/*dynamic/static body*/
 		bodyDef.type = b2Body.b2_staticBody;
 
-		if(borderData.x>400||borderData.y>300){
-			bodyDef.position.x = (borderData.x+6) / SCALE;
-			bodyDef.position.y = (borderData.y+6) / SCALE;
-		}else{
-			bodyDef.position.x = (borderData.x-6) / SCALE;
-			bodyDef.position.y = (borderData.y-6) / SCALE;
-		}
+		bodyDef.position.x = (borderData.x) / SCALE;
+		bodyDef.position.y = (borderData.y) / SCALE;
+		
 		
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
@@ -247,7 +241,7 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_registerListener = function() {
-		//$(this).on("entityRequested", applyEntity);
+		//$("body").on("entityRequested", applyEntity);
 		$('body').on("blobRequested", applyBlobEntity);
 		$('body').on('onInputRecieved', _applyForce);
 		$('body').on('borderRequested',_applyBorder);

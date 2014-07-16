@@ -39,16 +39,19 @@ BlobApp.LevelLoader = (function() {
 			var layerData = mapData.layers[idx];
 			if (layerData.type == 'tilelayer')
 				_initLayer(layerData, tilesetSheet, mapData.tilewidth, mapData.tileheight);
-			else if(layerData.type == 'objectgroup'){
-				_initBorders(layerData);
-			}
+		//	else if(layerData.type == 'objectgroup'){
+		//		_initBorders(layerData);
+		//	}
 		}
 	},
 
 	// layer initialization
 	_initLayer = function(layerData, tilesetSheet, tilewidth, tileheight) {
+		borders = new Array();
 		for ( var y = 0; y < layerData.height; y++) {
+			borders.push(new Array());
 			for ( var x = 0; x < layerData.width; x++) {
+				borders[y][x] = false;
 				//get tile id
 					var idx = x + y * layerData.width;
 					xcoords = x*25;
@@ -76,18 +79,76 @@ BlobApp.LevelLoader = (function() {
 					break;*/
 					case 0: break;
 					default:
+					borders[y][x] = true;
 					_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
 					break;
 				}
 			}
 		}
+		_initBorders(borders);
 	},
 
-	_initBorders = function(layerData){
-		var objects = layerData.objects;
-		for(var i =0, k = objects.length;i<k;i++){
-			$('body').trigger('borderRequested', objects[i]);
+	_initBorders = function(borders){
+		// Horizontal borders
+		// Variables have: x, y, width, height
+		hBorders = new Array();
+		currentHBorder = undefined;
+		for(var rowNum = 0; rowNum < borders.length; rowNum++) {
+			currentHBorder = undefined;
+			for(var colNum = 0; colNum < borders[0].length; colNum++) {
+				if(borders[rowNum][colNum]) {
+					if(!currentHBorder) {
+						if(colNum != borders[0].length -1 && borders[rowNum][colNum+1]){
+						hBorders.push({
+							"x" : colNum*25,
+							"y" : rowNum*25,
+							"width" : 13,
+							"height" : 13
+						});
+						currentHBorder = true;}
+					} else {
+						hBorders[hBorders.length - 1].width += 13;
+						hBorders[hBorders.length -1].x += 13;
+					}
+				} else {
+					currentHBorder = false;
+				}
+			}
 		}
+		for(var i = 0; i < hBorders.length; i++) $('body').trigger('borderRequested', hBorders[i]);
+		// Vertical borders
+
+		vBorders = new Array();
+		currentVBorder = undefined;
+		addStuff = undefined;
+		for(var colNum = 0; colNum < borders[0].length; colNum++) {
+			currentVBorder = undefined;
+			for(var rowNum = 0; rowNum < borders.length; rowNum++) {
+				if(borders[rowNum][colNum]) {
+					if(!currentVBorder) {
+						// IF: not already a horizontal line 
+						horizontalLine = ((colNum != 0 && borders[rowNum][colNum-1]) || (colNum != borders[0].length-1 && borders[rowNum][colNum +1]));
+						if(!horizontalLine){
+							vBorders.push({
+								"x" : colNum*25,
+								"y" : rowNum*25,
+								"width" : 13,
+								"height" : 13
+							});
+
+						currentVBorder = true;
+						}
+					} else {
+						vBorders[vBorders.length - 1].height += 13;
+						vBorders[vBorders.length -1].y += 13;
+					}
+				} else {
+					currentVBorder = false;
+				}
+			}
+		}
+		console.log(vBorders);
+		for(var i = 0; i < vBorders.length; i++) $('body').trigger('borderRequested', vBorders[i]);
 	},
 
 	_loadGenericData = function(layerData, tilesetSheet, x, y, idx){
@@ -158,68 +219,6 @@ BlobApp.LevelLoader = (function() {
 					        "name":"Kachelebene 1",
 					        "opacity":1,
 					        "type":"tilelayer",
-					        "visible":true,
-					        "width":33,
-					        "x":0,
-					        "y":0
-					        }, 
-					        {
-					        "height":25,
-					        "name":"Objektebene 1",
-					        "objects":[
-					                {
-					                "height":624,
-					                "name":"",
-					                "properties":
-					                    {
-
-					                    },
-					                "type":"",
-					                "visible":true,
-					                "width":21,
-					                "x":1,
-					                "y":1
-					                }, 
-					                {
-					                "height":21,
-					                "name":"",
-					                "properties":
-					                    {
-
-					                    },
-					                "type":"",
-					                "visible":true,
-					                "width":825,
-					                "x":0,
-					                "y":0
-					                }, 
-					                {
-					                "height":624,
-					                "name":"",
-					                "properties":
-					                   {
-					                    },
-					                "type":"",
-					                "visible":true,
-					                "width":21,
-					                "x":801,
-					                "y":-1
-					                }, 
-					                {
-					                "height":21,
-					                "name":"",
-					                "properties":
-					                	{
-
-					                    },
-					                "type":"",
-					                "visible":true,
-					                "width":799,
-					                "x":16,
-					                "y":604
-					                }],
-					        "opacity":1,
-					        "type":"objectgroup",
 					        "visible":true,
 					        "width":33,
 					        "x":0,
