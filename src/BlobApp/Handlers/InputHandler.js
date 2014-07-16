@@ -21,17 +21,19 @@ BlobApp.InputHandler = (function() {
 
     init = function() {
         $body = $('body');
-        $body.on('keyUp',_onKeyUp);
-        $body.on('keyDown',_onKeyDown);
+        $body.on('keyup',_onKeyUp);
+        $body.on('keydown',_onKeyDown);
+        return that;
     },
     /*start movement left/right, trigger jump/trigger effect*/
-    _onKeyUp = function(e){
+    _onKeyDown = function(e){
         switch(e.keyCode){
             case keyMap.p1Jump:
                 $(that).trigger('p1ArrowUp');
             break;
 
             case keyMap.p1Left:
+                console.log("LeftRegistered");
                 $(that).trigger('p1ArrowLeftStarted');
             break;
 
@@ -47,7 +49,7 @@ BlobApp.InputHandler = (function() {
                 $(that).trigger('p2ArrowUp');
             break;
 
-            case keyMapp.p2Left:
+            case keyMap.p2Left:
                 $(that).trigger('p2ArrowLeftStarted');
             break;
 
@@ -61,7 +63,7 @@ BlobApp.InputHandler = (function() {
         }
     },
     /*stopMovement left/right*/
-    _onKeyDown = function(e){
+    _onKeyUp = function(e){
         switch(e.keyCode){
             case keyMap.p1Left:
                 $(that).trigger('p1ArrowLeftStopped');
@@ -71,7 +73,7 @@ BlobApp.InputHandler = (function() {
                 $(that).trigger('p1ArrowRightStopped');
             break;
 
-            case keyMapp.p2Left:
+            case keyMap.p2Left:
                 $(that).trigger('p2ArrowLeftStopped');
             break;
 
