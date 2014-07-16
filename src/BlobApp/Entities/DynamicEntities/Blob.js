@@ -12,16 +12,16 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		var height;
 		if(blobID == EntityConfig.REDBLOBID){
 			tileset.src = "res/img/redBlobMoveRight.png"//mapData.tilesets[0].image;
-			height = 50;
+			height = sizeY;
 		}else{
 			tileset.src = "res/img/blob.png"//mapData.tilesets[0].image;
-			height = 25;
+			height = sizeY;
 		}
 		// getting imagefile from first tileset
 		_listeners();
 		// callback for loading layers after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, 25,height);		
-	}
+		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+	},
 
 	_initSprite = function(tileset, w,h){
 		var imageData = {
@@ -30,17 +30,18 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 				width : w,
 				height : h,
 				count: 20,
-				regX: w/2,
-				regY: h/2
+				
 			}
-		};
+		}
+
 		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
 
 		sprite = new createjs.Sprite(tilesetSheet);
 
-		sprite.gotoAndStop(0);
 		/* koordinaten kommen aus dem levelloader */
+		sprite.regX = w/2;
+		sprite.regY = h/2;
 		sprite.x = x_pos;
 		sprite.y = y_pos;
 
@@ -69,7 +70,7 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 				break;
 			}
 		}
-	}
+	};
 
 	this.prototype.init();
 
