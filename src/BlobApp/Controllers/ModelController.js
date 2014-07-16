@@ -6,9 +6,9 @@ BlobApp.ModelController = (function() {
 	_blobPlayerOne,
 	_blobPlayerTwo,
 	_screenStateHandler,
+	_inputHandler,
 
 	init = function() {
-		_registerListener();
 		//Initialize all Modules from Model
 		//Initialize Box2D Engine
 		//Inform Maincontroller when finished
@@ -16,57 +16,62 @@ BlobApp.ModelController = (function() {
 		//_blobPlayerOne = BlobApp.BlobOne.init();
 		//_blobPlayerTwo = BlobApp.BlobTwo.init();
 		//_screenStateHandler = BlobApp.ScreenState.init();
-
-		bla = new BlobApp.BlobPlayer1();
+		_inputHandler = BlobApp.InputHandler.init();
+		_blobPlayerOne = new BlobApp.BlobPlayer1();
+		
+		_registerListener();
+		console.log(_blobPlayerOne);
 	},
 
 	_registerListener = function() {
-		$(that).on("p1ArrowUp",_onP1ArrowUp);
-		$(that).on("p1ArrowRightStarted",_onP1ArrowRightStarted);
-		$(that).on("p1ArrowLeftStarted",_onP1ArrowLeftStarted);
-		$(that).on("p1ArrowDown",_onP1ArrowDown);
-		$(that).on("p2ArrowUp",_onP2ArrowUp);
-		$(that).on("p2ArrowRightStarted",_onP2ArrowRightStarted);
-		$(that).on("p2ArrowLeftStarted",_onP2ArrowLeftStarted);
-		$(that).on("p2ArrowDown",_onP2ArrowDown);
-		$(that).on("p1ArrowRightStopped",_onP1ArrowRightStopped);
-		$(that).on("p1ArrowLeftStopped",_onP1ArrowLeftStopped);
-		$(that).on("p2ArrowRightStopped",_onP2ArrowRightStopped);
-		$(that).on("p2ArrowLeftStopped",_onP2ArrowLeftStopped);
-		$(that).on("p1blobDeath",_onP1BlobDeath);
-		$(that).on("p2blobDeath",_onP2BlobDeath);
+		$(_inputHandler).on("p1ArrowUp",_onP1ArrowUp);
+		$(_inputHandler).on("p1ArrowRightStarted",_onP1ArrowRightStarted);
+		$(_inputHandler).on("p1ArrowLeftStarted",_onP1ArrowLeftStarted);
+		$(_inputHandler).on("p1ArrowDown",_onP1ArrowDown);
+		$(_inputHandler).on("p2ArrowUp",_onP2ArrowUp);
+		$(_inputHandler).on("p2ArrowRightStarted",_onP2ArrowRightStarted);
+		$(_inputHandler).on("p2ArrowLeftStarted",_onP2ArrowLeftStarted);
+		$(_inputHandler).on("p2ArrowDown",_onP2ArrowDown);
+		$(_inputHandler).on("p1ArrowRightStopped",_onP1ArrowRightStopped);
+		$(_inputHandler).on("p1ArrowLeftStopped",_onP1ArrowLeftStopped);
+		$(_inputHandler).on("p2ArrowRightStopped",_onP2ArrowRightStopped);
+		$(_inputHandler).on("p2ArrowLeftStopped",_onP2ArrowLeftStopped);
+		$(_inputHandler).on("p1blobDeath",_onP1BlobDeath);
+		$(_inputHandler).on("p2blobDeath",_onP2BlobDeath);
+		$('body').on("blobEntityCreated",_onBlobEntityCreated);
 	},
 
 	_onP1ArrowUp = function() {
-		//_blobPlayerOne.onUpPressed();
+		_blobPlayerOne.prototype.onUpPressed();
 	},
 
 	_onP1ArrowRightStarted = function() {
-		//_blobPlayerOne.onRightPressed();	
+		_blobPlayerOne.prototype.onRightPressed();	
 	},
 
 	_onP1ArrowLeftStarted = function() {
-		//_blobPlayerOne.onLeftPressed();		
+		console.log("leftEvent in controller");
+		_blobPlayerOne.prototype.onLeftPressed();		
 	},
 
 	_onP1ArrowDown = function() {
-		//_blobPlayerOne.onDownPressed();
+		_blobPlayerOne.prototype.onDownPressed();
 	},
 
 	_onP2ArrowUp = function() {
-		//_blobPlayerTwo.onUpPressed();
+		_blobPlayerTwo.prototype.onUpPressed();
 	},
 
 	_onP2ArrowRightStarted = function() {
-		//_blobPlayerTwo.onRightPressed();
+		_blobPlayerTwo.prototype.onRightPressed();
 	},
 
 	_onP2ArrowLeftStarted = function() {
-		//_blobPlayerTwo.onLeftPressed();
+		_blobPlayerTwo.prototype.onLeftPressed();
 	},
 
 	_onP2ArrowDown = function() {
-		//_blobPlayerTwo.onDownPressed();
+		_blobPlayerTwo.prototype.onDownPressed();
 	},
 
 	_onP1ArrowRightStopped = function() {
@@ -95,6 +100,11 @@ BlobApp.ModelController = (function() {
 
 	_onP2BlobDeath = function() {
 		_screenStateHandler.onPlayerDead("p2");
+	},
+
+	_onBlobEntityCreated = function(event, entity) {
+		console.log("entity im modelcontroller");
+		_blobPlayerOne.prototype.setEntity(entity);
 	};
 
 	that.init = init;
