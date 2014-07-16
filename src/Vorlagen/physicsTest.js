@@ -93,7 +93,6 @@ appTest.physicsTest = (function() {
 		floorFixture.density = 1;
 		floorFixture.restitution = 0;
 		floorFixture.friction = 0.2;
-		console.log(floorFixture);
 		floorFixture.shape = new b2PolygonShape;
 		floorFixture.shape.SetAsBox(850 / SCALE, 10 / SCALE);
 
@@ -135,7 +134,7 @@ appTest.physicsTest = (function() {
 		var listener = new Box2D.Dynamics.b2ContactListener;
 		listener.BeginContact = function(contact){
 			console.log(contact.GetFixtureA().GetBody().GetUserData(), contact.GetFixtureB().GetBody().GetUserData());
-			console.log(contact);
+			//console.log(contact);
 			// TODO
 			if(bodies[0] == contact.GetFixtureA().GetBody()) jumpP1Allowed = true;
 			if(bodies[1] == contact.GetFixtureA().GetBody()) jumpP2Allowed = true;
