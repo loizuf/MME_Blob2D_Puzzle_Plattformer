@@ -17,6 +17,7 @@ BlobApp.PhysicsHandler = (function() {
 	var bodiesToRemove = [];
 	var actors = [];
 	var bodies =[];
+	var TILESIZE = 6;
 
 	init = function(){
 		_setupPhysics();
@@ -30,6 +31,8 @@ BlobApp.PhysicsHandler = (function() {
 
 
 		world = new b2World(new b2Vec2(0,10), true);
+		
+		/* "floor" fixture erstellen(irgend wo unterhalb des canvas, wenn contact TOT!*/
 		/*
 		// boundaries - floor
 		var floorFixture = new b2FixtureDef;
@@ -89,7 +92,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
-		fixture.shape.SetAsBox(6 / SCALE, 6 / SCALE);
+		fixture.shape.SetAsBox(TILESIZE / SCALE, TILESIZE / SCALE);
 
 		var bodyDef = new b2BodyDef;
 
@@ -118,20 +121,25 @@ BlobApp.PhysicsHandler = (function() {
 
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
-		fixture.shape.SetAsBox(6 / SCALE, 6 / SCALE);
+		if(userData == EntityConfig.REDBLOBID){
+			fixture.shape.SetAsBox(TILESIZE / SCALE, 15 / SCALE);
+		}else{
+			fixture.shape.SetAsBox(TILESIZE / SCALE, TILESIZE / SCALE);
+		}
+		
 
 		var bodyDef = new b2BodyDef;
 
 
 		/*dynamic/static body*/
 		bodyDef.type = b2Body.b2_dynamicBody;
-		bodyDef.position.x = (sprite.x)/ SCALE;
+		bodyDef.position.x = (sprite.x) / SCALE;
 		bodyDef.position.y = (sprite.y) / SCALE;
 		
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
 		// assign actor
-		entity.SetUserData(7);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		entity.SetUserData(userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		var actor = new _actorObject(entity, sprite);
 		bodies.push(entity); 	
 	},
