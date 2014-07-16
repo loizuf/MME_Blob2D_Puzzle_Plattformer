@@ -17,6 +17,7 @@ BlobApp.PhysicsHandler = (function() {
 	var bodiesToRemove = [];
 	var actors = [];
 	var bodies =[];
+	var greenBlob;
 
 	init = function(){
 		_setupPhysics();
@@ -30,7 +31,7 @@ BlobApp.PhysicsHandler = (function() {
 
 
 		world = new b2World(new b2Vec2(0,10), true);
-		/*
+		
 		// boundaries - floor
 		var floorFixture = new b2FixtureDef;
 		floorFixture.density = 1;
@@ -74,7 +75,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		var right = world.CreateBody(rightBodyDef);
 		right.CreateFixture(rightFixture);
-		*/
+		
 	
 	},
 
@@ -89,7 +90,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
-		fixture.shape.SetAsBox(6 / SCALE, 6 / SCALE);
+		fixture.shape.SetAsBox(12 / SCALE, 12 / SCALE);
 
 		var bodyDef = new b2BodyDef;
 
@@ -118,7 +119,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
-		fixture.shape.SetAsBox(6 / SCALE, 6 / SCALE);
+		fixture.shape.SetAsBox(1 / SCALE, 1 / SCALE);
 
 		var bodyDef = new b2BodyDef;
 
@@ -137,8 +138,8 @@ BlobApp.PhysicsHandler = (function() {
 		//entity muss in das blob Model. Debug lösung über Event
 		var blobEntityCreated = $.Event('blobEntityCreated');
 		$("body").trigger(blobEntityCreated, entity);
-		
-		bodies.push(entity); 	
+		greenBlob = entity;
+		//bodies.push(entity); 	
 	},
 
 	update = function() {
@@ -164,6 +165,12 @@ BlobApp.PhysicsHandler = (function() {
 		}	
 	},
 
+	_applyForce = function(event) {
+		if(greenBlob.m_linearVelocity.x>-1){
+			greenBlob.ApplyImpulse(new b2Vec2(-0.01, 0), greenBlob.GetPosition());
+		}
+	},
+
 	_actorObject = function(body, skin) {
 		this.body = body;
 		this.skin = skin;
@@ -178,6 +185,7 @@ BlobApp.PhysicsHandler = (function() {
 	_registerListener = function() {
 		$(this).on("entityRequested", applyEntity);
 		$(this).on("blobRequested", applyBlobEntity);
+		$(this).on('onInputRecieved', _applyForce)
 		_registerCollisionHandler();
 	},
 
@@ -185,7 +193,7 @@ BlobApp.PhysicsHandler = (function() {
 		var listener = new Box2D.Dynamics.b2ContactListener;
 		listener.BeginContact = function(contact){
 		//	console.log("hoot");
-			console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
+		//	console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
 			a = contact.GetFixtureA().GetBody().GetUserData();
 			b = contact.GetFixtureB().GetBody().GetUserData();
 			switch(a){

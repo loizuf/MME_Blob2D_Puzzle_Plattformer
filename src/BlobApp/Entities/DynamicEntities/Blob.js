@@ -43,6 +43,7 @@ BlobApp.Blob = (function Blob(sprt, x_pos, y_pos, sizeX, sizeY, blobID) {
 		sprite.regY = 12;
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
+		console.log(sprite);
 		that.prototype.applyPhysicsBody(sprite);
 	}
 
