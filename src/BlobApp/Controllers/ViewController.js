@@ -11,12 +11,10 @@ BlobApp.ViewController = (function() {
 	},
 
 	applyEntity = function(event, data, wurst) {
-		console.log("applied entity", data);
 		stage.addChild(data);
 	},
 
 	update = function() {
-		//console.log("hoot");
 		stage.update();
 	},
 
@@ -36,12 +34,12 @@ BlobApp.ViewController = (function() {
 
 	_tick = function() {
 		var onTickRequest = $.Event('onTick');
-		$("body").trigger(onTickRequest);		
+		$('body').trigger(onTickRequest);		
 	},
 
 	_listener = function(){
 		$('body').on('entityRequested',applyEntity);
-		$("body").on("blobRequested", applyEntity);
+		$('body').on("blobRequested", applyEntity);
 	};
 
 	that.init = init;

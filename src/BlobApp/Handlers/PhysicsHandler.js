@@ -30,7 +30,7 @@ BlobApp.PhysicsHandler = (function() {
 
 
 		world = new b2World(new b2Vec2(0,10), true);
-		
+		/*
 		// boundaries - floor
 		var floorFixture = new b2FixtureDef;
 		floorFixture.density = 1;
@@ -74,7 +74,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		var right = world.CreateBody(rightBodyDef);
 		right.CreateFixture(rightFixture);
-		
+		*/
 	
 	},
 
@@ -89,7 +89,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
-		fixture.shape.SetAsBox(25 / SCALE, 25 / SCALE);
+		fixture.shape.SetAsBox(6 / SCALE, 6 / SCALE);
 
 		var bodyDef = new b2BodyDef;
 
@@ -103,7 +103,7 @@ BlobApp.PhysicsHandler = (function() {
 		entity.CreateFixture(fixture);
 
 		// assign actor
-		entity.SetUserData(userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		entity.SetUserData("staticEntity");  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		var actor = new _actorObject(entity, sprite);
 		bodies.push(entity); 
 		
@@ -118,20 +118,20 @@ BlobApp.PhysicsHandler = (function() {
 
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
-		fixture.shape.SetAsBox(25 / SCALE, 25 / SCALE);
+		fixture.shape.SetAsBox(6 / SCALE, 6 / SCALE);
 
 		var bodyDef = new b2BodyDef;
 
 
 		/*dynamic/static body*/
 		bodyDef.type = b2Body.b2_dynamicBody;
-		bodyDef.position.x = sprite.x / SCALE;
-		bodyDef.position.y = sprite.y / SCALE;
+		bodyDef.position.x = (sprite.x)/ SCALE;
+		bodyDef.position.y = (sprite.y) / SCALE;
 		
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
 		// assign actor
-		entity.SetUserData(userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		entity.SetUserData(7);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		var actor = new _actorObject(entity, sprite);
 		bodies.push(entity); 	
 	},
@@ -183,14 +183,14 @@ BlobApp.PhysicsHandler = (function() {
 			console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
 			a = contact.GetFixtureA().GetBody().GetUserData();
 			b = contact.GetFixtureB().GetBody().GetUserData();
-			/*switch(a){
+			switch(a){
 				case EntityConfig.GREENBLOBID: 
 
 				break;
 				case EntityConfig.REDBLOBID: 
 
 				break;
-			} */
+			} 
 		}
 		world.SetContactListener(listener);
 	};

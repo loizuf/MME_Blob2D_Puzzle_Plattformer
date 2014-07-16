@@ -5,8 +5,6 @@ BlobApp.Blob = (function Blob(sprt, x_pos, y_pos, sizeX, sizeY, blobID) {
 
 	this.prototype = new BlobApp.DynamicEntity(sprt, x_pos, y_pos, sizeX, sizeY);
 	this.prototype.applyPhysicsBody = function(sprite) { 
-		//sprite.userData="blob";
-		console.log(sprite);
 		$("body").trigger('blobRequested', sprite, null);
 	
 	};
@@ -25,7 +23,6 @@ BlobApp.Blob = (function Blob(sprt, x_pos, y_pos, sizeX, sizeY, blobID) {
 	}
 
 	_initSprite = function(tileset){
-		console.log(tileset);
 		var imageData = {
 			images : [ tileset ],
 			frames : {
@@ -39,9 +36,8 @@ BlobApp.Blob = (function Blob(sprt, x_pos, y_pos, sizeX, sizeY, blobID) {
 		sprite = new createjs.Sprite(tilesetSheet);
 
 		/* koordinaten kommen aus dem levelloader */
-		sprite.x = x_pos*25-12;
-		sprite.y = y_pos*25-12;
-
+		sprite.x = x_pos;
+		sprite.y = y_pos;
 		/* setzen auf höhe/2, breite /2 */
 		sprite.regX = 12;
 		sprite.regY = 12;

@@ -48,12 +48,14 @@ BlobApp.LevelLoader = (function() {
 			for ( var x = 0; x < layerData.width; x++) {
 				//get tile id
 				var idx = x + y * layerData.width;
+				xcoords = x*25-12;
+				ycoords = y*25-12;
 				switch(layerData.data[idx]){
 					case REDBLOB:
 					_createRedBlob();
 					break;
 					case GREENBLOB:
-					_createGreenBlob(layerData, tilesetSheet, x, y, idx);
+					_createGreenBlob(layerData, tilesetSheet, xcoords, ycoords, idx);
 					break;
 					case SPIKES:
 					_createSpike();
@@ -66,7 +68,7 @@ BlobApp.LevelLoader = (function() {
 					break;*/
 					case 0: break;
 					default:
-					_loadGenericData(layerData, tilesetSheet, x, y, idx);
+					_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
 					break;
 				}
 	
@@ -81,8 +83,8 @@ BlobApp.LevelLoader = (function() {
 		// tilemap data uses 1 as first value, EaselJS uses 0 (sub 1 to load correct tile)
 		cellBitmap.gotoAndStop(layerData.data[idx]-1);
 		// isometrix tile positioning based on X Y order from Tiled
-		cellBitmap.x = x*25 -12;
-		cellBitmap.y = y*25 -12;
+		cellBitmap.x = x;
+		cellBitmap.y = y;
 		// add bitmap to stage
 		$('body').trigger('entityRequested',cellBitmap, null);
 	},
@@ -95,23 +97,7 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_createGreenBlob = function(layerData, tilesetSheet, x, y, idx){
-
-		var cellBitmap = new createjs.Sprite(tilesetSheet);
-		// layer data has single dimension array
-
-		// tilemap data uses 1 as first value, EaselJS uses 0 (sub 1 to load correct tile)
-		cellBitmap.gotoAndStop(layerData.data[idx]-1);
-		// isometrix tile positioning based on X Y order from Tiled
-		cellBitmap.x = x*25 -12;
-		cellBitmap.y = y*25 -12;
-		// add bitmap to stage
-
-
-		var blob = new BlobApp.Blob(cellBitmap, x, y, 25, 25, 1);
-
-
-
-		//$('body').trigger('entityRequested',cellBitmap, null);
+		var blob = new BlobApp.Blob(null, x, y, 25, 25, 1);
 	},
 
 	_createSpike = function() {
