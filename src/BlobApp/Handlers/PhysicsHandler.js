@@ -109,6 +109,34 @@ BlobApp.PhysicsHandler = (function() {
 		
 	},
 
+	applyBlobEntity = function(event, sprite, userData) {
+		var fixture = new b2FixtureDef;
+		//console.log(skin);
+		fixture.density = 1;
+		fixture.restitution = 0;
+		fixture.friction = 0.1;
+
+		/*shape anpassen*/
+		fixture.shape = new b2PolygonShape;
+		fixture.shape.SetAsBox(25 / SCALE, 25 / SCALE);
+
+		var bodyDef = new b2BodyDef;
+
+
+		/*dynamic/static body*/
+		bodyDef.type = b2Body.b2_dynamicBody;
+		bodyDef.position.x = sprite.x / SCALE;
+		bodyDef.position.y = sprite.y / SCALE;
+		
+		var entity = world.CreateBody(bodyDef);
+		entity.CreateFixture(fixture);
+		console.log(entity);
+		// assign actor
+		entity.SetUserData(userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		var actor = new _actorObject(entity, sprite);
+		bodies.push(entity); 	
+	},
+
 	update = function() {
 		var now = Date.now();
 		var dt = now - lastTimestamp;
@@ -145,6 +173,7 @@ BlobApp.PhysicsHandler = (function() {
 
 	_registerListener = function() {
 		$(this).on("entityRequested", applyEntity);
+		$(this).on("blobRequested", applyBlobEntity);
 		_registerCollisionHandler();
 	},
 

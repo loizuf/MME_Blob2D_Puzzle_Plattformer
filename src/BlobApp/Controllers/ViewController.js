@@ -16,7 +16,7 @@ BlobApp.ViewController = (function() {
 	},
 
 	update = function() {
-		console.log("hoot");
+		//console.log("hoot");
 		stage.update();
 	},
 
@@ -42,6 +42,7 @@ BlobApp.ViewController = (function() {
 
 	_listener = function(){
 		$('body').on('entityRequested',applyEntity);
+		$("body").on("blobRequested", applyEntity);
 	};
 
 	that.init = init;
