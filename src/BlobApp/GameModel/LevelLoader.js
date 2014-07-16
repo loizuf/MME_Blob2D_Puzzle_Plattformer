@@ -103,12 +103,15 @@ BlobApp.LevelLoader = (function() {
 
 
 	_createRedBlob = function(x,y){
-		//var blob = new BlobApp.Blob(x, y, 25, 25, EntityConfig.REDBLOBID);
-		//$('body').trigger('blobRequested',blob.sprite);
+		var blob = new BlobApp.Blob(x, y, 25, 50, EntityConfig.REDBLOBID);
+
+		_createRequestObject["sprite"] = blob.sprite;
+		_createRequestObject["number"] = EntityConfig.REDBLOBID;
+
+		$('body').trigger('blobRequested',_createRequestObject);
 	},
 
 	_createGreenBlob = function(x, y){
-		console.log(x,y)
 		var blob = new BlobApp.Blob(x, y, 25, 25, EntityConfig.GREENBLOBID);
 
 		_createRequestObject["sprite"] = blob.sprite;

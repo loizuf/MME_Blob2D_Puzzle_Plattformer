@@ -96,8 +96,6 @@ BlobApp.PhysicsHandler = (function() {
 
 	/*das muss vom levelloader aufgerufen werden!*/
 	applyEntity = function(event, spriteAndNumber) {
-		console.log(spriteAndNumber);
-
 		sprite = spriteAndNumber["sprite"];
 		userData = spriteAndNumber["number"];
 
@@ -141,20 +139,18 @@ BlobApp.PhysicsHandler = (function() {
 		//console.log(skin);
 		fixture.density = 1;
 		fixture.restitution = 0;
-		fixture.friction = 0.1;
-		console.log("userdata given...",sprite);	
+		fixture.friction = 0.1;	
 	
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
 
-		fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY / SCALE);
-		/*if(userData == EntityConfig.REDBLOBID){
-			
-			redblob = wurstbrot;
+		console.log(userData);
+		if(userData == EntityConfig.REDBLOBID){
+			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY*2 / SCALE);
 		}else{
 			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY / SCALE);
 			greenBlob = entity;
-		}*/
+		}
 		
 
 
@@ -165,7 +161,6 @@ BlobApp.PhysicsHandler = (function() {
 		bodyDef.type = b2Body.b2_dynamicBody;
 		bodyDef.position.x = (sprite.x) / SCALE;
 		bodyDef.position.y = (sprite.y) / SCALE;
-		console.log(bodyDef.position.x*SCALE,bodyDef.position.y*SCALE);
 		
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);

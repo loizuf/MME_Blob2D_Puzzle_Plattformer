@@ -30,7 +30,6 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 				width : w,
 				height : h,
 				count: 20,
-				
 			}
 		}
 
