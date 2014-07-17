@@ -1,7 +1,7 @@
 BlobApp.ViewController = (function() {
 	var that = {},
 	canvas, context, debugCanvas, debugContext, stage,
-	b2ddebug = true,
+	b2ddebug = false,
 
 	init = function() {
 		_initView();
@@ -49,7 +49,7 @@ BlobApp.ViewController = (function() {
 	},
 
 	_listener = function(){
-		$('body').on('entityRequested',applyEntity);
+		$('body').on('genericRequested',applyEntity);
 		$('body').on('blobRequested', applyEntity);
 		$('body').on('backgroundAdded', applyBackground);
 	};
