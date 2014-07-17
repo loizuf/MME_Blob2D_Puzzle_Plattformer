@@ -22,7 +22,7 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_initBackground = function(){
-		var background= new createjs.Bitmap("res/img/Rasterbild.png");
+		var background= new createjs.Bitmap("res/img/thingy.png");
 		$('body').trigger('backgroundAdded', background);
 	}
 
@@ -217,7 +217,7 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_createButton = function(x, y){
-		var entity = new BlobApp.TriggerButton(x,y,25,25,EntityConfig.BUTTONID)
+		var entity = new BlobApp.TriggerButton(x,y,25,25,EntityConfig.BUTTONID);
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["number"] = EntityConfig.BUTTONID;
 
@@ -226,7 +226,8 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_createDoor = function(x, y){
-		var entity = new BlobApp.DynamicDoor(x,y,25,50,EntityConfig.DOORID)
+		var entity = new BlobApp.DynamicDoor(x,y,25,50,EntityConfig.DOORID);
+
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["number"] = EntityConfig.DOORID;
 		_createRequestObject["height"] = 2;
