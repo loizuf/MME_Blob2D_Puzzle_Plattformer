@@ -217,7 +217,7 @@ BlobApp.PhysicsHandler = (function() {
 				_handleGreenBlobCollision(contact.GetFixtureA().GetBody(), b);
 				break;
 				case EntityConfig.REDBLOBID: 
-				$('body').trigger('onReAllowJump', contact.GetFixtureA().GetBody());
+				_handleRedBlobCollision(contact.GetFixtureA().GetBody(), b);
 				break;
 			} 
 
@@ -226,19 +226,36 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_handleGreenBlobCollision = function(body, bUserData){
-		$('body').trigger('onReAllowJump', body);
+		console.log("greenblob collided");
 		switch(bUserData){
 			case EntityConfig.REDBLOBID:
-
+			//TODO handle trampolin
 			break;
 			case EntityConfig.VERTICALBORDERID:
 			console.log("verticalBorder collided");
 			break;
 			case EntityConfig.HORIZONTALBORDERID:
+			$('body').trigger('onReAllowJump', body);
 			console.log("horizontalborder collided");
 			break;
 
 		}
+	},
+	_handleGreenBlobCollision = function(body, bUserData){
+		console.log("redblob collided");
+		switch(bUserData){
+			case EntityConfig.GREENBLOBID:
+			//TODO handle carry
+			break;
+			case EntityConfig.VERTICALBORDERID:
+			console.log("verticalBorder collided");
+			break;
+			case EntityConfig.HORIZONTALBORDERID:
+			$('body').trigger('onReAllowJump', body);
+			console.log("horizontalborder collided");
+			break;
+		}
+
 	};
 
 	that.init = init;
