@@ -5,13 +5,13 @@
  </tileset>
  <layer name="Kachelebene 1" width="33" height="25">
   <properties>
-   <property name="Door1" value="19&amp;23"/>
-   <property name="Door2" value="16&amp;23"/>
-   <property name="Door3" value="13&amp;23"/>
-   <property name="Door4" value="14&amp;20"/>
+   <property name="Door1" value=""/>
+   <property name="Door2" value=""/>
+   <property name="Door3" value=""/>
+   <property name="Door4" value=""/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztlEsKwkAMQOMHRETEigsRF9Ur6EbwBCLdKHoGD+Beb6AnNqMdGEIyk05bQWjg0S7S8CZJJwGApKHhD7gjywCPmh0mEI5x4/CJFOqdlcZB6xjrUoWDjdDMpP1fkTotpBPp4JuZ6RF33p1wlrK9KVL3UKHDqGDdI3IS2Ec4XJEzw8XjYILrl5QrhdmdNjJV5HJ1uX4VdbD/gc3X9Jfrl6ZnWodQrpRHZxLjsIXw+Xx16UxCDkPGoUwfuPnR/yIj3yw8DqF9eMJ3hw2+e7CLrD21XDYg33806D1uvxnkz76Te1PUcyPNnTX7wDnMkR4yE+pnindtUAd3Lr/ihbwBTUg9rQ==
+   eJztlUsKwkAMQOMHRETEigsRF9Ur6EbwBCLdKHoGD+Beb6AnNqMdGEIyk5laVw087CINb5J0zAAgaxC5I8sAj5odJhCOcePwiRzqnZXGQeuY6vILBxuhmUn7vyJ1Wkgn0cE3M9Mj7rw74SxVexNT9/BDh1Fk3SNyEtgnOFyRM8PF42CC65eUK4XZnTYyVeRydbl+xTrY78Dma/rL9UvTM61DKFfKozNJcdhC+Hy+unQmIYch41ClD9z86HdRkHcWHofQPjzhu8MG3z3YRdaeWi4bkO8/GvQet+8Myt++k3tT1HMjL501+8A5zJEeMhPqF4pnbVAHdy7/4gVx/+cN9fIG+Is9rQ==
   </data>
  </layer>
 </map>
