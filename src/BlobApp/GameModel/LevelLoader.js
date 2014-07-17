@@ -190,7 +190,7 @@ BlobApp.LevelLoader = (function() {
 		_createRequestObject["sprite"] = cellBitmap;
 		_createRequestObject["number"] = idx;
 
-		$('body').trigger('entityRequested',_createRequestObject);
+		$('body').trigger('genericRequested',_createRequestObject);
 	},
 
 
@@ -222,14 +222,17 @@ BlobApp.LevelLoader = (function() {
 		_createRequestObject["number"] = EntityConfig.BUTTONID;
 
 		$('body').trigger('entityRequested', _createRequestObject);
+		$('body').trigger('genericRequested', _createRequestObject);
 	},
 
 	_createDoor = function(x, y){
 		var entity = new BlobApp.DynamicDoor(x,y,25,50,EntityConfig.DOORID)
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["number"] = EntityConfig.DOORID;
+		_createRequestObject["height"] = 2;
 
 		$('body').trigger('entityRequested', _createRequestObject);
+		$('body').trigger('genericRequested', _createRequestObject);
 	},
 
 	// utility function for loading assets from server
