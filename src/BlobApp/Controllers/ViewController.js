@@ -10,8 +10,12 @@ BlobApp.ViewController = (function() {
 		return that;
 	},
 
-	applyEntity = function(event, data, wurst) {
+	applyEntity = function(event, data) {
 		stage.addChild(data.sprite);
+	},
+	applyBackground = function(event, wurst) {
+		console.log("hoot?");
+		stage.addChild(wurst);
 	},
 
 	update = function() {
@@ -41,6 +45,7 @@ BlobApp.ViewController = (function() {
 	_listener = function(){
 		$('body').on('entityRequested',applyEntity);
 		$('body').on('blobRequested', applyEntity);
+		$('body').on('backgroundAdded', applyBackground);
 	};
 
 	that.init = init;
