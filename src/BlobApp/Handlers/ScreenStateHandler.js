@@ -41,6 +41,7 @@ BlobApp.ScreenState = ( function() {
 		player1State = PLAYER_STATES[1];
 		player2State = PLAYER_STATES[1];
 		keyPickedUp = false;
+		return that;
 	},
 
 	onPlayerDead = function(player) {
@@ -66,8 +67,13 @@ BlobApp.ScreenState = ( function() {
 
 	onPickupKey = function() {
 		keyPickedUp=true;
+	},
+
+	doorCreated = function(doorNumber, buttonNumber) {
+		_triggerConnections.push([doorNumber, buttonNumber]);
 	};
 
-
+	that.doorCreated = doorCreated;
+	that.init = init;
 	return that;
 })();

@@ -15,7 +15,7 @@ BlobApp.ModelController = (function() {
 
 		//_blobPlayerOne = BlobApp.BlobOne.init();
 		//_blobPlayerTwo = BlobApp.BlobTwo.init();
-		//_screenStateHandler = BlobApp.ScreenState.init();
+		_screenStateHandler = BlobApp.ScreenState.init();
 		_inputHandler = BlobApp.InputHandler.init();
 		_blobPlayerOne = new BlobApp.BlobPlayer1();
 		_blobPlayerTwo = new BlobApp.BlobPlayer2();
@@ -53,7 +53,7 @@ BlobApp.ModelController = (function() {
 	},
 
 	_onDoorCreated = function(event, data){
-		console.log("Nothing to see here. Move along.", data.doorNumber, data.buttonNumber);
+		_screenStateHandler.doorCreated(data.doorNumber, data.buttonNumber);
 	}
 
 	_onP1ArrowUpStarted = function() {
