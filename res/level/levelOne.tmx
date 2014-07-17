@@ -5,9 +5,12 @@
  </tileset>
  <layer name="Kachelebene 1" width="33" height="25">
   <properties>
-   <property name="Door1" value=""/>
-   <property name="Door2" value=""/>
-   <property name="Door3" value=""/>
+   <property name="Button1" value="011"/>
+   <property name="Button2" value="012"/>
+   <property name="Button3" value="013"/>
+   <property name="Door1" value="011"/>
+   <property name="Door2" value="012"/>
+   <property name="Door3" value="013"/>
   </properties>
   <data encoding="base64" compression="zlib">
    eJwTYmBgEBrFDI1ArEQF7EWmviYgFmagDkgjU58gFd1QNgjcYEtDNzgSaZYvFdzAjSTOicQm5L8QIA4F4nAgjqDQDdJQmh2IJZHUIPvPnwSziVULcsNEIGaiIWYmwg20Ln8IpTd6uAE5nLGFCcgN1ConicHKONxArfKBXDAS3cDIgJlvJuFxAz+J5hNTHuDKA6SEA8gfyGkbVkaqMhBXHlDDDbAyDd0eRQZIO4CQedRyAyzPY3MHrvxHrBt4SXADLneAAKyOw5X+8LlBlkQ34HKHLw61xJalhDA2f+DSj8vPoxg3BgDk/CtQ

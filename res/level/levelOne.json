@@ -7,9 +7,8 @@
          "opacity":1,
          "properties":
             {
-             "Door1":"",
-             "Door2":"",
-             "Door3":""
+             "Buttons":[021,022,023],
+             "Doors":[022,021,023]
             },
          "type":"tilelayer",
          "visible":true,
