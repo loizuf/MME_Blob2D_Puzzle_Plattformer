@@ -1,8 +1,8 @@
-BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY) {
+BlobApp.TriggerButton = (function Button(x_pos, y_pos, sizeX, sizeY) {
 	var that = this,
 	sprite, tilesetSheet;
 
-	this.prototype = new DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY);
 	
 	this.prototype.init =function(){
 		tileset = new Image();
@@ -16,6 +16,7 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY) {
 	},
 
 	_initSprite = function(tileset, w,h){
+		console.log("initiated button sprite", tileset);
 		var imageData = {
 			images : [ tileset ],
 			frames : {

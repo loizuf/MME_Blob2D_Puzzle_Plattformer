@@ -74,11 +74,11 @@ BlobApp.LevelLoader = (function() {
 					break;
 					break;
 					case EntityConfig.DOORID:
-					_createDoor();
+					_createDoor(xcoords,ycoords);
 					break;
 					case EntityConfig.DOORLOWERID: break;
 					case EntityConfig.BUTTONID:
-					_createButton();
+					_createButton(xcoords,ycoords);
 					case EntityConfig.EMPTYTILEID: break;
 					default:
 					borders[y][x] = true;
@@ -203,16 +203,16 @@ BlobApp.LevelLoader = (function() {
 
 	},
 
-	_createButton = function(){
-		var entity = new BLobApp.DynamicDoor(x,y,25,25,EntityConfig.BUTTONID)
+	_createButton = function(x, y){
+		var entity = new BlobApp.TriggerButton(x,y,25,25,EntityConfig.BUTTONID)
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["number"] = EntityConfig.BUTTONID;
 
 		$('body').trigger('entityRequested', _createRequestObject);
 	},
 
-	_createDoor = function(){
-		var entity = new BLobApp.Button(x,y,25,50,EntityConfig.DOORID)
+	_createDoor = function(x, y){
+		var entity = new BlobApp.DynamicDoor(x,y,25,50,EntityConfig.DOORID)
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["number"] = EntityConfig.DOORID;
 

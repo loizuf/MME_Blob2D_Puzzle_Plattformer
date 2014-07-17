@@ -2,7 +2,7 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY) {
 	var that = this,
 	sprite, tilesetSheet;
 
-	this.prototype = new DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY);
 	
 	this.prototype.init =function(){
 		tileset = new Image();
@@ -21,6 +21,7 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY) {
 			frames : {
 				width : w,
 				height : h,
+				count: 2
 			}
 		}
 
@@ -31,7 +32,11 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY) {
 
 		/* koordinaten kommen aus dem levelloader */
 		sprite.regX = w/2;
+		if(h==25){
 		sprite.regY = h/2;
+		}else{
+		sprite.regY = h/4;	
+		}
 		sprite.x = x_pos;
 		sprite.y = y_pos;
 
@@ -43,8 +48,6 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY) {
 	},
 
 	_listeners = function(){},
-
-	_animate = function(event, data){};
 
 	this.prototype.init();
 	this.sprite = sprite;

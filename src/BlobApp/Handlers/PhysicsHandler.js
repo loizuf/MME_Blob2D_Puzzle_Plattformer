@@ -52,6 +52,7 @@ BlobApp.PhysicsHandler = (function() {
 		sprite = spriteAndNumber["sprite"];
 		userData = spriteAndNumber["number"];
 
+
 		var fixture = new b2FixtureDef;
 		//console.log(skin);
 		fixture.density = 1;
@@ -197,7 +198,7 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_registerListener = function() {
-		//$("body").on("entityRequested", applyEntity);
+		$("body").on("entityRequested", applyEntity);
 		$('body').on("blobRequested", applyBlobEntity);
 		$('body').on('onInputRecieved', _applyForce);
 		$('body').on('onInputRecievedJump', _applyForceJump);
