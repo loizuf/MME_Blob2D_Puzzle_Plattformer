@@ -1,6 +1,7 @@
 BlobApp.ViewController = (function() {
 	var that = {},
 	canvas, context, debugCanvas, debugContext, stage,
+	b2ddebug = true,
 
 	init = function() {
 		_initView();
@@ -11,14 +12,20 @@ BlobApp.ViewController = (function() {
 	},
 
 	applyEntity = function(event, data) {
+		if(!b2ddebug){
 		stage.addChild(data.sprite);
+		}
 	},
 	applyBackground = function(event, wurst) {
+		if(!b2ddebug){
 		stage.addChild(wurst);
+		}
 	},
 
 	update = function() {
+		if(!b2ddebug){
 		stage.update();
+		}
 	},
 
 	_ticker = function() {

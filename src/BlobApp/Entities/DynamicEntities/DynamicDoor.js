@@ -31,18 +31,12 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY) {
 		sprite = new createjs.Sprite(tilesetSheet);
 
 		/* koordinaten kommen aus dem levelloader */
+		console.log(w,h);
 		sprite.regX = w/2;
-		if(h==25){
 		sprite.regY = h/2;
-		}else{
-		sprite.regY = h/4;	
-		}
 		sprite.x = x_pos;
 		sprite.y = y_pos;
 
-		/* setzen auf höhe/2, breite /2 */
-		sprite.regX = imageData.frames.width/2;
-		sprite.regY = imageData.frames.height/2;
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 	},

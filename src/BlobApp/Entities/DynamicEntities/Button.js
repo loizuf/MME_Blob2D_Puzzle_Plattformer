@@ -16,7 +16,6 @@ BlobApp.TriggerButton = (function Button(x_pos, y_pos, sizeX, sizeY) {
 	},
 
 	_initSprite = function(tileset, w,h){
-		console.log("initiated button sprite", tileset);
 		var imageData = {
 			images : [ tileset ],
 			frames : {
@@ -36,9 +35,6 @@ BlobApp.TriggerButton = (function Button(x_pos, y_pos, sizeX, sizeY) {
 		sprite.x = x_pos;
 		sprite.y = y_pos;
 
-		/* setzen auf höhe/2, breite /2 */
-		sprite.regX = imageData.frames.width/2;
-		sprite.regY = imageData.frames.height/2;
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 	},

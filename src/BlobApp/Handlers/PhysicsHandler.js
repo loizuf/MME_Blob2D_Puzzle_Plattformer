@@ -60,9 +60,12 @@ BlobApp.PhysicsHandler = (function() {
 		fixture.friction = 0.1;
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
-
-		fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY / SCALE);
-
+		if(userData == EntityConfig.DOORID){
+			console.log("foundDoor");
+			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY*2 / SCALE);
+		}else{
+			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY / SCALE);
+		}
 
 		var bodyDef = new b2BodyDef;
 
@@ -97,9 +100,9 @@ BlobApp.PhysicsHandler = (function() {
 		fixture.shape = new b2PolygonShape;
 
 		if(userData == EntityConfig.REDBLOBID){
-			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY*2 / SCALE);
+			fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, ((TILESIZEY*2)-1 )/ SCALE);
 		}else{
-			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY / SCALE);
+			fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, (TILESIZEY-1) / SCALE);
 		}
 		
 		var bodyDef = new b2BodyDef;
@@ -227,33 +230,33 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_handleGreenBlobCollision = function(body, bUserData){
-		console.log("greenblob collided");
+		//console.log("greenblob collided");
 		switch(bUserData){
 			case EntityConfig.REDBLOBID:
 			//TODO handle trampolin
 			break;
 			case EntityConfig.VERTICALBORDERID:
-			console.log("verticalBorder collided");
+			//console.log("verticalBorder collided");
 			break;
 			case EntityConfig.HORIZONTALBORDERID:
 			$('body').trigger('onReAllowJump', body);
-			console.log("horizontalborder collided");
+			//console.log("horizontalborder collided");
 			break;
 
 		}
 	},
 	_handleRedBlobCollision = function(body, bUserData){
-		console.log("redblob collided");
+		//console.log("redblob collided");
 		switch(bUserData){
 			case EntityConfig.GREENBLOBID:
 			//TODO handle carry
 			break;
 			case EntityConfig.VERTICALBORDERID:
-			console.log("verticalBorder collided");
+			//console.log("verticalBorder collided");
 			break;
 			case EntityConfig.HORIZONTALBORDERID:
 			$('body').trigger('onReAllowJump', body);
-			console.log("horizontalborder collided");
+			//console.log("horizontalborder collided");
 			break;
 		}
 
