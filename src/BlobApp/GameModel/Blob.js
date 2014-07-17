@@ -67,7 +67,6 @@ BlobApp.BlobSuperClass = function() {
 		_currentRight = _moveRight;
 		_currentUp = _jump;
 		_currentDown = _triggerSpecial;
-		console.log(_currentLeft);
 	}
 
 	this.killBlob = function(startpX, startpY){
@@ -89,7 +88,7 @@ BlobApp.BlobSuperClass = function() {
 	// Makes the Blob jump
 	_jump = function() {
 		if(_jumpAllowed != false) {
-			$('body').trigger('onInputRecieved',{ directionX: 0, directionY: -5});
+			$('body').trigger('onInputRecievedJump',{ directionX: 0, directionY: -5});
 			_jumpAllowed = false;
 		}
 	},

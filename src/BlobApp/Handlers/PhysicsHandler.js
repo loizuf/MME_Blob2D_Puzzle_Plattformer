@@ -19,6 +19,7 @@ BlobApp.PhysicsHandler = (function() {
 	var bodies =[];
 
 	var greenBlob;
+	var redBlob;
 
 	var TILESIZEX = 12;
 	var TILESIZEY = 12;
@@ -132,6 +133,7 @@ BlobApp.PhysicsHandler = (function() {
 	applyBlobEntity = function(event, spriteAndNumber) {
 		sprite = spriteAndNumber["sprite"];
 		userData = spriteAndNumber["number"];
+		console.log(userData);
 
 		var fixture = new b2FixtureDef;
 		//console.log(skin);
@@ -142,12 +144,10 @@ BlobApp.PhysicsHandler = (function() {
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
 
-		console.log(userData);
 		if(userData == EntityConfig.REDBLOBID){
 			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY*2 / SCALE);
 		}else{
 			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY / SCALE);
-			greenBlob = entity;
 		}
 		
 		var bodyDef = new b2BodyDef;
@@ -170,6 +170,8 @@ BlobApp.PhysicsHandler = (function() {
 		var blobEntityCreated = $.Event('blobEntityCreated');
 		$("body").trigger(blobEntityCreated, entity);
 		greenBlob = entity;
+
+
 		//bodies.push(entity); 	
 	},
 
@@ -200,6 +202,11 @@ BlobApp.PhysicsHandler = (function() {
 		if((greenBlob.m_linearVelocity.x > -3) && (greenBlob.m_linearVelocity.x < 3)) {
 			greenBlob.ApplyImpulse(new b2Vec2(direction.directionX, direction.directionY), greenBlob.GetPosition());
 		}
+	},
+
+	// TODO better code
+	_applyForceJump = function(event, direction) {
+			greenBlob.ApplyImpulse(new b2Vec2(direction.directionX, direction.directionY), greenBlob.GetPosition());
 	},
 
 	_applyBorder = function(event, borderData){
@@ -244,6 +251,7 @@ BlobApp.PhysicsHandler = (function() {
 		//$("body").on("entityRequested", applyEntity);
 		$('body').on("blobRequested", applyBlobEntity);
 		$('body').on('onInputRecieved', _applyForce);
+		$('body').on('onInputRecievedJump', _applyForceJump);
 		$('body').on('borderRequested',_applyBorder);
 		_registerCollisionHandler();
 	},
@@ -251,7 +259,7 @@ BlobApp.PhysicsHandler = (function() {
 	_registerCollisionHandler = function(){
 		var listener = new Box2D.Dynamics.b2ContactListener;
 		listener.BeginContact = function(contact){
-		//	console.log("hoot");
+
 		//	console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
 			a = contact.GetFixtureA().GetBody().GetUserData();
 			b = contact.GetFixtureB().GetBody().GetUserData();
@@ -264,7 +272,7 @@ BlobApp.PhysicsHandler = (function() {
 				break;
 			} 
 
-			if(greenBlob == contact.GetFixtureA().GetBody()) {
+			if(greenBlob == contact.GetFixtureA().GetBody() || greenBlob == contact.GetFixtureB().GetBody()) {
 				$('body').trigger('onReAllowJump', greenBlob);
 			}
 		}
