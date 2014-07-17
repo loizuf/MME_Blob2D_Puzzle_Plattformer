@@ -127,17 +127,23 @@ BlobApp.ModelController = (function() {
 	
 
 	_reAllowJump = function(event, entity) {
-		console.log("re allow jump");
 		if(entity.GetUserData() == EntityConfig.GREENBLOBID) {
+			//console.log("p1 re allow jump");
 			_blobPlayerOne.prototype.allowJump();
 		} else {
-			console.log("Fail");
+			//console.log("p2 re allow jump");
+			_blobPlayerTwo.prototype.allowJump();
 		}
 	},
 
 	_onBlobEntityCreated = function(event, entity) {
-		console.log("entity im modelcontroller");
-		_blobPlayerOne.prototype.setEntity(entity);
+		if(entity.GetUserData() == EntityConfig.GREENBLOBID) {
+			//console.log("p1 created");
+			_blobPlayerOne.prototype.setEntity(entity);
+		} else {
+			//console.log("p2 created");
+			_blobPlayerTwo.prototype.setEntity(entity);
+		 }
 	};
 
 	that.init = init;

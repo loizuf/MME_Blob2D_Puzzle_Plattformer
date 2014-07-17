@@ -44,54 +44,6 @@ BlobApp.PhysicsHandler = (function() {
 
 		world = new b2World(new b2Vec2(0,10), true);
 		world.SetDebugDraw(debugDraw);
-
-		/* "floor" fixture erstellen(irgend wo unterhalb des canvas, wenn contact TOT!*/
-		/*
-		// boundaries - floor
-		var floorFixture = new b2FixtureDef;
-		floorFixture.density = 1;
-		floorFixture.restitution = 0;
-		floorFixture.friction = 0.2;
-		console.log(floorFixture);
-		floorFixture.shape = new b2PolygonShape;
-		floorFixture.shape.SetAsBox(850 / SCALE, 10 / SCALE);
-
-		var floorBodyDef = new b2BodyDef;
-		floorBodyDef.type = b2Body.b2_staticBody;
-		floorBodyDef.position.x = -25 / SCALE;
-		floorBodyDef.position.y = 600 / SCALE;
-
-		var floor = world.CreateBody(floorBodyDef);
-		floor.SetUserData("floor");
-		floor.CreateFixture(floorFixture);
-
-		// boundaries - left
-		var leftFixture = new b2FixtureDef;
-		leftFixture.shape = new b2PolygonShape;
-		leftFixture.shape.SetAsBox(10 / SCALE, 600 / SCALE);
-
-		var leftBodyDef = new b2BodyDef;
-		leftBodyDef.type = b2Body.b2_staticBody;
-		leftBodyDef.position.x = -9 / SCALE;
-		leftBodyDef.position.y = -25 / SCALE;
-
-		var left = world.CreateBody(leftBodyDef);
-		left.CreateFixture(leftFixture);
-
-		// boundaries - right
-		var rightFixture = new b2FixtureDef;
-		rightFixture.shape = new b2PolygonShape;
-		rightFixture.shape.SetAsBox(10 / SCALE, 800 / SCALE);
-
-		var rightBodyDef = new b2BodyDef;
-		rightBodyDef.type = b2Body.b2_staticBody;
-		rightBodyDef.position.x = 800 / SCALE;
-		rightBodyDef.position.y = -25 / SCALE;
-
-		var right = world.CreateBody(rightBodyDef);
-		right.CreateFixture(rightFixture);
-		*/
-	
 	},
 
 
@@ -133,8 +85,7 @@ BlobApp.PhysicsHandler = (function() {
 	applyBlobEntity = function(event, spriteAndNumber) {
 		sprite = spriteAndNumber["sprite"];
 		userData = spriteAndNumber["number"];
-		console.log(userData);
-
+		
 		var fixture = new b2FixtureDef;
 		//console.log(skin);
 		fixture.density = 1;
@@ -169,9 +120,6 @@ BlobApp.PhysicsHandler = (function() {
 		//entity muss in das blob Model. Debug lösung über Event
 		var blobEntityCreated = $.Event('blobEntityCreated');
 		$("body").trigger(blobEntityCreated, entity);
-		greenBlob = entity;
-
-
 		//bodies.push(entity); 	
 	},
 
@@ -199,14 +147,16 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_applyForce = function(event, direction) {
-		if((greenBlob.m_linearVelocity.x > -3) && (greenBlob.m_linearVelocity.x < 3)) {
-			greenBlob.ApplyImpulse(new b2Vec2(direction.directionX, direction.directionY), greenBlob.GetPosition());
+		var entity = direction.entity;
+		if((entity.m_linearVelocity.x > -3) && (entity.m_linearVelocity.x < 3)) {
+			entity.ApplyImpulse(new b2Vec2(direction.directionX, direction.directionY), entity.GetPosition());
 		}
 	},
 
 	// TODO better code
 	_applyForceJump = function(event, direction) {
-			greenBlob.ApplyImpulse(new b2Vec2(direction.directionX, direction.directionY), greenBlob.GetPosition());
+			var entity = direction.entity;
+			entity.ApplyImpulse(new b2Vec2(direction.directionX, direction.directionY), entity.GetPosition());
 	},
 
 	_applyBorder = function(event, borderData){
@@ -265,18 +215,24 @@ BlobApp.PhysicsHandler = (function() {
 			b = contact.GetFixtureB().GetBody().GetUserData();
 			switch(a){
 				case EntityConfig.GREENBLOBID: 
-
+				_handleGreenBlobCollision(contact.GetFixtureA().GetBody(), b);
 				break;
 				case EntityConfig.REDBLOBID: 
-
+				$('body').trigger('onReAllowJump', contact.GetFixtureA().GetBody());
 				break;
 			} 
 
-			if(greenBlob == contact.GetFixtureA().GetBody() || greenBlob == contact.GetFixtureB().GetBody()) {
-				$('body').trigger('onReAllowJump', greenBlob);
-			}
 		}
 		world.SetContactListener(listener);
+	},
+
+	_handleGreenBlobCollision = function(body, bUserData){
+		$('body').trigger('onReAllowJump', body);
+		switch(bUserData){
+			case EntityConfig.REDBLOBID:
+
+			break;
+		}
 	};
 
 	that.init = init;

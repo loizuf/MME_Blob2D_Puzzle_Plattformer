@@ -77,18 +77,18 @@ BlobApp.BlobSuperClass = function() {
 
 	// Manipulates the movement direction so that the blob moves to the left
 	_moveLeft = function() {
-		$('body').trigger('onInputRecieved', { directionX: -1, directionY: 0});
+		$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -0.5, directionY: 0});
 	},
 
 	// Manipulates the movement direction so that the blob moves to the right
 	_moveRight = function() {
-		$('body').trigger('onInputRecieved',{ directionX: 1, directionY: 0});
+		$('body').trigger('onInputRecieved',{entity: _blobEntity, directionX: 0.5, directionY: 0});
 	},
 
 	// Makes the Blob jump
 	_jump = function() {
 		if(_jumpAllowed != false) {
-			$('body').trigger('onInputRecievedJump',{ directionX: 0, directionY: -5});
+			$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -6});
 			_jumpAllowed = false;
 		}
 	},

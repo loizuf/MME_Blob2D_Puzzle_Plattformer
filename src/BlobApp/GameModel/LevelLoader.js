@@ -9,7 +9,7 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	init = function(){
-		console.log("levelloader started");
+		_initBackground();
 		mapData = mapDataJson;
 
 		// create EaselJS image for tileset
@@ -20,6 +20,10 @@ BlobApp.LevelLoader = (function() {
 		tileset.onLoad = _initLayers();
 		return that;
 	},
+
+	_initBackground = function(){
+		var background= createjs.Bitmap("res/img/background.png");
+	}
 
 	_initLayers = function() {
 		var w = mapData.tilesets[0].tilewidth;
@@ -39,9 +43,6 @@ BlobApp.LevelLoader = (function() {
 			var layerData = mapData.layers[idx];
 			if (layerData.type == 'tilelayer')
 				_initLayer(layerData, tilesetSheet, mapData.tilewidth, mapData.tileheight);
-		//	else if(layerData.type == 'objectgroup'){
-		//		_initBorders(layerData);
-		//	}
 		}
 	},
 
@@ -147,7 +148,6 @@ BlobApp.LevelLoader = (function() {
 				}
 			}
 		}
-		console.log(vBorders);
 		for(var i = 0; i < vBorders.length; i++) $('body').trigger('borderRequested', vBorders[i]);
 	},
 
@@ -187,7 +187,7 @@ BlobApp.LevelLoader = (function() {
 
 		_createRequestObject["sprite"] = blob.sprite;
 		_createRequestObject["number"] = EntityConfig.GREENBLOBID;
-		console.log("greenblob anyone?");
+
 		$('body').trigger('blobRequested', _createRequestObject);
 	},
 
