@@ -101,9 +101,9 @@ BlobApp.LevelLoader = (function() {
 				if(borders[rowNum][colNum]) {
 					if(!currentHBorder) {
 						// UNLESS: Would be a single item AND is in a vertical line
-						singleHorizontal = ((colNum != borders[0].length -1 && !borders[rowNum][colNum+1]) || (colNum != 0 && !borders[rowNum][colNum-1]));
+						singleHorizontal = !((colNum != 0 && borders[rowNum][colNum-1]) || (colNum != borders[0].length-1 && borders[rowNum][colNum+1]));
 						verticalLine = ((rowNum != borders.length -1 && borders[rowNum+1][colNum]) || (rowNum != 0 && borders[rowNum-1][colNum]));
-						if((!verticalLine && singleHorizontal) || !singleHorizontal) {
+						if(!(singleHorizontal && verticalLine)) {
 							hBorders.push({
 								"x" : colNum*25,
 								"y" : rowNum*25,
