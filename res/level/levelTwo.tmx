@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="33" height="25" tilewidth="25" tileheight="25">
+ <tileset firstgid="1" name="Tileset" tilewidth="25" tileheight="25">
+  <image source="../img/Tileset.png" width="400" height="250"/>
+ </tileset>
+ <layer name="Kachelebene 1" width="33" height="25">
+  <properties>
+   <property name="Door1" value="19&amp;23"/>
+   <property name="Door2" value="16&amp;23"/>
+   <property name="Door3" value="13&amp;23"/>
+   <property name="Door4" value="14&amp;20"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztlEsKwkAMQOMHRETEigsRF9Ur6EbwBCLdKHoGD+Beb6AnNqMdGEIyk05bQWjg0S7S8CZJJwGApKHhD7gjywCPmh0mEI5x4/CJFOqdlcZB6xjrUoWDjdDMpP1fkTotpBPp4JuZ6RF33p1wlrK9KVL3UKHDqGDdI3IS2Ec4XJEzw8XjYILrl5QrhdmdNjJV5HJ1uX4VdbD/gc3X9Jfrl6ZnWodQrpRHZxLjsIXw+Xx16UxCDkPGoUwfuPnR/yIj3yw8DqF9eMJ3hw2+e7CLrD21XDYg33806D1uvxnkz76Te1PUcyPNnTX7wDnMkR4yE+pnindtUAd3Lr/ihbwBTUg9rQ==
+  </data>
+ </layer>
+</map>

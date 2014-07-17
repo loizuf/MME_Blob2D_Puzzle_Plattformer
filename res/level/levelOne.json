@@ -7,9 +7,9 @@
          "opacity":1,
          "properties":
             {
-             "Door_one":"8.5",
-             "Door_three":"20.22",
-             "Door_two":"18.3"
+             "Door1":"8&5",
+             "Door2":"18&3",
+             "Door3":"20&22"
             },
          "type":"tilelayer",
          "visible":true,
