@@ -6,7 +6,7 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY) {
 	
 	this.prototype.init =function(){
 		tileset = new Image();
-		tileset.src = "res/img/door.png"//mapData.tilesets[0].image;
+		tileset.src = "res/img/button.png"//mapData.tilesets[0].image;
 
 
 		// getting imagefile from first tileset
