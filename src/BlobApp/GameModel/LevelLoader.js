@@ -100,15 +100,19 @@ BlobApp.LevelLoader = (function() {
 			for(var colNum = 0; colNum < borders[0].length; colNum++) {
 				if(borders[rowNum][colNum]) {
 					if(!currentHBorder) {
-						if(colNum != borders[0].length -1 && borders[rowNum][colNum+1]){
-						hBorders.push({
-							"x" : colNum*25,
-							"y" : rowNum*25,
-							"width" : 13,
-							"height" : 13,
-							"userData" : EntityConfig.HORIZONTALBORDERID
-						});
-						currentHBorder = true;}
+						// UNLESS: Would be a single item AND is in a vertical line
+						singleHorizontal = ((colNum != borders[0].length -1 && !borders[rowNum][colNum+1]) || (colNum != 0 && !borders[rowNum][colNum-1]));
+						verticalLine = ((rowNum != borders.length -1 && borders[rowNum+1][colNum]) || (rowNum != 0 && borders[rowNum-1][colNum]));
+						if((!verticalLine && singleHorizontal) || !singleHorizontal) {
+							hBorders.push({
+								"x" : colNum*25,
+								"y" : rowNum*25,
+								"width" : 13,
+								"height" : 13,
+								"userData" : EntityConfig.HORIZONTALBORDERID
+							});
+							currentHBorder = true;
+						}
 					} else {
 						hBorders[hBorders.length - 1].width += 13;
 						hBorders[hBorders.length -1].x += 13;
@@ -119,6 +123,7 @@ BlobApp.LevelLoader = (function() {
 			}
 		}
 		for(var i = 0; i < hBorders.length; i++) $('body').trigger('borderRequested', hBorders[i]);
+
 		// Vertical borders
 
 		vBorders = new Array();
@@ -129,9 +134,9 @@ BlobApp.LevelLoader = (function() {
 			for(var rowNum = 0; rowNum < borders.length; rowNum++) {
 				if(borders[rowNum][colNum]) {
 					if(!currentVBorder) {
-						// IF: not already a horizontal line 
-						horizontalLine = ((colNum != 0 && borders[rowNum][colNum-1]) || (colNum != borders[0].length-1 && borders[rowNum][colNum +1]));
-						if(!horizontalLine){
+						// IF: not already a horizontal line AND will be a vertical line
+						verticalLine = ((rowNum != borders.length -1 && borders[rowNum+1][colNum]) || (rowNum != 0 && borders[rowNum-1][colNum]));
+						if(verticalLine ){
 							vBorders.push({
 								"x" : colNum*25,
 								"y" : rowNum*25,
