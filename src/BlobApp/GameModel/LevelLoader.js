@@ -79,8 +79,8 @@ BlobApp.LevelLoader = (function() {
 					break;
 					case EntityConfig.DOORID:
 					_createDoor(xcoords,ycoords);
-					doorCount++;
 					_informModel(layerData, doorCount);
+					doorCount++;
 					break;
 					case EntityConfig.DOORLOWERID: break;
 					case EntityConfig.BUTTONID:
@@ -99,7 +99,11 @@ BlobApp.LevelLoader = (function() {
 	_informModel = function(layerData, doorCount) {
 		var doorNumber = layerData.properties.Doors[doorCount];
 		var buttonNumber = layerData.properties.Buttons[doorCount];
-		$('body').trigger("doorCreated", doorNumber, buttonNumber);
+		var eventPackage = {
+			"doorNumber": doorNumber,
+			"buttonNumber": buttonNumber
+		};
+		$('body').trigger("doorCreated", eventPackage);
 	},
 
 	_initBorders = function(borders){
@@ -262,8 +266,8 @@ BlobApp.LevelLoader = (function() {
          "opacity":1,
          "properties":
             {
-             "Buttons":[021,022,023],
-             "Doors":[022,021,023]
+             "Buttons":[21,22,23],
+             "Doors":[22,21,23]
             },
          "type":"tilelayer",
          "visible":true,

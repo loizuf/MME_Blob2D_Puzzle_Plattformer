@@ -48,7 +48,13 @@ BlobApp.ModelController = (function() {
 		$(_inputHandler).on("p2blobDeath",_onP2BlobDeath);
 		$('body').on("blobEntityCreated",_onBlobEntityCreated);
 		$('body').on('onReAllowJump', _reAllowJump);
+
+		$('body').on("doorCreated", _onDoorCreated);
 	},
+
+	_onDoorCreated = function(event, data){
+		console.log("Nothing to see here. Move along.", data.doorNumber, data.buttonNumber);
+	}
 
 	_onP1ArrowUpStarted = function() {
 		_blobPlayerOne.prototype.onUpPressed(true);
