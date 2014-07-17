@@ -212,16 +212,16 @@ BlobApp.PhysicsHandler = (function() {
 	_registerCollisionHandler = function(){
 		var listener = new Box2D.Dynamics.b2ContactListener;
 		listener.BeginContact = function(contact){
-
 		//	console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
 			a = contact.GetFixtureA().GetBody().GetUserData();
 			b = contact.GetFixtureB().GetBody().GetUserData();
+
 			switch(a){
 				case EntityConfig.GREENBLOBID: 
-				_handleGreenBlobCollision(contact.GetFixtureA().GetBody(), b);
+				_handleGreenBlobCollision(contact.GetFixtureA().GetBody(), b, contact);
 				break;
 				case EntityConfig.REDBLOBID: 
-				_handleRedBlobCollision(contact.GetFixtureA().GetBody(), b);
+				_handleRedBlobCollision(contact.GetFixtureA().GetBody(), b, contact);
 				break;
 			} 
 
@@ -229,7 +229,7 @@ BlobApp.PhysicsHandler = (function() {
 		world.SetContactListener(listener);
 	},
 
-	_handleGreenBlobCollision = function(body, bUserData){
+	_handleGreenBlobCollision = function(body, bUserData, contact){
 		//console.log("greenblob collided");
 		switch(bUserData){
 			case EntityConfig.REDBLOBID:
@@ -239,13 +239,14 @@ BlobApp.PhysicsHandler = (function() {
 			//console.log("verticalBorder collided");
 			break;
 			case EntityConfig.HORIZONTALBORDERID:
-			$('body').trigger('onReAllowJump', body);
-			//console.log("horizontalborder collided");
+			if(contact.m_manifold.m_localPlaneNormal.y>0){
+				$('body').trigger('onReAllowJump', body);
+			}
 			break;
 
 		}
 	},
-	_handleRedBlobCollision = function(body, bUserData){
+	_handleRedBlobCollision = function(body, bUserData, contact){
 		//console.log("redblob collided");
 		switch(bUserData){
 			case EntityConfig.GREENBLOBID:
@@ -255,7 +256,9 @@ BlobApp.PhysicsHandler = (function() {
 			//console.log("verticalBorder collided");
 			break;
 			case EntityConfig.HORIZONTALBORDERID:
-			$('body').trigger('onReAllowJump', body);
+			if(contact.m_manifold.m_localPlaneNormal.y>0){
+				$('body').trigger('onReAllowJump', body);
+			}
 			//console.log("horizontalborder collided");
 			break;
 		}
