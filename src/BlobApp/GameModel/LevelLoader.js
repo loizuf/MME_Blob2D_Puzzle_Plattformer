@@ -107,15 +107,15 @@ BlobApp.LevelLoader = (function() {
 							hBorders.push({
 								"x" : colNum*25,
 								"y" : rowNum*25,
-								"width" : 13,
-								"height" : 13,
+								"width" : 12.5,
+								"height" : 12.5,
 								"userData" : EntityConfig.HORIZONTALBORDERID
 							});
 							currentHBorder = true;
 						}
 					} else {
-						hBorders[hBorders.length - 1].width += 13;
-						hBorders[hBorders.length -1].x += 13;
+						hBorders[hBorders.length - 1].width += 12.5;
+						hBorders[hBorders.length -1].x += 12.5;
 					}
 				} else {
 					currentHBorder = false;
@@ -141,16 +141,16 @@ BlobApp.LevelLoader = (function() {
 							vBorders.push({
 								"x" : colNum*25,
 								"y" : rowNum*25,
-								"width" : 12,
-								"height" : 12,
+								"width" : 12.5,
+								"height" : 12.5,
 								"userData" : EntityConfig.VERTICALBORDERID
 							});
 
-						currentVBorder = true;
+							currentVBorder = true;
 						}
 					} else {
-						vBorders[vBorders.length - 1].height += 12;
-						vBorders[vBorders.length -1].y += 12;
+						vBorders[vBorders.length - 1].height += 12.5;
+						vBorders[vBorders.length -1].y += 12.5;
 					}
 				} else {
 					currentVBorder = false;
