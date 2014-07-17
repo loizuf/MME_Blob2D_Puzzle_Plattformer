@@ -176,11 +176,10 @@ BlobApp.PhysicsHandler = (function() {
 		bodyDef.position.x = (borderData.x) / SCALE;
 		bodyDef.position.y = (borderData.y) / SCALE;
 		
-		
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
 		// assign actor
-		entity.SetUserData(0);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		entity.SetUserData(borderData.userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		//var actor = new _actorObject(entity, sprite);
 		//bodies.push(entity); 
 
@@ -232,6 +231,13 @@ BlobApp.PhysicsHandler = (function() {
 			case EntityConfig.REDBLOBID:
 
 			break;
+			case EntityConfig.VERTICALBORDERID:
+			console.log("verticalBorder collided");
+			break;
+			case EntityConfig.HORIZONTALBORDERID:
+			console.log("horizontalborder collided");
+			break;
+
 		}
 	};
 

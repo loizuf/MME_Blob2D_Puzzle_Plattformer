@@ -14,7 +14,6 @@ BlobApp.ViewController = (function() {
 		stage.addChild(data.sprite);
 	},
 	applyBackground = function(event, wurst) {
-		console.log("hoot?");
 		stage.addChild(wurst);
 	},
 

@@ -105,7 +105,8 @@ BlobApp.LevelLoader = (function() {
 							"x" : colNum*25,
 							"y" : rowNum*25,
 							"width" : 13,
-							"height" : 13
+							"height" : 13,
+							"userData" : EntityConfig.HORIZONTALBORDERID
 						});
 						currentHBorder = true;}
 					} else {
@@ -135,7 +136,8 @@ BlobApp.LevelLoader = (function() {
 								"x" : colNum*25,
 								"y" : rowNum*25,
 								"width" : 13,
-								"height" : 13
+								"height" : 13,
+								"userData" : EntityConfig.VERTICALBORDERID
 							});
 
 						currentVBorder = true;
