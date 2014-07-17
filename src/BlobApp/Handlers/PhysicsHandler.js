@@ -241,7 +241,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		}
 	},
-	_handleGreenBlobCollision = function(body, bUserData){
+	_handleRedBlobCollision = function(body, bUserData){
 		console.log("redblob collided");
 		switch(bUserData){
 			case EntityConfig.GREENBLOBID:

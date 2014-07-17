@@ -22,6 +22,11 @@ BlobApp.BlobSuperClass = function() {
 	// Box2D Entity
 	_blobEntity,
 
+	REDBLOBXSPEED = 0.5,
+	GREENBLOBXSPEED = 0.1, 
+	REDBLOBYSPEED = 10,
+	GREENBLOBXYSPEED = 4.2,
+
 
 	/* 
 		current<Direction>: Function that is called when the key is pressed
@@ -77,18 +82,31 @@ BlobApp.BlobSuperClass = function() {
 
 	// Manipulates the movement direction so that the blob moves to the left
 	_moveLeft = function() {
-		$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -0.5, directionY: 0});
+		if(_blobEntity.GetUserData()==EntityConfig.REDBLOBID){
+			$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -1*REDBLOBXSPEED, directionY: 0});
+		}else{
+			$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -1*GREENBLOBXSPEED, directionY: 0});
+		}
+		
 	},
 
 	// Manipulates the movement direction so that the blob moves to the right
 	_moveRight = function() {
-		$('body').trigger('onInputRecieved',{entity: _blobEntity, directionX: 0.5, directionY: 0});
+		if(_blobEntity.GetUserData()==EntityConfig.REDBLOBID){
+		$('body').trigger('onInputRecieved',{entity: _blobEntity, directionX: REDBLOBXSPEED, directionY: 0});
+		}else{
+		$('body').trigger('onInputRecieved',{entity: _blobEntity, directionX: GREENBLOBXSPEED, directionY: 0});
+		}
 	},
 
 	// Makes the Blob jump
 	_jump = function() {
 		if(_jumpAllowed != false) {
-			$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -6});
+			if(_blobEntity.GetUserData()==EntityConfig.REDBLOBID){
+			$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*REDBLOBYSPEED});
+			}else{
+			$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*GREENBLOBXYSPEED});
+			}
 			_jumpAllowed = false;
 		}
 	},
