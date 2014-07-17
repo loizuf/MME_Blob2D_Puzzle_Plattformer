@@ -201,7 +201,7 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_registerListener = function() {
-		$("body").on("entityRequested", applyEntity);
+		//$("body").on("entityRequested", applyEntity);
 		$('body').on("blobRequested", applyBlobEntity);
 		$('body').on('onInputRecieved', _applyForce);
 		$('body').on('onInputRecievedJump', _applyForceJump);

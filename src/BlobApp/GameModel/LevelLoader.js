@@ -136,20 +136,21 @@ BlobApp.LevelLoader = (function() {
 					if(!currentVBorder) {
 						// IF: not already a horizontal line AND will be a vertical line
 						verticalLine = ((rowNum != borders.length -1 && borders[rowNum+1][colNum]) || (rowNum != 0 && borders[rowNum-1][colNum]));
-						if(verticalLine ){
+						horizontalLine = ((colNum != 0 && borders[rowNum][colNum-1]) || (colNum != borders[0].length-1 && borders[rowNum][colNum+1]));
+						if(verticalLine && !horizontalLine){
 							vBorders.push({
 								"x" : colNum*25,
 								"y" : rowNum*25,
-								"width" : 13,
-								"height" : 13,
+								"width" : 12,
+								"height" : 12,
 								"userData" : EntityConfig.VERTICALBORDERID
 							});
 
 						currentVBorder = true;
 						}
 					} else {
-						vBorders[vBorders.length - 1].height += 13;
-						vBorders[vBorders.length -1].y += 13;
+						vBorders[vBorders.length - 1].height += 12;
+						vBorders[vBorders.length -1].y += 12;
 					}
 				} else {
 					currentVBorder = false;
