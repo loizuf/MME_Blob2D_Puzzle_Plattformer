@@ -50,6 +50,10 @@ BlobApp.LevelLoader = (function() {
 	// layer initialization
 	_initLayer = function(layerData, tilesetSheet, tilewidth, tileheight) {
 		borders = new Array();
+
+		//Testvariable zur Übergabe von Infos(Doors)
+		var doorCount = 0;
+
 		for ( var y = 0; y < layerData.height; y++) {
 			borders.push(new Array());
 			for ( var x = 0; x < layerData.width; x++) {
@@ -75,6 +79,8 @@ BlobApp.LevelLoader = (function() {
 					break;
 					case EntityConfig.DOORID:
 					_createDoor(xcoords,ycoords);
+					doorCount++;
+					_informModel(layerData, doorCount);
 					break;
 					case EntityConfig.DOORLOWERID: break;
 					case EntityConfig.BUTTONID:
@@ -88,6 +94,12 @@ BlobApp.LevelLoader = (function() {
 			}
 		}
 		_initBorders(borders);
+	},
+
+	_informModel = function(layerData, doorCount) {
+		var doorNumber = layerData.properties.Doors[doorCount];
+		var buttonNumber = layerData.properties.Buttons[doorCount];
+		$('body').trigger("doorCreated", doorNumber, buttonNumber);
 	},
 
 	_initBorders = function(borders){
@@ -248,9 +260,8 @@ BlobApp.LevelLoader = (function() {
 	        "opacity":1,
 	        "properties":
 	           {
-	            "Door_one":"8.5",
-	            "Door_three":"20.22",
-	            "Door_two":"18.3"
+	           	"Buttons":[021,022,023],
+             	"Doors":[022,021,023]
 	           },
 	        "type":"tilelayer",
 	        "visible":true,
