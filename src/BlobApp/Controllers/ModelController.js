@@ -133,7 +133,7 @@ BlobApp.ModelController = (function() {
 	
 
 	_reAllowJump = function(event, entity) {
-		if(entity.GetUserData() == EntityConfig.GREENBLOBID) {
+		if(entity.GetUserData()[0] == EntityConfig.GREENBLOBID) {
 			//console.log("p1 re allow jump");
 			_blobPlayerOne.prototype.allowJump();
 		} else {
@@ -143,7 +143,7 @@ BlobApp.ModelController = (function() {
 	},
 
 	_onBlobEntityCreated = function(event, entity) {
-		if(entity.GetUserData() == EntityConfig.GREENBLOBID) {
+		if(entity.GetUserData()[0] == EntityConfig.GREENBLOBID) {
 			//console.log("p1 created");
 			_blobPlayerOne.prototype.setEntity(entity);
 		} else {

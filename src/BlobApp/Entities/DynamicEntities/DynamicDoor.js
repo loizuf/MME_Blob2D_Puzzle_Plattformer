@@ -1,4 +1,4 @@
-BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY) {
+BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY, doorID) {
 	var that = this,
 	sprite, tilesetSheet;
 
@@ -40,7 +40,12 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY) {
 		sprite.mouseEnabled = false;
 	},
 
-	_listeners = function(){},
+	_listeners = function(){
+		$('body').on('openDoor', _onOpenDoor);
+	},
+	_onOpenDoor = function(){
+		console.log("view open door requested");
+	}
 
 	this.prototype.init();
 	this.sprite = sprite;

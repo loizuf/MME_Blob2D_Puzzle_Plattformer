@@ -50,7 +50,8 @@ BlobApp.PhysicsHandler = (function() {
 	/*das muss vom levelloader aufgerufen werden!*/
 	applyEntity = function(event, spriteAndNumber) {
 		sprite = spriteAndNumber["sprite"];
-		userData = spriteAndNumber["userData"][0];
+		userData = spriteAndNumber["userData"];
+		entityID = userData[0]
 
 		var fixture = new b2FixtureDef;
 		//console.log(skin);
@@ -59,7 +60,7 @@ BlobApp.PhysicsHandler = (function() {
 		fixture.friction = 0.1;
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
-		if(userData == EntityConfig.DOORID){
+		if(entityID == EntityConfig.DOORID){
 			console.log("foundDoor");
 			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY*2 / SCALE);
 		}else{
@@ -118,7 +119,7 @@ BlobApp.PhysicsHandler = (function() {
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
 		// assign actor
-		entity.SetUserData(userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		entity.SetUserData([userData,undefined]);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		var actor = new _actorObject(entity, sprite);
 
 		//entity muss in das blob Model. Debug lösung über Event
@@ -183,7 +184,7 @@ BlobApp.PhysicsHandler = (function() {
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
 		// assign actor
-		entity.SetUserData(borderData.userData[0]);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		entity.SetUserData(borderData.userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		//var actor = new _actorObject(entity, sprite);
 		//bodies.push(entity); 
 
@@ -206,6 +207,7 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('onInputRecieved', _applyForce);
 		$('body').on('onInputRecievedJump', _applyForceJump);
 		$('body').on('borderRequested',_applyBorder);
+		$('body').on('_onOpenDoor',_openDoor);
 		_registerCollisionHandler();
 	},
 
@@ -215,13 +217,15 @@ BlobApp.PhysicsHandler = (function() {
 		//	console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
 			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
 			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
+			bodyA = contact.GetFixtureA().GetBody();
+			bodyB = contact.GetFixtureB().GetBody();
 
 			switch(aID){
 				case EntityConfig.GREENBLOBID: 
-				_handleGreenBlobCollision(contact.GetFixtureA().GetBody(), bID, contact);
+				_handleGreenBlobCollision(bodyA,bodyB, bID, contact);
 				break;
 				case EntityConfig.REDBLOBID: 
-				_handleRedBlobCollision(contact.GetFixtureA().GetBody(), bID, contact);
+				_handleRedBlobCollision(bodyA,bodyB, bID, contact);
 				break;
 			} 
 
@@ -229,13 +233,17 @@ BlobApp.PhysicsHandler = (function() {
 		world.SetContactListener(listener);
 	},
 
-	_handleButtonCollison = function(body, contact){
+	_handleButtonCollison = function(bodyB, contact){
+		var buttonID = bodyB.GetUserData()[1];
+
+		console.log("button found",bodyB.GetUserData());
+
 		if(contact.m_manifold.m_localPlaneNormal.y>0){
-			$('body').trigger('doorOpenRequested');
+			$('body').trigger('doorOpenRequested', buttonID);
 		}
 	},
 
-	_handleGreenBlobCollision = function(body, bID, contact){
+	_handleGreenBlobCollision = function(bodyA,bodyB, bID, contact){
 		//console.log("greenblob collided");
 		switch(bID){
 			case EntityConfig.REDBLOBID:
@@ -246,23 +254,23 @@ BlobApp.PhysicsHandler = (function() {
 			break;
 			case EntityConfig.HORIZONTALBORDERID:
 				if(contact.m_manifold.m_localPlaneNormal.y>0){
-					$('body').trigger('onReAllowJump', body);
+					$('body').trigger('onReAllowJump', bodyA);
 				}
 			break;
 			case EntityConfig.BUTTONID:
-				_handleButtonCollison(body, contact);
+				_handleButtonCollison(bodyB, contact);
 			break;
 
 		}
 	},
-	_handleRedBlobCollision = function(body, bID, contact){
+	_handleRedBlobCollision = function(bodyA,bodyB, bID, contact){
 		//console.log("redblob collided");
 		switch(bID){
 			case EntityConfig.GREENBLOBID:
 				// Trampolin
 				if(contact.m_manifold.m_localPlaneNormal.y>0){
 					y = contact.m_fixtureA.m_body.GetLinearVelocity().y;
-					_applyForceJump(null, {"entity" : body, "directionX" : 0, "directionY" : -2.2*y});
+					_applyForceJump(null, {"entity" : bodyA, "directionX" : 0, "directionY" : -2.2*y});
 				}
 			break;
 			case EntityConfig.VERTICALBORDERID:
@@ -270,16 +278,21 @@ BlobApp.PhysicsHandler = (function() {
 			break;
 			case EntityConfig.HORIZONTALBORDERID:
 			if(contact.m_manifold.m_localPlaneNormal.y>0){
-				$('body').trigger('onReAllowJump', body);
+				$('body').trigger('onReAllowJump', bodyA);
 			}
 			//console.log("horizontalborder collided");
 			break;
 			case EntityConfig.BUTTONID:
-				_handleButtonCollison(body, contact);
-
+			console.log(bodyB);
+				_handleButtonCollison(bodyB, contact);
 			break;
 		}
 
+	},
+
+
+	_openDoor = function(){
+		console.log(world);
 	};
 
 	that.init = init;

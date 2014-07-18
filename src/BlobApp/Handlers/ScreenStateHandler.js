@@ -38,11 +38,16 @@ BlobApp.ScreenState = ( function() {
 
 
 	init = function() {
+		_listeners();
 		player1State = PLAYER_STATES[1];
 		player2State = PLAYER_STATES[1];
 		keyPickedUp = false;
 		return that;
 	},
+
+	_listeners = function(){
+		$('body').on('doorOpenRequested', _onDoorOpenRequested);
+	}
 
 	onPlayerDead = function(player) {
 		if(player == PLAYER_1_NAME) {
@@ -72,6 +77,18 @@ BlobApp.ScreenState = ( function() {
 	doorCreated = function(doorNumber, buttonNumber) {
 		_triggerConnections.push([doorNumber, buttonNumber]);
 	};
+
+	_onDoorOpenRequested = function(e, buttonID){
+		var doorID;
+		for(var i = 0,k=_triggerConnections.length;i<k;i++){
+			if(_triggerConnections[i][1]==doorID){
+				doorID = _triggerConnections[i][0];
+				$('body').trigger('openDoor', doorID);
+				return;
+			}
+		}
+
+	}
 
 	that.doorCreated = doorCreated;
 	that.init = init;

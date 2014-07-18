@@ -82,7 +82,7 @@ BlobApp.BlobSuperClass = function() {
 
 	// Manipulates the movement direction so that the blob moves to the left
 	_moveLeft = function() {
-		if(_blobEntity.GetUserData()==EntityConfig.REDBLOBID){
+		if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID){
 			$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -1*REDBLOBXSPEED, directionY: 0});
 		}else{
 			$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -1*GREENBLOBXSPEED, directionY: 0});
@@ -92,7 +92,7 @@ BlobApp.BlobSuperClass = function() {
 
 	// Manipulates the movement direction so that the blob moves to the right
 	_moveRight = function() {
-		if(_blobEntity.GetUserData()==EntityConfig.REDBLOBID){
+		if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID){
 		$('body').trigger('onInputRecieved',{entity: _blobEntity, directionX: REDBLOBXSPEED, directionY: 0});
 		}else{
 		$('body').trigger('onInputRecieved',{entity: _blobEntity, directionX: GREENBLOBXSPEED, directionY: 0});
@@ -102,7 +102,7 @@ BlobApp.BlobSuperClass = function() {
 	// Makes the Blob jump
 	_jump = function() {
 		if(_jumpAllowed != false) {
-			if(_blobEntity.GetUserData()==EntityConfig.REDBLOBID){
+			if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID){
 			$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*REDBLOBYSPEED});
 			}else{
 			$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*GREENBLOBXYSPEED});
