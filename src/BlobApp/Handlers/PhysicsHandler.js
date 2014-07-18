@@ -249,7 +249,12 @@ BlobApp.PhysicsHandler = (function() {
 		//console.log("redblob collided");
 		switch(bUserData){
 			case EntityConfig.GREENBLOBID:
-			//TODO handle carry
+				// Trampolin
+				console.log(contact);
+				if(contact.m_manifold.m_localPlaneNormal.y>0){
+					y = contact.m_fixtureA.m_body.GetLinearVelocity().y;
+					_applyForceJump(null, {"entity" : body, "directionX" : 0, "directionY" : -2.2*y});
+				}
 			break;
 			case EntityConfig.VERTICALBORDERID:
 			//console.log("verticalBorder collided");
