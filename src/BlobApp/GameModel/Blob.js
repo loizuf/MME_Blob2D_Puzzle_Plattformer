@@ -22,10 +22,10 @@ BlobApp.BlobSuperClass = function() {
 	// Box2D Entity
 	_blobEntity,
 
-	REDBLOBXSPEED = 0.5,
-	GREENBLOBXSPEED = 0.1, 
-	REDBLOBYSPEED = 10,
-	GREENBLOBXYSPEED = 4.2,
+	REDBLOBXSPEED = 0.4,
+	GREENBLOBXSPEED = 0.15, 
+	REDBLOBYSPEED = 9,
+	GREENBLOBXYSPEED = 3.5,
 
 
 	/* 
