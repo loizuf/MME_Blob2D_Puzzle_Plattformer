@@ -9,9 +9,15 @@
 <body>
 
 <h1>Blob&sup2;</h1>
+<div id="menu-container">
+	<div id="menu">
+		<div id="menu-play" class="menu-item">spiel starten</div>
+	</div>
+</div>
+
 <div id="canvas-container">
-<canvas width="800" height="600" id="gameCanvas"></canvas>
-<canvas width="800" height="600" id="debugCanvas"></canvas>
+	<canvas width="800" height="600" id="gameCanvas"></canvas>
+	<canvas width="800" height="600" id="debugCanvas"></canvas>
 </div>
 <!-- engines and jQuery -->
 <script type="text/javascript" src="libs/Box2dWeb-2.1.a.3.min.js"></script>
@@ -27,6 +33,7 @@
 
 <!-- actual app -->
 <script type="text/javascript" src="src/BlobApp/BlobApp.js"></script>
+<script type="text/javascript" src="src/BlobApp/BlobGame.js"></script>
 
 
 <script type="text/javascript" src="src/BlobApp/Controllers/MainController.js"></script>

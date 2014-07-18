@@ -1,2 +1,4 @@
 http://www.luxanimals.com/blog/article/combining_easel_box2d
 easeljs dokumentation
+http://stackoverflow.com/questions/3779534/how-to-disable-text-selection-with-css-or-js
+disable selection

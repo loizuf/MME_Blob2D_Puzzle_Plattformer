@@ -1,6 +1,8 @@
 //Starting Point. This gets initialized by index.html
 BlobApp = {
-	init: function(){
-		BlobApp.MainController.init();
-	}
+	init : function(){
+		console.log("hoot?");
+		BlobApp.BlobGame.init();
+		console.log("hoot!");
+	},
 };

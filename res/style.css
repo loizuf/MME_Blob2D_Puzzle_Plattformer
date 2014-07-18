@@ -1,6 +1,12 @@
 body {
 	background-image: url(img/BackgroundImage.png);
 	background-repeat: repeat;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 h1 {
@@ -15,16 +21,41 @@ h1 {
 
 #canvas-container {
   	width: 100%;
+  	display:none;
    	text-align:center;
 }
 
 #gameCanvas {
 	background-color: #ffffff;
-   	display: inline;
+	display:inline;
   	box-shadow: 0px 0px 10px 7px #000000;
 
 }
 
 #debugCanvas{
 	display: none;
+}
+#menu-container{
+	width: 100%;
+	text-align: center;
+}
+#menu{
+	width: 800px;
+	height: 600px;
+	display:inline-block;
+	background-image: url(img/menudummy.png);	
+}
+.menu-item{
+	margin-top: 50px;
+	border: 3px solid black;
+	font-family: 'Sigmar One', cursive;
+	font-size: 200%;
+	width: 300px;
+	height: 60px;
+	display: inline-block;
+	text-align: center;
+	background-image: url(img/menuitembg.png);	
+}
+#menu-play{
+	width
 }
