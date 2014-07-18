@@ -242,6 +242,9 @@ BlobApp.PhysicsHandler = (function() {
 				$('body').trigger('onReAllowJump', body);
 			}
 			break;
+			case EntityConfig.BUTTONID:
+			
+			break;
 
 		}
 	},

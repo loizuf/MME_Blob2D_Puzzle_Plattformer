@@ -9,6 +9,7 @@ BlobApp.MainController = (function() {
 	_physicsHandler = null,
 
 	init = function(){
+		console.log("started");
 		_initModules();
 		_registerListeners();
 	},
