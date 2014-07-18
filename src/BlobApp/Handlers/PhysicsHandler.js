@@ -50,7 +50,7 @@ BlobApp.PhysicsHandler = (function() {
 	/*das muss vom levelloader aufgerufen werden!*/
 	applyEntity = function(event, spriteAndNumber) {
 		sprite = spriteAndNumber["sprite"];
-		userData = spriteAndNumber["number"];
+		userData = spriteAndNumber["userData"][0];
 
 		var fixture = new b2FixtureDef;
 		//console.log(skin);
@@ -87,7 +87,8 @@ BlobApp.PhysicsHandler = (function() {
 
 	applyBlobEntity = function(event, spriteAndNumber) {
 		sprite = spriteAndNumber["sprite"];
-		userData = spriteAndNumber["number"];
+		userData = spriteAndNumber["userData"][0];
+
 		
 		var fixture = new b2FixtureDef;
 		//console.log(skin);
@@ -182,7 +183,7 @@ BlobApp.PhysicsHandler = (function() {
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
 		// assign actor
-		entity.SetUserData(borderData.userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		entity.SetUserData(borderData.userData[0]);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		//var actor = new _actorObject(entity, sprite);
 		//bodies.push(entity); 
 
@@ -212,15 +213,15 @@ BlobApp.PhysicsHandler = (function() {
 		var listener = new Box2D.Dynamics.b2ContactListener;
 		listener.BeginContact = function(contact){
 		//	console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
-			a = contact.GetFixtureA().GetBody().GetUserData();
-			b = contact.GetFixtureB().GetBody().GetUserData();
+			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
+			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
 
-			switch(a){
+			switch(aID){
 				case EntityConfig.GREENBLOBID: 
-				_handleGreenBlobCollision(contact.GetFixtureA().GetBody(), b, contact);
+				_handleGreenBlobCollision(contact.GetFixtureA().GetBody(), bID, contact);
 				break;
 				case EntityConfig.REDBLOBID: 
-				_handleRedBlobCollision(contact.GetFixtureA().GetBody(), b, contact);
+				_handleRedBlobCollision(contact.GetFixtureA().GetBody(), bID, contact);
 				break;
 			} 
 
@@ -228,9 +229,15 @@ BlobApp.PhysicsHandler = (function() {
 		world.SetContactListener(listener);
 	},
 
-	_handleGreenBlobCollision = function(body, bUserData, contact){
+	_handleButtonCollison = function(body, contact){
+		if(contact.m_manifold.m_localPlaneNormal.y>0){
+			$('body').trigger('doorOpenRequested');
+		}
+	},
+
+	_handleGreenBlobCollision = function(body, bID, contact){
 		//console.log("greenblob collided");
-		switch(bUserData){
+		switch(bID){
 			case EntityConfig.REDBLOBID:
 			//TODO handle trampolin
 			break;
@@ -238,22 +245,21 @@ BlobApp.PhysicsHandler = (function() {
 			//console.log("verticalBorder collided");
 			break;
 			case EntityConfig.HORIZONTALBORDERID:
-			if(contact.m_manifold.m_localPlaneNormal.y>0){
-				$('body').trigger('onReAllowJump', body);
-			}
+				if(contact.m_manifold.m_localPlaneNormal.y>0){
+					$('body').trigger('onReAllowJump', body);
+				}
 			break;
 			case EntityConfig.BUTTONID:
-			
+				_handleButtonCollison(body, contact);
 			break;
 
 		}
 	},
-	_handleRedBlobCollision = function(body, bUserData, contact){
+	_handleRedBlobCollision = function(body, bID, contact){
 		//console.log("redblob collided");
-		switch(bUserData){
+		switch(bID){
 			case EntityConfig.GREENBLOBID:
 				// Trampolin
-				console.log(contact);
 				if(contact.m_manifold.m_localPlaneNormal.y>0){
 					y = contact.m_fixtureA.m_body.GetLinearVelocity().y;
 					_applyForceJump(null, {"entity" : body, "directionX" : 0, "directionY" : -2.2*y});
@@ -267,6 +273,10 @@ BlobApp.PhysicsHandler = (function() {
 				$('body').trigger('onReAllowJump', body);
 			}
 			//console.log("horizontalborder collided");
+			break;
+			case EntityConfig.BUTTONID:
+				_handleButtonCollison(body, contact);
+
 			break;
 		}
 

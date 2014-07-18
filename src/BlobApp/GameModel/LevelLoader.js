@@ -5,7 +5,7 @@ BlobApp.LevelLoader = (function() {
 	/* need to be extracted from json!*/
 	_createRequestObject = {
 		"sprite" : undefined,
-		"number" : undefined
+		"userData" : undefined
 	},
 
 	init = function(){
@@ -126,7 +126,7 @@ BlobApp.LevelLoader = (function() {
 								"y" : rowNum*25,
 								"width" : 12.5,
 								"height" : 12.5,
-								"userData" : EntityConfig.HORIZONTALBORDERID
+								"userData" : [EntityConfig.HORIZONTALBORDERID,undefined]
 							});
 							currentHBorder = true;
 						}
@@ -160,7 +160,7 @@ BlobApp.LevelLoader = (function() {
 								"y" : rowNum*25,
 								"width" : 12.5,
 								"height" : 12.5,
-								"userData" : EntityConfig.VERTICALBORDERID
+								"userData" : [EntityConfig.VERTICALBORDERID,undefined]
 							});
 
 							currentVBorder = true;
@@ -193,7 +193,7 @@ BlobApp.LevelLoader = (function() {
 		// add bitmap to stage
 
 		_createRequestObject["sprite"] = cellBitmap;
-		_createRequestObject["number"] = idx;
+		_createRequestObject["userData"] = [idx,undefined];
 
 		$('body').trigger('genericRequested',_createRequestObject);
 	},
@@ -203,8 +203,7 @@ BlobApp.LevelLoader = (function() {
 		var blob = new BlobApp.Blob(x, y, 25, 50, EntityConfig.REDBLOBID);
 
 		_createRequestObject["sprite"] = blob.sprite;
-		_createRequestObject["number"] = EntityConfig.REDBLOBID;
-
+		_createRequestObject["userData"] = [EntityConfig.REDBLOBID,undefined];
 		$('body').trigger('blobRequested',_createRequestObject);
 	},
 
@@ -212,7 +211,7 @@ BlobApp.LevelLoader = (function() {
 		var blob = new BlobApp.Blob(x, y, 25, 25, EntityConfig.GREENBLOBID);
 
 		_createRequestObject["sprite"] = blob.sprite;
-		_createRequestObject["number"] = EntityConfig.GREENBLOBID;
+		_createRequestObject["userData"] = [EntityConfig.GREENBLOBID,undefined];
 
 		$('body').trigger('blobRequested', _createRequestObject);
 	},
@@ -224,7 +223,7 @@ BlobApp.LevelLoader = (function() {
 	_createButton = function(x, y){
 		var entity = new BlobApp.TriggerButton(x,y,25,25,EntityConfig.BUTTONID);
 		_createRequestObject["sprite"] = entity.sprite;
-		_createRequestObject["number"] = EntityConfig.BUTTONID;
+		_createRequestObject["userData"] = [EntityConfig.BUTTONID,undefined];
 
 		$('body').trigger('entityRequested', _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
@@ -234,8 +233,9 @@ BlobApp.LevelLoader = (function() {
 		var entity = new BlobApp.DynamicDoor(x,y,25,50,EntityConfig.DOORID);
 
 		_createRequestObject["sprite"] = entity.sprite;
-		_createRequestObject["number"] = EntityConfig.DOORID;
+		_createRequestObject["userData"] = [EntityConfig.DOORID,undefined];
 		_createRequestObject["height"] = 2;
+
 
 		$('body').trigger('entityRequested', _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
