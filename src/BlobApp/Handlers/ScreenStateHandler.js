@@ -76,19 +76,19 @@ BlobApp.ScreenState = ( function() {
 
 	doorCreated = function(doorNumber, buttonNumber) {
 		_triggerConnections.push([doorNumber, buttonNumber]);
-	};
+	},
 
 	_onDoorOpenRequested = function(e, buttonID){
 		var doorID;
 		for(var i = 0,k=_triggerConnections.length;i<k;i++){
-			if(_triggerConnections[i][1]==doorID){
+			if(_triggerConnections[i][1]==buttonID){
 				doorID = _triggerConnections[i][0];
 				$('body').trigger('openDoor', doorID);
 				return;
 			}
 		}
 
-	}
+	};
 
 	that.doorCreated = doorCreated;
 	that.init = init;

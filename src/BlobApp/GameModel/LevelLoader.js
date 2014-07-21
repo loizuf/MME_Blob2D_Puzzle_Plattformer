@@ -52,7 +52,8 @@ BlobApp.LevelLoader = (function() {
 		borders = new Array();
 
 		//Testvariable zur Übergabe von Infos(Doors)
-		var doorCount = 0;
+		var doorCount = 0,
+		buttonCount = 0;
 
 		for ( var y = 0; y < layerData.height; y++) {
 			borders.push(new Array());
@@ -83,7 +84,8 @@ BlobApp.LevelLoader = (function() {
 					break;
 					case EntityConfig.DOORLOWERID: break;
 					case EntityConfig.BUTTONID:
-					_createButton(xcoords,ycoords,layerData, doorCount);
+					_createButton(xcoords,ycoords,layerData, buttonCount);
+					buttonCount++;
 					case EntityConfig.EMPTYTILEID: break;
 					default:
 					borders[y][x] = true;
@@ -219,10 +221,10 @@ BlobApp.LevelLoader = (function() {
 
 	},
 
-	_createButton = function(x, y,layerData,doorCount){
+	_createButton = function(x, y,layerData,buttonCount){
 		var entity = new BlobApp.TriggerButton(x,y,25,25,EntityConfig.BUTTONID);
-		var buttonNumber = layerData.properties.Buttons[doorCount];
-		console.log("createdButtonwith", buttonNumber);
+		var buttonNumber = layerData.properties.Buttons[buttonCount];
+
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.BUTTONID,buttonNumber];
 

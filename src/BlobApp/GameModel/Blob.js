@@ -24,8 +24,8 @@ BlobApp.BlobSuperClass = function() {
 
 	REDBLOBXSPEED = 0.4,
 	GREENBLOBXSPEED = 0.15, 
-	REDBLOBYSPEED = 9,
-	GREENBLOBXYSPEED = 3.5,
+	REDBLOBYSPEED = 9.3,
+	GREENBLOBYSPEED = 3.8,
 
 
 	/* 
@@ -105,7 +105,7 @@ BlobApp.BlobSuperClass = function() {
 			if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID){
 			$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*REDBLOBYSPEED});
 			}else{
-			$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*GREENBLOBXYSPEED});
+			$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*GREENBLOBYSPEED});
 			}
 			_jumpAllowed = false;
 		}

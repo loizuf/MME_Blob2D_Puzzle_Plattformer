@@ -21,8 +21,8 @@ BlobApp.PhysicsHandler = (function() {
 	var greenBlob;
 	var redBlob;
 
-	var TILESIZEX = 12;
-	var TILESIZEY = 12;
+	var TILESIZEX = 12.5;
+	var TILESIZEY = 12.5;
 
 
 	init = function(){
@@ -61,7 +61,6 @@ BlobApp.PhysicsHandler = (function() {
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
 		if(entityID == EntityConfig.DOORID){
-			console.log("foundDoor");
 			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY*2 / SCALE);
 		}else{
 			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY / SCALE);
@@ -135,6 +134,11 @@ BlobApp.PhysicsHandler = (function() {
 		fixedTimestepAccumulator += dt;
 		lastTimestamp = now;
 
+		for(var i = 0; i < bodiesToRemove.length; i++) {
+			world.DestroyBody(bodiesToRemove[i]);
+		}
+		bodiesToRemove.length = 0;
+
 		while(fixedTimestepAccumulator >= STEP) {		
 
 			// update active actors
@@ -207,7 +211,7 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('onInputRecieved', _applyForce);
 		$('body').on('onInputRecievedJump', _applyForceJump);
 		$('body').on('borderRequested',_applyBorder);
-		$('body').on('_onOpenDoor',_openDoor);
+		$('body').on('openDoor',_openDoor);
 		_registerCollisionHandler();
 	},
 
@@ -234,6 +238,7 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_handleButtonCollison = function(bodyB, contact){
+		console.log("buttoncontact", contact);
 		var buttonID = bodyB.GetUserData()[1];
 
 		console.log("button found",bodyB.GetUserData());
@@ -291,8 +296,12 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 
-	_openDoor = function(){
-		console.log(world);
+	_openDoor = function(event, doorID){
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.DOORID && bodies[i].GetUserData()[1] == doorID) {
+				bodiesToRemove.push(bodies[i]);
+			}
+		}
 	};
 
 	that.init = init;
