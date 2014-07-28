@@ -99,7 +99,7 @@ BlobApp.LevelLoader = (function() {
 
 	_informModel = function(layerData, doorCount) {
 		var doorNumber = layerData.properties.Doors[doorCount];
-		var buttonNumber = layerData.properties.Buttons[doorCount];
+		var buttonNumber = layerData.properties.Doors[doorCount];
 		var eventPackage = {
 			"doorNumber": doorNumber,
 			"buttonNumber": buttonNumber
@@ -226,7 +226,7 @@ BlobApp.LevelLoader = (function() {
 		var buttonNumber = layerData.properties.Buttons[buttonCount];
 
 		_createRequestObject["sprite"] = entity.sprite;
-		_createRequestObject["userData"] = [EntityConfig.BUTTONID,buttonNumber];
+		_createRequestObject["userData"] = [EntityConfig.BUTTONID,buttonNumber,layerData.properties.Doors[buttonCount]];
 
 		$('body').trigger('entityRequested', _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
