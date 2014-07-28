@@ -8,6 +8,7 @@ EntityConfig = {
 	BUTTONID: 79,
 	DOORID: 61,
 	DOORLOWERID: 77,
+	KEYID: 15,
 	SPIKEID : 1000
 	/* any other special id!*/
 

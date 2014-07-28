@@ -47,6 +47,7 @@ BlobApp.ScreenState = ( function() {
 
 	_listeners = function(){
 		$('body').on('doorOpenRequested', _onDoorOpenRequested);
+		$('body').on('keyPickedUp', onPickupKey);
 	}
 
 	onPlayerDead = function(player) {
@@ -71,6 +72,7 @@ BlobApp.ScreenState = ( function() {
 
 
 	onPickupKey = function() {
+		console.log("Yay");
 		keyPickedUp=true;
 	},
 

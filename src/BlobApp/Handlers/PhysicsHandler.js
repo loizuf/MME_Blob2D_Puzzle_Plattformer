@@ -192,7 +192,28 @@ BlobApp.PhysicsHandler = (function() {
 		//var actor = new _actorObject(entity, sprite);
 		//bodies.push(entity); 
 
-	}
+	}, 
+
+	_applyKey = function(event, data) {
+		var fixture = new b2FixtureDef;
+		fixture.density = 1;
+		fixture.restitution = 0;
+		fixture.friction = 0;
+
+		fixture.shape = new b2PolygonShape;
+		fixture.shape.SetAsBox(TILESIZEX/SCALE, TILESIZEY/SCALE);
+
+		var bodyDef = new b2BodyDef;
+		bodyDef.type = b2Body.b2_staticBody;
+
+		bodyDef.position.x = (data.x) / SCALE;
+		bodyDef.position.y = (data.y) / SCALE;
+
+		var entity = world.CreateBody(bodyDef);
+		entity.CreateFixture(fixture);
+		entity.SetUserData(data.userData);
+	},
+
 
 	_actorObject = function(body, skin) {
 		this.body = body;
@@ -211,6 +232,7 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('onInputRecieved', _applyForce);
 		$('body').on('onInputRecievedJump', _applyForceJump);
 		$('body').on('borderRequested',_applyBorder);
+		$("body").on('keyRequested', _applyKey);
 		$('body').on('openDoor',_openDoor);
 		_registerCollisionHandler();
 	},
@@ -262,6 +284,9 @@ BlobApp.PhysicsHandler = (function() {
 			case EntityConfig.BUTTONID:
 				_handleButtonCollison(bodyB, contact);
 			break;
+			case EntityConfig.KEYID:
+				_pickUpKey(bodyA, bodyB);
+				break;
 
 		}
 	},
@@ -287,9 +312,17 @@ BlobApp.PhysicsHandler = (function() {
 			case EntityConfig.BUTTONID:
 				_handleButtonCollison(bodyB, contact);
 			break;
+			case EntityConfig.KEYID:
+				_pickUpKey(bodyA, bodyB);
+				break;
 		}
 
 	},
+
+	_pickUpKey = function(bodyA, bodyB) {
+		bodiesToRemove.push(bodyB);
+		$('body').trigger('keyPickedUp');
+	},	
 
 
 	_openDoor = function(event, doorID){

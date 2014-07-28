@@ -87,6 +87,11 @@ BlobApp.LevelLoader = (function() {
 					_createButton(xcoords,ycoords,layerData, buttonCount);
 					buttonCount++;
 					case EntityConfig.EMPTYTILEID: break;
+
+					case EntityConfig.KEYID:
+						_createKey(xcoords, ycoords);
+						break;
+
 					default:
 					borders[y][x] = true;
 					_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
@@ -243,6 +248,20 @@ BlobApp.LevelLoader = (function() {
 		_createRequestObject["height"] = 2;
 		
 		$('body').trigger('entityRequested', _createRequestObject);
+		$('body').trigger('genericRequested', _createRequestObject);
+	},
+	
+	_createKey = function(x, y) {
+
+		var entity = new BlobApp.Key(x, y, 25, 25, EntityConfig.KEYID);
+
+		_createRequestObject["sprite"] = entity.sprite;
+		_createRequestObject["userData"] = [EntityConfig.KEYID];
+		_createRequestObject["x"] = x;
+		_createRequestObject["y"] = y;
+
+
+		$('body').trigger("keyRequested", _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
 	},
 
