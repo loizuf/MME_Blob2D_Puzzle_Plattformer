@@ -47,11 +47,16 @@ BlobApp.ViewController = (function() {
 		var onTickRequest = $.Event('onTick');
 		$('body').trigger(onTickRequest);		
 	},
+	_deleteDoor = function(event , data){
+		var i = stage.getChildIndex(data.sprite);
+		stage.removeChildAt(i);
+	},
 
 	_listener = function(){
 		$('body').on('genericRequested',applyEntity);
 		$('body').on('blobRequested', applyEntity);
 		$('body').on('backgroundAdded', applyBackground);
+		$('body').on('viewOpenDoor', _deleteDoor);
 	};
 
 	that.init = init;

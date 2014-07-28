@@ -1,18 +1,17 @@
 BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY, doorID) {
 	var that = this,
-	sprite, tilesetSheet;
+	sprite, tilesetSheet, doorID, easleID;
 
 	this.prototype = new BlobApp.DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY);
 	
 	this.prototype.init =function(){
-		tileset = new Image();
-		tileset.src = "res/img/door.png"//mapData.tilesets[0].image;
+		this.doorID  = doorID;
 
-
-		// getting imagefile from first tileset
-		_listeners();
-		// callback for loading layers after tileset is loaded
+		var tileset = new Image();
+		tileset.src = "res/img/door.png"
+		// callback for loading sprite after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		_listeners();
 	},
 
 	_initSprite = function(tileset, w,h){
@@ -38,13 +37,16 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY, doorID) 
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
+		easleID = sprite.id;
 	},
 
 	_listeners = function(){
 		$('body').on('openDoor', _onOpenDoor);
 	},
-	_onOpenDoor = function(){
-		console.log("view open door requested");
+	_onOpenDoor = function(event, givenID){
+		if(doorID == givenID){
+		$('body').trigger('viewOpenDoor', {"id": easleID, "sprite": sprite});
+		}
 	}
 
 	this.prototype.init();

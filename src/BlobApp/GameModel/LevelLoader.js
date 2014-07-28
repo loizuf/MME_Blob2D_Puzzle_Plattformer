@@ -237,13 +237,11 @@ BlobApp.LevelLoader = (function() {
 		
 
 		_informModel(layerData,doorCount);
-		var entity = new BlobApp.DynamicDoor(x,y,25,50,EntityConfig.DOORID);
-
+		var entity = new BlobApp.DynamicDoor(x,y,25,50,doorNumber);
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.DOORID,doorNumber];
 		_createRequestObject["height"] = 2;
-
-
+		
 		$('body').trigger('entityRequested', _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
 	},

@@ -238,10 +238,7 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_handleButtonCollison = function(bodyB, contact){
-		console.log("buttoncontact", contact);
 		var buttonID = bodyB.GetUserData()[1];
-
-		console.log("button found",bodyB.GetUserData());
 
 		if(contact.m_manifold.m_localPlaneNormal.y>0){
 			$('body').trigger('doorOpenRequested', buttonID);
@@ -288,7 +285,6 @@ BlobApp.PhysicsHandler = (function() {
 			//console.log("horizontalborder collided");
 			break;
 			case EntityConfig.BUTTONID:
-			console.log(bodyB);
 				_handleButtonCollison(bodyB, contact);
 			break;
 		}
