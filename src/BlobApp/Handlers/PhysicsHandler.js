@@ -124,7 +124,7 @@ BlobApp.PhysicsHandler = (function() {
 		//entity muss in das blob Model. Debug lösung über Event
 		var blobEntityCreated = $.Event('blobEntityCreated');
 		$("body").trigger(blobEntityCreated, entity);
-		//bodies.push(entity); 	
+		bodies.push(entity); 	
 	},
 
 	update = function() {
@@ -226,6 +226,71 @@ BlobApp.PhysicsHandler = (function() {
 		actors.push(this);
 	},
 
+
+	// Heli stuff
+	heliIsActive = false,
+	heliBody = undefined,
+	_initHeli = function() {
+		if(heliIsActive) return;
+		heliIsActive = true;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID || bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+				bodiesToRemove.push(bodies[i]);
+			}
+		}
+
+		// Create Heli (= Create Blob)
+		//sprite = spriteAndNumber["sprite"];
+		userData = "Heli";
+		
+		var fixture = new b2FixtureDef;
+		//console.log(skin);
+		fixture.density = 1;
+		fixture.restitution = 0;
+		fixture.friction = 0.1;	
+	
+		/*shape anpassen*/
+		fixture.shape = new b2PolygonShape;
+
+	//	if(userData == EntityConfig.REDBLOBID){
+			fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, ((TILESIZEY*2)-1 )/ SCALE);
+		//}else{
+		//	fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, (TILESIZEY-1) / SCALE);
+		//}
+		
+		var bodyDef = new b2BodyDef;
+
+
+		/*dynamic/static body*/
+		bodyDef.type = b2Body.b2_dynamicBody;
+		bodyDef.position.x = (200) / SCALE;
+		bodyDef.position.y = (200) / SCALE;
+		
+		bodyDef.fixedRotation = true;
+
+		var entity = world.CreateBody(bodyDef);
+		entity.CreateFixture(fixture);
+		// assign actor
+		entity.SetUserData([userData,undefined]);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		//var actor = new _actorObject(entity, sprite);
+
+		//entity muss in das blob Model. Debug lösung über Event
+		var blobEntityCreated = $.Event('blobEntityCreated');
+		//$("body").trigger(blobEntityCreated, entity);
+		bodies.push(entity); 
+		heliBody = entity;	
+
+	},
+
+	_moveHeli = function(event, data) {
+		var isX = data.dir=="x";
+		var speedX = isX? data.speed : 0;
+		var speedY = isX? 0 : data.speed;
+
+		heliBody.ApplyImpulse(new b2Vec2(speedX, speedY), heliBody.GetPosition());
+	},
+
 	_registerListener = function() {
 		$("body").on("entityRequested", applyEntity);
 		$('body').on("blobRequested", applyBlobEntity);
@@ -234,6 +299,11 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('borderRequested',_applyBorder);
 		$("body").on('keyRequested', _applyKey);
 		$('body').on('openDoor',_openDoor);
+		// START: DUMMY HELI
+		$('body').on('startHeli', _initHeli);
+
+		$('body').on('heliMove', _moveHeli);
+		// END: DUMMY HELI
 		_registerCollisionHandler();
 	},
 

@@ -7,7 +7,7 @@
 BlobApp.BlobSuperClass = function() {
 
 	//var b2Vec2 = Box2D.Common.Math.b2Vec2;
-
+	thisVar = this;
 	var _positionX = null,
 	_positionY = null,
 	// box2d? value
@@ -18,6 +18,7 @@ BlobApp.BlobSuperClass = function() {
 	// As the name suggests, 
 	_jumpAllowed,
 	// Waiting for other blob to trigger a special interaction: No interaction allowed
+	// Is false when not waiting, otherwhise contains name of the skill that the blob is waiting to use.
 	_waitingForOtherBlob,
 	// Box2D Entity
 	_blobEntity,
@@ -54,7 +55,7 @@ BlobApp.BlobSuperClass = function() {
 	this.init = function(pX, pY, v, dir){
 		_setPropertiesOfBlob(pX, pY, v, dir);
 
-		_setupMovementFunctions();
+		thisVar.setupMovementFunctions();
 
 		// listener methods
 		$("body").on("onTick", _callDirections);
@@ -67,12 +68,12 @@ BlobApp.BlobSuperClass = function() {
 		_direction = dir;
 	},
 
-	_setupMovementFunctions = function() {
-		_currentLeft = _moveLeft;
-		_currentRight = _moveRight;
-		_currentUp = _jump;
-		_currentDown = _triggerSpecial;
-	}
+	this.setupMovementFunctions = function() {
+		_currentLeft = thisVar._moveLeft;
+		_currentRight = thisVar._moveRight;
+		_currentUp = thisVar._jump;
+		_currentDown = thisVar._triggerSpecial;
+	},
 
 	this.killBlob = function(startpX, startpY){
 		//_setPropertiesOfBlob(startpX, startpY, 0, 0);
@@ -81,7 +82,7 @@ BlobApp.BlobSuperClass = function() {
 
 
 	// Manipulates the movement direction so that the blob moves to the left
-	_moveLeft = function() {
+	this._moveLeft = function() {
 		if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID){
 			$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -1*REDBLOBXSPEED, directionY: 0});
 		}else{
@@ -91,7 +92,7 @@ BlobApp.BlobSuperClass = function() {
 	},
 
 	// Manipulates the movement direction so that the blob moves to the right
-	_moveRight = function() {
+	this._moveRight = function() {
 		if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID){
 		$('body').trigger('onInputRecieved',{entity: _blobEntity, directionX: REDBLOBXSPEED, directionY: 0});
 		}else{
@@ -100,12 +101,12 @@ BlobApp.BlobSuperClass = function() {
 	},
 
 	// Makes the Blob jump
-	_jump = function() {
+	this._jump = function() {
 		if(_jumpAllowed != false) {
 			if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID){
-			$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*REDBLOBYSPEED});
+				$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*REDBLOBYSPEED});
 			}else{
-			$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*GREENBLOBYSPEED});
+				$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*GREENBLOBYSPEED});
 			}
 			_jumpAllowed = false;
 		}
@@ -115,8 +116,8 @@ BlobApp.BlobSuperClass = function() {
 		Tries to trigger a special event. 
 		If the other blob is ready, it might work; otherwhise, the other player is informed via a bubble-y-thing
 	*/
-	_triggerSpecial = function() {
-
+	this._triggerSpecial = function() {
+		
 	},
 
 	this.allowJump = function() {
@@ -187,6 +188,14 @@ BlobApp.BlobSuperClass = function() {
 
 	this.setEntity = function(entity){
 		_blobEntity = entity;
+	},
+
+	this.setWaitingForOther = function(waiting) {
+		_waitingForOtherBlob = waiting;
+	},
+
+	this.getWaitingForOther = function() {
+		return _waitingForOtherBlob;
 	};
 
 	this.init();

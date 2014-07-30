@@ -50,6 +50,9 @@ BlobApp.ModelController = (function() {
 		$('body').on('onReAllowJump', _reAllowJump);
 
 		$('body').on("doorCreated", _onDoorCreated);
+
+
+		$('body').on('onPlayerWaitingChange', _onPlayerWaitingChange)
 	},
 
 	_onDoorCreated = function(event, data){
@@ -150,6 +153,29 @@ BlobApp.ModelController = (function() {
 			//console.log("p2 created");
 			_blobPlayerTwo.prototype.setEntity(entity);
 		 }
+	},
+
+	_onPlayerWaitingChange = function(event, data) {
+	//	console.log(data);
+
+		player = (data.playerName == "p1")? _blobPlayerOne : _blobPlayerTwo;
+		waiting = data.waiting;
+
+		player.prototype.setWaitingForOther(waiting);
+
+		if(waiting != false) {
+			if(player == _blobPlayerOne) {
+				if(waiting == _blobPlayerTwo.prototype.getWaitingForOther()) {
+					console.log("Heli Trigger!!");
+					$('body').trigger("startHeli");
+				}
+			} else {
+				if(waiting == _blobPlayerOne.prototype.getWaitingForOther()) {
+					console.log("Heli Trigger!!");
+					$('body').trigger("startHeli");
+				}
+			}
+		}
 	};
 
 	that.init = init;

@@ -50,7 +50,7 @@ BlobApp.ScreenState = ( function() {
 		$('body').on('keyPickedUp', onPickupKey);
 	}
 
-	onPlayerDead = function(player) {
+	onPlayerDead = function(event, player) {
 		if(player == PLAYER_1_NAME) {
 			player1State = PLAYER_STATES[0];
 		} else {
@@ -58,7 +58,7 @@ BlobApp.ScreenState = ( function() {
 		}
 	},
 
-	onPlayerReachGoal = function(player) {
+	onPlayerReachGoal = function(event, player) {
 		if(player == PLAYER_1_NAME) {
 			player1State = PLAYER_STATES[2];
 		} else {
@@ -72,9 +72,8 @@ BlobApp.ScreenState = ( function() {
 
 
 	onPickupKey = function() {
-		console.log("Yay");
 		keyPickedUp=true;
-	},
+	}
 
 	doorCreated = function(doorNumber, buttonNumber) {
 		_triggerConnections.push([doorNumber, buttonNumber]);
