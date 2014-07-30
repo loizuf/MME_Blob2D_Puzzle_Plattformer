@@ -12,6 +12,8 @@ BlobApp.InputHandler = (function() {
 
     controller1,
     controller2,
+    player1,
+    player2,
     _requestAnimFrame,
     isChrome,
     haveEvents,
@@ -54,13 +56,16 @@ BlobApp.InputHandler = (function() {
         p2Trigger : 40 
     },
 
-
-
     init = function() {
         $body = $('body');
         $body.on('keyup',_onKeyUp);
         $body.on('keydown',_onKeyDown);
        
+        /*- - - - - - - - - - - - - - - - - - - - - - - - - - */
+        player1 = prompt("Player1: Choose Control Method", "Type in \"Keyboard\" or \"Controller\"");
+        player2 = prompt("Player2: Choose Control Method", "Type in \"Keyboard\" or \"Controller\"");
+        /*- - - - - - - - - - - - - - - - - - - - - - - - - - */
+
         _initGamepads();
         
         return that;
@@ -71,8 +76,6 @@ BlobApp.InputHandler = (function() {
         isChrome = navigator.userAgent.match(/Chrome/),
         haveEvents = !isChrome;
 
-        
-
         if (!haveEvents) {
             _updateControllers();
         } 
@@ -80,23 +83,32 @@ BlobApp.InputHandler = (function() {
 
     _updateControllers = function() {
         if (!haveEvents) {
-            controller1 = navigator.getGamepads()[ID_CONTROLLER_ONE];
-            controller2 = navigator.getGamepads()[ID_CONTROLLER_TWO];
+            if(player1 == "Controller" && player2 == "Controller") {
+                controller1 = navigator.getGamepads()[ID_CONTROLLER_ONE];
+                controller2 = navigator.getGamepads()[ID_CONTROLLER_TWO];
+            } else if(player1 == "Controller"){
+                controller1 = navigator.getGamepads()[ID_CONTROLLER_ONE];
+            } else if(player2 == "Controller"){
+                controller2 = navigator.getGamepads()[ID_CONTROLLER_ONE];
+            }  
         }
 
-        if(controller1 !== undefined && controller2 != undefined) {
+        if(controller1 !== undefined || controller2 != undefined) {
 
             _updateXboxControllers();
             _requestAnimFrame(_updateControllers); 
         } else {
-            console.log("No controller connected");
             _requestAnimFrame(_updateControllers); 
         }
     },
 
     _updateXboxControllers = function() {
-        _trackPlayerOneGreenBlob();
-        _trackPlayerTwoRedBlob();
+        if(controller1 !== undefined) {
+            _trackPlayerOneGreenBlob();
+        }
+        if (controller2 !== undefined) {
+            _trackPlayerTwoRedBlob();
+        }
     },
 
     _trackPlayerOneGreenBlob = function() {
