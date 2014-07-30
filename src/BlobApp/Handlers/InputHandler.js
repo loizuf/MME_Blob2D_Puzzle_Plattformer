@@ -60,6 +60,7 @@ BlobApp.InputHandler = (function() {
         $body = $('body');
         $body.on('keyup',_onKeyUp);
         $body.on('keydown',_onKeyDown);
+       
         _initGamepads();
         
         return that;
@@ -69,6 +70,9 @@ BlobApp.InputHandler = (function() {
         _requestAnimFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame,
         isChrome = navigator.userAgent.match(/Chrome/),
         haveEvents = !isChrome;
+
+        
+
         if (!haveEvents) {
             _updateControllers();
         } 
@@ -80,10 +84,14 @@ BlobApp.InputHandler = (function() {
             controller2 = navigator.getGamepads()[ID_CONTROLLER_TWO];
         }
 
-        if(controller1 != null && controller2 != null) {
+        if(controller1 !== undefined && controller2 != undefined) {
+
             _updateXboxControllers();
             _requestAnimFrame(_updateControllers); 
-        }   
+        } else {
+            console.log("No controller connected");
+            _requestAnimFrame(_updateControllers); 
+        }
     },
 
     _updateXboxControllers = function() {
