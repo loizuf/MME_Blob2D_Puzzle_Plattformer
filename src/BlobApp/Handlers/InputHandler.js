@@ -65,10 +65,10 @@ BlobApp.InputHandler = (function() {
         $body.on('keyup',_onKeyUp);
         $body.on('keydown',_onKeyDown);
 
-        /*- - - - - - - - - - - - - - - - - - - - - - - - - - */
+        /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
         player1 = prompt("Player1: Choose Control Method", "Type in \"Keyboard\" or \"Controller\"");
         player2 = prompt("Player2: Choose Control Method", "Type in \"Keyboard\" or \"Controller\"");
-        /*- - - - - - - - - - - - - - - - - - - - - - - - - - */
+        /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
         _initGamepads();
         
@@ -299,7 +299,7 @@ BlobApp.InputHandler = (function() {
         return button > 0.5;
     },
 
-    /*start movement left/right, trigger jump/trigger effect*/
+    /*start movement left/right, trigger jump/trigger/special ability effects*/
     _onKeyDown = function(e){
         switch(e.keyCode){
             case keyMap.p1Jump:
@@ -324,10 +324,7 @@ BlobApp.InputHandler = (function() {
 
             case keyMap.p2Left:
                 if (isHeliActive && isLeftActiveButton) {
-                    $(that).trigger('p2ButtonMashEvent');
-                    isLeftActiveButton = false;
-                    isRightActiveButton = true;
-
+                    _trackMashingInput()
                 } else {
                     $(that).trigger('p2ArrowLeftStarted');
                 }
@@ -335,10 +332,7 @@ BlobApp.InputHandler = (function() {
 
             case keyMap.p2Right:
                 if (isHeliActive && isRightActiveButton) {
-                    $(that).trigger('p2ButtonMashEvent');
-                    isLeftActiveButton = true;
-                    isRightActiveButton = false;
-
+                   _trackMashingInput();
                 } else {
                     $(that).trigger('p2ArrowRightStarted');
                 }
@@ -348,6 +342,12 @@ BlobApp.InputHandler = (function() {
                  $(that).trigger('p2ArrowDownStarted');
             break;
         }
+    },
+
+    _trackMashingInput = function() {
+        $(that).trigger('p2ButtonMashEvent');
+        isLeftActiveButton = !isLeftActiveButton;
+        isRightActiveButton = !isRightActiveButton;
     },
 
     /*stopMovement left/right*/
