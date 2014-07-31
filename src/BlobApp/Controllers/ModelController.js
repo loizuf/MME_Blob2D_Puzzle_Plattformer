@@ -46,12 +46,10 @@ BlobApp.ModelController = (function() {
 
 		$(_inputHandler).on("p1blobDeath",_onP1BlobDeath);
 		$(_inputHandler).on("p2blobDeath",_onP2BlobDeath);
+
 		$('body').on("blobEntityCreated",_onBlobEntityCreated);
 		$('body').on('onReAllowJump', _reAllowJump);
-
 		$('body').on("doorCreated", _onDoorCreated);
-
-
 		$('body').on('onPlayerWaitingChange', _onPlayerWaitingChange)
 	},
 
@@ -168,11 +166,13 @@ BlobApp.ModelController = (function() {
 				if(waiting == _blobPlayerTwo.prototype.getWaitingForOther()) {
 					console.log("Heli Trigger!!");
 					$('body').trigger("startHeli");
+					_inputHandler.changeControls();
 				}
 			} else {
 				if(waiting == _blobPlayerOne.prototype.getWaitingForOther()) {
 					console.log("Heli Trigger!!");
 					$('body').trigger("startHeli");
+					_inputHandler.changeControls();
 				}
 			}
 		}

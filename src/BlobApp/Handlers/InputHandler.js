@@ -10,6 +10,10 @@ BlobApp.InputHandler = (function() {
     ID_CONTROLLER_TWO = 1,
     GAMEPAD_ANALOG_STICK_DEADZONE = 0.3,
 
+    isHeliActive = false,
+    isLeftActiveButton = false,
+    isRightActiveButton = true,
+
     controller1,
     controller2,
     player1,
@@ -60,7 +64,7 @@ BlobApp.InputHandler = (function() {
         $body = $('body');
         $body.on('keyup',_onKeyUp);
         $body.on('keydown',_onKeyDown);
-       
+
         /*- - - - - - - - - - - - - - - - - - - - - - - - - - */
         player1 = prompt("Player1: Choose Control Method", "Type in \"Keyboard\" or \"Controller\"");
         player2 = prompt("Player2: Choose Control Method", "Type in \"Keyboard\" or \"Controller\"");
@@ -69,6 +73,10 @@ BlobApp.InputHandler = (function() {
         _initGamepads();
         
         return that;
+    },
+
+    changeControls = function() {
+        isHeliActive = true;
     },
 
     _initGamepads = function() {
@@ -206,6 +214,28 @@ BlobApp.InputHandler = (function() {
                     break;
                 } 
             break;
+
+            case XBOX_BUTTONS.X:
+                switch(id) {
+                    case ID_CONTROLLER_ONE: _onKeyUp({keyCode:keyMap.p1Trigger});
+                    break;
+                    case ID_CONTROLLER_TWO: _onKeyUp({keyCode:keyMap.p2Trigger});
+                    break;
+                }
+            break;
+
+            case XBOX_BUTTONS.RB:
+                if(id == ID_CONTROLLER_TWO) {
+                    _onKeyUp({keyCode:keyMap.p2Right});
+                }
+            break;
+
+            // used for heli button mashing
+            case XBOX_BUTTONS.LB:
+                if(id == ID_CONTROLLER_TWO) {
+                    _onKeyUp({keyCode:keyMap.p2Left});
+                }
+            break;
         }
     },
 
@@ -237,6 +267,27 @@ BlobApp.InputHandler = (function() {
                     break;
                 }        
 
+            break;
+
+            case XBOX_BUTTONS.X:
+                switch(id) {
+                    case ID_CONTROLLER_ONE: _onKeyDown({keyCode:keyMap.p1Trigger});
+                    break;
+                    case ID_CONTROLLER_TWO: _onKeyDown({keyCode:keyMap.p2Trigger});
+                    break;
+                }
+            break;
+
+            case XBOX_BUTTONS.RB:
+                if(id == ID_CONTROLLER_TWO && isHeliActive) {
+                    _onKeyDown({keyCode:keyMap.p2Right});
+                }
+            break;
+
+            case XBOX_BUTTONS.LB:
+                if(id == ID_CONTROLLER_TWO && isHeliActive) {
+                    _onKeyDown({keyCode:keyMap.p2Left});
+                }
             break;
         }
     },
@@ -272,15 +323,29 @@ BlobApp.InputHandler = (function() {
             break;
 
             case keyMap.p2Left:
-                $(that).trigger('p2ArrowLeftStarted');
+                if (isHeliActive && isLeftActiveButton) {
+                    $(that).trigger('p2ButtonMashEvent');
+                    isLeftActiveButton = false;
+                    isRightActiveButton = true;
+
+                } else {
+                    $(that).trigger('p2ArrowLeftStarted');
+                }
             break;
 
             case keyMap.p2Right:
-                $(that).trigger('p2ArrowRightStarted');
+                if (isHeliActive && isRightActiveButton) {
+                    $(that).trigger('p2ButtonMashEvent');
+                    isLeftActiveButton = true;
+                    isRightActiveButton = false;
+
+                } else {
+                    $(that).trigger('p2ArrowRightStarted');
+                }
             break;
 
-            case keyMap.p2Trigger:
-                $(that).trigger('p2ArrowDownStarted');
+            case keyMap.p2Trigger:     
+                 $(that).trigger('p2ArrowDownStarted');
             break;
         }
     },
@@ -323,5 +388,6 @@ BlobApp.InputHandler = (function() {
     };
 
     that.init = init;
+    that.changeControls = changeControls;
     return that;
 })();
