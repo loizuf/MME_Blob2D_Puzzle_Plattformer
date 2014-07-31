@@ -38,6 +38,7 @@ BlobApp.BlobSuperClass = function() {
 	_currentRight,
 	_currentUp,
 	_currentDown,
+	_currentMash,
 
 	keyUpPressed,
 	keyDownPressed,
@@ -169,6 +170,10 @@ BlobApp.BlobSuperClass = function() {
 		}
 	},
 
+	this.onButtonMash = function() {
+		_currentMash();
+	},
+
 	// These functions can be called from outside(?) to change what happens when a button is pressed
 	this.setCurrentDown = function(currentDown) {
 		_currentDown = currentDown;
@@ -184,6 +189,10 @@ BlobApp.BlobSuperClass = function() {
 
 	this.setCurrentRight = function(currentRight) {
 		_currentRight = currentRight;
+	},
+
+	this.setCurrentMash = function(currentMash) {
+		_currentMash = currentMash;
 	},
 
 	this.setEntity = function(entity){

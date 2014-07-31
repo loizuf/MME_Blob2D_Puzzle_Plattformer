@@ -49,35 +49,23 @@ BlobApp.BlobPlayer2 = (function() {
 
 
 	// START: Helicopter special skill:
-	var heliSpeedUp = -2;
-	var heliSpeedDown = 0;
+	var heliSpeedY = -4	;
 	var heliCurrentYSpeed;
 
 	this.initHeli = function() {
 		// BlobPlayer1 controls left and right movements:
 		prototypeVar.setCurrentLeft(function(){});
 		prototypeVar.setCurrentRight(function(){});
+		prototypeVar.setCurrentUp(function(){});
+		prototypeVar.setCurrentDown(function(){});
 
 		// BlobPlayer2 (this blob) controls up and down movements for heli:
-		prototypeVar.setCurrentUp(heliMoveUp);
-		prototypeVar.setCurrentDown(heliMoveDown);
+		prototypeVar.setCurrentMash(onButtonMash);
 		heliCurrentYSpeed = 0;
 	}
 
-	function heliMoveUp() {
-		if(heliCurrentYSpeed > heliSpeedUp) {
-			heliCurrentYSpeed-=0.5;
-		}
-
-		$('body').trigger('heliMove', {"speed" : heliCurrentYSpeed, "dir" : "y"});
-	}
-
-	function heliMoveDown() {
-		if(heliCurrentYSpeed < heliSpeedDown) {
-			heliCurrentYSpeed++;
-		}
-
-		$('body').trigger('heliMove', {"speed" : heliCurrentYSpeed, "dir" : "y"});
+	function onButtonMash() {
+		$('body').trigger('heliMove', {"speed" : heliSpeedY, "dir" : "y"});
 	}
 	// END: Heli
 

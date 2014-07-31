@@ -44,6 +44,8 @@ BlobApp.ModelController = (function() {
 		$(_inputHandler).on("p2ArrowLeftStopped",_onP2ArrowLeftStopped);
 		$(_inputHandler).on("p2ArrowDownStopped",_onP2ArrowDownStopped);
 
+		$(_inputHandler).on("p2ButtonMashEvent",_onP2ButtonMashEvent);
+
 		$(_inputHandler).on("p1blobDeath",_onP1BlobDeath);
 		$(_inputHandler).on("p2blobDeath",_onP2BlobDeath);
 
@@ -131,6 +133,10 @@ BlobApp.ModelController = (function() {
 	_onP2BlobDeath = function() {
 		_screenStateHandler.onPlayerDead("p2");
 	},
+
+	_onP2ButtonMashEvent = function() {
+		_blobPlayerTwo.prototype.onButtonMash();
+	}
 	
 
 	_reAllowJump = function(event, entity) {
