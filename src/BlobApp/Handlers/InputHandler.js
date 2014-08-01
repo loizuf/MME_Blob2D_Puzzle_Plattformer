@@ -38,8 +38,8 @@ BlobApp.InputHandler = (function() {
         RB: 5,
         LEFT_STICK: 6,
         RIGHT_STICK: 7,
-        START: 8,
-        BACK: 9,
+        BACK: 8,
+        START: 9,
         HOME: 10,
         DPAD_UP: 11,
         DPAD_DOWN: 12,
@@ -57,7 +57,9 @@ BlobApp.InputHandler = (function() {
         p2Jump : 38,
         p2Left : 37,
         p2Right : 39,
-        p2Trigger : 40 
+        p2Trigger : 40,
+
+        pause : 27
     },
 
     init = function() {
@@ -289,6 +291,10 @@ BlobApp.InputHandler = (function() {
                     _onKeyDown({keyCode:keyMap.p2Left});
                 }
             break;
+
+            case XBOX_BUTTONS.START:
+                _onKeyDown({keyCode:keyMap.pause});
+            break;
         }
     },
 
@@ -340,6 +346,10 @@ BlobApp.InputHandler = (function() {
 
             case keyMap.p2Trigger:     
                  $(that).trigger('p2ArrowDownStarted');
+            break;
+
+            case keyMap.pause:
+                $(that).trigger('onPauseScreenRequested');
             break;
         }
     },

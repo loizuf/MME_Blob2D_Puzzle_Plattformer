@@ -1,6 +1,8 @@
 BlobApp.PhysicsHandler = (function() {
 	var that = {},
+
 	SCALE = 30, STEP = 20, TIMESTEP = 1/20;
+	
 	var b2Vec2 = Box2D.Common.Math.b2Vec2;
 	var b2BodyDef = Box2D.Dynamics.b2BodyDef;
 	var b2Body = Box2D.Dynamics.b2Body;
@@ -101,7 +103,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		if(userData == EntityConfig.REDBLOBID){
 			fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, ((TILESIZEY*2)-1 )/ SCALE);
-		}else{
+		} else {
 			fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, (TILESIZEY-1) / SCALE);
 		}
 		
@@ -153,6 +155,14 @@ BlobApp.PhysicsHandler = (function() {
    			//world.m_debugDraw.m_sprite.graphics.clear();
    			world.DrawDebugData();
 		}	
+	},
+
+	_pauseEngine = function() {
+		TIMESTEP = 0;
+	},
+
+	_unpauseEngine = function() {
+		TIMESTEP = 1/20;
 	},
 
 	_applyForce = function(event, direction) {
@@ -304,7 +314,16 @@ BlobApp.PhysicsHandler = (function() {
 
 		$('body').on('heliMove', _moveHeli);
 		// END: DUMMY HELI
+
+		$('body').on("onPause", _pauseEngine);
+		$('body').on("onUnpause", _unpauseEngine);
+		$('body').on("onDestroyPhysicsWorld", _destroyWorld);
 		_registerCollisionHandler();
+	},
+
+	_destroyWorld = function() {
+		_pauseEngine();
+		world = null;
 	},
 
 	_registerCollisionHandler = function(){
