@@ -30,6 +30,9 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 				width : w,
 				height : h,
 				count: 20,
+			},
+			animations: {
+				run: [0,19]
 			}
 		}
 
@@ -49,7 +52,9 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		sprite.regY = imageData.frames.height/2;
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
-		sprite.play();
+		if(blobID == EntityConfig.REDBLOBID){
+			sprite.gotoAndPlay("run");
+		}		
 	},
 
 	_listeners = function(){
