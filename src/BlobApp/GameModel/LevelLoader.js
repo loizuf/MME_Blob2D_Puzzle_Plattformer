@@ -27,6 +27,7 @@ BlobApp.LevelLoader = (function() {
 	}
 
 	_initLayers = function() {
+		console.log("initlayers");
 		var w = mapData.tilesets[0].tilewidth;
 		var h = mapData.tilesets[0].tileheight;
 		var imageData = {

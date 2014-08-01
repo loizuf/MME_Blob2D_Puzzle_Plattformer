@@ -157,14 +157,6 @@ BlobApp.PhysicsHandler = (function() {
 		}	
 	},
 
-	_pauseEngine = function() {
-		TIMESTEP = 0;
-	},
-
-	_unpauseEngine = function() {
-		TIMESTEP = 1/20;
-	},
-
 	_applyForce = function(event, direction) {
 		var entity = direction.entity;
 		if((entity.m_linearVelocity.x > -3) && (entity.m_linearVelocity.x < 3)) {
@@ -315,15 +307,21 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('heliMove', _moveHeli);
 		// END: DUMMY HELI
 
-		$('body').on("onPause", _pauseEngine);
-		$('body').on("onUnpause", _unpauseEngine);
-		$('body').on("onDestroyPhysicsWorld", _destroyWorld);
+		$('body').on("destroyPhysics", _destroyWorld);
 		_registerCollisionHandler();
 	},
 
 	_destroyWorld = function() {
-		_pauseEngine();
-		world = null;
+		console.log("Zin'rok");
+		a = world.GetBodyList();
+		bodies = [];
+		actors = [];
+		while(a!=null){
+			tmp = a.GetNext();
+			world.DestroyBody(a);
+			a = tmp;
+		}
+		//$('body').trigger("onReloadGame");
 	},
 
 	_registerCollisionHandler = function(){

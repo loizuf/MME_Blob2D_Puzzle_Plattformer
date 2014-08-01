@@ -68,8 +68,8 @@ BlobApp.InputHandler = (function() {
         $body.on('keydown',_onKeyDown);
 
         /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-        player1 = prompt("Player1: Choose Control Method", "Type in \"Keyboard\" or \"Controller\"");
-        player2 = prompt("Player2: Choose Control Method", "Type in \"Keyboard\" or \"Controller\"");
+        player1 = "a"//prompt("Player1: Choose Control Method", "Type in \"Keyboard\" or \"Controller\"");
+        player2 = "a"//prompt("Player2: Choose Control Method", "Type in \"Keyboard\" or \"Controller\"");
         /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
         _initGamepads();

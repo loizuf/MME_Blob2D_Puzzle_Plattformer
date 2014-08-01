@@ -29,6 +29,7 @@ BlobApp.ViewController = (function() {
 	},
 
 	displayPauseScreen = function() {
+		_pauseGame();
 		var $pauseContainer = $('#pause-container');
 		var $gamecanvas = $('#canvas-container');
 		var $menuResume = $('#resume');
@@ -49,7 +50,23 @@ BlobApp.ViewController = (function() {
 	},
 
 	_restartGame = function() {
-		//needs to reload everything
+		var $gamecanvas = $('#canvas-container');
+		$gamecanvas.css('display', 'block');
+		_hidePauseScreen();
+		_clearScene();
+		$('body').trigger("destroyPhysics");
+		_resumeGame();
+	},
+
+	_clearScene = function(){
+		stage.removeAllChildren();
+	},
+
+	_pauseGame = function(){
+		createjs.Ticker.setFPS(0);
+	},
+	_resumeGame = function(){
+		createjs.Ticker.setFPS(30);
 	},
 
 	_showMenu = function() {
@@ -58,10 +75,9 @@ BlobApp.ViewController = (function() {
 
 	_proceedGame = function() {
 		var $gamecanvas = $('#canvas-container');
-
-		$(that).trigger('onProceedingRequested');
 		$gamecanvas.css('display', 'block');
 		_hidePauseScreen();
+		_resumeGame();
 	},
 
 	_ticker = function() {
@@ -80,6 +96,7 @@ BlobApp.ViewController = (function() {
 	},
 
 	_tick = function() {
+		console.log("tick");
 		var onTickRequest = $.Event('onTick');
 		$('body').trigger(onTickRequest);		
 	},
