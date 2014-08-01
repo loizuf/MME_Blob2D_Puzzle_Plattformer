@@ -39,6 +39,10 @@ BlobApp.ViewController = (function() {
 		$pauseContainer.css('display', 'block');
 		$gamecanvas.css('display', 'none');
 
+		$menuResume.unbind("click");
+		$menuRestart.unbind("click");
+		$menuMenu.unbind("click");
+
 		$menuResume.on('click', _proceedGame);
 		$menuRestart.on('click', _restartGame);
 		$menuMenu.on('click', _showMenu);
