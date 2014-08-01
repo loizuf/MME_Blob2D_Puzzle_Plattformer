@@ -17,6 +17,9 @@ BlobApp.ModelController = (function() {
 		//_blobPlayerTwo = BlobApp.BlobTwo.init();
 		_screenStateHandler = BlobApp.ScreenState.init();
 		_inputHandler = BlobApp.InputHandler.init();
+		_viewController = BlobApp.ViewController.init();
+		//_physicsHandler = BlobApp.PhysicsHandler.init();
+
 		_blobPlayerOne = new BlobApp.BlobPlayer1();
 		_blobPlayerTwo = new BlobApp.BlobPlayer2();
 		
@@ -49,10 +52,24 @@ BlobApp.ModelController = (function() {
 		$(_inputHandler).on("p1blobDeath",_onP1BlobDeath);
 		$(_inputHandler).on("p2blobDeath",_onP2BlobDeath);
 
+		$(_inputHandler).on("onPauseScreenRequested", _pauseGame);
+
+		$(_viewController).on("onProceedingRequested", _proceedGame);
+
 		$('body').on("blobEntityCreated",_onBlobEntityCreated);
 		$('body').on('onReAllowJump', _reAllowJump);
 		$('body').on("doorCreated", _onDoorCreated);
 		$('body').on('onPlayerWaitingChange', _onPlayerWaitingChange)
+	},
+
+
+	_proceedGame = function() {
+		$('body').trigger('onUnpause');
+	},
+
+	_pauseGame = function() {
+		_viewController.displayPauseScreen();
+		$('body').trigger('onPause');
 	},
 
 	_onDoorCreated = function(event, data){
