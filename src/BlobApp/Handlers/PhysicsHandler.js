@@ -303,7 +303,6 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('openDoor',_openDoor);
 		// START: DUMMY HELI
 		$('body').on('startHeli', _initHeli);
-
 		$('body').on('heliMove', _moveHeli);
 		// END: DUMMY HELI
 
@@ -314,14 +313,17 @@ BlobApp.PhysicsHandler = (function() {
 	_destroyWorld = function() {
 		console.log("Zin'rok");
 		a = world.GetBodyList();
-		bodies = [];
-		actors = [];
+
+		var cnt = 0;
 		while(a!=null){
+			cnt++;
+			console.log("destroying", cnt);
 			tmp = a.GetNext();
-			world.DestroyBody(a);
+			bodiesToRemove.push(a);
 			a = tmp;
 		}
-		//$('body').trigger("onReloadGame");
+
+		$('body').trigger("onReloadGame");
 	},
 
 	_registerCollisionHandler = function(){

@@ -219,7 +219,6 @@ BlobApp.LevelLoader = (function() {
 
 		_createRequestObject["sprite"] = blob.sprite;
 		_createRequestObject["userData"] = [EntityConfig.GREENBLOBID,undefined];
-
 		$('body').trigger('blobRequested', _createRequestObject);
 	},
 

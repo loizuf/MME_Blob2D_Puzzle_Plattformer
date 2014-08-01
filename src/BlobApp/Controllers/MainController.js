@@ -34,11 +34,13 @@ BlobApp.MainController = (function() {
 
 	_reload = function(){
 		console.log("reloading game");
-		_modelController = null,
-		_viewController = null,
-		_physicsHandler = null,
-		_levelloader = null,
-		init();
+		_modelController = undefined,
+		_levelloader = undefined;
+		_modelController = BlobApp.ModelController;
+		_levelloader = BlobApp.LevelLoader;
+		_modelController.init();
+		_levelloader.init();
+
 	},
 
 	_sceneUpdate = function(){

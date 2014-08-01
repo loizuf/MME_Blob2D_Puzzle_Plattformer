@@ -50,12 +50,13 @@ BlobApp.ViewController = (function() {
 	},
 
 	_restartGame = function() {
+		//if(restarting){return;}
 		var $gamecanvas = $('#canvas-container');
 		$gamecanvas.css('display', 'block');
 		_hidePauseScreen();
 		_clearScene();
 		$('body').trigger("destroyPhysics");
-		_resumeGame();
+		_tick();
 	},
 
 	_clearScene = function(){
@@ -90,7 +91,6 @@ BlobApp.ViewController = (function() {
 		canvas = document.getElementById('gameCanvas');
 		debugCanvas = document.getElementById('debugCanvas');
 		context = canvas.getContext("2d");
-
 		stage = new createjs.Stage(canvas);
 		stage.snapPixelsEnabled = true;
 	},
