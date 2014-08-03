@@ -1,14 +1,18 @@
 BlobApp.ViewController = (function() {
 	var that = {},
 	canvas, context, debugCanvas, debugContext, stage,
-	b2ddebug = true,
 
+	b2ddebug = true,
 	init = function() {
 		_initView();
 		_ticker();
 		_listener();
 
 		return that;
+	},
+
+	resetGame = function() {
+		init();
 	},
 
 	applyEntity = function(event, data) {
@@ -28,7 +32,7 @@ BlobApp.ViewController = (function() {
 		}
 	},
 
-	displayPauseScreen = function() {
+	_displayPauseScreen = function() {
 		_pauseGame();
 		var $pauseContainer = $('#pause-container');
 		var $gamecanvas = $('#canvas-container');
@@ -61,6 +65,7 @@ BlobApp.ViewController = (function() {
 		_clearScene();
 		$('body').trigger("destroyPhysics");
 		_tick();
+		_resumeGame();
 	},
 
 	_clearScene = function(){
@@ -76,9 +81,20 @@ BlobApp.ViewController = (function() {
 
 	_showMenu = function() {
 		// needs unload everything (world, physics, level etc.)
+		var $gamecanvas = $('#canvas-container');
+		$gamecanvas.css('display', 'block');
+
+		var menu = $('#menu-container');
+		menu.css('display', 'block');
+
+		_clearScene();
+		$('body').trigger("resetGame");
+		_tick();
+		
 	},
 
 	_proceedGame = function() {
+		$(that).trigger('onProceedingRequested');
 		var $gamecanvas = $('#canvas-container');
 		$gamecanvas.css('display', 'block');
 		_hidePauseScreen();
@@ -115,12 +131,12 @@ BlobApp.ViewController = (function() {
 		$('body').on('blobRequested', applyEntity);
 		$('body').on('backgroundAdded', applyBackground);
 		$('body').on('viewOpenDoor', _deleteDoor);
+		$('body').on('onPause', _displayPauseScreen);
 	};
 
 	that.init = init;
 	that.applyEntity = applyEntity;
 	that.update = update;
-	that.displayPauseScreen = displayPauseScreen;
 
 	return that;
 })();

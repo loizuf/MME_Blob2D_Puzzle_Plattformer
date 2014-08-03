@@ -1,6 +1,8 @@
 BlobApp.PhysicsHandler = (function() {
 	var that = {},
 
+	isResetted = false;
+
 	SCALE = 30, STEP = 20, TIMESTEP = 1/20;
 	
 	var b2Vec2 = Box2D.Common.Math.b2Vec2;
@@ -30,10 +32,26 @@ BlobApp.PhysicsHandler = (function() {
 	init = function(){
 		_setupPhysics();
 		_registerListener();
-		return that;
-	};
 
+		return that;
+	},
+
+	_resetGame = function() {
+		a = world.GetBodyList();
+
+		var cnt = 0;
+		while(a!=null){
+			cnt++;
+			console.log("destroying", cnt);
+			tmp = a.GetNext();
+			bodiesToRemove.push(a);
+			a = tmp;
+		}
 	
+		$('body').trigger('onResetGame');
+		
+	},
+
 	_setupPhysics = function() {
 		/* die borders noch schöner gestalten?! */
 		var debugDraw = new b2DebugDraw();
@@ -232,6 +250,7 @@ BlobApp.PhysicsHandler = (function() {
 	// Heli stuff
 	heliIsActive = false,
 	heliBody = undefined,
+
 	_initHeli = function() {
 		if(heliIsActive) return;
 		heliIsActive = true;
@@ -307,6 +326,7 @@ BlobApp.PhysicsHandler = (function() {
 		// END: DUMMY HELI
 
 		$('body').on("destroyPhysics", _destroyWorld);
+		$('body').on("resetGame", _resetGame);
 		_registerCollisionHandler();
 	},
 

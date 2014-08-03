@@ -10,7 +10,6 @@ BlobApp.MainController = (function() {
 	_levelloader = null,
 
 	init = function(){
-		console.log("started");
 		_initModules();
 		_registerListeners();
 	},
@@ -30,6 +29,7 @@ BlobApp.MainController = (function() {
 	_registerListeners = function(){
 		$("body").on('onTick', _sceneUpdate);
 		$("body").on('onReloadGame', _reload);
+		$('body').on('onResetGame', _reset);
 	},
 
 	_reload = function(){
@@ -40,8 +40,12 @@ BlobApp.MainController = (function() {
 		_levelloader = BlobApp.LevelLoader;
 		_modelController.init();
 		_levelloader.init();
-
 	},
+
+	_reset = function() {
+		console.log("resetting game");
+		
+	}
 
 	_sceneUpdate = function(){
 		_physicsHandler.update();

@@ -3,10 +3,12 @@ BlobApp.BlobGame = (function() {
 
 	init = function(){
 		var $menuplay = $('#menu-play');
-		$menuplay.on('click', startGame);
+		$menuplay.unbind("click");
+		$menuplay.on('click', _startGame);
+
 	},
 
-	startGame = function(){
+	_startGame = function(){
 		var $menucontainer = $('#menu-container');
 		var $gamecanvas = $('#canvas-container');
 		
