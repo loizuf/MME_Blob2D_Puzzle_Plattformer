@@ -8,7 +8,8 @@ BlobApp.BlobGame = (function() {
 
 	},
 
-	_startGame = function(){
+	_startGame = function(){		
+		$('body').unbind();
 		var $menucontainer = $('#menu-container');
 		var $gamecanvas = $('#canvas-container');
 		
