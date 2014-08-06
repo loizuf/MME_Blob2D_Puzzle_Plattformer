@@ -324,11 +324,12 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('startHeli', _initHeli);
 		$('body').on('heliMove', _moveHeli);
 		// END: DUMMY HELI
-		$('body').on("restartPhys", restartPhys);
+		$('body').on("restartPhys", _restartPhys);
 		$('body').on("destroyPhysics", _destroyWorld);
 		$('body').on("resetGame", _resetGame);
 		_registerCollisionHandler();
 	},
+	
 	_restartPhys = function(){
 		console.log("whey");
 		lastTimestamp = Date.now();
