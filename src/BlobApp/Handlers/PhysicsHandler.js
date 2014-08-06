@@ -274,8 +274,8 @@ BlobApp.PhysicsHandler = (function() {
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
 
-	//	if(userData == EntityConfig.REDBLOBID){
-			fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, ((TILESIZEY*2)-1 )/ SCALE);
+		//	if(userData == EntityConfig.REDBLOBID){
+		fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, ((TILESIZEY*2)-1 )/ SCALE);
 		//}else{
 		//	fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, (TILESIZEY-1) / SCALE);
 		//}
@@ -324,12 +324,15 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('startHeli', _initHeli);
 		$('body').on('heliMove', _moveHeli);
 		// END: DUMMY HELI
-
+		$('body').on("restartPhys", restartPhys);
 		$('body').on("destroyPhysics", _destroyWorld);
 		$('body').on("resetGame", _resetGame);
 		_registerCollisionHandler();
 	},
-
+	_restartPhys = function(){
+		console.log("whey");
+		lastTimestamp = Date.now();
+	},
 	_destroyWorld = function() {
 		console.log("Zin'rok");
 		a = world.GetBodyList();

@@ -74,8 +74,10 @@ BlobApp.ViewController = (function() {
 
 	_pauseGame = function(){
 		createjs.Ticker.setFPS(0);
+		
 	},
 	_resumeGame = function(){
+		$('body').trigger("restartPhys");
 		createjs.Ticker.setFPS(30);
 	},
 
