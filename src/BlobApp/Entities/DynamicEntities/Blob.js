@@ -2,7 +2,9 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 
 	var that = this,
 	blobID = blobID,
-	sprite, tilesetSheet, tileset;
+	sprite, 
+	tilesetSheet, 
+	tileset;
 
 	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
 	
@@ -53,6 +55,7 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("idle1");
+		console.log(sprite);
 	},
 
 
@@ -61,12 +64,13 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 	},
 
 	_showAnimation = function(name) {
+		console.log(sprite);
 		sprite.gotoAndPlay(name);
 	},
 
 	_animate = function(event, data){
-		console.log(data);
-		if(blobID==data.blobID){
+			if(blobID==data.blobID){
+			console.log("hello",data.animationKey);
 			switch(data.animationKey){
 				case AnimationKeys.IDLE1:
 					_showAnimation("idle1");
