@@ -2,8 +2,7 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 
 	var that = this,
 	blobID = blobID,
-	sprite, tilesetSheet;
-
+	sprite, tilesetSheet, tileset;
 
 	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
 	
@@ -11,10 +10,10 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		tileset = new Image();
 		var height;
 		if(blobID == EntityConfig.REDBLOBID){
-			tileset.src = "res/img/redBlobMoveRight.png"//mapData.tilesets[0].image;
+			tileset.src = "res/img/redBlobMove.png"//mapData.tilesets[0].image;
 			height = sizeY;
 		}else{
-			tileset.src = "res/img/blob.png"//mapData.tilesets[0].image;
+			tileset.src = "res/img/greenBlobMove.png"//mapData.tilesets[0].image;
 			height = sizeY;
 		}
 		// getting imagefile from first tileset
@@ -29,10 +28,11 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 			frames : {
 				width : w,
 				height : h,
-				count: 20,
 			},
 			animations: {
-				run: [0,19]
+				runRight: [0,19],
+				runLeft: [20,39],
+				idle1: [40,59]
 			}
 		}
 
@@ -52,25 +52,30 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		sprite.regY = imageData.frames.height/2;
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
-		if(blobID == EntityConfig.REDBLOBID){
-			sprite.gotoAndPlay("run");
-		}		
+		sprite.gotoAndPlay("idle1");
 	},
+
 
 	_listeners = function(){
 		$('body').on('blobanimationChanged', _animate);
 	},
 
-	_animate = function(event, data){
-		if(this.blobID==data.blobID){
-			switch(data.animationKey){
-				case IDLE:
-					gotoAndPlay
-				break;
-				case MOVERIGHT:
+	_showAnimation = function(name) {
+		sprite.gotoAndPlay(name);
+	},
 
+	_animate = function(event, data){
+		console.log(data);
+		if(blobID==data.blobID){
+			switch(data.animationKey){
+				case AnimationKeys.IDLE1:
+					_showAnimation("idle1");
 				break;
-				case MOVELEFT:
+				case AnimationKeys.MOVERIGHT:
+					_showAnimation("runRight");
+				break;
+				case AnimationKeys.MOVELEFT:
+					_showAnimation("runLeft");
 				break;
 			}
 		}

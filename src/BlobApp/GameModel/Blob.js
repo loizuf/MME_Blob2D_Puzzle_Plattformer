@@ -28,6 +28,8 @@ BlobApp.BlobSuperClass = function() {
 	REDBLOBYSPEED = 9.3,
 	GREENBLOBYSPEED = 3.8,
 
+	_blobID,
+
 
 	/* 
 		current<Direction>: Function that is called when the key is pressed
@@ -86,6 +88,7 @@ BlobApp.BlobSuperClass = function() {
 	this._moveLeft = function() {
 		if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID){
 			$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -1*REDBLOBXSPEED, directionY: 0});
+			
 		}else{
 			$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -1*GREENBLOBXSPEED, directionY: 0});
 		}
@@ -131,6 +134,12 @@ BlobApp.BlobSuperClass = function() {
 		if(keyUpPressed) _currentUp();
 		if(keyDownPressed) _currentDown();
 
+		/*if(!keyLeftPressed && !keyUpPressed && !keyDownPressed && !keyRightPressed) {
+			$('body').trigger('blobanimationChanged', {
+				"blobID" : _blobID,
+				"animationKey" : AnimationKeys.IDLE1
+			});
+		} */
 	},
 
 	// These functions are called when a button is pressed
@@ -138,6 +147,11 @@ BlobApp.BlobSuperClass = function() {
 		if(pressed) {
 			keyLeftPressed = true;
 			keyRightPressed = false;
+
+			$('body').trigger('blobanimationChanged', {
+				"blobID" : _blobID,
+				"animationKey" : AnimationKeys.MOVELEFT
+			});
 		} else {
 			keyLeftPressed = false;
 		}
@@ -147,6 +161,11 @@ BlobApp.BlobSuperClass = function() {
 		if(pressed) {
 			keyRightPressed = true;
 			keyLeftPressed = false;
+
+			$('body').trigger('blobanimationChanged', {
+				"blobID" : _blobID,
+				"animationKey" : AnimationKeys.MOVERIGHT
+			});
 		} else {
 			keyRightPressed = false;
 		}
@@ -197,6 +216,7 @@ BlobApp.BlobSuperClass = function() {
 
 	this.setEntity = function(entity){
 		_blobEntity = entity;
+		_blobID = _blobEntity.GetUserData()[0];
 	},
 
 	this.setWaitingForOther = function(waiting) {
