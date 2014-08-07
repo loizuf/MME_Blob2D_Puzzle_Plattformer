@@ -9,12 +9,13 @@ BlobApp.MainController = (function() {
 	_physicsHandler = null,
 	_levelloader = null,
 
-	init = function(){
-		_initModules();
+	init = function(lvlID){
+		_initModules(lvlID);
 		_registerListeners();
 	},
 
-	_initModules = function() {
+	_initModules = function(lvlID) {
+		console.log("main control", lvlID);
 		_modelController = BlobApp.ModelController;
 		_viewController = BlobApp.ViewController;
 		_physicsHandler = BlobApp.PhysicsHandler;
@@ -23,7 +24,7 @@ BlobApp.MainController = (function() {
 		_modelController.init();
 		_viewController.init();
 		_physicsHandler.init();
-		_levelloader.init();
+		_levelloader.init(lvlID);
 	},
 
 	_registerListeners = function(){
@@ -45,7 +46,7 @@ BlobApp.MainController = (function() {
 	_reset = function() {
 		console.log("resetting game");
 		
-	}
+	},
 
 	_sceneUpdate = function(){
 		_physicsHandler.update();
