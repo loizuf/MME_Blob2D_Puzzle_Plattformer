@@ -15,4 +15,10 @@ EntityConfig = {
 
 
 
+},
+
+AnimationKeys = {
+	MOVELEFT: 0,
+	MOVERIGHT: 1,
+	IDLE1: 2
 }

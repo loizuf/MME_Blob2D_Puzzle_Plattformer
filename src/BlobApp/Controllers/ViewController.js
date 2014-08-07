@@ -2,7 +2,7 @@ BlobApp.ViewController = (function() {
 	var that = {},
 	canvas, context, debugCanvas, debugContext, stage,
 
-	b2ddebug = true,
+	b2ddebug = false,
 	init = function() {
 		_initView();
 		_ticker();
@@ -74,8 +74,10 @@ BlobApp.ViewController = (function() {
 
 	_pauseGame = function(){
 		createjs.Ticker.setFPS(0);
+		
 	},
 	_resumeGame = function(){
+		$('body').trigger("restartPhys");
 		createjs.Ticker.setFPS(30);
 	},
 
@@ -116,7 +118,7 @@ BlobApp.ViewController = (function() {
 	},
 
 	_tick = function() {
-		console.log("tick");
+		//console.log("tick");
 		var onTickRequest = $.Event('onTick');
 		$('body').trigger(onTickRequest);		
 	},
