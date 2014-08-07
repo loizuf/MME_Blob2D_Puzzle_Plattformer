@@ -126,12 +126,17 @@ BlobApp.ViewController = (function() {
 		stage.removeChildAt(i);
 	},
 
+	_onLevelFinished = function() {
+		_showMenu();
+	},
+
 	_listener = function(){
 		$('body').on('genericRequested',applyEntity);
 		$('body').on('blobRequested', applyEntity);
 		$('body').on('backgroundAdded', applyBackground);
 		$('body').on('viewOpenDoor', _deleteDoor);
 		$('body').on('onPause', _displayPauseScreen);
+		$('body').on('levelFinished', _onLevelFinished);
 	};
 
 	that.init = init;

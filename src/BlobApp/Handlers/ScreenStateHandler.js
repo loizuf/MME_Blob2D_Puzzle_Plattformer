@@ -66,7 +66,7 @@ BlobApp.ScreenState = ( function() {
 		}
 
 		if(player1State == PLAYER_STATES[2] && player2State == PLAYER_STATES[2]) {
-			// trigger success
+			$("body").trigger('levelFinished');
 		}
 	},
 

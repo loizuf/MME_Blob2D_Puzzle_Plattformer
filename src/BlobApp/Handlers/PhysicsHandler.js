@@ -3,7 +3,8 @@ BlobApp.PhysicsHandler = (function() {
 
 	isResetted = false;
 
-	SCALE = 30, STEP = 20, TIMESTEP = 1/20;
+	SCALE = 30, STEP = 20, TIMESTEP = 1/20,
+	PLAYER_ONE_NAME = "p1", PLAYER_TWO_NAME="p2";
 	
 	var b2Vec2 = Box2D.Common.Math.b2Vec2;
 	var b2BodyDef = Box2D.Dynamics.b2BodyDef;
@@ -395,7 +396,10 @@ BlobApp.PhysicsHandler = (function() {
 			break;
 			case EntityConfig.KEYID:
 				_pickUpKey(bodyA, bodyB);
-				break;
+			break;
+			case EntityConfig.GOALID:
+				_attemptFinish(EntityConfig.GREENBLOBID);
+			break;
 
 		}
 	},
@@ -423,9 +427,21 @@ BlobApp.PhysicsHandler = (function() {
 			break;
 			case EntityConfig.KEYID:
 				_pickUpKey(bodyA, bodyB);
-				break;
+			break;
+			case EntityConfig.GOALID:
+				_attemptFinish(EntityConfig.REDBLOBID);
+			break;
 		}
 
+	},
+
+	_attemptFinish = function(blobID) {
+		console.log(blobID);
+		if(blobID == EntityConfig.REDBLOBID){
+			$('body').trigger('blobFinishAttempt', PLAYER_ONE_NAME);
+		} else if(blobID == EntityConfig.GREENBLOBID){
+			$('body').trigger('blobFinishAttempt', PLAYER_TWO_NAME);
+		}
 	},
 
 	_pickUpKey = function(bodyA, bodyB) {

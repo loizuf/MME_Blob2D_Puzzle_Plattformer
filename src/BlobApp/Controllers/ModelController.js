@@ -57,7 +57,14 @@ BlobApp.ModelController = (function() {
 		$('body').on("blobEntityCreated",_onBlobEntityCreated);
 		$('body').on('onReAllowJump', _reAllowJump);
 		$('body').on("doorCreated", _onDoorCreated);
-		$('body').on('onPlayerWaitingChange', _onPlayerWaitingChange)
+		$('body').on('onPlayerWaitingChange', _onPlayerWaitingChange);
+
+		$('body').on('blobFinishAttempt', _onBlobFinishAttempt);
+		$('body').on('levelFinished', _onLevelFinished);
+	},
+
+	_onBlobFinishAttempt = function(event, blobID) {
+		_screenStateHandler.finishBlob(blobID);
 	},
 
 	_proceedGame = function() {
