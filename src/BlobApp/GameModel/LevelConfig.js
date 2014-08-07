@@ -138,7 +138,5 @@ LevelConfig = {
 		"tilewidth":25,
 		"version":1,
 		"width":33
-	},
-
-	TEST : 1
+	}
 }
