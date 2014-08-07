@@ -34,7 +34,11 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 			animations: {
 				runRight: [0,19],
 				runLeft: [20,39],
-				idle1: [40,59]
+				idle1: [40,59],
+				jumpRight: [60, 79, "jumpEndRight"],
+				jumpEndRight: [79],
+				jumpLeft: [80, 99, "jumpEndLeft"],
+				jumpEndLeft: [99]
 			}
 		}
 
@@ -74,6 +78,12 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 				break;
 				case AnimationKeys.MOVELEFT:
 					sprite.gotoAndPlay("runLeft");
+				break;
+				case AnimationKeys.JUMPRIGHT:
+					sprite.gotoAndPlay("jumpRight");
+				break;
+				case AnimationKeys.JUMPLEFT:
+					sprite.gotoAndPlay("jumpLeft");
 				break;
 			}
 		}

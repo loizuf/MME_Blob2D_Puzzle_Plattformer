@@ -106,6 +106,22 @@ BlobApp.BlobSuperClass = function() {
 
 	// Makes the Blob jump
 	this._jump = function() {
+		// Animation
+		// TODO, impossible with easel?? switch between animations mid-jump
+		if(_jumpAllowed) {
+			if(!keyLeftPressed)
+				$('body').trigger('blobanimationChanged', {
+					"blobID" : _blobID,
+					"animationKey" : AnimationKeys.JUMPRIGHT
+				});
+			else 
+				$('body').trigger('blobanimationChanged', {
+					"blobID" : _blobID,
+					"animationKey" : AnimationKeys.JUMPLEFT	
+				});				
+		}
+
+
 		if(_jumpAllowed != false) {
 			if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID){
 				$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*REDBLOBYSPEED});
@@ -126,6 +142,12 @@ BlobApp.BlobSuperClass = function() {
 
 	this.allowJump = function() {
 		_jumpAllowed = true;
+
+		$('body').trigger('blobanimationChanged', {
+			"blobID" : _blobID,
+			"animationKey" : AnimationKeys.IDLE1
+		});
+
 	},
 
 	_callDirections = function() {
@@ -147,11 +169,11 @@ BlobApp.BlobSuperClass = function() {
 		if(pressed) {
 			keyLeftPressed = true;
 			keyRightPressed = false;
-
-			$('body').trigger('blobanimationChanged', {
-				"blobID" : _blobID,
-				"animationKey" : AnimationKeys.MOVELEFT
-			});
+			if(_jumpAllowed)
+				$('body').trigger('blobanimationChanged', {
+					"blobID" : _blobID,
+					"animationKey" : AnimationKeys.MOVELEFT
+				});
 		} else {
 			keyLeftPressed = false;
 		}
@@ -162,10 +184,11 @@ BlobApp.BlobSuperClass = function() {
 			keyRightPressed = true;
 			keyLeftPressed = false;
 			//console.log(_blobID);
-			$('body').trigger('blobanimationChanged', {
-				"blobID" : _blobID,
-				"animationKey" : AnimationKeys.MOVERIGHT
-			});
+			if(_jumpAllowed)	
+				$('body').trigger('blobanimationChanged', {
+					"blobID" : _blobID,
+					"animationKey" : AnimationKeys.MOVERIGHT
+				});
 		} else {
 			keyRightPressed = false;
 		}
