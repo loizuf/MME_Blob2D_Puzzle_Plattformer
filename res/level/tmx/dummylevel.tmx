@@ -4,20 +4,20 @@
   <property name="mapBackground" value="res/img/levelBackground.png"/>
  </properties>
  <tileset firstgid="1" name="Tileset" tilewidth="25" tileheight="25">
-  <image source="../img/Tileset.png" width="500" height="500"/>
+  <image source="../../img/Tileset.png" width="400" height="250"/>
  </tileset>
  <layer name="Kachelebene 2" width="33" height="25">
   <data encoding="base64" compression="zlib">
-   eJxbyMDAoEUlHEWGnkVALM5APRBGhh7RUTfQxA2TBoEbyAGD3Q1NQJwzwG7Al76cBoEbyEn/+NzgBsTZWPB0OrqBnDRJiRtA6QzZr9ED4IY6ND454ZABxFkMmHFHbB6ihhtAgJzykNpuoAQMBjdMY0CNt8FeVo+6Yei7gdT6jBZuILUMHSxu2ArETFTE7iSq3wbEAO44HX4=
+   eJxrZGBgUKIS9iJDTxMQCzNQD7iRoUdw1A00cUPZIHADOWCwuyELiCMG2A340pfZIHADOekfnxusgDgcC66moxvISZOUuAGUzpD96j0AbkhD45MTDiFAHMaAGXfE5iFquAEEyCkPqe0GSsBgcEMVA2q8DfayetQNQ98NpNZntHADqWXoYHHDRCBmoiK2JlH9JCAGALZyGAI=
   </data>
  </layer>
  <layer name="ObjectLayer" width="33" height="25">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUEAsqoXgUjAzAO9AOAALFgXYAFQA/Gn8w5KFsIM4ZaEcMMTAY4o1eIINheKYRkL8yGSB+g+HB6sehnN64B9oBQCA/AHYOtjYSANfGCEs=
+   eJxjYBgFo2AUEAsSoXgUjAzAO9AOAALZgXYAFQA/Gn8w5KFwII4YaEcMMTAY4o1eIIRheKYRkL9CGSB+g+HB6sehnN64B9oBQCA9AHYOtjYSAF9MBr8=
   </data>
  </layer>
  <objectgroup name="Objektebene 1" width="33" height="25">
   <object name="GreenBlob" gid="7" x="93" y="594"/>
-  <object name="RedBlob" gid="29" x="129" y="597"/>
+  <object name="RedBlob" gid="25" x="129" y="597"/>
  </objectgroup>
 </map>
