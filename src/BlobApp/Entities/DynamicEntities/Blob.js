@@ -55,7 +55,6 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("idle1");
-		console.log(sprite);
 	},
 
 
@@ -66,7 +65,6 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 	_animate = function(event, data){
 			if(blobID==data.blobID){
 		
-			console.log("hello",data.animationKey);
 			switch(data.animationKey){
 				case AnimationKeys.IDLE1:
 					sprite.gotoAndPlay("idle1");

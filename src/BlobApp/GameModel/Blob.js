@@ -161,7 +161,7 @@ BlobApp.BlobSuperClass = function() {
 		if(pressed) {
 			keyRightPressed = true;
 			keyLeftPressed = false;
-			console.log(_blobID);
+			//console.log(_blobID);
 			$('body').trigger('blobanimationChanged', {
 				"blobID" : _blobID,
 				"animationKey" : AnimationKeys.MOVERIGHT

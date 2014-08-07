@@ -60,7 +60,7 @@ BlobApp.ModelController = (function() {
 		$('body').on('onPlayerWaitingChange', _onPlayerWaitingChange);
 
 		$('body').on('blobFinishAttempt', _onBlobFinishAttempt);
-		$('body').on('levelFinished', _onLevelFinished);
+		//$('body').on('levelFinished', _onLevelFinished);
 	},
 
 	_onBlobFinishAttempt = function(event, blobID) {
