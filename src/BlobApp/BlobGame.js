@@ -16,9 +16,11 @@ BlobApp.BlobGame = (function() {
 		
 		var $selectLevel1 = $('#level1');
 		var $selectLevel2 = $('#level2');
+		var $selectLevel3 = $('#level3');
 
 		$selectLevel1.click({lvlID:1}, _startGame);
 		$selectLevel2.click({lvlID:2}, _startGame);
+		$selectLevel3.click({lvlID:3}, _startGame);
 	},
 
 	_startGame = function(event) {
