@@ -90,7 +90,7 @@ BlobApp.ScreenState = ( function() {
 		}
 
 	};
-
+	that.onPlayerReachGoal = onPlayerReachGoal;
 	that.doorCreated = doorCreated;
 	that.init = init;
 	return that;

@@ -1,11 +1,11 @@
-BlobApp.Key = (function Key(x_pos, y_pos, sizeX, sizeY, keyID) {
+BlobApp.Goal = (function Goal(x_pos, y_pos, sizeX, sizeY, GOALID) {
 	this.prototype = new BlobApp.DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY);
 
 	var sprite, tilesetSheet;
 
 	this.prototype.init =function(){
 		var tileset = new Image();
-		tileset.src = "res/img/key.png"
+		tileset.src = "res/img/goal.png"
 		// callback for loading sprite after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
 	},	
@@ -25,18 +25,18 @@ BlobApp.Key = (function Key(x_pos, y_pos, sizeX, sizeY, keyID) {
 		tilesetSheet = new createjs.SpriteSheet(imageData);
 
 		sprite = new createjs.Sprite(tilesetSheet);
-
 		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = w/2;
-		sprite.regY = h/2;
+		sprite.regX = imageData.frames.width/2;
+		sprite.regY = imageData.frames.height/2;
 		sprite.x = x_pos;
 		sprite.y = y_pos;
 
+	
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 	},
 
 	this.prototype.init();
-	this.keyID = keyID;
+	this.keyID = GOALID;
 	this.sprite = sprite;
 });

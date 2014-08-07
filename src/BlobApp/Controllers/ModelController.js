@@ -64,7 +64,7 @@ BlobApp.ModelController = (function() {
 	},
 
 	_onBlobFinishAttempt = function(event, blobID) {
-		_screenStateHandler.finishBlob(blobID);
+		_screenStateHandler.onPlayerReachGoal(blobID);
 	},
 
 	_proceedGame = function() {

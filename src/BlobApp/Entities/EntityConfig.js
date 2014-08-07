@@ -10,7 +10,8 @@ EntityConfig = {
 	DOORLOWERID: 77,
 	KEYID: 15,
 	SPIKEID : 1000,
-	GOALID: 66
+	GOALID: 13,
+	GOADLLOWERID: 29
 	/* any other special id!*/
 
 

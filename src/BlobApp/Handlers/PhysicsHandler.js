@@ -216,19 +216,20 @@ BlobApp.PhysicsHandler = (function() {
 	}, 
 
 	_applyKey = function(event, data) {
+		var sprite = data.sprite;
+		console.log(data.height);
 		var fixture = new b2FixtureDef;
 		fixture.density = 1;
 		fixture.restitution = 0;
 		fixture.friction = 0;
-
 		fixture.shape = new b2PolygonShape;
-		fixture.shape.SetAsBox(TILESIZEX/SCALE, TILESIZEY/SCALE);
+		fixture.shape.SetAsBox(TILESIZEX/SCALE, (data.height*TILESIZEY)/SCALE);
 
 		var bodyDef = new b2BodyDef;
 		bodyDef.type = b2Body.b2_staticBody;
 
-		bodyDef.position.x = (data.x) / SCALE;
-		bodyDef.position.y = (data.y) / SCALE;
+		bodyDef.position.x = (sprite.x) / SCALE;
+		bodyDef.position.y = (sprite.y+12) / SCALE;
 
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
@@ -391,9 +392,6 @@ BlobApp.PhysicsHandler = (function() {
 			//console.log("verticalBorder collided");
 			break;
 			case EntityConfig.HORIZONTALBORDERID:
-				if(contact.m_manifold.m_localPlaneNormal.y>0){
-					$('body').trigger('onReAllowJump', bodyA);
-				}
 			break;
 			case EntityConfig.BUTTONID:
 				_handleButtonCollison(bodyB, contact);
@@ -406,12 +404,17 @@ BlobApp.PhysicsHandler = (function() {
 			break;
 
 		}
+		if(contact.m_manifold.m_localPlaneNormal.y>0){
+			$('body').trigger('onReAllowJump', bodyA);
+		}
 	},
 	_handleRedBlobCollision = function(bodyA,bodyB, bID, contact){
 		//console.log("redblob collided");
+		var notTramped = true;
 		switch(bID){
 			case EntityConfig.GREENBLOBID:
 				// Trampolin
+				notTramped = false;
 				if(contact.m_manifold.m_localPlaneNormal.y>0){
 					y = contact.m_fixtureA.m_body.GetLinearVelocity().y;
 					_applyForceJump(null, {"entity" : bodyA, "directionX" : 0, "directionY" : -2.2*y});
@@ -421,9 +424,6 @@ BlobApp.PhysicsHandler = (function() {
 			//console.log("verticalBorder collided");
 			break;
 			case EntityConfig.HORIZONTALBORDERID:
-			if(contact.m_manifold.m_localPlaneNormal.y>0){
-				$('body').trigger('onReAllowJump', bodyA);
-			}
 			//console.log("horizontalborder collided");
 			break;
 			case EntityConfig.BUTTONID:
@@ -435,6 +435,9 @@ BlobApp.PhysicsHandler = (function() {
 			case EntityConfig.GOALID:
 				_attemptFinish(EntityConfig.REDBLOBID);
 			break;
+		}
+		if(contact.m_manifold.m_localPlaneNormal.y>0 && notTramped){
+			$('body').trigger('onReAllowJump', bodyA);
 		}
 
 	},
