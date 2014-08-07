@@ -229,7 +229,7 @@ BlobApp.PhysicsHandler = (function() {
 		bodyDef.type = b2Body.b2_staticBody;
 
 		bodyDef.position.x = (sprite.x) / SCALE;
-		bodyDef.position.y = (sprite.y+12) / SCALE;
+		bodyDef.position.y = (sprite.y) / SCALE;
 
 		var entity = world.CreateBody(bodyDef);
 		entity.CreateFixture(fixture);
