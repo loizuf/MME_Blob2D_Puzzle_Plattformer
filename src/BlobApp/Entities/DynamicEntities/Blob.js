@@ -63,23 +63,19 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		$('body').on('blobanimationChanged', _animate);
 	},
 
-	_showAnimation = function(name) {
-		console.log(sprite);
-		sprite.gotoAndPlay(name);
-	},
-
 	_animate = function(event, data){
 			if(blobID==data.blobID){
+		
 			console.log("hello",data.animationKey);
 			switch(data.animationKey){
 				case AnimationKeys.IDLE1:
-					_showAnimation("idle1");
+					sprite.gotoAndPlay("idle1");
 				break;
 				case AnimationKeys.MOVERIGHT:
-					_showAnimation("runRight");
+					sprite.gotoAndPlay("runRight");
 				break;
 				case AnimationKeys.MOVELEFT:
-					_showAnimation("runLeft");
+					sprite.gotoAndPlay("runLeft");
 				break;
 			}
 		}
