@@ -21,5 +21,7 @@ EntityConfig = {
 AnimationKeys = {
 	MOVELEFT: 0,
 	MOVERIGHT: 1,
-	IDLE1: 2
+	IDLE1: 2,
+	JUMPRIGHT: 3,
+	JUMPLEFT: 4
 }

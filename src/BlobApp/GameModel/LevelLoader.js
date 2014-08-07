@@ -2,13 +2,16 @@ BlobApp.LevelLoader = (function() {
 	var that = {},
 	tileset,
 	mapData,
+	levelID,
 	/* need to be extracted from json!*/
 	_createRequestObject = {
 		"sprite" : undefined,
 		"userData" : undefined
 	},
 
-	init = function(){
+	init = function(lvlID){
+		levelID = lvlID;
+		console.log("level load", levelID);
 		_initBackground();
 		mapData = mapDataJson;
 
