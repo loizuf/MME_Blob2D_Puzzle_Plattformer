@@ -225,6 +225,8 @@ BlobApp.PhysicsHandler = (function() {
 		fixture.shape = new b2PolygonShape;
 		fixture.shape.SetAsBox(TILESIZEX/SCALE, (data.height*TILESIZEY)/SCALE);
 
+		fixture.isSensor = true;
+
 		var bodyDef = new b2BodyDef;
 		bodyDef.type = b2Body.b2_staticBody;
 
