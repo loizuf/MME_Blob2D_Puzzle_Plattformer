@@ -264,11 +264,12 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_createGoal = function(x, y) {
-		var entity = new BlobApp.Goal(x, y, 25, 50, EntityConfig.GOALID);
+		var entity = new BlobApp.Goal(x, y+12.5, 25, 50, EntityConfig.GOALID);
 
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.GOALID];
 		_createRequestObject["height"] = 2;
+
 		$('body').trigger("keyRequested", _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
 	},
