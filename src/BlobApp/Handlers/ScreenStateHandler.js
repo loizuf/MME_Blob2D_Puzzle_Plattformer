@@ -59,13 +59,15 @@ BlobApp.ScreenState = ( function() {
 	},
 
 	onPlayerReachGoal = function(player) {
-		if(player == PLAYER_1_NAME) {
-			player1State = PLAYER_STATES[2];
-		} else {
-			player2State = PLAYER_STATES[2];
-		}
-		if(player1State == PLAYER_STATES[2] && player2State == PLAYER_STATES[2]) {
-			$("body").trigger('levelFinished');
+		if(keyPickedUp){
+			if(player == PLAYER_1_NAME) {
+				player1State = PLAYER_STATES[2];
+			} else {
+				player2State = PLAYER_STATES[2];
+			}
+			if(player1State == PLAYER_STATES[2] && player2State == PLAYER_STATES[2]) {
+				$("body").trigger('levelFinished');
+			}
 		}
 	},
 
@@ -89,6 +91,7 @@ BlobApp.ScreenState = ( function() {
 		}
 
 	};
+	that.onPickupKey = onPickupKey;
 	that.onPlayerReachGoal = onPlayerReachGoal;
 	that.doorCreated = doorCreated;
 	that.init = init;

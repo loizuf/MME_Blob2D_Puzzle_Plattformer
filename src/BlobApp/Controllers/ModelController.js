@@ -59,8 +59,13 @@ BlobApp.ModelController = (function() {
 		$('body').on("doorCreated", _onDoorCreated);
 		$('body').on('onPlayerWaitingChange', _onPlayerWaitingChange);
 
+		$('body').on('keyPickedUp', _onKeyPickedUp);
 		$('body').on('blobFinishAttempt', _onBlobFinishAttempt);
 		//$('body').on('levelFinished', _onLevelFinished);
+	},
+
+	_onKeyPickedUp = function() {
+		_screenStateHandler.onPickupKey();
 	},
 
 	_onBlobFinishAttempt = function(event, blobID) {
