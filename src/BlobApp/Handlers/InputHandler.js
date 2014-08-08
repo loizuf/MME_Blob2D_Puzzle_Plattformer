@@ -62,17 +62,18 @@ BlobApp.InputHandler = (function() {
         pause : 27
     },
 
-    init = function() {
+    init = function(p1ControlsID, p2ControlsID) {
+        controller1 = undefined;
+        controller2 = undefined;
+
+        player1 = p1ControlsID;
+        player2 = p2ControlsID;
+
         $body = $('body');
         $body.on('keyup',_onKeyUp);
         $body.on('keydown',_onKeyDown);
 
-        /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-        player1 = "a"//prompt("Player1: Choose Control Method", "Type in \"Keyboard\" or \"Controller\"");
-        player2 = "a"//prompt("Player2: Choose Control Method", "Type in \"Keyboard\" or \"Controller\"");
-        /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-        _initGamepads();
+        _initGamepads(p1ControlsID, p2ControlsID);
         
         return that;
     },
@@ -93,12 +94,12 @@ BlobApp.InputHandler = (function() {
 
     _updateControllers = function() {
         if (!haveEvents) {
-            if(player1 == "Controller" && player2 == "Controller") {
+            if(player1 == 2 && player2 == 2) {
                 controller1 = navigator.getGamepads()[ID_CONTROLLER_ONE];
                 controller2 = navigator.getGamepads()[ID_CONTROLLER_TWO];
-            } else if(player1 == "Controller"){
+            } else if(player1 == 2){
                 controller1 = navigator.getGamepads()[ID_CONTROLLER_ONE];
-            } else if(player2 == "Controller"){
+            } else if(player2 == 2){
                 controller2 = navigator.getGamepads()[ID_CONTROLLER_ONE];
             }  
         }

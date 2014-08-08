@@ -8,7 +8,7 @@ BlobApp.ModelController = (function() {
 	_screenStateHandler,
 	_inputHandler,
 
-	init = function() {
+	init = function(p1ControlsID, p2ControlsID) {
 		//Initialize all Modules from Model
 		//Initialize Box2D Engine
 		//Inform Maincontroller when finished
@@ -16,7 +16,7 @@ BlobApp.ModelController = (function() {
 		//_blobPlayerOne = BlobApp.BlobOne.init();
 		//_blobPlayerTwo = BlobApp.BlobTwo.init();
 		_screenStateHandler = BlobApp.ScreenState.init();
-		_inputHandler = BlobApp.InputHandler.init();
+		_inputHandler = BlobApp.InputHandler.init(p1ControlsID, p2ControlsID);
 
 		_blobPlayerOne = new BlobApp.BlobPlayer1();
 		_blobPlayerTwo = new BlobApp.BlobPlayer2();

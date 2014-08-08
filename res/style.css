@@ -43,7 +43,33 @@ h1 {
 	display: none;
 }
 
+#player1-control-selection-container {
+	width: 100%;
+	text-align: center;
+	display: none;
+}
+
+#player2-control-selection-container {
+	width: 100%;
+	text-align: center;
+	display: none;
+}
+
 #selection {
+	width: 800px;
+	height: 600px;
+	display: inline-block;
+	background-image: url(img/menudummy.png);
+}
+
+#p1Select {
+	width: 800px;
+	height: 600px;
+	display: inline-block;
+	background-image: url(img/menudummy.png);
+}
+
+#p2Select {
 	width: 800px;
 	height: 600px;
 	display: inline-block;
