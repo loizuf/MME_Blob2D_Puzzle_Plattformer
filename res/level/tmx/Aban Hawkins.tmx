@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="33" height="25" tilewidth="25" tileheight="25">
+ <tileset firstgid="1" name="Tileset" tilewidth="25" tileheight="25">
+  <image source="../../img/Tileset.png" width="400" height="250"/>
+ </tileset>
+ <layer name="Kachelebene 1" width="33" height="25">
+  <properties>
+   <property name="Buttons" value=""/>
+   <property name="Doors" value=""/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzNlr9uAjEMxg0dEKpQVSqQqoqh/8QLAAOoK0MR6gJqVxg6sMHQAab2DeCJm4hEtUw+X3JwFZY+5XIhyc+x4+ObiB4S9ZpjDtKP0Q2l2zDHHGTXORm+zoBBs94/Mch9Lo2q7jk1TpJh5kQZ7/w+FdfeGd0ChtB8jWFiNI1Qkz0/Gz2JsXegD7H/MsAgbeWkGVpDzgutE8MQY8euEZqP4odi6teYH8HQJxw/KxvvstFFgQxZ53hP+5r6mMBg42zv74wJ9WMYVoRzk+eUZFgTvku8P4pg0AwxID9Chs5BqyvyfRH3wvoWW6tOcZZF14eYO14Egz3HBen1eq7MPxXDkHCOytzUcpIb/1Z7P30+dI069Odn22ijMEhDtbon+vx7bBk+lTW1McSwpX0t5hqIfkMwaP/lQmPaXbcM9QjJs3px7ZVra4ExbiU69NNrl8jw5tqx2KPFnsfitym+agrFK0VZvv4ClL9FMw==
+  </data>
+ </layer>
+</map>

@@ -293,6 +293,9 @@ BlobApp.LevelLoader = (function() {
 
 	_getLevelMapData = function(levelNumber) {
 		switch (levelNumber){
+			case 0:
+			mapDataJson = LevelConfig.MENU;
+			break;
 			case 1:
 			mapDataJson = LevelConfig.INTRODUCTION;
 			break;
@@ -302,13 +305,13 @@ BlobApp.LevelLoader = (function() {
 			case 3:
 			mapDataJson = LevelConfig.TRAMPOLINE;
 			break;
-			case 100:
-			mapDataJson = LevelConfig.MENU;
+			case 4:
+			mapDataJson = LevelConfig.ABAN_HAWKINS;
 			break;
-			case 101:
+			case 98:
 			mapDataJson = LevelConfig.OVER0;
 			break;
-			case 102:
+			case 99:
 			mapDataJson = LevelConfig.OVER1;
 			break;
 		}
