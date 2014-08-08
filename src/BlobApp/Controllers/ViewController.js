@@ -130,6 +130,7 @@ BlobApp.ViewController = (function() {
 	},
 
 	_onLevelFinished = function() {
+		$gamecanvas.css('display', 'none');
 		_showMenu();
 	},
 
