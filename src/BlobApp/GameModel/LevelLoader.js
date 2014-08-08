@@ -302,6 +302,15 @@ BlobApp.LevelLoader = (function() {
 			case 3:
 			mapDataJson = LevelConfig.TRAMPOLINE;
 			break;
+			case 100:
+			mapDataJson = LevelConfig.MENU;
+			break;
+			case 101:
+			mapDataJson = LevelConfig.OVER0;
+			break;
+			case 102:
+			mapDataJson = LevelConfig.OVER1;
+			break;
 		}
 	};
 	that.init = init;
