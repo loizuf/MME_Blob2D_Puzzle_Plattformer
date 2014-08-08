@@ -121,7 +121,7 @@ BlobApp.PhysicsHandler = (function() {
 		fixture.shape = new b2PolygonShape;
 
 		if(userData == EntityConfig.REDBLOBID){
-			fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, ((TILESIZEY*2)-1 )/ SCALE);
+			fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, ((TILESIZEY*2)-3 )/ SCALE);
 		} else {
 			fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, (TILESIZEY-1) / SCALE);
 		}
@@ -400,9 +400,11 @@ BlobApp.PhysicsHandler = (function() {
 			break;
 			case EntityConfig.KEYID:
 				_pickUpKey(bodyA, bodyB);
+				return;
 			break;
 			case EntityConfig.GOALID:
 				_attemptFinish(EntityConfig.GREENBLOBID);
+				return;
 			break;
 
 		}
@@ -433,9 +435,11 @@ BlobApp.PhysicsHandler = (function() {
 			break;
 			case EntityConfig.KEYID:
 				_pickUpKey(bodyA, bodyB);
+				return;
 			break;
 			case EntityConfig.GOALID:
 				_attemptFinish(EntityConfig.REDBLOBID);
+				return;
 			break;
 		}
 		if(contact.m_manifold.m_localPlaneNormal.y>0 && notTramped){
