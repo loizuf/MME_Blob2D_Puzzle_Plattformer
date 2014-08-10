@@ -256,6 +256,23 @@ BlobApp.PhysicsHandler = (function() {
 	heliBody = undefined,
 
 	_initHeli = function() {
+
+		greenBlobEntity = undefined;
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				greenBlobEntity = bodies[i];
+				console.log(greenBlobEntity);
+				break;
+			}
+		}
+
+
+
+		var heliEnt = new BlobApp.Heli(greenBlobEntity.m_xf.position.x * SCALE, 
+									   greenBlobEntity.m_xf.position.y * SCALE, 50, 50);
+		sprite = heliEnt.sprite;
+		$('body').trigger("heliEntityRequested", {"sprite" : sprite});
+
 		if(heliIsActive) return;
 		heliIsActive = true;
 
@@ -272,14 +289,13 @@ BlobApp.PhysicsHandler = (function() {
 		var fixture = new b2FixtureDef;
 		//console.log(skin);
 		fixture.density = 1;
-		fixture.restitution = 0;
+		fixture.restitution = 0.5;
 		fixture.friction = 0.1;	
 	
 		/*shape anpassen*/
 		fixture.shape = new b2PolygonShape;
 
 		//	if(userData == EntityConfig.REDBLOBID){
-		fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, ((TILESIZEY*2)-1 )/ SCALE);
 		//}else{
 		//	fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, (TILESIZEY-1) / SCALE);
 		//}
@@ -289,23 +305,37 @@ BlobApp.PhysicsHandler = (function() {
 
 		/*dynamic/static body*/
 		bodyDef.type = b2Body.b2_dynamicBody;
-		bodyDef.position.x = (200) / SCALE;
-		bodyDef.position.y = (200) / SCALE;
 		
 		bodyDef.fixedRotation = true;
 
+		bodyDef.position.x = (sprite.x) / SCALE;
+		bodyDef.position.y = (sprite.y) / SCALE;
+
 		var entity = world.CreateBody(bodyDef);
+
+		fixture.shape.SetAsArray(
+			[new b2Vec2(-(TILESIZEX*2-1 )/ SCALE, -(TILESIZEY-1)/SCALE),
+			 new b2Vec2(-(TILESIZEX*2-1 )/ SCALE, -3*(TILESIZEY-1)/SCALE),
+			 new b2Vec2((TILESIZEX*2-1 )/ SCALE, -3*(TILESIZEY-1)/SCALE),
+			 new b2Vec2((TILESIZEX*2-1 )/ SCALE, -(TILESIZEY-1)/SCALE)],
+			 4);
 		entity.CreateFixture(fixture);
+
+		fixture.shape.SetAsArray(
+			[new b2Vec2(-((TILESIZEX*2-1 )/ SCALE)/2, (TILESIZEY-1)/SCALE),
+			 new b2Vec2(-((TILESIZEX*2-1 )/ SCALE)/2, -(TILESIZEY-1)/SCALE),
+			 new b2Vec2(((TILESIZEX*2-1 )/ SCALE)/2, -(TILESIZEY-1)/SCALE),
+			 new b2Vec2(((TILESIZEX*2-1 )/ SCALE)/2, (TILESIZEY-1)/SCALE)],
+			 4);
+		entity.CreateFixture(fixture);
+	
+
 		// assign actor
 		entity.SetUserData([userData,undefined]);  // set the actor as user data of the body so we can use it later: body.GetUserData()
-		//var actor = new _actorObject(entity, sprite);
+		var actor = new _actorObject(entity, sprite);
 
-		//entity muss in das blob Model. Debug lösung über Event
-		var blobEntityCreated = $.Event('blobEntityCreated');
-		//$("body").trigger(blobEntityCreated, entity);
 		bodies.push(entity); 
 		heliBody = entity;	
-
 	},
 
 	_moveHeli = function(event, data) {

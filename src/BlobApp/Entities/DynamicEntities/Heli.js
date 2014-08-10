@@ -1,7 +1,6 @@
-BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
+BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 
 	var that = this,
-	blobID = blobID,
 	sprite, 
 	tilesetSheet, 
 	tileset;
@@ -11,13 +10,8 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 	this.prototype.init =function(){
 		tileset = new Image();
 		var height;
-		if(blobID == EntityConfig.REDBLOBID){
-			tileset.src = "res/img/redBlobMove.png"//mapData.tilesets[0].image;
-			height = sizeY;
-		}else{
-			tileset.src = "res/img/greenBlobMove.png"//mapData.tilesets[0].image;
-			height = sizeY;
-		}
+		tileset.src = "res/img/Heli.png";//mapData.tilesets[0].image;
+		height = sizeY;
 		// getting imagefile from first tileset
 		_listeners();
 		// callback for loading layers after tileset is loaded
@@ -32,13 +26,9 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 				height : h,
 			},
 			animations: {
-				runRight: [0,19],
-				runLeft: [20,39],
-				idle1: [40,59],
-				jumpRight: [60, 79, "jumpEndRight"],
-				jumpEndRight: [79],
-				jumpLeft: [80, 99, "jumpEndLeft"],
-				jumpEndLeft: [99]
+				startAni: [0,19, "moveRight"],
+				moveRight: [20, 39],
+				moveLeft: [20, 39]
 			}
 		}
 
@@ -46,11 +36,8 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		tilesetSheet = new createjs.SpriteSheet(imageData);
 
 		sprite = new createjs.Sprite(tilesetSheet);
-		if(blobID == EntityConfig.REDBLOBID){
-			sprite.name = "blobRed";
-		}else{
-			sprite.name = "blobGreen";
-		}
+		sprite.name = "heli";
+
 
 		/* koordinaten kommen aus dem levelloader */
 		sprite.regX = w/2;
@@ -63,39 +50,26 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		sprite.regY = imageData.frames.height/2;
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
-		sprite.gotoAndPlay("idle1");
+		sprite.gotoAndPlay("startAni");
 	},
 
 
 	_listeners = function(){
-		$('body').on('blobanimationChanged', _animate);
+		$('body').on('helianimationChanged', _animate);
 	},
 
-	_animate = function(event, data){
-			if(blobID==data.blobID){
-		
+	_animate = function(event, data){	
 			switch(data.animationKey){
-				case AnimationKeys.IDLE1:
-					sprite.gotoAndPlay("idle1");
-				break;
 				case AnimationKeys.MOVERIGHT:
-					sprite.gotoAndPlay("runRight");
+					sprite.gotoAndPlay("moveRight");
 				break;
 				case AnimationKeys.MOVELEFT:
-					sprite.gotoAndPlay("runLeft");
-				break;
-				case AnimationKeys.JUMPRIGHT:
-					sprite.gotoAndPlay("jumpRight");
-				break;
-				case AnimationKeys.JUMPLEFT:
-					sprite.gotoAndPlay("jumpLeft");
+					sprite.gotoAndPlay("moveLeft");
 				break;
 			}
-		}
 	};
 
 	this.prototype.init();
 
 	this.sprite = sprite;
-	this.blobID = blobID;
 });

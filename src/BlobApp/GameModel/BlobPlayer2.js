@@ -49,7 +49,7 @@ BlobApp.BlobPlayer2 = (function() {
 
 
 	// START: Helicopter special skill:
-	var heliSpeedY = -4	;
+	var heliSpeedY = -5.5;
 	var heliCurrentYSpeed;
 
 	this.initHeli = function() {

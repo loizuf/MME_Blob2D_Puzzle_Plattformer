@@ -21,6 +21,18 @@ BlobApp.ViewController = (function() {
 			stage.addChild(data.sprite);
 		}
 	},
+
+	// TODO: The view Controller should not have to know that such a thing as "heli" exists, it should just be told "remove blobs, add sprite" in a more general way!!
+
+	applyHeli = function(event, data) {
+		stage.removeChild(stage.getChildByName("blobRed"));
+		stage.removeChild(stage.getChildByName("blobGreen"));
+
+		if(!b2ddebug){
+			stage.addChild(data.sprite);
+		}
+	},
+	
 	applyBackground = function(event, wurst) {
 		if(!b2ddebug){
 			stage.addChild(wurst);
@@ -137,6 +149,7 @@ BlobApp.ViewController = (function() {
 	_listener = function(){
 		$('body').on('genericRequested',applyEntity);
 		$('body').on('blobRequested', applyEntity);
+		$('body').on('heliEntityRequested', applyHeli);
 		$('body').on('backgroundAdded', applyBackground);
 		$('body').on('viewOpenDoor', _deleteDoor);
 		$('body').on('onPause', _displayPauseScreen);
