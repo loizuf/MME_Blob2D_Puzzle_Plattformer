@@ -67,37 +67,49 @@ BlobApp.PhysicsHandler = (function() {
 		world.SetDebugDraw(debugDraw);
 	},
 
+	createDefaultBoxEntity = function(x, y, width, height, sensor) {
+
+		var fixture = createDefaultBoxFixture(width, height, sensor);
+
+		var bodyDef = new b2BodyDef;
+		bodyDef.type = b2Body.b2_staticBody;
+
+		bodyDef.position.x = x;
+		bodyDef.position.y = y;
+
+		var entity = world.CreateBody(bodyDef);
+		entity.CreateFixture(fixture);
+
+		return entity;
+	},
+
+	createDefaultBoxFixture = function(width, height, sensor) {
+		var fixture = new b2FixtureDef;
+		fixture.density = 1;
+		fixture.restitution = 0;
+		fixture.friction = 0.1;
+
+		if(sensor) fixture.isSensor = true;
+
+		fixture.shape = new b2PolygonShape;
+		fixture.shape.SetAsBox(width, height);
+
+		return fixture;
+	},
+
 
 	/*das muss vom levelloader aufgerufen werden!*/
 	applyEntity = function(event, spriteAndNumber) {
 		sprite = spriteAndNumber["sprite"];
 		userData = spriteAndNumber["userData"];
-		entityID = userData[0]
+		entityID = userData[0];
 
-		var fixture = new b2FixtureDef;
-		//console.log(skin);
-		fixture.density = 1;
-		fixture.restitution = 0;
-		fixture.friction = 0.1;
-		/*shape anpassen*/
-		fixture.shape = new b2PolygonShape;
-		if(entityID == EntityConfig.DOORID){
-			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY*2 / SCALE);
-		}else{
-			fixture.shape.SetAsBox(TILESIZEX / SCALE, TILESIZEY / SCALE);
-		}
+		var x = (sprite.x) / SCALE,
+		y = (sprite.y) / SCALE,
+		width = TILESIZEX / SCALE,
+		height = (entityID == EntityConfig.DOORID)? TILESIZEY*2 / SCALE : TILESIZEY / SCALE;
 
-		var bodyDef = new b2BodyDef;
-
-
-		/*dynamic/static body*/
-		bodyDef.type = b2Body.b2_staticBody;
-
-		bodyDef.position.x = (sprite.x) / SCALE;
-		bodyDef.position.y = (sprite.y) / SCALE;
-		
-		var entity = world.CreateBody(bodyDef);
-		entity.CreateFixture(fixture);
+		var entity = createDefaultBoxEntity(x, y, width, height);
 
 		// assign actor
 		entity.SetUserData(userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
@@ -111,23 +123,13 @@ BlobApp.PhysicsHandler = (function() {
 		userData = spriteAndNumber["userData"][0];
 
 		
-		var fixture = new b2FixtureDef;
-		//console.log(skin);
-		fixture.density = 1;
-		fixture.restitution = 0;
-		fixture.friction = 0.1;	
-	
-		/*shape anpassen*/
-		fixture.shape = new b2PolygonShape;
+		var width = (TILESIZEX-1) / SCALE,
+			height = (userData == EntityConfig.REDBLOBID) ? ((TILESIZEY*2)-3 )/ SCALE : (TILESIZEY-1) / SCALE;
 
-		if(userData == EntityConfig.REDBLOBID){
-			fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, ((TILESIZEY*2)-3 )/ SCALE);
-		} else {
-			fixture.shape.SetAsBox((TILESIZEX-1) / SCALE, (TILESIZEY-1) / SCALE);
-		}
+
+		var fixture = createDefaultBoxFixture(width, height);
 		
 		var bodyDef = new b2BodyDef;
-
 
 		/*dynamic/static body*/
 		bodyDef.type = b2Body.b2_dynamicBody;
@@ -193,51 +195,27 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_applyBorder = function(event, borderData){
-		var fixture = new b2FixtureDef;
-		fixture.density = 1;
-		fixture.restitution = 0;
-		fixture.friction = 0.1;
-		/*shape anpassen*/
-		fixture.shape = new b2PolygonShape;
-		fixture.shape.SetAsBox(borderData.width/SCALE, borderData.height/SCALE);
+		var x = (borderData.x) / SCALE,
+			y = (borderData.y) / SCALE,
+			width = borderData.width/SCALE,
+			height = borderData.height/SCALE;
 
-		var bodyDef = new b2BodyDef;
+		var entity = createDefaultBoxEntity(x, y, width, height);
 
-		/*dynamic/static body*/
-		bodyDef.type = b2Body.b2_staticBody;
-
-		bodyDef.position.x = (borderData.x) / SCALE;
-		bodyDef.position.y = (borderData.y) / SCALE;
-		
-		var entity = world.CreateBody(bodyDef);
-		entity.CreateFixture(fixture);
-		// assign actor
-		entity.SetUserData(borderData.userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
-		//var actor = new _actorObject(entity, sprite);
-		//bodies.push(entity); 
-
+		entity.SetUserData(borderData.userData);
 	}, 
 
 	_applyKey = function(event, data) {
 		var sprite = data.sprite;
-		console.log(data.height);
-		var fixture = new b2FixtureDef;
-		fixture.density = 1;
-		fixture.restitution = 0;
-		fixture.friction = 0;
-		fixture.shape = new b2PolygonShape;
-		fixture.shape.SetAsBox(TILESIZEX/SCALE, (data.height*TILESIZEY)/SCALE);
 
-		fixture.isSensor = true;
+		var x = (sprite.x) / SCALE,
+			y = (sprite.y) / SCALE,
+			width = TILESIZEX/SCALE,
+			height = (data.height*TILESIZEY)/SCALE;
 
-		var bodyDef = new b2BodyDef;
-		bodyDef.type = b2Body.b2_staticBody;
 
-		bodyDef.position.x = (sprite.x) / SCALE;
-		bodyDef.position.y = (sprite.y) / SCALE;
+		var entity = createDefaultBoxEntity(x, y, width, height, true);		
 
-		var entity = world.CreateBody(bodyDef);
-		entity.CreateFixture(fixture);
 		entity.SetUserData(data.userData);
 	},
 
