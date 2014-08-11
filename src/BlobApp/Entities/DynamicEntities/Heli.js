@@ -28,7 +28,7 @@ BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 			animations: {
 				startAni: [0,19, "moveRight"],
 				moveRight: [20, 39],
-				moveLeft: [20, 39]
+				moveLeft: [40, 59]
 			}
 		}
 
@@ -55,7 +55,7 @@ BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 
 
 	_listeners = function(){
-		$('body').on('helianimationChanged', _animate);
+		$('body').on('heliAnimationChanged', _animate);
 	},
 
 	_animate = function(event, data){	

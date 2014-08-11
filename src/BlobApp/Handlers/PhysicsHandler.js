@@ -162,6 +162,9 @@ BlobApp.PhysicsHandler = (function() {
 
 		while(fixedTimestepAccumulator >= STEP) {		
 
+			if(heliBody != undefined)
+				heliBody.ApplyForce( new b2Vec2(0, -8.5*heliBody.GetMass()), heliBody.GetPosition());
+
 			// update active actors
 			for(var i=0, l=actors.length; i<l; i++) {
 				actors[i].update();
@@ -314,17 +317,17 @@ BlobApp.PhysicsHandler = (function() {
 		var entity = world.CreateBody(bodyDef);
 
 		fixture.shape.SetAsArray(
-			[new b2Vec2(-(TILESIZEX*2-1 )/ SCALE, -(TILESIZEY-1)/SCALE),
+			[new b2Vec2(-(TILESIZEX*2-1 )/ SCALE, -2.5*(TILESIZEY-1)/SCALE),
 			 new b2Vec2(-(TILESIZEX*2-1 )/ SCALE, -3*(TILESIZEY-1)/SCALE),
 			 new b2Vec2((TILESIZEX*2-1 )/ SCALE, -3*(TILESIZEY-1)/SCALE),
-			 new b2Vec2((TILESIZEX*2-1 )/ SCALE, -(TILESIZEY-1)/SCALE)],
+			 new b2Vec2((TILESIZEX*2-1 )/ SCALE, -2.5*(TILESIZEY-1)/SCALE)],
 			 4);
 		entity.CreateFixture(fixture);
 
 		fixture.shape.SetAsArray(
 			[new b2Vec2(-((TILESIZEX*2-1 )/ SCALE)/2, (TILESIZEY-1)/SCALE),
-			 new b2Vec2(-((TILESIZEX*2-1 )/ SCALE)/2, -(TILESIZEY-1)/SCALE),
-			 new b2Vec2(((TILESIZEX*2-1 )/ SCALE)/2, -(TILESIZEY-1)/SCALE),
+			 new b2Vec2(-((TILESIZEX*2-1 )/ SCALE)/2, -2.5*(TILESIZEY-1)/SCALE),
+			 new b2Vec2(((TILESIZEX*2-1 )/ SCALE)/2, -2.5*(TILESIZEY-1)/SCALE),
 			 new b2Vec2(((TILESIZEX*2-1 )/ SCALE)/2, (TILESIZEY-1)/SCALE)],
 			 4);
 		entity.CreateFixture(fixture);

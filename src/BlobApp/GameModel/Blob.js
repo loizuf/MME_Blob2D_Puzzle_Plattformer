@@ -177,6 +177,8 @@ BlobApp.BlobSuperClass = function() {
 		} else {
 			keyLeftPressed = false;
 		}
+
+		if(_blobID == EntityConfig.GREENBLOBID) $('body').trigger('heliAnimationChanged', {"animationKey": AnimationKeys.MOVELEFT});
 	},
 
 	this.onRightPressed = function(pressed) {
@@ -192,6 +194,7 @@ BlobApp.BlobSuperClass = function() {
 		} else {
 			keyRightPressed = false;
 		}
+		if(_blobID == EntityConfig.GREENBLOBID) $('body').trigger('heliAnimationChanged', {"animationKey": AnimationKeys.MOVERIGHT});
 	},
 
 	this.onUpPressed = function(pressed) {
