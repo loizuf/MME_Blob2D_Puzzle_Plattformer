@@ -4,15 +4,13 @@ BlobApp.BlobPlayer1 = (function() {
 	var prototypeVar = this.prototype;
 
 	this.setup = function() {
-		console.log(prototypeVar);
-		prototypeVar.setCurrentDown(function() {
-			thisVar.tryToInit("heli");
-		});
 		_initListeners();
 	},
 
 	_initListeners = function() {
 		$('body').on("startHeli", thisVar.initHeli);
+		$('body').on("greenBlobInHeliZone", _setDownAction);
+		$('body').on("greenBlobLeftTriggerZone", _setDownAction);
 	},
 
 	this.tryToInit = function(skill) {
@@ -22,6 +20,17 @@ BlobApp.BlobPlayer1 = (function() {
 				break;
 
 		}
+	},
+
+	_setDownAction = function(event, what) {
+		// Case: player probably left trigger zone --> reset
+		if(!what) {
+			prototypeVar.setCurrentDown(function(){});
+			return;
+		} 
+		prototypeVar.setCurrentDown(function() {
+			thisVar.tryToInit(what.name);
+		});
 	},
 
 

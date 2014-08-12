@@ -105,9 +105,9 @@ BlobApp.PhysicsHandler = (function() {
 		entityID = userData[0];
 
 		var x = (sprite.x) / SCALE,
-		y = (sprite.y) / SCALE,
-		width = TILESIZEX / SCALE,
-		height = (entityID == EntityConfig.DOORID)? TILESIZEY*2 / SCALE : TILESIZEY / SCALE;
+			y = (sprite.y) / SCALE,
+			width = TILESIZEX / SCALE,
+			height = (entityID == EntityConfig.DOORID)? TILESIZEY*2 / SCALE : TILESIZEY / SCALE;
 
 		var entity = createDefaultBoxEntity(x, y, width, height);
 
@@ -205,12 +205,12 @@ BlobApp.PhysicsHandler = (function() {
 		entity.SetUserData(borderData.userData);
 	}, 
 
-	_applyKey = function(event, data) {
+	_applySensor = function(event, data) {
 		var sprite = data.sprite;
 
 		var x = (sprite.x) / SCALE,
 			y = (sprite.y) / SCALE,
-			width = TILESIZEX/SCALE,
+			width = (data.width)? data.width*TILESIZEX/SCALE : TILESIZEX/SCALE,
 			height = (data.height*TILESIZEY)/SCALE;
 
 
@@ -333,7 +333,7 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('onInputRecieved', _applyForce);
 		$('body').on('onInputRecievedJump', _applyForceJump);
 		$('body').on('borderRequested',_applyBorder);
-		$("body").on('keyRequested', _applyKey);
+		$("body").on('sensorRequested', _applySensor);
 		$('body').on('openDoor',_openDoor);
 		// START: DUMMY HELI
 		$('body').on('startHeli', _initHeli);
@@ -383,7 +383,26 @@ BlobApp.PhysicsHandler = (function() {
 				break;
 			} 
 
-		}
+		};
+
+		listener.EndContact = function(contact) {
+			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
+			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
+			bodyA = contact.GetFixtureA().GetBody();
+			bodyB = contact.GetFixtureB().GetBody();
+
+			switch(aID){
+				case EntityConfig.GREENBLOBID: 
+					_handleGreenBlobEndCollision(bodyA,bodyB, bID, contact);
+				break;
+				case EntityConfig.REDBLOBID: 
+					_handleRedBlobEndCollision(bodyA,bodyB, bID, contact);
+				break;
+			} 
+
+		};
+
+
 		world.SetContactListener(listener);
 	},
 
@@ -417,12 +436,16 @@ BlobApp.PhysicsHandler = (function() {
 				_attemptFinish(EntityConfig.GREENBLOBID);
 				return;
 			break;
+			case EntityConfig.HELITRIGGER:
+				_playerInHeliZone("greenBlob");
+				return;
 
 		}
 		if(contact.m_manifold.m_localPlaneNormal.y>0){
 			$('body').trigger('onReAllowJump', bodyA);
 		}
 	},
+
 	_handleRedBlobCollision = function(bodyA,bodyB, bID, contact){
 		//console.log("redblob collided");
 		var notTramped = true;
@@ -452,11 +475,38 @@ BlobApp.PhysicsHandler = (function() {
 				_attemptFinish(EntityConfig.REDBLOBID);
 				return;
 			break;
+			case EntityConfig.HELITRIGGER:
+				_playerInHeliZone("redBlob");
+				return;
 		}
 		if(contact.m_manifold.m_localPlaneNormal.y>0 && notTramped){
 			$('body').trigger('onReAllowJump', bodyA);
 		}
 
+	},
+
+	_handleRedBlobEndCollision = function(bodyA, bodyB, bID, contact) {
+		switch(bID){
+			case EntityConfig.HELITRIGGER : 
+				_playerLeftTriggerZone("redBlob");
+			break;
+		}
+	},
+
+	_handleGreenBlobEndCollision = function(bodyA, bodyB, bID, contact) {
+		switch(bID){
+			case EntityConfig.HELITRIGGER : 
+				_playerLeftTriggerZone("greenBlob");
+			break;
+		}
+	},
+
+	_playerInHeliZone = function(player) {
+			$('body').trigger(player+"InHeliZone", {name: "heli"});
+	},
+
+	_playerLeftTriggerZone = function(player) {
+			$('body').trigger(player+"LeftTriggerZone");
 	},
 
 	_attemptFinish = function(blobID) {

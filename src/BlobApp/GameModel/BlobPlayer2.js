@@ -4,24 +4,36 @@ BlobApp.BlobPlayer2 = (function() {
 	var prototypeVar = this.prototype;
 
 	this.setup = function() {
-		prototypeVar.setCurrentDown(function() {
-			thisVar.tryToInit("heli");
-		});
+		
 		_initListeners();
 	},
 
 	_initListeners = function() {
 		$('body').on("startHeli", thisVar.initHeli);
+		$('body').on("redBlobInHeliZone", _setDownAction);
+		$('body').on("redBlobLeftTriggerZone", _setDownAction);
 	},
 
 	this.tryToInit = function(skill) {
 		switch(skill) {
 			case "heli":
+			console.log("Yaaay2");
 				thisVar.setIdle(skill);
 				break;
 
 		}
-	}
+	},
+
+	_setDownAction = function(event, what) {
+		// Case: player probably left trigger zone --> reset
+		if(!what) {
+			prototypeVar.setCurrentDown(function(){});
+			return;
+		} 
+		prototypeVar.setCurrentDown(function() {
+			thisVar.tryToInit(what.name);
+		});
+	},
 
 
 	// For when the blob is waiting for the other blob to do something

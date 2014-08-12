@@ -85,12 +85,12 @@ BlobApp.LevelLoader = (function() {
 
 					case EntityConfig.DOORID:
 						_createDoor(xcoords,ycoords,layerData,doorCount);
-					doorCount++;
+						doorCount++;
 					break;
 	
 					case EntityConfig.BUTTONID:
 						_createButton(xcoords,ycoords,layerData, buttonCount);
-					buttonCount++;
+						buttonCount++;
 					break;
 
 					case EntityConfig.KEYID:
@@ -100,6 +100,11 @@ BlobApp.LevelLoader = (function() {
 					case EntityConfig.GOALID:
 						_createGoal(xcoords, ycoords);
 					break;
+
+					case EntityConfig.HELITILE:
+						_createHeliTriggerZone(xcoords, ycoords);
+						// No break!
+
 					default:
 					borders[y][x] = true;
 					_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
@@ -259,7 +264,7 @@ BlobApp.LevelLoader = (function() {
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.KEYID];
 		_createRequestObject["height"] = 1;
-		$('body').trigger("keyRequested", _createRequestObject);
+		$('body').trigger("sensorRequested", _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
 	},
 
@@ -270,8 +275,23 @@ BlobApp.LevelLoader = (function() {
 		_createRequestObject["userData"] = [EntityConfig.GOALID];
 		_createRequestObject["height"] = 2;
 
-		$('body').trigger("keyRequested", _createRequestObject);
+		$('body').trigger("sensorRequested", _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
+	},
+
+	_createHeliTriggerZone = function(x, y) {
+		var entity = new BlobApp.CooperationTrigger(x, y-25, 60, 60, EntityConfig.HELITRIGGER);
+
+		_createRequestObject["sprite"] = entity.sprite;
+		_createRequestObject["userData"] = [EntityConfig.HELITRIGGER];
+		_createRequestObject["height"] = 1.2;
+		_createRequestObject["width"] = 1.2;
+
+		$("body").trigger("sensorRequested", _createRequestObject);
+		$('body').trigger('genericRequested', _createRequestObject);
+
+
+		_createRequestObject["width"] = 1.0;
 	},
 
 	// utility function for loading assets from server

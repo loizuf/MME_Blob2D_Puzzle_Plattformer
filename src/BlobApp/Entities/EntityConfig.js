@@ -11,7 +11,10 @@ EntityConfig = {
 	KEYID: 15,
 	SPIKEID : 1000,
 	GOALID: 13,
-	GOADLLOWERID: 29
+	GOADLLOWERID: 29,
+	HELITILE : 147,
+	HELITRIGGER : 1147,
+
 	/* any other special id!*/
 
 
@@ -23,5 +26,7 @@ AnimationKeys = {
 	MOVERIGHT: 1,
 	IDLE1: 2,
 	JUMPRIGHT: 3,
-	JUMPLEFT: 4
+	JUMPLEFT: 4,
+	SMALLSHINE: 5,
+	BIGSHINE: 6
 }
