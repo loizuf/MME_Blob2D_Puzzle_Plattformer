@@ -31,12 +31,14 @@ BlobApp.BlobPlayer1 = (function() {
 		} 
 
 		if(what.name == "trampolin") {
-			thisVar.initTrampolin();
+			prototypeVar.setCurrentDown(function() {
+				thisVar.initTrampolin();
+			});
 		}
 
 		if(what.name == "heli") {
 			prototypeVar.setCurrentDown(function() {
-			thisVar.tryToInit(what.name);
+				thisVar.tryToInit(what.name);
 			});
 		}	
 	},
@@ -51,9 +53,10 @@ BlobApp.BlobPlayer1 = (function() {
 
 		prototypeVar.setCurrentRight(function(){});
 		prototypeVar.setCurrentLeft(function(){});
+		$('body').trigger("onTrampolinActive");
 	},
 
-		thisVar.stopTrampolin = function() {
+	this.stopTrampolin = function() {
 		console.log("stopTrampolin");
 	},
 

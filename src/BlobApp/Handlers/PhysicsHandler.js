@@ -29,6 +29,8 @@ BlobApp.PhysicsHandler = (function() {
 	var TILESIZEX = 12.5;
 	var TILESIZEY = 12.5;
 
+	var isTrampolinActive = false;
+
 
 	init = function(){
 		_setupPhysics();
@@ -324,6 +326,7 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('onInputRecievedJump', _applyForceJump);
 		$('body').on('borderRequested',_applyBorder);
 		$("body").on('sensorRequested', _applySensor);
+		$('body').on('onTrampolinActive', _activateTrampolin)
 
 		$('body').on('openDoor',_openDoor);
 		
@@ -337,6 +340,10 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on("resetGame", _resetGame);
 
 		_registerCollisionHandler();
+	},
+
+	_activateTrampolin = function(argument) {
+		isTrampolinActive = !isTrampolinActive;
 	},
 	
 	_restartPhys = function() {
@@ -412,10 +419,11 @@ BlobApp.PhysicsHandler = (function() {
 
 			case EntityConfig.VERTICALBORDERID:
 			break;
-		
-			case EntityConfig.HORIZONTALBORDERID:		
-			break;
 			*/
+
+			case EntityConfig.HORIZONTALBORDERID:		
+				_provideTrampolin();
+			break;			
 
 			case EntityConfig.BUTTONID:
 				_handleButtonCollison(bodyB, contact);
@@ -434,9 +442,6 @@ BlobApp.PhysicsHandler = (function() {
 				_playerInHeliZone("greenBlob");
 				return;
 			break;
-
-			default: //_provideTrampolin();
-			break;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -453,13 +458,13 @@ BlobApp.PhysicsHandler = (function() {
 
 		switch(bID) {
 			case EntityConfig.GREENBLOBID:
-				
-				/* Trampolin */
-				notTramped = false;
-				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-					y = contact.m_fixtureA.m_body.GetLinearVelocity().y;
-					_applyForceJump(null, {"entity" : bodyA, "directionX" : 0, "directionY" : -2.2 * y});
-				}
+				if(isTrampolinActive == true) {
+					notTramped = false;
+					if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+						y = contact.m_fixtureA.m_body.GetLinearVelocity().y;
+						_applyForceJump(null, {"entity" : bodyA, "directionX" : 0, "directionY" : -2.2 * y});
+					}
+				}				
 			break;
 
 			case EntityConfig.VERTICALBORDERID:
