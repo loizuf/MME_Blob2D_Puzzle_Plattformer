@@ -1,10 +1,10 @@
 BlobApp.BlobPlayer2 = (function() {	
 	this.prototype = new BlobApp.BlobSuperClass();
+
 	var thisVar = this;
 	var prototypeVar = this.prototype;
 
-	this.setup = function() {
-		
+	this.setup = function() {	
 		_initListeners();
 	},
 
@@ -17,10 +17,8 @@ BlobApp.BlobPlayer2 = (function() {
 	this.tryToInit = function(skill) {
 		switch(skill) {
 			case "heli":
-			console.log("Yaaay2");
 				thisVar.setIdle(skill);
-				break;
-
+			break;
 		}
 	},
 
@@ -30,11 +28,11 @@ BlobApp.BlobPlayer2 = (function() {
 			prototypeVar.setCurrentDown(function(){});
 			return;
 		} 
+		
 		prototypeVar.setCurrentDown(function() {
 			thisVar.tryToInit(what.name);
 		});
 	},
-
 
 	// For when the blob is waiting for the other blob to do something
 	this.setIdle = function(skill) {
@@ -58,7 +56,6 @@ BlobApp.BlobPlayer2 = (function() {
 		
 		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p2", "waiting" : skill});
 	}
-
 
 	// START: Helicopter special skill:
 	var heliSpeedY = -1;

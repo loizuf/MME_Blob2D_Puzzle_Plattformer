@@ -3,20 +3,20 @@ BlobApp.Key = (function Key(x_pos, y_pos, sizeX, sizeY, keyID) {
 
 	var sprite, tilesetSheet;
 
-	this.prototype.init =function(){
+	this.prototype.init =function() {
 		var tileset = new Image();
 		tileset.src = "res/img/key.png"
+
 		// callback for loading sprite after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
 	},	
 	
-
-	_initSprite = function(tileset, w,h){
+	_initSprite = function(tileset, width, height) {
 		var imageData = {
 			images : [ tileset ],
 			frames : {
-				width : w,
-				height : h,
+				width : width,
+				height : height,
 				count: 1
 			}
 		}
@@ -27,8 +27,9 @@ BlobApp.Key = (function Key(x_pos, y_pos, sizeX, sizeY, keyID) {
 		sprite = new createjs.Sprite(tilesetSheet);
 
 		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = w/2;
-		sprite.regY = h/2;
+		sprite.regX = width / 2;
+		sprite.regY = height / 2;
+		
 		sprite.x = x_pos;
 		sprite.y = y_pos;
 

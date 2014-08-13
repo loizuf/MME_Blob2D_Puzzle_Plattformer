@@ -1,6 +1,7 @@
 BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 
 	var that = this,
+
 	blobID = blobID,
 	sprite, 
 	tilesetSheet, 
@@ -8,29 +9,34 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 
 	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
 	
-	this.prototype.init =function(){
+	this.prototype.init =function() {
 		tileset = new Image();
+
 		var height;
-		if(blobID == EntityConfig.REDBLOBID){
+
+		if(blobID == EntityConfig.REDBLOBID) {
 			tileset.src = "res/img/redBlobMove.png"//mapData.tilesets[0].image;
 			height = sizeY;
-		}else{
+		} else {
 			tileset.src = "res/img/greenBlobMove.png"//mapData.tilesets[0].image;
 			height = sizeY;
 		}
+
 		// getting imagefile from first tileset
 		_listeners();
+
 		// callback for loading layers after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
 	},
 
-	_initSprite = function(tileset, w,h){
+	_initSprite = function(tileset, width, height) {
 		var imageData = {
 			images : [ tileset ],
 			frames : {
-				width : w,
-				height : h,
+				width : width,
+				height : height,
 			},
+
 			animations: {
 				runRight: [0,19],
 				runLeft: [20,39],
@@ -46,47 +52,53 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		tilesetSheet = new createjs.SpriteSheet(imageData);
 
 		sprite = new createjs.Sprite(tilesetSheet);
-		if(blobID == EntityConfig.REDBLOBID){
+
+		if(blobID == EntityConfig.REDBLOBID) {
 			sprite.name = "blobRed";
-		}else{
+		} else {
 			sprite.name = "blobGreen";
 		}
 
 		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = w/2;
-		sprite.regY = h/2;
+		sprite.regX = width/2;
+		sprite.regY = height/2;
+
 		sprite.x = x_pos;
 		sprite.y = y_pos;
 
 		/* setzen auf höhe/2, breite /2 */
 		sprite.regX = imageData.frames.width/2;
 		sprite.regY = imageData.frames.height/2;
+		
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("idle1");
 	},
 
-
-	_listeners = function(){
+	_listeners = function() {
 		$('body').on('blobanimationChanged', _animate);
 	},
 
-	_animate = function(event, data){
-			if(blobID==data.blobID){
+	_animate = function(event, data) {
+			if(blobID==data.blobID) {
 		
-			switch(data.animationKey){
+			switch(data.animationKey) {
 				case AnimationKeys.IDLE1:
 					sprite.gotoAndPlay("idle1");
 				break;
+
 				case AnimationKeys.MOVERIGHT:
 					sprite.gotoAndPlay("runRight");
 				break;
+
 				case AnimationKeys.MOVELEFT:
 					sprite.gotoAndPlay("runLeft");
 				break;
+
 				case AnimationKeys.JUMPRIGHT:
 					sprite.gotoAndPlay("jumpRight");
 				break;
+
 				case AnimationKeys.JUMPLEFT:
 					sprite.gotoAndPlay("jumpLeft");
 				break;
@@ -95,7 +107,6 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 	};
 
 	this.prototype.init();
-
 	this.sprite = sprite;
 	this.blobID = blobID;
 });

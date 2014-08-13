@@ -4,6 +4,7 @@
 */
 BlobApp.MainController = (function() {
 	var that = {},
+	
 	_modelController = null,
 	_viewController = null,
 	_physicsHandler = null,

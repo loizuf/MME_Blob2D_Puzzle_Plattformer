@@ -3,5 +3,6 @@ BlobApp.Trap = (function Trap(x_pos, y_pos, sizeX, sizeY, trapID) {
 	this.prototype.applyPhysicsBody = function() { 
 
 	};
+	
 	this.trapID = trapID;
 });

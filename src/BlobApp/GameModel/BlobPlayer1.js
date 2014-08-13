@@ -1,5 +1,6 @@
 BlobApp.BlobPlayer1 = (function() {
 	this.prototype = new BlobApp.BlobSuperClass();
+
 	var thisVar = this;
 	var prototypeVar = this.prototype;
 
@@ -11,14 +12,14 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on("startHeli", thisVar.initHeli);
 		$('body').on("greenBlobInHeliZone", _setDownAction);
 		$('body').on("greenBlobLeftTriggerZone", _setDownAction);
+		$('body').on("onDefaultCollision", _setDownAction)
 	},
 
 	this.tryToInit = function(skill) {
 		switch(skill) {
 			case "heli":
 				thisVar.setIdle(skill);
-				break;
-
+			break;
 		}
 	},
 
@@ -28,11 +29,33 @@ BlobApp.BlobPlayer1 = (function() {
 			prototypeVar.setCurrentDown(function(){});
 			return;
 		} 
-		prototypeVar.setCurrentDown(function() {
+
+		if(what.name == "trampolin") {
+			thisVar.initTrampolin();
+		}
+
+		if(what.name == "heli") {
+			prototypeVar.setCurrentDown(function() {
 			thisVar.tryToInit(what.name);
-		});
+			});
+		}	
 	},
 
+	this.initTrampolin = function() {
+		console.log("initTrampolin");
+
+		prototypeVar.setCurrentUp(function(){});
+		prototypeVar.setCurrentDown(function(){
+			thisVar.stopTrampolin();
+		});
+
+		prototypeVar.setCurrentRight(function(){});
+		prototypeVar.setCurrentLeft(function(){});
+	},
+
+		thisVar.stopTrampolin = function() {
+		console.log("stopTrampolin");
+	},
 
 	// For when the blob is waiting for the other blob to do something
 	this.setIdle = function(skill) {
@@ -54,28 +77,28 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setCurrentRight(restore);
 
 		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : skill});		
-
-	}
+	},
 
 	// START: Helicopter special skill:
-	var heliSpeedX = 0.1;
+	heliSpeedX = 0.1,
+
 	this.initHeli = function() {
 		// BlobPlayer2 controls up and down movements:
 		prototypeVar.setCurrentUp(function(){});
 		prototypeVar.setCurrentDown(function(){});
 
 		// BlobPlayer1 (this blob) controls left and right movements for heli:
-		prototypeVar.setCurrentLeft(heliMoveLeft);
-		prototypeVar.setCurrentRight(heliMoveRight);
-	}
+		prototypeVar.setCurrentLeft(_heliMoveLeft);
+		prototypeVar.setCurrentRight(_heliMoveRight);
+	},
 
-	function heliMoveRight() {		
+	_heliMoveRight = function() {		
 		$('body').trigger('heliMove', {"speed" : heliSpeedX, "dir" : "x"});
-	}
+	},
 
-	function heliMoveLeft() {
+	_heliMoveLeft  = function() {
 		$('body').trigger('heliMove', {"speed" : -heliSpeedX, "dir" : "x"});
-	}
+	};
 	// END: Heli */
 
 	this.setup();

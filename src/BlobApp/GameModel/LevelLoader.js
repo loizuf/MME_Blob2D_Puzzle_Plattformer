@@ -1,8 +1,10 @@
 BlobApp.LevelLoader = (function() {
 	var that = {},
+
 	tileset,
 	mapData,
 	levelID,
+
 	/* need to be extracted from json!*/
 	_createRequestObject = {
 		"sprite" : undefined,
@@ -11,17 +13,21 @@ BlobApp.LevelLoader = (function() {
 
 	init = function(lvlID){
 		levelID = lvlID;
-		console.log("level load", levelID);
+
 		_initBackground();
 		_getLevelMapData(levelID);
+
 		mapData = mapDataJson;
 
 		// create EaselJS image for tileset
 		tileset = new Image();
+
 		// getting imagefile from first tileset
 		tileset.src = "res/img/Tileset.png"//mapData.tilesets[0].image;
+
 		// callback for loading layers after tileset is loaded
 		tileset.onLoad = _initLayers();
+
 		return that;
 	},
 
@@ -31,24 +37,26 @@ BlobApp.LevelLoader = (function() {
 	}
 
 	_initLayers = function() {
-		console.log("initlayers");
-		var w = mapData.tilesets[0].tilewidth;
-		var h = mapData.tilesets[0].tileheight;
+		var width = mapData.tilesets[0].tilewidth;
+		var height = mapData.tilesets[0].tileheight;
+
 		var imageData = {
 			images : [ tileset ],
 			frames : {
-				width : w,
-				height : h
+				width : width,
+				height : height
 			}
 		};
+
 		// create spritesheet for generic objects (ground e.g.)
 		var tilesetSheet = new createjs.SpriteSheet(imageData);
 		
 		// loading each layer at a time
-		for (var idx = 0; idx < mapData.layers.length; idx++) {
-			var layerData = mapData.layers[idx];
-			if (layerData.type == 'tilelayer')
+		for (var i = 0; i < mapData.layers.length; i++) {
+			var layerData = mapData.layers[i];
+			if (layerData.type == 'tilelayer') {
 				_initLayer(layerData, tilesetSheet, mapData.tilewidth, mapData.tileheight);
+			}
 		}
 	},
 
@@ -57,61 +65,65 @@ BlobApp.LevelLoader = (function() {
 		borders = new Array();
 
 		//Testvariable zur Übergabe von Infos(Doors)
-		var doorCount = 0,
-		buttonCount = 0;
+		var doorCount = 0, buttonCount = 0;
 
 		for ( var y = 0; y < layerData.height; y++) {
 			borders.push(new Array());
+
 			for ( var x = 0; x < layerData.width; x++) {
 				borders[y][x] = false;
+
 				//get tile id
 					var idx = x + y * layerData.width;
-					xcoords = x*25;
-					ycoords = y*25;
-					switch(layerData.data[idx]){
-					case EntityConfig.REDBLOBID:
-					_createRedBlob(xcoords,ycoords);
-					break;
 
-					case EntityConfig.REDBLOBLOWERID: 
-					case EntityConfig.DOORLOWERID:
-					case EntityConfig.EMPTYTILEID: 
-					case EntityConfig.GOADLLOWERID:
-					break;
+					xcoords = x * 25;
+					ycoords = y * 25;
 
-					case EntityConfig.GREENBLOBID:
-					_createGreenBlob(xcoords, ycoords);
-					break;
+					switch(layerData.data[idx]) {
+						case EntityConfig.REDBLOBID:
+							_createRedBlob(xcoords,ycoords);
+						break;
 
-					case EntityConfig.DOORID:
-						_createDoor(xcoords,ycoords,layerData,doorCount);
-						doorCount++;
-					break;
-	
-					case EntityConfig.BUTTONID:
-						_createButton(xcoords,ycoords,layerData, buttonCount);
-						buttonCount++;
-					break;
+						case EntityConfig.REDBLOBLOWERID: 
+						case EntityConfig.DOORLOWERID:
+						case EntityConfig.EMPTYTILEID: 
+						case EntityConfig.GOADLLOWERID:
+						break;
 
-					case EntityConfig.KEYID:
-						_createKey(xcoords, ycoords);
-					break;
+						case EntityConfig.GREENBLOBID:
+							_createGreenBlob(xcoords, ycoords);
+						break;
 
-					case EntityConfig.GOALID:
-						_createGoal(xcoords, ycoords);
-					break;
+						case EntityConfig.DOORID:
+							_createDoor(xcoords,ycoords,layerData,doorCount);
+							doorCount++;
+						break;
+		
+						case EntityConfig.BUTTONID:
+							_createButton(xcoords,ycoords,layerData, buttonCount);
+							buttonCount++;
+						break;
 
-					case EntityConfig.HELITILE:
-						_createHeliTriggerZone(xcoords, ycoords);
-						// No break!
+						case EntityConfig.KEYID:
+							_createKey(xcoords, ycoords);
+						break;
 
-					default:
-					borders[y][x] = true;
-					_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
-					break;
+						case EntityConfig.GOALID:
+							_createGoal(xcoords, ycoords);
+						break;
+
+						case EntityConfig.HELITILE:
+							_createHeliTriggerZone(xcoords, ycoords);
+							// No break!
+
+						default:
+							borders[y][x] = true;
+							_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
+						break;
+					}
 				}
 			}
-		}
+
 		_initBorders(borders);
 	},
 
@@ -122,88 +134,106 @@ BlobApp.LevelLoader = (function() {
 			"doorNumber": doorNumber,
 			"buttonNumber": buttonNumber
 		};
+
 		$('body').trigger("doorCreated", eventPackage);
 	},
 
-	_initBorders = function(borders){
+	_initBorders = function(borders) {
 		// Horizontal borders
 		// Variables have: x, y, width, height
 		hBorders = new Array();
 		currentHBorder = undefined;
+
 		for(var rowNum = 0; rowNum < borders.length; rowNum++) {
 			currentHBorder = undefined;
+
 			for(var colNum = 0; colNum < borders[0].length; colNum++) {
 				if(borders[rowNum][colNum]) {
 					if(!currentHBorder) {
+
 						// UNLESS: Would be a single item AND is in a vertical line
-						singleHorizontal = !((colNum != 0 && borders[rowNum][colNum-1]) || (colNum != borders[0].length-1 && borders[rowNum][colNum+1]));
-						verticalLine = (
-							(rowNum != 0 && borders[rowNum-1][colNum]));
+						singleHorizontal = !((colNum != 0 && borders[rowNum][colNum - 1]) || (colNum != borders[0].length - 1 && borders[rowNum][colNum + 1]));
+						verticalLine = ((rowNum != 0 && borders[rowNum - 1][colNum]));
+						
 						if(!(singleHorizontal && verticalLine)) {
 							hBorders.push({
-								"x" : colNum*25,
-								"y" : rowNum*25,
+								"x" : colNum * 25,
+								"y" : rowNum * 25,
 								"width" : 12.5,
 								"height" : 12.5,
-								"userData" : [EntityConfig.HORIZONTALBORDERID,undefined]
+								"userData" : [EntityConfig.HORIZONTALBORDERID, undefined]
 							});
+
 							currentHBorder = true;
 						}
+
 					} else {
 						hBorders[hBorders.length - 1].width += 12.5;
 						hBorders[hBorders.length -1].x += 12.5;
 					}
+
 				} else {
 					currentHBorder = false;
 				}
 			}
 		}
-		for(var i = 0; i < hBorders.length; i++) $('body').trigger('borderRequested', hBorders[i]);
+
+		for(var i = 0; i < hBorders.length; i++) {
+			$('body').trigger('borderRequested', hBorders[i]);
+		}
 
 		// Vertical borders
-
 		vBorders = new Array();
 		currentVBorder = undefined;
 		addStuff = undefined;
+
 		for(var colNum = 0; colNum < borders[0].length; colNum++) {
 			currentVBorder = undefined;
+
 			for(var rowNum = 0; rowNum < borders.length; rowNum++) {
 				if(borders[rowNum][colNum]) {
 					if(!currentVBorder) {
+
 						// IF: not already a horizontal line AND will be a vertical line
-						verticalLine = ((rowNum != borders.length -1 && borders[rowNum+1][colNum]) || (rowNum != 0 && borders[rowNum-1][colNum]));
-						horizontalLine = ((colNum != 0 && borders[rowNum][colNum-1]) || (colNum != borders[0].length-1 && borders[rowNum][colNum+1]));
+						verticalLine = ((rowNum != borders.length - 1 && borders[rowNum + 1][colNum]) || (rowNum != 0 && borders[rowNum - 1][colNum]));
+						horizontalLine = ((colNum != 0 && borders[rowNum][colNum - 1]) || (colNum != borders[0].length - 1 && borders[rowNum][colNum + 1]));
+						
 						if(verticalLine && !horizontalLine){
-							vBorders.push({
-								"x" : colNum*25,
-								"y" : rowNum*25,
+							vBorders.push({ 
+								"x" : colNum * 25,
+								"y" : rowNum * 25,
 								"width" : 12.5,
 								"height" : 12.5,
-								"userData" : [EntityConfig.VERTICALBORDERID,undefined]
+								"userData" : [EntityConfig.VERTICALBORDERID, undefined]
 							});
 
 							currentVBorder = true;
 						}
+
 					} else {
 						vBorders[vBorders.length - 1].height += 12.5;
 						vBorders[vBorders.length -1].y += 12.5;
 					}
+
 				} else {
 					currentVBorder = false;
 				}
 			}
 		}
-		for(var i = 0; i < vBorders.length; i++) $('body').trigger('borderRequested', vBorders[i]);
+
+		for(var i = 0; i < vBorders.length; i++) {
+			$('body').trigger('borderRequested', vBorders[i]);
+		}
 	},
 
-	_loadGenericData = function(layerData, tilesetSheet, x, y, idx){
+	_loadGenericData = function(layerData, tilesetSheet, x, y, idx) {
 		var cellBitmap = new createjs.Sprite(tilesetSheet);
 		// layer data has single dimension array
 
 		// tilemap data uses 1 as first value, EaselJS uses 0 (sub 1 to load correct tile)
-		cellBitmap.gotoAndStop(layerData.data[idx]-1);
-		// isometrix tile positioning based on X Y order from Tile
+		cellBitmap.gotoAndStop(layerData.data[idx] - 1);
 
+		// isometrix tile positioning based on X Y order from Tile
 		cellBitmap.x = x;
 		cellBitmap.y = y;
 
@@ -212,45 +242,51 @@ BlobApp.LevelLoader = (function() {
 		// add bitmap to stage
 
 		_createRequestObject["sprite"] = cellBitmap;
-		_createRequestObject["userData"] = [idx,undefined];
+		_createRequestObject["userData"] = [idx, undefined];
 
 		$('body').trigger('genericRequested',_createRequestObject);
 	},
 
 
-	_createRedBlob = function(x,y){
+	_createRedBlob = function(x, y) {
 		var blob1 = new BlobApp.Blob(x, y, 25, 50, EntityConfig.REDBLOBID);
+
 		_createRequestObject["sprite"] = blob1.sprite;
-		_createRequestObject["userData"] = [EntityConfig.REDBLOBID,undefined];
-		$('body').trigger('blobRequested',_createRequestObject);
+		_createRequestObject["userData"] = [EntityConfig.REDBLOBID, undefined];
+
+		$('body').trigger('blobRequested', _createRequestObject);
 	},
 
-	_createGreenBlob = function(x, y){
+	_createGreenBlob = function(x, y) {
 		var blob2 = new BlobApp.Blob(x, y, 25, 25, EntityConfig.GREENBLOBID);
+
 		_createRequestObject["sprite"] = blob2.sprite;
 		_createRequestObject["userData"] = [EntityConfig.GREENBLOBID,undefined];
+
 		$('body').trigger('blobRequested', _createRequestObject);
 	},
 
 
 	_createButton = function(x, y,layerData,buttonCount){
-		var entity = new BlobApp.TriggerButton(x,y,25,25,EntityConfig.BUTTONID);
+		var entity = new BlobApp.TriggerButton(x, y, 25, 25, EntityConfig.BUTTONID);
 		var buttonNumber = layerData.properties.Buttons[buttonCount];
 
 		_createRequestObject["sprite"] = entity.sprite;
-		_createRequestObject["userData"] = [EntityConfig.BUTTONID,buttonNumber,layerData.properties.Doors[buttonCount]];
+		_createRequestObject["userData"] = [EntityConfig.BUTTONID, buttonNumber, layerData.properties.Doors[buttonCount]];
 
 		$('body').trigger('entityRequested', _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
 	},
 
-	_createDoor = function(x, y,layerData,doorCount){
+	_createDoor = function(x, y, layerData, doorCount){
 		var doorNumber = layerData.properties.Doors[doorCount];
 		
-		_informModel(layerData,doorCount);
-		var entity = new BlobApp.DynamicDoor(x,y,25,50,doorNumber);
+		_informModel(layerData, doorCount);
+
+		var entity = new BlobApp.DynamicDoor(x, y, 25, 50, doorNumber);
+
 		_createRequestObject["sprite"] = entity.sprite;
-		_createRequestObject["userData"] = [EntityConfig.DOORID,doorNumber];
+		_createRequestObject["userData"] = [EntityConfig.DOORID, doorNumber];
 		_createRequestObject["height"] = 2;
 		
 		$('body').trigger('entityRequested', _createRequestObject);
@@ -258,12 +294,12 @@ BlobApp.LevelLoader = (function() {
 	},
 	
 	_createKey = function(x, y) {
-
 		var entity = new BlobApp.Key(x, y, 25, 25, EntityConfig.KEYID);
 
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.KEYID];
 		_createRequestObject["height"] = 1;
+
 		$('body').trigger("sensorRequested", _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
 	},
@@ -290,7 +326,6 @@ BlobApp.LevelLoader = (function() {
 		$("body").trigger("sensorRequested", _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
 
-
 		_createRequestObject["width"] = 1.0;
 	},
 
@@ -303,8 +338,6 @@ BlobApp.LevelLoader = (function() {
 		return xmlHttp.responseText;
 	},
 
-
-
 	// utility function for loading json data from server
 	_httpGetData = function(theUrl) {
 		var responseText = httpGet(theUrl);
@@ -314,29 +347,36 @@ BlobApp.LevelLoader = (function() {
 	_getLevelMapData = function(levelNumber) {
 		switch (levelNumber){
 			case 0:
-			mapDataJson = LevelConfig.MENU;
+				mapDataJson = LevelConfig.MENU;
 			break;
+
 			case 1:
-			mapDataJson = LevelConfig.INTRODUCTION;
+				mapDataJson = LevelConfig.INTRODUCTION;
 			break;
+
 			case 2:
-			mapDataJson = LevelConfig.SNAKES;
+				mapDataJson = LevelConfig.SNAKES;
 			break;
+
 			case 3:
-			mapDataJson = LevelConfig.TRAMPOLINE;
+				mapDataJson = LevelConfig.TRAMPOLINE;
 			break;
+
 			case 4:
-			mapDataJson = LevelConfig.ABAN_HAWKINS;
+				mapDataJson = LevelConfig.ABAN_HAWKINS;
 			break;
+
 			case 98:
-			mapDataJson = LevelConfig.OVER0;
+				mapDataJson = LevelConfig.OVER0;
 			break;
+
 			case 99:
-			mapDataJson = LevelConfig.OVER1;
+				mapDataJson = LevelConfig.OVER1;
 			break;
 		}
 	};
-	that.init = init;
 
+	that.init = init;
+	
 	return that;
 })();

@@ -44,7 +44,6 @@ BlobApp.ModelController = (function() {
 		$(_inputHandler).on("p2ArrowRightStopped",_onP2ArrowRightStopped);
 		$(_inputHandler).on("p2ArrowLeftStopped",_onP2ArrowLeftStopped);
 		$(_inputHandler).on("p2ArrowDownStopped",_onP2ArrowDownStopped);
-
 		$(_inputHandler).on("p2ButtonMashEvent",_onP2ButtonMashEvent);
 
 		$(_inputHandler).on("p1blobDeath",_onP1BlobDeath);
@@ -53,12 +52,10 @@ BlobApp.ModelController = (function() {
 		$(_inputHandler).on("onPauseScreenRequested", _pauseGame);
 
 		$('body').on("onProceedingRequested", _proceedGame);
-
 		$('body').on("blobEntityCreated",_onBlobEntityCreated);
 		$('body').on('onReAllowJump', _reAllowJump);
 		$('body').on("doorCreated", _onDoorCreated);
 		$('body').on('onPlayerWaitingChange', _onPlayerWaitingChange);
-
 		$('body').on('keyPickedUp', _onKeyPickedUp);
 		$('body').on('blobFinishAttempt', _onBlobFinishAttempt);
 		//$('body').on('levelFinished', _onLevelFinished);
@@ -166,28 +163,22 @@ BlobApp.ModelController = (function() {
 
 	_reAllowJump = function(event, entity) {
 		if(entity.GetUserData()[0] == EntityConfig.GREENBLOBID) {
-			//console.log("p1 re allow jump");
 			_blobPlayerOne.prototype.allowJump();
 		} else {
-			//console.log("p2 re allow jump");
 			_blobPlayerTwo.prototype.allowJump();
 		}
 	},
 
 	_onBlobEntityCreated = function(event, entity) {
 		if(entity.GetUserData()[0] == EntityConfig.GREENBLOBID) {
-			//console.log("p1 created");
 			_blobPlayerOne.prototype.setEntity(entity);
 		} else {
-			//console.log("p2 created");
 			_blobPlayerTwo.prototype.setEntity(entity);
 		 }
 	},
 
 	_onPlayerWaitingChange = function(event, data) {
-	//	console.log(data);
-
-		player = (data.playerName == "p1")? _blobPlayerOne : _blobPlayerTwo;
+		player = (data.playerName == "p1") ? _blobPlayerOne : _blobPlayerTwo;
 		waiting = data.waiting;
 
 		player.prototype.setWaitingForOther(waiting);
@@ -195,13 +186,11 @@ BlobApp.ModelController = (function() {
 		if(waiting != false) {
 			if(player == _blobPlayerOne) {
 				if(waiting == _blobPlayerTwo.prototype.getWaitingForOther()) {
-					console.log("Heli Trigger!!");
 					$('body').trigger("startHeli");
 					_inputHandler.changeControls();
 				}
 			} else {
 				if(waiting == _blobPlayerOne.prototype.getWaitingForOther()) {
-					console.log("Heli Trigger!!");
 					$('body').trigger("startHeli");
 					_inputHandler.changeControls();
 				}

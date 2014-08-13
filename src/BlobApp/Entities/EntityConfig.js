@@ -16,9 +16,6 @@ EntityConfig = {
 	HELITRIGGER : 1147,
 
 	/* any other special id!*/
-
-
-
 },
 
 AnimationKeys = {

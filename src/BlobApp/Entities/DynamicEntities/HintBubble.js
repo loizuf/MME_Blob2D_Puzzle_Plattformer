@@ -3,5 +3,6 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, sizeX, sizeY, hintID) {
 	this.prototype.applyPhysicsBody = function() { 
 
 	};
+	
 	this.hintID = hintID;
 });

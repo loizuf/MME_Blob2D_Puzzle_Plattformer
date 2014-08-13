@@ -3,5 +3,6 @@ BlobApp.StaticDoor = (function StaticDoor(x_pos, y_pos, sizeX, sizeY, doorID) {
 	this.prototype.applyPhysicsBody = function() { 
 
 	};
+	
 	this.doorID = doorID;
 });

@@ -88,7 +88,6 @@ BlobApp.GlobalState = (function() {
 	that.onSettingsChange = onSettingsChange;
 	that.setCurrentLevel = setCurrentLevel;
 	that.setCurrentScreen = setCurrentScreen;
-	
 	that.getGameState = getGameState;
 
 	return that;

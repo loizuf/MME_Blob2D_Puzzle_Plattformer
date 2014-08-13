@@ -8,18 +8,23 @@ BlobApp.BlobSuperClass = function() {
 
 	//var b2Vec2 = Box2D.Common.Math.b2Vec2;
 	thisVar = this;
+
 	var _positionX = null,
 	_positionY = null,
+
 	// box2d? value
 	_velocity = null,
+
 	// Box2D vector
 	_direction = null,
 
 	// As the name suggests, 
 	_jumpAllowed,
+
 	// Waiting for other blob to trigger a special interaction: No interaction allowed
 	// Is false when not waiting, otherwhise contains name of the skill that the blob is waiting to use.
 	_waitingForOtherBlob,
+
 	// Box2D Entity
 	_blobEntity,
 
@@ -29,7 +34,6 @@ BlobApp.BlobSuperClass = function() {
 	GREENBLOBYSPEED = 3.8,
 
 	_blobID,
-
 
 	/* 
 		current<Direction>: Function that is called when the key is pressed
@@ -49,13 +53,11 @@ BlobApp.BlobSuperClass = function() {
 
 //!	 !Must be overriden by subclass!
 	this.specialSkills = null,
+
 	// If the blobs are currently doing some fancy interaction
 	this.specialInteractionActive = null,
 
-
-
-
-	this.init = function(pX, pY, v, dir){
+	this.init = function(pX, pY, v, dir) {
 		_setPropertiesOfBlob(pX, pY, v, dir);
 
 		thisVar.setupMovementFunctions();
@@ -64,7 +66,7 @@ BlobApp.BlobSuperClass = function() {
 		$("body").on("onTick", _callDirections);
 	},
 
-	_setPropertiesOfBlob = function(pX, pY, v, dir){
+	_setPropertiesOfBlob = function(pX, pY, v, dir) {
 		_positionX = pX;
 		_positionY = pY;
 		_velocity = v;
@@ -78,7 +80,7 @@ BlobApp.BlobSuperClass = function() {
 		_currentDown = thisVar._triggerSpecial;
 	},
 
-	this.killBlob = function(startpX, startpY){
+	this.killBlob = function(startpX, startpY) {
 		//_setPropertiesOfBlob(startpX, startpY, 0, 0);
 		// Trigger something to kill other blob, wait some time, reset positions
 	},
@@ -86,48 +88,46 @@ BlobApp.BlobSuperClass = function() {
 
 	// Manipulates the movement direction so that the blob moves to the left
 	this._moveLeft = function() {
-		if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID){
-			$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -1*REDBLOBXSPEED, directionY: 0});
-			
-		}else{
-			$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -1*GREENBLOBXSPEED, directionY: 0});
+		if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID) {
+			$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -1 * REDBLOBXSPEED, directionY: 0});	
+		} else {
+			$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -1 * GREENBLOBXSPEED, directionY: 0});
 		}
-		
 	},
 
 	// Manipulates the movement direction so that the blob moves to the right
 	this._moveRight = function() {
-		if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID){
-		$('body').trigger('onInputRecieved',{entity: _blobEntity, directionX: REDBLOBXSPEED, directionY: 0});
-		}else{
-		$('body').trigger('onInputRecieved',{entity: _blobEntity, directionX: GREENBLOBXSPEED, directionY: 0});
+		if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID) {
+			$('body').trigger('onInputRecieved',{entity: _blobEntity, directionX: REDBLOBXSPEED, directionY: 0});
+		} else {
+			$('body').trigger('onInputRecieved',{entity: _blobEntity, directionX: GREENBLOBXSPEED, directionY: 0});
 		}
 	},
 
 	// Makes the Blob jump
 	this._jump = function() {
-		// Animation
 		// TODO, impossible with easel?? switch between animations mid-jump
 		if(_jumpAllowed) {
-			if(!keyLeftPressed)
+			if(!keyLeftPressed) {
 				$('body').trigger('blobanimationChanged', {
 					"blobID" : _blobID,
 					"animationKey" : AnimationKeys.JUMPRIGHT
 				});
-			else 
+			} else {
 				$('body').trigger('blobanimationChanged', {
 					"blobID" : _blobID,
 					"animationKey" : AnimationKeys.JUMPLEFT	
-				});				
+				});	
+			}			
 		}
 
-
 		if(_jumpAllowed != false) {
-			if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID){
+			if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID) {
 				$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*REDBLOBYSPEED});
-			}else{
+			} else {
 				$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*GREENBLOBYSPEED});
 			}
+
 			_jumpAllowed = false;
 		}
 	},
@@ -136,9 +136,7 @@ BlobApp.BlobSuperClass = function() {
 		Tries to trigger a special event. 
 		If the other blob is ready, it might work; otherwhise, the other player is informed via a bubble-y-thing
 	*/
-	this._triggerSpecial = function() {
-		
-	},
+	this._triggerSpecial = function() {},
 
 	this.allowJump = function() {
 		_jumpAllowed = true;
@@ -147,14 +145,24 @@ BlobApp.BlobSuperClass = function() {
 			"blobID" : _blobID,
 			"animationKey" : AnimationKeys.IDLE1
 		});
-
 	},
 
 	_callDirections = function() {
-		if(keyLeftPressed) _currentLeft();
-		if(keyRightPressed) _currentRight();
-		if(keyUpPressed) _currentUp();
-		if(keyDownPressed) _currentDown();
+		if(keyLeftPressed) {
+			_currentLeft();
+		}
+
+		if(keyRightPressed) {
+			_currentRight();
+		}
+
+		if(keyUpPressed) { 
+			_currentUp();
+		}
+
+		if(keyDownPressed) {
+			_currentDown();
+		}
 
 		/*if(!keyLeftPressed && !keyUpPressed && !keyDownPressed && !keyRightPressed) {
 			$('body').trigger('blobanimationChanged', {
@@ -169,32 +177,42 @@ BlobApp.BlobSuperClass = function() {
 		if(pressed) {
 			keyLeftPressed = true;
 			keyRightPressed = false;
-			if(_jumpAllowed)
+
+			if(_jumpAllowed) {
 				$('body').trigger('blobanimationChanged', {
 					"blobID" : _blobID,
 					"animationKey" : AnimationKeys.MOVELEFT
 				});
+			}
+
 		} else {
 			keyLeftPressed = false;
 		}
 
-		if(_blobID == EntityConfig.GREENBLOBID) $('body').trigger('heliAnimationChanged', {"animationKey": AnimationKeys.MOVELEFT});
+		if(_blobID == EntityConfig.GREENBLOBID) {
+			$('body').trigger('heliAnimationChanged', {"animationKey": AnimationKeys.MOVELEFT});
+		}
 	},
 
 	this.onRightPressed = function(pressed) {
 		if(pressed) {
 			keyRightPressed = true;
 			keyLeftPressed = false;
-			//console.log(_blobID);
-			if(_jumpAllowed)	
+
+			if(_jumpAllowed) {	
 				$('body').trigger('blobanimationChanged', {
 					"blobID" : _blobID,
 					"animationKey" : AnimationKeys.MOVERIGHT
 				});
+			}
+
 		} else {
 			keyRightPressed = false;
 		}
-		if(_blobID == EntityConfig.GREENBLOBID) $('body').trigger('heliAnimationChanged', {"animationKey": AnimationKeys.MOVERIGHT});
+
+		if(_blobID == EntityConfig.GREENBLOBID) {
+			$('body').trigger('heliAnimationChanged', {"animationKey": AnimationKeys.MOVERIGHT});
+		}
 	},
 
 	this.onUpPressed = function(pressed) {

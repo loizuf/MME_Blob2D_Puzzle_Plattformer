@@ -38,24 +38,20 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_resetGame = function() {
-		a = world.GetBodyList();
+		var bodies = world.GetBodyList();
 
-		var cnt = 0;
-		while(a!=null){
-			cnt++;
-			console.log("destroying", cnt);
-			tmp = a.GetNext();
-			bodiesToRemove.push(a);
-			a = tmp;
+		while(bodies!=null){
+			var tmpBody = bodies.GetNext();
+			bodiesToRemove.push(bodies);
+			bodies = tmpBody;
 		}
-	
+
 		$('body').trigger('onResetGame');
-		
 	},
 
 	_setupPhysics = function() {
-		/* die borders noch schöner gestalten?! */
 		var debugDraw = new b2DebugDraw();
+
         debugDraw.SetSprite(document.getElementById("gameCanvas").getContext("2d"));
         debugDraw.SetDrawScale(30.0);
         debugDraw.SetFillAlpha(0.5);
@@ -63,17 +59,15 @@ BlobApp.PhysicsHandler = (function() {
         debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
         
 
-		world = new b2World(new b2Vec2(0,10), true);
+		world = new b2World(new b2Vec2(0, 10), true);
 		world.SetDebugDraw(debugDraw);
 	},
 
 	createDefaultBoxEntity = function(x, y, width, height, sensor) {
-
 		var fixture = createDefaultBoxFixture(width, height, sensor);
-
 		var bodyDef = new b2BodyDef;
-		bodyDef.type = b2Body.b2_staticBody;
 
+		bodyDef.type = b2Body.b2_staticBody;
 		bodyDef.position.x = x;
 		bodyDef.position.y = y;
 
@@ -85,11 +79,14 @@ BlobApp.PhysicsHandler = (function() {
 
 	createDefaultBoxFixture = function(width, height, sensor) {
 		var fixture = new b2FixtureDef;
+
 		fixture.density = 1;
 		fixture.restitution = 0;
 		fixture.friction = 0.1;
 
-		if(sensor) fixture.isSensor = true;
+		if(sensor) {
+			fixture.isSensor = true;
+		}
 
 		fixture.shape = new b2PolygonShape;
 		fixture.shape.SetAsBox(width, height);
@@ -104,16 +101,16 @@ BlobApp.PhysicsHandler = (function() {
 		userData = spriteAndNumber["userData"];
 		entityID = userData[0];
 
-		var x = (sprite.x) / SCALE,
-			y = (sprite.y) / SCALE,
+		var x = (sprite.x) / SCALE,	y = (sprite.y) / SCALE,
 			width = TILESIZEX / SCALE,
-			height = (entityID == EntityConfig.DOORID)? TILESIZEY*2 / SCALE : TILESIZEY / SCALE;
+			height = (entityID == EntityConfig.DOORID) ? TILESIZEY * 2 / SCALE : TILESIZEY / SCALE;
 
 		var entity = createDefaultBoxEntity(x, y, width, height);
 
-		// assign actor
-		entity.SetUserData(userData);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		entity.SetUserData(userData);  
+		
 		var actor = new _actorObject(entity, sprite);
+		
 		bodies.push(entity); 
 		
 	},
@@ -123,30 +120,27 @@ BlobApp.PhysicsHandler = (function() {
 		userData = spriteAndNumber["userData"][0];
 
 		
-		var width = (TILESIZEX-1) / SCALE,
-			height = (userData == EntityConfig.REDBLOBID) ? ((TILESIZEY*2)-3 )/ SCALE : (TILESIZEY-1) / SCALE;
-
+		var width = (TILESIZEX - 1) / SCALE,
+			height = (userData == EntityConfig.REDBLOBID) ? ((TILESIZEY * 2) - 3 )/ SCALE : (TILESIZEY - 1) / SCALE;
 
 		var fixture = createDefaultBoxFixture(width, height);
-		
 		var bodyDef = new b2BodyDef;
 
-		/*dynamic/static body*/
 		bodyDef.type = b2Body.b2_dynamicBody;
 		bodyDef.position.x = (sprite.x) / SCALE;
 		bodyDef.position.y = (sprite.y) / SCALE;
-		
 		bodyDef.fixedRotation = true;
 
 		var entity = world.CreateBody(bodyDef);
-		entity.CreateFixture(fixture);
-		// assign actor
-		entity.SetUserData([userData,undefined]);  // set the actor as user data of the body so we can use it later: body.GetUserData()
-		var actor = new _actorObject(entity, sprite);
 
-		//entity muss in das blob Model. Debug lösung über Event
+		entity.CreateFixture(fixture);
+		entity.SetUserData([userData,undefined]);
+		
+		var actor = new _actorObject(entity, sprite);
 		var blobEntityCreated = $.Event('blobEntityCreated');
+
 		$("body").trigger(blobEntityCreated, entity);
+
 		bodies.push(entity); 	
 	},
 
@@ -160,23 +154,22 @@ BlobApp.PhysicsHandler = (function() {
 		for(var i = 0; i < bodiesToRemove.length; i++) {
 			world.DestroyBody(bodiesToRemove[i]);
 		}
+
 		bodiesToRemove.length = 0;
 
 		while(fixedTimestepAccumulator >= STEP) {		
+			if(heliBody != undefined) {
+				heliBody.ApplyForce( new b2Vec2(0, -8.5 * heliBody.GetMass()), heliBody.GetPosition());
+			}
 
-			if(heliBody != undefined)
-				heliBody.ApplyForce( new b2Vec2(0, -8.5*heliBody.GetMass()), heliBody.GetPosition());
-
-			// update active actors
-			for(var i=0, l=actors.length; i<l; i++) {
+			for(var i = 0, l = actors.length; i < l; i++) {
 				actors[i].update();
 			}
 
-			world.Step(TIMESTEP, 10, 10);
-
 			fixedTimestepAccumulator -= STEP;
+
+			world.Step(TIMESTEP, 10, 10);
 			world.ClearForces();
-   			//world.m_debugDraw.m_sprite.graphics.clear();
    			world.DrawDebugData();
 		}	
 	},
@@ -184,7 +177,8 @@ BlobApp.PhysicsHandler = (function() {
 	_applyForce = function(event, direction) {
 		var entity = direction.entity;
 		if((entity.m_linearVelocity.x > -3) && (entity.m_linearVelocity.x < 3)) {
-			entity.ApplyImpulse(new b2Vec2(direction.directionX, direction.directionY), entity.GetPosition());
+			entity.ApplyImpulse(new b2Vec2(direction.directionX, 
+				direction.directionY), entity.GetPosition());
 		}
 	},
 
@@ -194,7 +188,7 @@ BlobApp.PhysicsHandler = (function() {
 			entity.ApplyImpulse(new b2Vec2(direction.directionX, direction.directionY), entity.GetPosition());
 	},
 
-	_applyBorder = function(event, borderData){
+	_applyBorder = function(event, borderData) {
 		var x = (borderData.x) / SCALE,
 			y = (borderData.y) / SCALE,
 			width = borderData.width/SCALE,
@@ -210,9 +204,8 @@ BlobApp.PhysicsHandler = (function() {
 
 		var x = (sprite.x) / SCALE,
 			y = (sprite.y) / SCALE,
-			width = (data.width)? data.width*TILESIZEX/SCALE : TILESIZEX/SCALE,
-			height = (data.height*TILESIZEY)/SCALE;
-
+			width = (data.width) ? data.width * TILESIZEX/SCALE : TILESIZEX/SCALE,
+			height = (data.height * TILESIZEY)/SCALE;
 
 		var entity = createDefaultBoxEntity(x, y, width, height, true);		
 
@@ -231,26 +224,22 @@ BlobApp.PhysicsHandler = (function() {
 		actors.push(this);
 	},
 
-
-	// Heli stuff
+	/* Heli stuff */
 	heliIsActive = false,
 	heliBody = undefined,
 
 	_initHeli = function() {
-
 		greenBlobEntity = undefined;
+
 		for(var i = 0; i < bodies.length; i++) {
 			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
 				greenBlobEntity = bodies[i];
-				console.log(greenBlobEntity);
 				break;
 			}
 		}
 
-
-
 		var heliEnt = new BlobApp.Heli(greenBlobEntity.m_xf.position.x * SCALE, 
-									   greenBlobEntity.m_xf.position.y * SCALE, 50, 50);
+			greenBlobEntity.m_xf.position.y * SCALE, 50, 50);
 		sprite = heliEnt.sprite;
 		$('body').trigger("heliEntityRequested", {"sprite" : sprite});
 
@@ -258,7 +247,9 @@ BlobApp.PhysicsHandler = (function() {
 		heliIsActive = true;
 
 		for(var i = 0; i < bodies.length; i++) {
-			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID || bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID 
+				|| bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+
 				bodiesToRemove.push(bodies[i]);
 			}
 		}
@@ -268,7 +259,7 @@ BlobApp.PhysicsHandler = (function() {
 		userData = "Heli";
 		
 		var fixture = new b2FixtureDef;
-		//console.log(skin);
+
 		fixture.density = 1;
 		fixture.restitution = 0.5;
 		fixture.friction = 0.1;	
@@ -283,36 +274,35 @@ BlobApp.PhysicsHandler = (function() {
 		
 		var bodyDef = new b2BodyDef;
 
-
 		/*dynamic/static body*/
 		bodyDef.type = b2Body.b2_dynamicBody;
-		
 		bodyDef.fixedRotation = true;
-
 		bodyDef.position.x = (sprite.x) / SCALE;
 		bodyDef.position.y = (sprite.y) / SCALE;
 
 		var entity = world.CreateBody(bodyDef);
 
 		fixture.shape.SetAsArray(
-			[new b2Vec2(-(TILESIZEX*2-1 )/ SCALE, -2.5*(TILESIZEY-1)/SCALE),
-			 new b2Vec2(-(TILESIZEX*2-1 )/ SCALE, -3*(TILESIZEY-1)/SCALE),
-			 new b2Vec2((TILESIZEX*2-1 )/ SCALE, -3*(TILESIZEY-1)/SCALE),
-			 new b2Vec2((TILESIZEX*2-1 )/ SCALE, -2.5*(TILESIZEY-1)/SCALE)],
+			[new b2Vec2(-(TILESIZEX * 2 - 1 )/ SCALE, -2.5 * (TILESIZEY - 1) / SCALE),
+			 new b2Vec2(-(TILESIZEX * 2 - 1 ) / SCALE, -3 *(TILESIZEY - 1) / SCALE),
+			 new b2Vec2((TILESIZEX * 2 - 1 ) / SCALE, -3 * (TILESIZEY - 1) / SCALE),
+			 new b2Vec2((TILESIZEX * 2 - 1 ) / SCALE, -2.5 * (TILESIZEY - 1) / SCALE)],
 			 4);
+
 		entity.CreateFixture(fixture);
 
 		fixture.shape.SetAsArray(
-			[new b2Vec2(-((TILESIZEX*2-1 )/ SCALE)/2, (TILESIZEY-1)/SCALE),
-			 new b2Vec2(-((TILESIZEX*2-1 )/ SCALE)/2, -2.5*(TILESIZEY-1)/SCALE),
-			 new b2Vec2(((TILESIZEX*2-1 )/ SCALE)/2, -2.5*(TILESIZEY-1)/SCALE),
-			 new b2Vec2(((TILESIZEX*2-1 )/ SCALE)/2, (TILESIZEY-1)/SCALE)],
+			[new b2Vec2(-((TILESIZEX * 2 - 1 ) / SCALE) / 2, (TILESIZEY - 1) / SCALE),
+			 new b2Vec2(-((TILESIZEX * 2 - 1 ) / SCALE) / 2, -2.5 * (TILESIZEY - 1) / SCALE),
+			 new b2Vec2(((TILESIZEX * 2 - 1 ) / SCALE) / 2, -2.5 * (TILESIZEY - 1) / SCALE),
+			 new b2Vec2(((TILESIZEX * 2 - 1 ) / SCALE) / 2, (TILESIZEY - 1) / SCALE)],
 			 4);
+
 		entity.CreateFixture(fixture);
-	
 
 		// assign actor
 		entity.SetUserData([userData,undefined]);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		
 		var actor = new _actorObject(entity, sprite);
 
 		bodies.push(entity); 
@@ -321,8 +311,8 @@ BlobApp.PhysicsHandler = (function() {
 
 	_moveHeli = function(event, data) {
 		var isX = data.dir=="x";
-		var speedX = isX? data.speed : 0;
-		var speedY = isX? 0 : data.speed;
+		var speedX = isX ? data.speed : 0;
+		var speedY = isX ? 0 : data.speed;
 
 		heliBody.ApplyImpulse(new b2Vec2(speedX, speedY), heliBody.GetPosition());
 	},
@@ -334,32 +324,32 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('onInputRecievedJump', _applyForceJump);
 		$('body').on('borderRequested',_applyBorder);
 		$("body").on('sensorRequested', _applySensor);
+
 		$('body').on('openDoor',_openDoor);
+		
 		// START: DUMMY HELI
 		$('body').on('startHeli', _initHeli);
 		$('body').on('heliMove', _moveHeli);
 		// END: DUMMY HELI
+
 		$('body').on("restartPhys", _restartPhys);
 		$('body').on("destroyPhysics", _destroyWorld);
 		$('body').on("resetGame", _resetGame);
+
 		_registerCollisionHandler();
 	},
 	
-	_restartPhys = function(){
-		console.log("whey");
+	_restartPhys = function() {
 		lastTimestamp = Date.now();
 	},
-	_destroyWorld = function() {
-		console.log("Zin'rok");
-		a = world.GetBodyList();
 
-		var cnt = 0;
-		while(a!=null){
-			cnt++;
-			console.log("destroying", cnt);
-			tmp = a.GetNext();
-			bodiesToRemove.push(a);
-			a = tmp;
+	_destroyWorld = function() {
+		var bodies = world.GetBodyList();
+
+		while(bodies != null){	
+			var tmpBody = bodies.GetNext();
+			bodiesToRemove.push(bodies);
+			bodies = tmpBody;
 		}
 
 		$('body').trigger("onReloadGame");
@@ -367,27 +357,29 @@ BlobApp.PhysicsHandler = (function() {
 
 	_registerCollisionHandler = function(){
 		var listener = new Box2D.Dynamics.b2ContactListener;
+
 		listener.BeginContact = function(contact){
-		//	console.log(contact.GetFixtureA().GetBody().GetUserData(),contact.GetFixtureB().GetBody().GetUserData());
 			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
 			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
+
 			bodyA = contact.GetFixtureA().GetBody();
 			bodyB = contact.GetFixtureB().GetBody();
 
 			switch(aID){
 				case EntityConfig.GREENBLOBID: 
-				_handleGreenBlobCollision(bodyA,bodyB, bID, contact);
+					_handleGreenBlobCollision(bodyA,bodyB, bID, contact);
 				break;
+
 				case EntityConfig.REDBLOBID: 
-				_handleRedBlobCollision(bodyA,bodyB, bID, contact);
+					_handleRedBlobCollision(bodyA,bodyB, bID, contact);
 				break;
 			} 
-
 		};
 
 		listener.EndContact = function(contact) {
 			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
 			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
+
 			bodyA = contact.GetFixtureA().GetBody();
 			bodyB = contact.GetFixtureB().GetBody();
 
@@ -402,32 +394,33 @@ BlobApp.PhysicsHandler = (function() {
 
 		};
 
-
 		world.SetContactListener(listener);
 	},
 
-	_handleButtonCollison = function(bodyB, contact){
+	_handleButtonCollison = function(bodyB, contact) {
 		var buttonID = bodyB.GetUserData()[1];
 
-		if(contact.m_manifold.m_localPlaneNormal.y>0){
+		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 			$('body').trigger('doorOpenRequested', buttonID);
 		}
 	},
 
-	_handleGreenBlobCollision = function(bodyA,bodyB, bID, contact){
-		//console.log("greenblob collided");
+	_handleGreenBlobCollision = function(bodyA,bodyB, bID, contact) {
 		switch(bID){
-			case EntityConfig.REDBLOBID:
-			//TODO handle trampolin
+			/* case EntityConfig.REDBLOBID:
 			break;
+
 			case EntityConfig.VERTICALBORDERID:
-			//console.log("verticalBorder collided");
 			break;
-			case EntityConfig.HORIZONTALBORDERID:
+		
+			case EntityConfig.HORIZONTALBORDERID:		
 			break;
+			*/
+
 			case EntityConfig.BUTTONID:
 				_handleButtonCollison(bodyB, contact);
 			break;
+			
 			case EntityConfig.KEYID:
 				_pickUpKey(bodyA, bodyB);
 				return;
@@ -436,57 +429,71 @@ BlobApp.PhysicsHandler = (function() {
 				_attemptFinish(EntityConfig.GREENBLOBID);
 				return;
 			break;
+
 			case EntityConfig.HELITRIGGER:
 				_playerInHeliZone("greenBlob");
 				return;
+			break;
 
+			default: //_provideTrampolin();
+			break;
 		}
-		if(contact.m_manifold.m_localPlaneNormal.y>0){
+
+		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 			$('body').trigger('onReAllowJump', bodyA);
 		}
 	},
 
-	_handleRedBlobCollision = function(bodyA,bodyB, bID, contact){
-		//console.log("redblob collided");
+	_provideTrampolin = function() {
+		$('body').trigger('onDefaultCollision', {name: "trampolin"});
+	},
+
+	_handleRedBlobCollision = function(bodyA,bodyB, bID, contact) {
 		var notTramped = true;
-		switch(bID){
+
+		switch(bID) {
 			case EntityConfig.GREENBLOBID:
-				// Trampolin
+				
+				/* Trampolin */
 				notTramped = false;
-				if(contact.m_manifold.m_localPlaneNormal.y>0){
+				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 					y = contact.m_fixtureA.m_body.GetLinearVelocity().y;
-					_applyForceJump(null, {"entity" : bodyA, "directionX" : 0, "directionY" : -2.2*y});
+					_applyForceJump(null, {"entity" : bodyA, "directionX" : 0, "directionY" : -2.2 * y});
 				}
 			break;
+
 			case EntityConfig.VERTICALBORDERID:
-			//console.log("verticalBorder collided");
 			break;
+
 			case EntityConfig.HORIZONTALBORDERID:
-			//console.log("horizontalborder collided");
 			break;
+
 			case EntityConfig.BUTTONID:
 				_handleButtonCollison(bodyB, contact);
 			break;
+
 			case EntityConfig.KEYID:
 				_pickUpKey(bodyA, bodyB);
 				return;
 			break;
+
 			case EntityConfig.GOALID:
 				_attemptFinish(EntityConfig.REDBLOBID);
 				return;
 			break;
+
 			case EntityConfig.HELITRIGGER:
 				_playerInHeliZone("redBlob");
 				return;
 		}
-		if(contact.m_manifold.m_localPlaneNormal.y>0 && notTramped){
+
+		if(contact.m_manifold.m_localPlaneNormal.y > 0 && notTramped) {
 			$('body').trigger('onReAllowJump', bodyA);
 		}
-
 	},
 
 	_handleRedBlobEndCollision = function(bodyA, bodyB, bID, contact) {
-		switch(bID){
+		switch(bID) {
 			case EntityConfig.HELITRIGGER : 
 				_playerLeftTriggerZone("redBlob");
 			break;
@@ -494,7 +501,7 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_handleGreenBlobEndCollision = function(bodyA, bodyB, bID, contact) {
-		switch(bID){
+		switch(bID) {
 			case EntityConfig.HELITRIGGER : 
 				_playerLeftTriggerZone("greenBlob");
 			break;
@@ -510,10 +517,9 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_attemptFinish = function(blobID) {
-		console.log(blobID);
-		if(blobID == EntityConfig.REDBLOBID){
+		if(blobID == EntityConfig.REDBLOBID) {
 			$('body').trigger('blobFinishAttempt', PLAYER_ONE_NAME);
-		} else if(blobID == EntityConfig.GREENBLOBID){
+		} else if(blobID == EntityConfig.GREENBLOBID) {
 			$('body').trigger('blobFinishAttempt', PLAYER_TWO_NAME);
 		}
 	},
@@ -524,7 +530,7 @@ BlobApp.PhysicsHandler = (function() {
 	},	
 
 
-	_openDoor = function(event, doorID){
+	_openDoor = function(event, doorID) {
 		for(var i = 0; i < bodies.length; i++) {
 			if(bodies[i].GetUserData()[0] == EntityConfig.DOORID && bodies[i].GetUserData()[1] == doorID) {
 				bodiesToRemove.push(bodies[i]);

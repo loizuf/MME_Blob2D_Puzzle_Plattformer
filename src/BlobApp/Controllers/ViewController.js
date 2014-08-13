@@ -23,7 +23,6 @@ BlobApp.ViewController = (function() {
 	},
 
 	// TODO: The view Controller should not have to know that such a thing as "heli" exists, it should just be told "remove blobs, add sprite" in a more general way!!
-
 	applyHeli = function(event, data) {
 		stage.removeChild(stage.getChildByName("blobRed"));
 		stage.removeChild(stage.getChildByName("blobGreen"));
@@ -33,9 +32,9 @@ BlobApp.ViewController = (function() {
 		}
 	},
 	
-	applyBackground = function(event, wurst) {
-		if(!b2ddebug){
-			stage.addChild(wurst);
+	applyBackground = function(event, child) {
+		if(!b2ddebug) {
+			stage.addChild(child);
 		}
 	},
 
@@ -47,6 +46,7 @@ BlobApp.ViewController = (function() {
 
 	_displayPauseScreen = function() {
 		_pauseGame();
+
 		var $pauseContainer = $('#pause-container');
 		var $gamecanvas = $('#canvas-container');
 		var $menuResume = $('#resume');
@@ -71,25 +71,27 @@ BlobApp.ViewController = (function() {
 	},
 
 	_restartGame = function() {
-		//if(restarting){return;}
 		var $gamecanvas = $('#canvas-container');
 		$gamecanvas.css('display', 'block');
+
 		_hidePauseScreen();
 		_clearScene();
+
 		$('body').trigger("destroyPhysics");
+
 		_tick();
 		_resumeGame();
 	},
 
-	_clearScene = function(){
+	_clearScene = function() {
 		stage.removeAllChildren();
 	},
 
-	_pauseGame = function(){
-		createjs.Ticker.setFPS(0);
-		
+	_pauseGame = function() {
+		createjs.Ticker.setFPS(0);	
 	},
-	_resumeGame = function(){
+
+	_resumeGame = function() {
 		$('body').trigger("restartPhys");
 		createjs.Ticker.setFPS(30);
 	},
@@ -103,15 +105,18 @@ BlobApp.ViewController = (function() {
 		menu.css('display', 'block');
 
 		_clearScene();
+
 		$('body').trigger("resetGame");
+
 		_tick();
-		
 	},
 
 	_proceedGame = function() {
 		$(that).trigger('onProceedingRequested');
+
 		var $gamecanvas = $('#canvas-container');
 		$gamecanvas.css('display', 'block');
+
 		_hidePauseScreen();
 		_resumeGame();
 	},
@@ -125,20 +130,21 @@ BlobApp.ViewController = (function() {
 	_initView = function() {
 		canvas = document.getElementById('gameCanvas');
 		debugCanvas = document.getElementById('debugCanvas');
+
 		context = canvas.getContext("2d");
+
 		stage = new createjs.Stage(canvas);
 		stage.snapPixelsEnabled = true;
 	},
 
 	_tick = function() {
-		//console.log("tick");
 		var onTickRequest = $.Event('onTick');
 		$('body').trigger(onTickRequest);		
 	},
 
 	_deleteDoor = function(event , data){
-		var i = stage.getChildIndex(data.sprite);
-		stage.removeChildAt(i);
+		var childIndex = stage.getChildIndex(data.sprite);
+		stage.removeChildAt(childIndex);
 	},
 
 	_onLevelFinished = function() {

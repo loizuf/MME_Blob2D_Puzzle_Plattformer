@@ -25,6 +25,7 @@ BlobApp.InputHandler = (function() {
     XBOX_AXES = {
         LEFT_STICK_X: 0,
         LEFT_STICK_Y: 1,
+
         RIGHT_STICK_X: 2,
         RIGHT_STICK_Y: 3
     };
@@ -34,13 +35,18 @@ BlobApp.InputHandler = (function() {
         B: 1,
         X: 2,
         Y: 3,
+
         LB: 4,
         RB: 5,
+
         LEFT_STICK: 6,
         RIGHT_STICK: 7,
+
         BACK: 8,
         START: 9,
+
         HOME: 10,
+
         DPAD_UP: 11,
         DPAD_DOWN: 12,
         DPAD_LEFT: 14,
@@ -79,7 +85,7 @@ BlobApp.InputHandler = (function() {
     },
 
     changeControls = function() {
-        isHeliActive = true;
+        isHeliActive = !isHeliActive;
     },
 
     _initGamepads = function() {
@@ -105,7 +111,6 @@ BlobApp.InputHandler = (function() {
         }
 
         if(controller1 !== undefined || controller2 != undefined) {
-
             _updateXboxControllers();
             _requestAnimFrame(_updateControllers); 
         } else {
@@ -117,6 +122,7 @@ BlobApp.InputHandler = (function() {
         if(controller1 !== undefined) {
             _trackPlayerOneGreenBlob();
         }
+
         if (controller2 !== undefined) {
             _trackPlayerTwoRedBlob();
         }
@@ -138,6 +144,7 @@ BlobApp.InputHandler = (function() {
                 _releaseGamepadsButtonsInput(ID_CONTROLLER_ONE, buttonPos);
                 continue;
             }
+
             _handleGamepadsButtonsInput(ID_CONTROLLER_ONE, buttonPos);
         }
     },
@@ -195,6 +202,7 @@ BlobApp.InputHandler = (function() {
                 switch(id) {
                     case ID_CONTROLLER_ONE: _onKeyUp({keyCode:keyMap.p1Jump});
                     break;
+
                     case ID_CONTROLLER_TWO: _onKeyUp({keyCode:keyMap.p2Jump});
                     break;
                 } 
@@ -204,6 +212,7 @@ BlobApp.InputHandler = (function() {
                 switch(id) {
                     case ID_CONTROLLER_ONE: _onKeyUp({keyCode:keyMap.p1Left});
                     break;
+
                     case ID_CONTROLLER_TWO: _onKeyUp({keyCode:keyMap.p2Left});
                     break;
                 }
@@ -213,6 +222,7 @@ BlobApp.InputHandler = (function() {
                 switch(id) {
                     case ID_CONTROLLER_ONE: _onKeyUp({keyCode:keyMap.p1Right});
                     break;
+
                     case ID_CONTROLLER_TWO: _onKeyUp({keyCode:keyMap.p2Right});
                     break;
                 } 
@@ -222,6 +232,7 @@ BlobApp.InputHandler = (function() {
                 switch(id) {
                     case ID_CONTROLLER_ONE: _onKeyUp({keyCode:keyMap.p1Trigger});
                     break;
+
                     case ID_CONTROLLER_TWO: _onKeyUp({keyCode:keyMap.p2Trigger});
                     break;
                 }
@@ -248,6 +259,7 @@ BlobApp.InputHandler = (function() {
                 switch(id) {
                     case ID_CONTROLLER_ONE: _onKeyDown({keyCode:keyMap.p1Jump});
                     break;
+
                     case ID_CONTROLLER_TWO: _onKeyDown({keyCode:keyMap.p2Jump});
                     break;
                 }
@@ -257,6 +269,7 @@ BlobApp.InputHandler = (function() {
                 switch(id) {
                     case ID_CONTROLLER_ONE: _onKeyDown({keyCode:keyMap.p1Left});
                     break;
+
                     case ID_CONTROLLER_TWO: _onKeyDown({keyCode:keyMap.p2Left});
                     break;
                 }   
@@ -266,6 +279,7 @@ BlobApp.InputHandler = (function() {
                 switch(id) {
                     case ID_CONTROLLER_ONE: _onKeyDown({keyCode:keyMap.p1Right});
                     break;
+
                     case ID_CONTROLLER_TWO: _onKeyDown({keyCode:keyMap.p2Right});
                     break;
                 }        
@@ -276,6 +290,7 @@ BlobApp.InputHandler = (function() {
                 switch(id) {
                     case ID_CONTROLLER_ONE: _onKeyDown({keyCode:keyMap.p1Trigger});
                     break;
+
                     case ID_CONTROLLER_TWO: _onKeyDown({keyCode:keyMap.p2Trigger});
                     break;
                 }
@@ -300,14 +315,15 @@ BlobApp.InputHandler = (function() {
     },
 
     _buttonPressed = function(button) {
-        if (typeof(button) == "object")
+        if (typeof(button) == "object") {
             return button.pressed;
+        }
 
         return button > 0.5;
     },
 
     /*start movement left/right, trigger jump/trigger/special ability effects*/
-    _onKeyDown = function(e){
+    _onKeyDown = function(e) {
         switch(e.keyCode){
             case keyMap.p1Jump:
                 $(that).trigger('p1ArrowUpStarted');
@@ -357,6 +373,7 @@ BlobApp.InputHandler = (function() {
 
     _trackMashingInput = function() {
         $(that).trigger('p2ButtonMashEvent');
+        
         isLeftActiveButton = !isLeftActiveButton;
         isRightActiveButton = !isRightActiveButton;
     },
