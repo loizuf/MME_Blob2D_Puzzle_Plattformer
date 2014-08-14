@@ -39,13 +39,16 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_resetGame = function() {
-		var bodies = world.GetBodyList();
+		var bodyList = world.GetBodyList();
 
-		while(bodies!=null){
-			var tmpBody = bodies.GetNext();
-			bodiesToRemove.push(bodies);
-			bodies = tmpBody;
+		while(bodyList!=null){
+			var tmpBody = bodyList.GetNext();
+			bodiesToRemove.push(bodyList);
+			bodyList = tmpBody;
 		}
+
+		bodies.length = 0;
+
 
 		$('body').trigger('onResetGame');
 	},
@@ -135,6 +138,7 @@ BlobApp.PhysicsHandler = (function() {
 		var entity = world.CreateBody(bodyDef);
 
 		entity.CreateFixture(fixture);
+
 		entity.SetUserData([userData,undefined]);
 		
 		var actor = new _actorObject(entity, sprite);
@@ -392,13 +396,15 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_destroyWorld = function() {
-		var bodies = world.GetBodyList();
+		var bodyList = world.GetBodyList();
 
-		while(bodies != null) {	
-			var tmpBody = bodies.GetNext();
-			bodiesToRemove.push(bodies);
-			bodies = tmpBody;
+		while(bodyList != null) {	
+			var tmpBody = bodyList.GetNext();
+			bodiesToRemove.push(bodyList);
+			bodyList = tmpBody;
 		}
+
+		bodies.length = 0;
 
 		$('body').trigger("onReloadGame");
 	},
@@ -462,8 +468,7 @@ BlobApp.PhysicsHandler = (function() {
 			break;
 			*/
 
-			case EntityConfig.HORIZONTALBORDERID:		
-				_provideTrampolin();
+			case EntityConfig.HORIZONTALBORDERID:	
 			break;			
 
 			case EntityConfig.BUTTONID:

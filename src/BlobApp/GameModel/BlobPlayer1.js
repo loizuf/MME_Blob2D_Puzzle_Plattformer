@@ -7,6 +7,11 @@ BlobApp.BlobPlayer1 = (function() {
 
 	this.setup = function() {
 		_initListeners();
+
+
+		prototypeVar.setCurrentDown(function() {
+			thisVar.initTrampolin();
+		});
 	},
 
 	_initListeners = function() {
@@ -26,15 +31,11 @@ BlobApp.BlobPlayer1 = (function() {
 
 	_setDownAction = function(event, what) {
 		if(!what) {
-			prototypeVar.setCurrentDown(function(){});
-			return;
-		} 
-
-		if(what.name == "trampolin") {
 			prototypeVar.setCurrentDown(function() {
 				thisVar.initTrampolin();
 			});
-		}
+			return;
+		} 
 
 		if(what.name == "heli") {
 			prototypeVar.setCurrentDown(function() {
@@ -104,7 +105,9 @@ BlobApp.BlobPlayer1 = (function() {
 	// START: Helicopter special skill:
 	heliSpeedX = 0.1,
 
-	this.initHeli = function() {
+	this.initHeli = function() {		
+		$('body').unbind("greenBlobLeftTriggerZone");
+
 		// BlobPlayer2 controls up and down movements:
 		prototypeVar.setCurrentUp(function(){});
 		prototypeVar.setCurrentDown(function(){});
