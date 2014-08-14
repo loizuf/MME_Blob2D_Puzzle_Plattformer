@@ -3,6 +3,7 @@ BlobApp.BlobPlayer1 = (function() {
 
 	var thisVar = this;
 	var prototypeVar = this.prototype;
+	var isTrampolin = false;
 
 	this.setup = function() {
 		_initListeners();
@@ -24,7 +25,6 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	_setDownAction = function(event, what) {
-		// Case: player probably left trigger zone --> reset
 		if(!what) {
 			prototypeVar.setCurrentDown(function(){});
 			return;
@@ -43,21 +43,36 @@ BlobApp.BlobPlayer1 = (function() {
 		}	
 	},
 
-	this.initTrampolin = function() {
-		console.log("initTrampolin");
+	this.initTrampolin = function() {	
+		if(!isTrampolin) {
+			prototypeVar.setCurrentUp(function(){});
+			prototypeVar.setCurrentDown(function(){
+				thisVar.stopTrampolin();
+			});
 
-		prototypeVar.setCurrentUp(function(){});
-		prototypeVar.setCurrentDown(function(){
-			thisVar.stopTrampolin();
-		});
+			prototypeVar.setCurrentRight(function(){});
+			prototypeVar.setCurrentLeft(function(){});
 
-		prototypeVar.setCurrentRight(function(){});
-		prototypeVar.setCurrentLeft(function(){});
-		$('body').trigger("onTrampolinActive");
+			$('body').trigger("onTrampolinActive");
+		}
+
+		isTrampolin = true;
 	},
 
 	this.stopTrampolin = function() {
-		console.log("stopTrampolin");
+		if (isTrampolin) {
+			prototypeVar.setCurrentUp(prototypeVar._jump);
+			prototypeVar.setCurrentDown(function() {
+				thisVar.initTrampolin();
+			});
+
+			prototypeVar.setCurrentRight(prototypeVar._moveRight);
+			prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
+
+			$('body').trigger("onTrampolinInactive");
+		}
+
+		isTrampolin = false;		
 	},
 
 	// For when the blob is waiting for the other blob to do something

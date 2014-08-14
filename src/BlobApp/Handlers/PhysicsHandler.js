@@ -31,7 +31,6 @@ BlobApp.PhysicsHandler = (function() {
 
 	var isTrampolinActive = false;
 
-
 	init = function(){
 		_setupPhysics();
 		_registerListener();
@@ -322,11 +321,15 @@ BlobApp.PhysicsHandler = (function() {
 	_registerListener = function() {
 		$("body").on("entityRequested", applyEntity);
 		$('body').on("blobRequested", applyBlobEntity);
+
 		$('body').on('onInputRecieved', _applyForce);
 		$('body').on('onInputRecievedJump', _applyForceJump);
+
 		$('body').on('borderRequested',_applyBorder);
 		$("body").on('sensorRequested', _applySensor);
-		$('body').on('onTrampolinActive', _activateTrampolin)
+
+		$('body').on('onTrampolinActive', _activateTrampolin);
+		$('body').on('onTrampolinInactive', _deactivateTrampolin);
 
 		$('body').on('openDoor',_openDoor);
 		
@@ -342,9 +345,51 @@ BlobApp.PhysicsHandler = (function() {
 		_registerCollisionHandler();
 	},
 
-	_activateTrampolin = function(argument) {
+	_activateTrampolin = function() {
+		console.log("activated");
+
+		var width = 2 * (TILESIZEX - 1) / SCALE;
+		var height = (TILESIZEY - 1) / SCALE;
+
 		isTrampolinActive = !isTrampolinActive;
+
+		var greenBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				greenBlobEntity = bodies[i];
+				break;
+			}
+		}
+
+		var fixture = createDefaultBoxFixture(2 * (TILESIZEX - 1) / SCALE, (TILESIZEY - 1) / SCALE);
+
+		greenBlobEntity.DestroyFixture(greenBlobEntity.GetFixtureList());
+		greenBlobEntity.CreateFixture(fixture);		
 	},
+
+	_deactivateTrampolin = function() {
+		console.log("deactivated");
+
+		var width = (TILESIZEX - 1) / SCALE;
+		var height = (TILESIZEY - 1) / SCALE;
+
+		isTrampolinActive = !isTrampolinActive;
+
+		var greenBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				greenBlobEntity = bodies[i];
+				break;
+			}
+		}
+
+		var fixture = createDefaultBoxFixture(width, height);
+
+		greenBlobEntity.DestroyFixture(greenBlobEntity.GetFixtureList());
+		greenBlobEntity.CreateFixture(fixture);
+	}
 	
 	_restartPhys = function() {
 		lastTimestamp = Date.now();
@@ -353,7 +398,7 @@ BlobApp.PhysicsHandler = (function() {
 	_destroyWorld = function() {
 		var bodies = world.GetBodyList();
 
-		while(bodies != null){	
+		while(bodies != null) {	
 			var tmpBody = bodies.GetNext();
 			bodiesToRemove.push(bodies);
 			bodies = tmpBody;
@@ -450,7 +495,9 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_provideTrampolin = function() {
-		$('body').trigger('onDefaultCollision', {name: "trampolin"});
+		if(!isTrampolinActive) {
+			$('body').trigger('onDefaultCollision', {name: "trampolin"});
+		}
 	},
 
 	_handleRedBlobCollision = function(bodyA,bodyB, bID, contact) {
