@@ -53,6 +53,8 @@ BlobApp.BlobSuperClass = function() {
 
 //!	 !Must be overriden by subclass!
 	this.specialSkills = null,
+	// Trampolin or stretching: Skill that a blob can use "on his own", without a trigger zone
+	this.singleSpecialAllowed = true,
 
 	// If the blobs are currently doing some fancy interaction
 	this.specialInteractionActive = null,
@@ -230,6 +232,7 @@ BlobApp.BlobSuperClass = function() {
 			keyUpPressed = false;
 		} else {
 			keyDownPressed = false;
+			thisVar.singleSpecialAllowed = true;
 		}
 	},
 
@@ -269,6 +272,14 @@ BlobApp.BlobSuperClass = function() {
 
 	this.getWaitingForOther = function() {
 		return _waitingForOtherBlob;
+	},
+
+	this.setSingleSpecialAllowed = function(singleSpecialAllowed) {
+		thisVar.singleSpecialAllowed = singleSpecialAllowed;
+	},
+
+	this.getSingleSpecialAllowed = function() {
+		return thisVar.singleSpecialAllowed;
 	};
 
 	this.init();

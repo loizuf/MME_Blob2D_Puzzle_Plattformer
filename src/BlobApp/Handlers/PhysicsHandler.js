@@ -346,8 +346,6 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_activateTrampolin = function() {
-		console.log("activated");
-
 		var width = 2 * (TILESIZEX - 1) / SCALE;
 		var height = (TILESIZEY - 1) / SCALE;
 
@@ -369,8 +367,6 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_deactivateTrampolin = function() {
-		console.log("deactivated");
-
 		var width = (TILESIZEX - 1) / SCALE;
 		var height = (TILESIZEY - 1) / SCALE;
 

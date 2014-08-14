@@ -44,7 +44,9 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	this.initTrampolin = function() {	
-		if(!isTrampolin) {
+		if(prototypeVar.getSingleSpecialAllowed() && !isTrampolin) {
+			prototypeVar.setSingleSpecialAllowed(false);
+
 			prototypeVar.setCurrentUp(function(){});
 			prototypeVar.setCurrentDown(function(){
 				thisVar.stopTrampolin();
@@ -54,13 +56,15 @@ BlobApp.BlobPlayer1 = (function() {
 			prototypeVar.setCurrentLeft(function(){});
 
 			$('body').trigger("onTrampolinActive");
+			isTrampolin = true;
 		}
 
-		isTrampolin = true;
 	},
 
 	this.stopTrampolin = function() {
-		if (isTrampolin) {
+		if (prototypeVar.getSingleSpecialAllowed() && isTrampolin) {
+			prototypeVar.setSingleSpecialAllowed(false);
+
 			prototypeVar.setCurrentUp(prototypeVar._jump);
 			prototypeVar.setCurrentDown(function() {
 				thisVar.initTrampolin();
@@ -70,9 +74,9 @@ BlobApp.BlobPlayer1 = (function() {
 			prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
 
 			$('body').trigger("onTrampolinInactive");
+			isTrampolin = false;	
 		}
-
-		isTrampolin = false;		
+	
 	},
 
 	// For when the blob is waiting for the other blob to do something
