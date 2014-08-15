@@ -25,5 +25,6 @@ AnimationKeys = {
 	JUMPRIGHT: 3,
 	JUMPLEFT: 4,
 	SMALLSHINE: 5,
-	BIGSHINE: 6
+	BIGSHINE: 6,
+	STOP: 7
 }

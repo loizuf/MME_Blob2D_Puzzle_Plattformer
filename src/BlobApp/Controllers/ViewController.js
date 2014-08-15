@@ -2,7 +2,7 @@ BlobApp.ViewController = (function() {
 	var that = {},
 	canvas, context, debugCanvas, debugContext, stage,
 
-	b2ddebug = true,
+	b2ddebug = false,
 
 	init = function() {
 		_initView();
@@ -30,6 +30,22 @@ BlobApp.ViewController = (function() {
 		if(!b2ddebug){
 			stage.addChild(data.sprite);
 		}
+	},
+
+	applyTrampolin = function(event, data) {
+		stage.removeChild(stage.getChildByName("blobGreen"));
+		
+		if(!b2ddebug){
+			stage.addChild(data.sprite);
+		}
+	},
+
+	removeTrampolin = function(event, data) {
+		stage.removeChild(stage.getChildByName("trampolin"));
+
+		if(!b2ddebug){
+			stage.addChild(data.sprite);
+		}	
 	},
 	
 	applyBackground = function(event, child) {
@@ -156,6 +172,8 @@ BlobApp.ViewController = (function() {
 		$('body').on('genericRequested',applyEntity);
 		$('body').on('blobRequested', applyEntity);
 		$('body').on('heliEntityRequested', applyHeli);
+		$('body').on('trampolinEntityRequested', applyTrampolin);
+		$('body').on('trampolinStopRequested', removeTrampolin);
 		$('body').on('backgroundAdded', applyBackground);
 		$('body').on('viewOpenDoor', _deleteDoor);
 		$('body').on('onPause', _displayPauseScreen);

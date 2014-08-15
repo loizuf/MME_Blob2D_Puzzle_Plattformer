@@ -367,10 +367,31 @@ BlobApp.PhysicsHandler = (function() {
 		var fixture = createDefaultBoxFixture(2 * (TILESIZEX - 1) / SCALE, (TILESIZEY - 1) / SCALE);
 
 		greenBlobEntity.DestroyFixture(greenBlobEntity.GetFixtureList());
-		greenBlobEntity.CreateFixture(fixture);		
+		greenBlobEntity.CreateFixture(fixture);	
+
+		var trampolinEntity = new BlobApp.Trampolin(greenBlobEntity.m_xf.position.x, 
+				greenBlobEntity.m_xf.position.y, 50, 25, greenBlobEntity);
+		var sprite = trampolinEntity.sprite;
+
+		$("body").trigger("trampolinEntityRequested", {"sprite" : sprite});
+		
+		var actor = undefined;
+
+		for(var i = 0; i < actors.length; i++) {
+			if(actors[i].body == greenBlobEntity) {
+				actor = actors[i];
+				break;
+			}
+		}
+		var oldSprite = actor.skin;
+		actor.skin = sprite;
+		// TODO this is not good code :/
+		trampolinEntity.setActor(actor);
+		trampolinEntity.setOldSprite(oldSprite); 
 	},
 
 	_deactivateTrampolin = function() {
+		$("body").trigger("trampolinAnimationChanged", {"animationKey" : AnimationKeys.STOP});
 		var width = (TILESIZEX - 1) / SCALE;
 		var height = (TILESIZEY - 1) / SCALE;
 
