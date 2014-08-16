@@ -13,6 +13,8 @@ BlobApp.InputHandler = (function() {
     isHeliActive = false,
     isLeftActiveButton = false,
     isRightActiveButton = true,
+    isP1XPressed = true,
+    isP2XPressed = false,
 
     controller1,
     controller2,
@@ -76,6 +78,7 @@ BlobApp.InputHandler = (function() {
         player2 = p2ControlsID;
 
         $body = $('body');
+
         $body.on('keyup',_onKeyUp);
         $body.on('keydown',_onKeyDown);
 
@@ -230,9 +233,7 @@ BlobApp.InputHandler = (function() {
 
             case XBOX_BUTTONS.X:
                 switch(id) {
-                    case ID_CONTROLLER_ONE: 
-                        _onKeyUp({keyCode:keyMap.p1Trigger});
-                        console.log("release x");
+                    case ID_CONTROLLER_ONE: _onKeyUp({keyCode:keyMap.p1Trigger});                                            
                     break;
 
                     case ID_CONTROLLER_TWO: _onKeyUp({keyCode:keyMap.p2Trigger});
@@ -290,15 +291,14 @@ BlobApp.InputHandler = (function() {
 
             case XBOX_BUTTONS.X:
                 switch(id) {
-                    case ID_CONTROLLER_ONE: 
-                        _onKeyDown({keyCode:keyMap.p1Trigger});
-                        console.log("pressed x");
+                    case ID_CONTROLLER_ONE: _onKeyDown({keyCode:keyMap.p1Trigger});                             
                     break;
 
                     case ID_CONTROLLER_TWO: _onKeyDown({keyCode:keyMap.p2Trigger});
                     break;
                 }
             break;
+
 
             case XBOX_BUTTONS.RB:
                 if(id == ID_CONTROLLER_TWO && isHeliActive) {

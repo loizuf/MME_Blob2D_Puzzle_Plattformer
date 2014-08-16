@@ -232,7 +232,6 @@ BlobApp.BlobSuperClass = function() {
 			keyUpPressed = false;
 		} else {
 			keyDownPressed = false;
-			thisVar.singleSpecialAllowed = true;
 		}
 	},
 

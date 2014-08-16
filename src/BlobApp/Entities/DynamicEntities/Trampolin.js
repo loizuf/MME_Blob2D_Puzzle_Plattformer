@@ -7,7 +7,7 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 	tileset,
 	oldSprite,
 	actor, 
-	removedSprite;
+	removedSpriteStop;
 
 	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
 	
@@ -65,6 +65,7 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 	_listeners = function() {
 		$('body').on('trampolinAnimationChanged', _animate);
 		$('body').on('onTick', _checkIfStopFinished);
+		$('body').on('onTick', _checkIfInitFinished);
 	},
 
 	_animate = function(event, data) {
@@ -82,12 +83,20 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 	},
 
 	_checkIfStopFinished = function() {
-		if(!removedSprite && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 19) {
+		if(!removedSpriteStop && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 19) {
 			actor.skin = oldSprite;
 			$('body').trigger('trampolinStopRequested', {"sprite" : oldSprite});
 			sprite.stop();
 			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)
-			removedSprite = true;
+			removedSpriteStop = true;
+			$('body').trigger('trampolinInitRequested');
+		}
+	},
+
+	_checkIfInitFinished = function() {
+		if(sprite.currentAnimation == "init" && sprite.currentAnimationFrame == 19) {
+			$('body').trigger('trampolinInitRequested');
+			console.log("init finished");
 		}
 	},
 

@@ -18,6 +18,7 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on("redBlobInHeliZone", _setDownAction);
 		$('body').on("redBlobLeftTriggerZone", _setDownAction);
 		$('body').on('heliStopRequested', _resetControls);
+		$('body').on('stretchInitRequested', _setStretch);
 	},
 
 	this.tryToInit = function(skill) {
@@ -28,8 +29,11 @@ BlobApp.BlobPlayer2 = (function() {
 		}
 	},
 
+	_setStretch = function() {
+		prototypeVar.setSingleSpecialAllowed(true);
+	},
+
 	_setDownAction = function(event, what) {
-		// Case: player probably left trigger zone --> reset
 		if(!what) {
 			prototypeVar.setCurrentDown(function() {
 				thisVar.initStretch();

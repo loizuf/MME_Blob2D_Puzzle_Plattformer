@@ -18,6 +18,7 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on("greenBlobInHeliZone", _setDownAction);
 		$('body').on("greenBlobLeftTriggerZone", _setDownAction);
 		$('body').on('heliStopRequested', _resetControls);
+		$('body').on('trampolinInitRequested', _setTrampolin);
 	},
 
 	this.tryToInit = function(skill) {
@@ -26,6 +27,11 @@ BlobApp.BlobPlayer1 = (function() {
 				thisVar.setIdle(skill);
 			break;
 		}
+	},
+
+	_setTrampolin = function() {
+		prototypeVar.setSingleSpecialAllowed(true);
+		console.log("set trampolin");
 	},
 
 	_setDownAction = function(event, what) {
@@ -83,7 +89,7 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setCurrentRight(prototypeVar._moveRight);
 		prototypeVar.setCurrentDown(function() {
 				thisVar.initTrampolin();
-			});
+		});
 	},
 
 	// For when the blob is waiting for the other blob to do something

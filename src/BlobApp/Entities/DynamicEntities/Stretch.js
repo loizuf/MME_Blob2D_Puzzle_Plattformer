@@ -62,6 +62,7 @@ BlobApp.Stretch = (function Stretch (x_pos, y_pos, sizeX, sizeY, redBlobEntity) 
 	_listeners = function() {
 		$('body').on('stretchAnimationChanged', _animate);
 		$('body').on('onTick', _checkIfStopFinished);
+		$('body').on('onTick', _checkIfInitFinished);
 	},
 
 	_animate = function(event, data) {
@@ -85,6 +86,13 @@ BlobApp.Stretch = (function Stretch (x_pos, y_pos, sizeX, sizeY, redBlobEntity) 
 			sprite.stop();
 			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)
 			removedSprite = true;
+			$('body').trigger('stretchInitRequested');
+		}
+	},
+
+	_checkIfInitFinished = function() {
+		if(sprite.currentAnimation == "init" && sprite.currentAnimationFrame == 19) {
+			$('body').trigger('stretchInitRequested');
 		}
 	},
 
