@@ -478,8 +478,6 @@ BlobApp.PhysicsHandler = (function() {
 		_recreateBlob(sprite2, userData2);
 
 		$('body').trigger('removeHeliFromView', {"sprites" : data.sprites});
-		$('body').trigger('greenBlobLeftTriggerZone');
-		$('body').trigger('redBlobLeftTriggerZone');
 
 		bodiesToRemove.push(heliBody);
 	},

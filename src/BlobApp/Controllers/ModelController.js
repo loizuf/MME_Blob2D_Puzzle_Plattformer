@@ -188,11 +188,15 @@ BlobApp.ModelController = (function() {
 				if(waiting == _blobPlayerTwo.prototype.getWaitingForOther()) {
 					$('body').trigger("startHeli");
 					_inputHandler.changeControls();
+					_blobPlayerOne.prototype.setWaitingForOther(false);
+					_blobPlayerTwo.prototype.setWaitingForOther(false);
 				}
 			} else {
 				if(waiting == _blobPlayerOne.prototype.getWaitingForOther()) {
 					$('body').trigger("startHeli");
 					_inputHandler.changeControls();
+					_blobPlayerOne.prototype.setWaitingForOther(false);
+					_blobPlayerTwo.prototype.setWaitingForOther(false);
 				}
 			}
 		}

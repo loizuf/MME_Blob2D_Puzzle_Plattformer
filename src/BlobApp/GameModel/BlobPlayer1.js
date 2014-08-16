@@ -84,6 +84,7 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	_resetControls = function() {
+		prototypeVar.setSingleSpecialAllowed(true);
 		prototypeVar.setCurrentUp(prototypeVar._jump);
 		prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
 		prototypeVar.setCurrentRight(prototypeVar._moveRight);
@@ -114,6 +115,7 @@ BlobApp.BlobPlayer1 = (function() {
 	this.initHeli = function() {		
 		$('body').unbind("greenBlobLeftTriggerZone");
 
+		prototypeVar.setSingleSpecialAllowed(false);
 		// BlobPlayer2 controls up and down movements:
 		prototypeVar.setCurrentUp(function(){});
 		prototypeVar.setCurrentDown(function(){});

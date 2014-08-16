@@ -81,6 +81,7 @@ BlobApp.BlobPlayer2 = (function() {
 	},
 
 	_resetControls = function() {
+		prototypeVar.setSingleSpecialAllowed(true);
 		prototypeVar.setCurrentUp(prototypeVar._jump);
 		prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
 		prototypeVar.setCurrentRight(prototypeVar._moveRight);
@@ -114,6 +115,7 @@ BlobApp.BlobPlayer2 = (function() {
 	var heliCurrentYSpeed;
 
 	this.initHeli = function() {
+		prototypeVar.setSingleSpecialAllowed(false);
 		// BlobPlayer1 controls left and right movements:
 		prototypeVar.setCurrentLeft(function(){});
 		prototypeVar.setCurrentRight(function(){});
