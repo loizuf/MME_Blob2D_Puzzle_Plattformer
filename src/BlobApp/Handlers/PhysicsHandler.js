@@ -4,7 +4,8 @@ BlobApp.PhysicsHandler = (function() {
 	isResetted = false;
 
 	SCALE = 30, STEP = 20, TIMESTEP = 1/20,
-	PLAYER_ONE_NAME = "p1", PLAYER_TWO_NAME="p2";
+	PLAYER_ONE_NAME = "p1", PLAYER_TWO_NAME="p2",
+	GROWTH_FACTOR = 0.1, STRETCH_HEIGHT = 4, TRAMPOLIN_WIDTH = 2;
 	
 	var b2Vec2 = Box2D.Common.Math.b2Vec2;
 	var b2BodyDef = Box2D.Dynamics.b2BodyDef;
@@ -29,6 +30,7 @@ BlobApp.PhysicsHandler = (function() {
 	var TILESIZEX = 12.5;
 	var TILESIZEY = 12.5;
 	var stretchSize = 2;
+	var trampolinSize = 1;
 
 	var isTrampolinActive = false;
 	var isStretchActive = false;
@@ -180,8 +182,13 @@ BlobApp.PhysicsHandler = (function() {
    			world.DrawDebugData();
 		}	
 
+		if(isTrampolinActive == true) {
+			_handleGreenBlobGrowth();
+		} else {
+			_handleGreenBlobShrinking();
+		}
+
 		if(isStretchActive == true) {
-			
 			_handleRedBlobGrowth();
 		} else {
 			_handleRedBlobShrinking();
@@ -189,8 +196,48 @@ BlobApp.PhysicsHandler = (function() {
 		}
 	},
 
+	_handleGreenBlobGrowth = function() {
+		var greenBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				greenBlobEntity = bodies[i];
+				break;
+			}
+		}
+
+		if(trampolinSize <= TRAMPOLIN_WIDTH) {
+			var fixture = createDefaultBoxFixture(trampolinSize * (TILESIZEX - 1) / SCALE, (TILESIZEY - 1) / SCALE);
+
+			greenBlobEntity.DestroyFixture(greenBlobEntity.GetFixtureList());
+			greenBlobEntity.CreateFixture(fixture);	
+
+			trampolinSize += GROWTH_FACTOR;
+		}
+	},
+
+	_handleGreenBlobShrinking = function() {
+		var greenBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				greenBlobEntity = bodies[i];
+				break;
+			}
+		}
+
+		if(trampolinSize >= 1) {
+			var fixture = createDefaultBoxFixture(trampolinSize * (TILESIZEX - 1) / SCALE, (TILESIZEY - 1) / SCALE);
+
+			greenBlobEntity.DestroyFixture(greenBlobEntity.GetFixtureList());
+			greenBlobEntity.CreateFixture(fixture);
+
+			trampolinSize -= GROWTH_FACTOR;
+		}
+	},
+
 	_handleRedBlobGrowth = function() {
-		var redBlobEntity = undefined;
+		var greenBlobEntity = undefined;
 
 		for(var i = 0; i < bodies.length; i++) {
 			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
@@ -199,11 +246,13 @@ BlobApp.PhysicsHandler = (function() {
 			}
 		}
 
-		if(stretchSize <= 4) {
+		if(stretchSize <= STRETCH_HEIGHT) {
 			var fixture = createDefaultBoxFixture((TILESIZEX - 1) / SCALE, stretchSize * (TILESIZEY - 1) / SCALE);
+
 			redBlobEntity.DestroyFixture(redBlobEntity.GetFixtureList());
 			redBlobEntity.CreateFixture(fixture);
-			stretchSize += 0.1;
+
+			stretchSize += GROWTH_FACTOR;
 		}
 	},
 
@@ -219,9 +268,11 @@ BlobApp.PhysicsHandler = (function() {
 
 		if(stretchSize >= 2) {
 			var fixture = createDefaultBoxFixture((TILESIZEX - 1) / SCALE, stretchSize * (TILESIZEY - 1) / SCALE);
+
 			redBlobEntity.DestroyFixture(redBlobEntity.GetFixtureList());
 			redBlobEntity.CreateFixture(fixture);
-			stretchSize -= 0.1;
+
+			stretchSize -= GROWTH_FACTOR;
 		}
 	},
 
@@ -487,25 +538,9 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_activateTrampolin = function() {
-		var width = 2 * (TILESIZEX - 1) / SCALE;
-		var height = (TILESIZEY - 1) / SCALE;
-
 		isTrampolinActive = !isTrampolinActive;
 
-		var greenBlobEntity = undefined;
-
-		for(var i = 0; i < bodies.length; i++) {
-			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
-				greenBlobEntity = bodies[i];
-				break;
-			}
-		}
-
-		var fixture = createDefaultBoxFixture(2 * (TILESIZEX - 1) / SCALE, (TILESIZEY - 1) / SCALE);
-
-		greenBlobEntity.DestroyFixture(greenBlobEntity.GetFixtureList());
-		greenBlobEntity.CreateFixture(fixture);	
-
+		/*
 		var trampolinEntity = new BlobApp.Trampolin(greenBlobEntity.m_xf.position.x, 
 				greenBlobEntity.m_xf.position.y, 50, 25, greenBlobEntity);
 		var sprite = trampolinEntity.sprite;
@@ -524,7 +559,9 @@ BlobApp.PhysicsHandler = (function() {
 		actor.skin = sprite;
 		// TODO this is not good code :/
 		trampolinEntity.setActor(actor);
-		trampolinEntity.setOldSprite(oldSprite); 
+		trampolinEntity.setOldSprite(oldSprite);
+
+		*/ 
 	},
 
 	_deactivateTrampolin = function() {
