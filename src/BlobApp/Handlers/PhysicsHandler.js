@@ -533,6 +533,7 @@ BlobApp.PhysicsHandler = (function() {
 						y = contact.m_fixtureA.m_body.GetLinearVelocity().y;
 						_applyForceJump(null, {"entity" : bodyA, "directionX" : 0, "directionY" : -2.2 * y});
 					}
+					$("body").trigger("trampolinAnimationChanged", {"animationKey" : AnimationKeys.BOUNCE});
 				}				
 			break;
 

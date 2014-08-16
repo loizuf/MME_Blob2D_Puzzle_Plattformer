@@ -34,7 +34,8 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 			animations: {
 				init: [0, 19, "idle"],
 				idle: [20, 39],
-				stop: [40, 59],
+				bounce: [40, 46, "idle"],
+				stop: [60, 79],
 			}
 		}
 
@@ -73,6 +74,9 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 			break;
 			case AnimationKeys.STOP:
 				sprite.gotoAndPlay("stop");
+			break;
+			case AnimationKeys.BOUNCE:
+				sprite.gotoAndPlay("bounce");
 			break;
 		}
 	},
