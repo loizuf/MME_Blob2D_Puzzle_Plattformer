@@ -1,6 +1,6 @@
-BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEntity) {
+BlobApp.Stretch = (function Stretch (x_pos, y_pos, sizeX, sizeY, redBlobEntity) {
 
-	var that = this,
+	var that = this;
 
 	sprite, 
 	tilesetSheet, 
@@ -10,20 +10,18 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 	removedSprite;
 
 	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
-	
+
 	this.prototype.init = function() {
 		tileset = new Image();
 
-		tileset.src = "res/img/trampolin.png"//mapData.tilesets[0].image;
+		tileset.src = "";
 
-		// getting imagefile from first tileset
 		_listeners();
 
-		// callback for loading layers after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX, sizeY);		
-	},
+		tileset.onLoad = _iniSprite(tileset, sizeX, sizeY);
+	}
 
-	_initSprite = function(tileset, width, height) {
+	_iniSprite = function(tileset, width, height) {
 		var imageData = {
 			images : [ tileset ],
 			frames : {
@@ -44,7 +42,7 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 
 		sprite = new createjs.Sprite(tilesetSheet);
 
-		sprite.name = "trampolin";
+		sprite.name = "Stretch";
 
 		/* koordinaten kommen aus dem levelloader */
 		sprite.regX = width / 2;
@@ -75,8 +73,8 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 			case AnimationKeys.STOP:
 				sprite.gotoAndPlay("stop");
 			break;
-			case AnimationKeys.BOUNCE:
-				sprite.gotoAndPlay("bounce");
+			case AnimationKeys.STRETCH:
+				sprite.gotoAndPlay("stretch");
 			break;
 		}
 	},

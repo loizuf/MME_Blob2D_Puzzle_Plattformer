@@ -230,7 +230,9 @@ BlobApp.InputHandler = (function() {
 
             case XBOX_BUTTONS.X:
                 switch(id) {
-                    case ID_CONTROLLER_ONE: _onKeyUp({keyCode:keyMap.p1Trigger});
+                    case ID_CONTROLLER_ONE: 
+                        _onKeyUp({keyCode:keyMap.p1Trigger});
+                        console.log("release x");
                     break;
 
                     case ID_CONTROLLER_TWO: _onKeyUp({keyCode:keyMap.p2Trigger});
@@ -288,7 +290,9 @@ BlobApp.InputHandler = (function() {
 
             case XBOX_BUTTONS.X:
                 switch(id) {
-                    case ID_CONTROLLER_ONE: _onKeyDown({keyCode:keyMap.p1Trigger});
+                    case ID_CONTROLLER_ONE: 
+                        _onKeyDown({keyCode:keyMap.p1Trigger});
+                        console.log("pressed x");
                     break;
 
                     case ID_CONTROLLER_TWO: _onKeyDown({keyCode:keyMap.p2Trigger});

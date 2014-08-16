@@ -3,9 +3,14 @@ BlobApp.BlobPlayer2 = (function() {
 
 	var thisVar = this;
 	var prototypeVar = this.prototype;
+	var isStretched = false;
 
 	this.setup = function() {	
 		_initListeners();
+
+		prototypeVar.setCurrentDown(function() {
+			thisVar.initStretch();
+		});
 	},
 
 	_initListeners = function() {
@@ -26,7 +31,9 @@ BlobApp.BlobPlayer2 = (function() {
 	_setDownAction = function(event, what) {
 		// Case: player probably left trigger zone --> reset
 		if(!what) {
-			prototypeVar.setCurrentDown(function(){});
+			prototypeVar.setCurrentDown(function() {
+				thisVar.initStretch();
+			});
 			return;
 		} 
 		
@@ -35,13 +42,48 @@ BlobApp.BlobPlayer2 = (function() {
 		});
 	},
 
+	this.initStretch = function() {
+		if(prototypeVar.getSingleSpecialAllowed() && !isStretched) {
+			prototypeVar.setSingleSpecialAllowed(false);
+
+			prototypeVar.setCurrentUp(function() {});
+			prototypeVar.setCurrentDown(function() {
+				thisVar.stopStretch();
+			});
+
+			prototypeVar.setCurrentRight(function(){});
+			prototypeVar.setCurrentLeft(function(){});
+
+			$('body').trigger("onStretchActive");
+			isStretched = true;
+		}
+	},
+
+	this.stopStretch = function() {
+		if (prototypeVar.getSingleSpecialAllowed() && isStretched) {
+			prototypeVar.setSingleSpecialAllowed(false);
+
+			prototypeVar.setCurrentUp(prototypeVar._jump);
+			prototypeVar.setCurrentDown(function() {
+				thisVar.initStretch();
+			});
+
+			prototypeVar.setCurrentRight(prototypeVar._moveRight);
+			prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
+
+			$('body').trigger("onStretchInactive");
+			isStretched = false;	
+		}
+	},
+
 	_resetControls = function() {
 		prototypeVar.setCurrentUp(prototypeVar._jump);
 		prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
 		prototypeVar.setCurrentRight(prototypeVar._moveRight);
 		prototypeVar.setCurrentMash(function(){});
 		prototypeVar.setCurrentDown(function() {
-			});
+			thisVar.initStretch();
+		});
 	},
 
 	// For when the blob is waiting for the other blob to do something

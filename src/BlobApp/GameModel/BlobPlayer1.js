@@ -7,8 +7,7 @@ BlobApp.BlobPlayer1 = (function() {
 
 	this.setup = function() {
 		_initListeners();
-
-
+		
 		prototypeVar.setCurrentDown(function() {
 			thisVar.initTrampolin();
 		});
@@ -18,7 +17,6 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on("startHeli", thisVar.initHeli);
 		$('body').on("greenBlobInHeliZone", _setDownAction);
 		$('body').on("greenBlobLeftTriggerZone", _setDownAction);
-		$('body').on("onDefaultCollision", _setDownAction)
 		$('body').on('heliStopRequested', _resetControls);
 	},
 
@@ -60,7 +58,6 @@ BlobApp.BlobPlayer1 = (function() {
 			$('body').trigger("onTrampolinActive");
 			isTrampolin = true;
 		}
-
 	},
 
 	this.stopTrampolin = function() {
@@ -78,7 +75,6 @@ BlobApp.BlobPlayer1 = (function() {
 			$('body').trigger("onTrampolinInactive");
 			isTrampolin = false;	
 		}
-	
 	},
 
 	_resetControls = function() {

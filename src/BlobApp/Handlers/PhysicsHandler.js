@@ -30,6 +30,7 @@ BlobApp.PhysicsHandler = (function() {
 	var TILESIZEY = 12.5;
 
 	var isTrampolinActive = false;
+	var isStretchActive = false;
 
 	init = function(){
 		_setupPhysics();
@@ -246,6 +247,7 @@ BlobApp.PhysicsHandler = (function() {
 		var heliEnt = new BlobApp.Heli(greenBlobEntity.m_xf.position.x * SCALE, 
 			greenBlobEntity.m_xf.position.y * SCALE -15, 50, 50);
 		sprite = heliEnt.sprite;
+
 		$('body').trigger("heliEntityRequested", {"sprite" : sprite});
 
 		_setHeliSprites(heliEnt);
@@ -421,6 +423,9 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('onTrampolinActive', _activateTrampolin);
 		$('body').on('onTrampolinInactive', _deactivateTrampolin);
 
+		$('body').on('onStretchActive', _activateStretch);
+		$('body').on('onStretchInactive', _deactivateStretch);
+
 		$('body').on('openDoor',_openDoor);
 		
 		// START: DUMMY HELI
@@ -497,7 +502,74 @@ BlobApp.PhysicsHandler = (function() {
 
 		greenBlobEntity.DestroyFixture(greenBlobEntity.GetFixtureList());
 		greenBlobEntity.CreateFixture(fixture);
-	}
+	},
+
+	_activateStretch = function() {
+		console.log("stretch");
+		var width = (TILESIZEX - 1) / SCALE;
+		var height = 2 * (TILESIZEY - 1) / SCALE;
+
+		isStretchActive = !isStretchActive;
+
+		var redBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+				redBlobEntity = bodies[i];
+				break;
+			}
+		}
+		$("body").trigger("stretchEntityRequested", {"sprite" : sprite}); // viewController
+			var fixture = createDefaultBoxFixture((TILESIZEX - 1) / SCALE, 4 * (TILESIZEY - 1) / SCALE);
+			redBlobEntity.DestroyFixture(redBlobEntity.GetFixtureList());
+			redBlobEntity.CreateFixture(fixture);
+		/*
+		var stretchEntity = new BlobApp.Stretch(redBlobEntity.m_xf.position.x, 
+				redBlobEntity.m_xf.position.y, 25, 100, redBlobEntity);
+
+		var sprite = stretchEntity.sprite;
+
+		*/
+		
+	
+		//var actor = undefined;
+
+		for(var i = 0; i < actors.length; i++) {
+			if(actors[i].body == redBlobEntity) {
+				actor = actors[i];
+				break;
+			}
+		}
+
+		//var oldSprite = actor.skin;
+
+		//actor.skin = sprite;
+		// TODO this is not good code :/
+		//stretchEntity.setActor(actor);
+		//stretchEntity.setOldSprite(oldSprite);
+	},
+
+	_deactivateStretch = function() {
+		$("body").trigger("stretchAnimationChanged", {"animationKey" : AnimationKeys.STOP});
+		var width = (TILESIZEX - 1) / SCALE;
+		var height = 2 * (TILESIZEY - 1) / SCALE;
+
+		isStretchActive = !isStretchActive;
+
+		var redBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+				redBlobEntity = bodies[i];
+				break;
+			}
+		}
+
+		var fixture = createDefaultBoxFixture(width, height);
+
+		redBlobEntity.DestroyFixture(redBlobEntity.GetFixtureList());
+		redBlobEntity.CreateFixture(fixture);
+	},
 	
 	_restartPhys = function() {
 		lastTimestamp = Date.now();
@@ -572,12 +644,14 @@ BlobApp.PhysicsHandler = (function() {
 
 	_handleGreenBlobCollision = function(bodyA,bodyB, bID, contact) {
 		switch(bID){
-			/* case EntityConfig.REDBLOBID:
+			case EntityConfig.REDBLOBID:
+				if(isStretchActive == true) {
+					$("body").trigger("trampolinAnimationChanged", {"animationKey" : AnimationKeys.STRETCH});
+				}
 			break;
 
 			case EntityConfig.VERTICALBORDERID:
-			break;
-			*/
+			break;		
 
 			case EntityConfig.HORIZONTALBORDERID:	
 			break;			
@@ -603,12 +677,6 @@ BlobApp.PhysicsHandler = (function() {
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 			$('body').trigger('onReAllowJump', bodyA);
-		}
-	},
-
-	_provideTrampolin = function() {
-		if(!isTrampolinActive) {
-			$('body').trigger('onDefaultCollision', {name: "trampolin"});
 		}
 	},
 
