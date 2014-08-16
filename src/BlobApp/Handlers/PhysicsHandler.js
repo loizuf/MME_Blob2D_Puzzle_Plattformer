@@ -28,6 +28,7 @@ BlobApp.PhysicsHandler = (function() {
 
 	var TILESIZEX = 12.5;
 	var TILESIZEY = 12.5;
+	var stretchSize = 2;
 
 	var isTrampolinActive = false;
 	var isStretchActive = false;
@@ -178,6 +179,50 @@ BlobApp.PhysicsHandler = (function() {
 			world.ClearForces();
    			world.DrawDebugData();
 		}	
+
+		if(isStretchActive == true) {
+			
+			_handleRedBlobGrowth();
+		} else {
+			_handleRedBlobShrinking();
+			
+		}
+	},
+
+	_handleRedBlobGrowth = function() {
+		var redBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+				redBlobEntity = bodies[i];
+				break;
+			}
+		}
+
+		if(stretchSize <= 4) {
+			var fixture = createDefaultBoxFixture((TILESIZEX - 1) / SCALE, stretchSize * (TILESIZEY - 1) / SCALE);
+			redBlobEntity.DestroyFixture(redBlobEntity.GetFixtureList());
+			redBlobEntity.CreateFixture(fixture);
+			stretchSize += 0.1;
+		}
+	},
+
+	_handleRedBlobShrinking = function() {
+		var redBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+				redBlobEntity = bodies[i];
+				break;
+			}
+		}
+
+		if(stretchSize >= 2) {
+			var fixture = createDefaultBoxFixture((TILESIZEX - 1) / SCALE, stretchSize * (TILESIZEY - 1) / SCALE);
+			redBlobEntity.DestroyFixture(redBlobEntity.GetFixtureList());
+			redBlobEntity.CreateFixture(fixture);
+			stretchSize -= 0.1;
+		}
 	},
 
 	_applyForce = function(event, direction) {
@@ -505,34 +550,20 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_activateStretch = function() {
-		console.log("stretch");
-		var width = (TILESIZEX - 1) / SCALE;
-		var height = 2 * (TILESIZEY - 1) / SCALE;
-
 		isStretchActive = !isStretchActive;
 
-		var redBlobEntity = undefined;
-
-		for(var i = 0; i < bodies.length; i++) {
-			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
-				redBlobEntity = bodies[i];
-				break;
-			}
-		}
 		$("body").trigger("stretchEntityRequested", {"sprite" : sprite}); // viewController
-			var fixture = createDefaultBoxFixture((TILESIZEX - 1) / SCALE, 4 * (TILESIZEY - 1) / SCALE);
-			redBlobEntity.DestroyFixture(redBlobEntity.GetFixtureList());
-			redBlobEntity.CreateFixture(fixture);
+
 		/*
 		var stretchEntity = new BlobApp.Stretch(redBlobEntity.m_xf.position.x, 
 				redBlobEntity.m_xf.position.y, 25, 100, redBlobEntity);
 
 		var sprite = stretchEntity.sprite;
 
-		*/
+		
 		
 	
-		//var actor = undefined;
+		var actor = undefined;
 
 		for(var i = 0; i < actors.length; i++) {
 			if(actors[i].body == redBlobEntity) {
@@ -541,12 +572,14 @@ BlobApp.PhysicsHandler = (function() {
 			}
 		}
 
-		//var oldSprite = actor.skin;
+		var oldSprite = actor.skin;
 
-		//actor.skin = sprite;
+		actor.skin = sprite;
 		// TODO this is not good code :/
-		//stretchEntity.setActor(actor);
-		//stretchEntity.setOldSprite(oldSprite);
+		stretchEntity.setActor(actor);
+		stretchEntity.setOldSprite(oldSprite);
+		
+		*/
 	},
 
 	_deactivateStretch = function() {
