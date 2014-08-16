@@ -4,7 +4,9 @@ BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 
 	sprite, 
 	tilesetSheet, 
-	tileset;
+	tileset,
+	blobSprites,
+	removedSprite;
 
 	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
 	
@@ -33,7 +35,8 @@ BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 			animations: {
 				startAni: [0,19, "moveRight"],
 				moveRight: [20, 39],
-				moveLeft: [40, 59]
+				moveLeft: [40, 59],
+				stop: [60, 79]
 			}
 		}
 
@@ -62,6 +65,7 @@ BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 
 	_listeners = function(){
 		$('body').on('heliAnimationChanged', _animate);
+		$('body').on('onTick', _checkIfStopFinished);
 	},
 
 	_animate = function(event, data){	
@@ -73,7 +77,24 @@ BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 			case AnimationKeys.MOVELEFT:
 				sprite.gotoAndPlay("moveLeft");
 			break;
+			
+			case AnimationKeys.STOP:
+				sprite.gotoAndPlay("stop");
+			break;
 		}
+	},
+
+	_checkIfStopFinished = function() {
+		if(!removedSprite && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 19) {
+			$('body').trigger('heliStopRequested', {"sprites" : blobSprites});
+			sprite.stop();
+			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)
+			removedSprite = true;
+		}
+	},
+
+	this.setBlobSprites = function(sprites) {
+		blobSprites = sprites;
 	};
 
 	this.prototype.init();

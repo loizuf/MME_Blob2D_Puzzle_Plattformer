@@ -244,18 +244,30 @@ BlobApp.PhysicsHandler = (function() {
 		}
 
 		var heliEnt = new BlobApp.Heli(greenBlobEntity.m_xf.position.x * SCALE, 
-			greenBlobEntity.m_xf.position.y * SCALE, 50, 50);
+			greenBlobEntity.m_xf.position.y * SCALE -15, 50, 50);
 		sprite = heliEnt.sprite;
 		$('body').trigger("heliEntityRequested", {"sprite" : sprite});
+
+		_setHeliSprites(heliEnt);
 
 		if(heliIsActive) return;
 		heliIsActive = true;
 
+		blobBodies = [];
 		for(var i = 0; i < bodies.length; i++) {
 			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID 
 				|| bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
-
 				bodiesToRemove.push(bodies[i]);
+			}
+		}
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				bodies.splice(i, 1);
+			}
+		}
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+				bodies.splice(i, 1);
 			}
 		}
 
@@ -314,12 +326,86 @@ BlobApp.PhysicsHandler = (function() {
 		heliBody = entity;	
 	},
 
+	_setHeliSprites = function(heliEntity) {
+		sprites = [];
+		for(var i = 0; i < actors.length; i++) {
+			if(actors[i].body.GetUserData()[0] == EntityConfig.GREENBLOBID
+				|| actors[i].body.GetUserData()[0] == EntityConfig.REDBLOBID) {
+				sprites.push(actors[i].skin);
+			}
+		}
+
+		heliEntity.setBlobSprites(sprites);
+	},
+
 	_moveHeli = function(event, data) {
 		var isX = data.dir=="x";
 		var speedX = isX ? data.speed : 0;
 		var speedY = isX ? 0 : data.speed;
 
 		heliBody.ApplyImpulse(new b2Vec2(speedX, speedY), heliBody.GetPosition());
+	},
+
+	_stopHeli = function() {
+		$('body').trigger('heliAnimationChanged', {"animationKey" : AnimationKeys.STOP});
+	},
+
+	_disassembleHeli = function(event, data) {
+
+		if(data.sprites[0].name == "blobRed") {
+			sprite1 = data.sprites[0];
+			sprite2 = data.sprites[1];
+		} else {
+			sprite1 = data.sprites[1];
+			sprite2 = data.sprites[0];
+		}
+
+
+		userData1 = (sprite1.name=="blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
+		userData2 = (userData1 == EntityConfig.REDBLOBID) ? EntityConfig.GREENBLOBID : EntityConfig.REDBLOBID;
+
+		var xPos = heliBody.m_xf.position.x;
+		var yPos = heliBody.m_xf.position.y;
+
+		sprite1.x = (xPos * SCALE) + 12.5;
+		sprite2.x = (xPos * SCALE) - 12.5;
+
+
+		sprite1.y = (yPos * SCALE) - 3;
+		sprite2.y = (yPos * SCALE) - 3;
+		
+		_recreateBlob(sprite1, userData1);
+		_recreateBlob(sprite2, userData2);
+
+		$('body').trigger('removeHeliFromView', {"sprites" : data.sprites});
+
+		bodiesToRemove.push(heliBody);
+	},
+
+	_recreateBlob = function(sprite, userData) {
+		var width = (TILESIZEX - 1) / SCALE,
+			height = (userData == EntityConfig.REDBLOBID) ? ((TILESIZEY * 2) - 3 )/ SCALE : (TILESIZEY - 1) / SCALE;
+
+		var fixture = createDefaultBoxFixture(width, height);
+		var bodyDef = new b2BodyDef;
+
+		bodyDef.type = b2Body.b2_dynamicBody;
+		bodyDef.position.x = (sprite.x) / SCALE;
+		bodyDef.position.y = (sprite.y) / SCALE;
+		bodyDef.fixedRotation = true;
+
+		var entity = world.CreateBody(bodyDef);
+
+		entity.CreateFixture(fixture);
+
+		entity.SetUserData([userData,undefined]);
+		
+		var actor = new _actorObject(entity, sprite);
+		var blobEntityCreated = $.Event('blobEntityCreated');
+
+		$("body").trigger(blobEntityCreated, entity);
+
+		bodies.push(entity); 
 	},
 
 	_registerListener = function() {
@@ -340,6 +426,7 @@ BlobApp.PhysicsHandler = (function() {
 		// START: DUMMY HELI
 		$('body').on('startHeli', _initHeli);
 		$('body').on('heliMove', _moveHeli);
+		$('body').on('heliStopRequested', _disassembleHeli);
 		// END: DUMMY HELI
 
 		$('body').on("restartPhys", _restartPhys);
@@ -447,6 +534,9 @@ BlobApp.PhysicsHandler = (function() {
 
 				case EntityConfig.REDBLOBID: 
 					_handleRedBlobCollision(bodyA,bodyB, bID, contact);
+				break;
+				case "Heli":
+					_handleHeliCollision(bodyA, bodyB, bID, contact);
 				break;
 			} 
 		};
@@ -564,6 +654,14 @@ BlobApp.PhysicsHandler = (function() {
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0 && notTramped) {
 			$('body').trigger('onReAllowJump', bodyA);
+		}
+	},
+
+	_handleHeliCollision = function(bodyA, bodyB, bID, contact) {
+		switch(bID) {
+			case EntityConfig.HELISTOPTRIGGER:
+				_stopHeli();
+			break;
 		}
 	},
 

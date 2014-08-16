@@ -12,6 +12,7 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on("startHeli", thisVar.initHeli);
 		$('body').on("redBlobInHeliZone", _setDownAction);
 		$('body').on("redBlobLeftTriggerZone", _setDownAction);
+		$('body').on('heliStopRequested', _resetControls);
 	},
 
 	this.tryToInit = function(skill) {
@@ -34,6 +35,15 @@ BlobApp.BlobPlayer2 = (function() {
 		});
 	},
 
+	_resetControls = function() {
+		prototypeVar.setCurrentUp(prototypeVar._jump);
+		prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
+		prototypeVar.setCurrentRight(prototypeVar._moveRight);
+		prototypeVar.setCurrentMash(function(){});
+		prototypeVar.setCurrentDown(function() {
+			});
+	},
+
 	// For when the blob is waiting for the other blob to do something
 	this.setIdle = function(skill) {
 		function restore() {
@@ -44,13 +54,9 @@ BlobApp.BlobPlayer2 = (function() {
 			prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
 			prototypeVar.setCurrentRight(prototypeVar._moveRight);
 
-			prototypeVar.setCurrentDown(function() {
-				thisVar.tryToInit("heli");
-			});
 		}
 
 		prototypeVar.setCurrentUp(restore);
-		prototypeVar.setCurrentDown(function(){});
 		prototypeVar.setCurrentLeft(restore);
 		prototypeVar.setCurrentRight(restore);
 		

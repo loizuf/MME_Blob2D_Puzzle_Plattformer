@@ -32,6 +32,15 @@ BlobApp.ViewController = (function() {
 		}
 	},
 
+	removeHeli = function(event, data) {
+		stage.removeChild(stage.getChildByName("heli"));
+
+		if(!b2ddebug){
+			stage.addChild(data.sprites[0]);
+			stage.addChild(data.sprites[1]);
+		}
+	},
+
 	applyTrampolin = function(event, data) {
 		stage.removeChild(stage.getChildByName("blobGreen"));
 		
@@ -172,6 +181,7 @@ BlobApp.ViewController = (function() {
 		$('body').on('genericRequested',applyEntity);
 		$('body').on('blobRequested', applyEntity);
 		$('body').on('heliEntityRequested', applyHeli);
+		$('body').on('removeHeliFromView', removeHeli);
 		$('body').on('trampolinEntityRequested', applyTrampolin);
 		$('body').on('trampolinStopRequested', removeTrampolin);
 		$('body').on('backgroundAdded', applyBackground);

@@ -14,6 +14,8 @@ EntityConfig = {
 	GOADLLOWERID: 29,
 	HELITILE : 147,
 	HELITRIGGER : 1147,
+	HELISTOPTILE: 148,
+	HELISTOPTRIGGER: 1148
 
 	/* any other special id!*/
 },

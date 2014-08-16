@@ -114,7 +114,15 @@ BlobApp.LevelLoader = (function() {
 
 						case EntityConfig.HELITILE:
 							_createHeliTriggerZone(xcoords, ycoords);
-							// No break!
+							borders[y][x] = true;
+							_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
+							break;
+
+						case EntityConfig.HELISTOPTILE:
+							_createHeliStopTriggerZone(xcoords, ycoords);
+							borders[y][x] = true;
+							_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
+							break;
 
 						default:
 							borders[y][x] = true;
@@ -320,6 +328,20 @@ BlobApp.LevelLoader = (function() {
 
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.HELITRIGGER];
+		_createRequestObject["height"] = 1.2;
+		_createRequestObject["width"] = 1.2;
+
+		$("body").trigger("sensorRequested", _createRequestObject);
+		$('body').trigger('genericRequested', _createRequestObject);
+
+		_createRequestObject["width"] = 1.0;
+	},
+
+	_createHeliStopTriggerZone = function(x, y) {
+		var entity = new BlobApp.CooperationTrigger(x, y-25, 60, 60, EntityConfig.HELISTOPTRIGGER);
+
+		_createRequestObject["sprite"] = entity.sprite;
+		_createRequestObject["userData"] = [EntityConfig.HELISTOPTRIGGER];
 		_createRequestObject["height"] = 1.2;
 		_createRequestObject["width"] = 1.2;
 

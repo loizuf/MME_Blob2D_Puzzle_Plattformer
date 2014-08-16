@@ -19,6 +19,7 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on("greenBlobInHeliZone", _setDownAction);
 		$('body').on("greenBlobLeftTriggerZone", _setDownAction);
 		$('body').on("onDefaultCollision", _setDownAction)
+		$('body').on('heliStopRequested', _resetControls);
 	},
 
 	this.tryToInit = function(skill) {
@@ -80,22 +81,25 @@ BlobApp.BlobPlayer1 = (function() {
 	
 	},
 
+	_resetControls = function() {
+		prototypeVar.setCurrentUp(prototypeVar._jump);
+		prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
+		prototypeVar.setCurrentRight(prototypeVar._moveRight);
+		prototypeVar.setCurrentDown(function() {
+				thisVar.initTrampolin();
+			});
+	},
+
 	// For when the blob is waiting for the other blob to do something
 	this.setIdle = function(skill) {
 		function restore() {
 			$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : false});
-
 			prototypeVar.setCurrentUp(prototypeVar._jump);
 			prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
 			prototypeVar.setCurrentRight(prototypeVar._moveRight);
-
-			prototypeVar.setCurrentDown(function() {
-				thisVar.tryToInit("heli");
-			});
 		}
 
 		prototypeVar.setCurrentUp(restore);
-		prototypeVar.setCurrentDown(function(){});
 		prototypeVar.setCurrentLeft(restore);
 		prototypeVar.setCurrentRight(restore);
 
