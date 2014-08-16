@@ -237,7 +237,7 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_handleRedBlobGrowth = function() {
-		var greenBlobEntity = undefined;
+		var redBlobEntity = undefined;
 
 		for(var i = 0; i < bodies.length; i++) {
 			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
@@ -245,6 +245,8 @@ BlobApp.PhysicsHandler = (function() {
 				break;
 			}
 		}
+
+		if(redBlobEntity == undefined) return;
 
 		if(stretchSize <= STRETCH_HEIGHT) {
 			var fixture = createDefaultBoxFixture((TILESIZEX - 1) / SCALE, stretchSize * (TILESIZEY - 1) / SCALE);
@@ -476,6 +478,8 @@ BlobApp.PhysicsHandler = (function() {
 		_recreateBlob(sprite2, userData2);
 
 		$('body').trigger('removeHeliFromView', {"sprites" : data.sprites});
+		$('body').trigger('greenBlobLeftTriggerZone');
+		$('body').trigger('redBlobLeftTriggerZone');
 
 		bodiesToRemove.push(heliBody);
 	},
@@ -540,7 +544,15 @@ BlobApp.PhysicsHandler = (function() {
 	_activateTrampolin = function() {
 		isTrampolinActive = !isTrampolinActive;
 
-		/*
+		var greenBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				greenBlobEntity = bodies[i];
+				break;
+			}
+		}
+
 		var trampolinEntity = new BlobApp.Trampolin(greenBlobEntity.m_xf.position.x, 
 				greenBlobEntity.m_xf.position.y, 50, 25, greenBlobEntity);
 		var sprite = trampolinEntity.sprite;
@@ -561,7 +573,7 @@ BlobApp.PhysicsHandler = (function() {
 		trampolinEntity.setActor(actor);
 		trampolinEntity.setOldSprite(oldSprite);
 
-		*/ 
+		 
 	},
 
 	_deactivateTrampolin = function() {
@@ -589,16 +601,24 @@ BlobApp.PhysicsHandler = (function() {
 	_activateStretch = function() {
 		isStretchActive = !isStretchActive;
 
-		$("body").trigger("stretchEntityRequested", {"sprite" : sprite}); // viewController
+		var redBlobEntity = undefined;
 
-		/*
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+				redBlobEntity = bodies[i];
+				break;
+			}
+		}
+
+		if(redBlobEntity == undefined) {
+			isStretchActive = !isStretchActive;
+			return;	
+		}
+		
 		var stretchEntity = new BlobApp.Stretch(redBlobEntity.m_xf.position.x, 
 				redBlobEntity.m_xf.position.y, 25, 100, redBlobEntity);
 
-		var sprite = stretchEntity.sprite;
-
-		
-		
+		var sprite = stretchEntity.sprite;	
 	
 		var actor = undefined;
 
@@ -609,36 +629,19 @@ BlobApp.PhysicsHandler = (function() {
 			}
 		}
 
+		$("body").trigger("stretchEntityRequested", {"sprite" : sprite}); // viewController
+
 		var oldSprite = actor.skin;
 
 		actor.skin = sprite;
 		// TODO this is not good code :/
 		stretchEntity.setActor(actor);
 		stretchEntity.setOldSprite(oldSprite);
-		
-		*/
 	},
 
 	_deactivateStretch = function() {
 		$("body").trigger("stretchAnimationChanged", {"animationKey" : AnimationKeys.STOP});
-		var width = (TILESIZEX - 1) / SCALE;
-		var height = 2 * (TILESIZEY - 1) / SCALE;
-
 		isStretchActive = !isStretchActive;
-
-		var redBlobEntity = undefined;
-
-		for(var i = 0; i < bodies.length; i++) {
-			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
-				redBlobEntity = bodies[i];
-				break;
-			}
-		}
-
-		var fixture = createDefaultBoxFixture(width, height);
-
-		redBlobEntity.DestroyFixture(redBlobEntity.GetFixtureList());
-		redBlobEntity.CreateFixture(fixture);
 	},
 	
 	_restartPhys = function() {

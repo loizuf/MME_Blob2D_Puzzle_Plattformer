@@ -43,7 +43,7 @@ BlobApp.BlobPlayer1 = (function() {
 		}	
 	},
 
-	this.initTrampolin = function() {	
+	this.initTrampolin = function() {
 		if(prototypeVar.getSingleSpecialAllowed() && !isTrampolin) {
 			prototypeVar.setSingleSpecialAllowed(false);
 
