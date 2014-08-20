@@ -89,7 +89,6 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	_resetControls = function() {
-		console.log("Meh");
 		prototypeVar.setSingleSpecialAllowed(true);
 		prototypeVar.setCurrentUp(prototypeVar._jump);
 		prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
