@@ -525,6 +525,8 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('onStretchInactive', _deactivateStretch);
 
 		$('body').on('openDoor',_openDoor);
+		$('body').on('onKeyPickedUp', _pickUpKey);
+		$('body').on('onTrampolinContact', _handleTrampolinContact);
 		
 		// START: DUMMY HELI
 		$('body').on('startHeli', _initHeli);
@@ -622,6 +624,14 @@ BlobApp.PhysicsHandler = (function() {
 		greenBlobEntity.CreateFixture(fixture);
 	},
 
+	_handleTrampolinContact = function(event, data) {
+		if(isTrampolinActive == true) {
+			console.log(data);
+			_applyForceJump(null, {"entity" : bodyA, "directionX" : 0, "directionY" : -2.2 * data.yVel});
+			$("body").trigger("trampolinAnimationChanged", {"animationKey" : AnimationKeys.BOUNCE});
+		}
+	},
+
 	_activateStretch = function() {
 		isStretchActive = !isStretchActive;
 
@@ -686,195 +696,18 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').trigger("onReloadGame");
 	},
 
-	_registerCollisionHandler = function(){
-		var listener = new Box2D.Dynamics.b2ContactListener;
+	_registerCollisionHandler = function() {
+		var collisionHandler = BlobApp.CollisionHandler();
 
-		listener.BeginContact = function(contact){
-			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
-			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
+		collisionHandler.init();
 
-			bodyA = contact.GetFixtureA().GetBody();
-			bodyB = contact.GetFixtureB().GetBody();
-
-			switch(aID){
-				case EntityConfig.GREENBLOBID: 
-					_handleGreenBlobCollision(bodyA,bodyB, bID, contact);
-				break;
-
-				case EntityConfig.REDBLOBID: 
-					_handleRedBlobCollision(bodyA,bodyB, bID, contact);
-				break;
-				case "Heli":
-					_handleHeliCollision(bodyA, bodyB, bID, contact);
-				break;
-			} 
-		};
-
-		listener.EndContact = function(contact) {
-			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
-			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
-
-			bodyA = contact.GetFixtureA().GetBody();
-			bodyB = contact.GetFixtureB().GetBody();
-
-			switch(aID){
-				case EntityConfig.GREENBLOBID: 
-					_handleGreenBlobEndCollision(bodyA,bodyB, bID, contact);
-				break;
-				case EntityConfig.REDBLOBID: 
-					_handleRedBlobEndCollision(bodyA,bodyB, bID, contact);
-				break;
-			} 
-
-		};
+		var listener = collisionHandler.getContactListener();	
 
 		world.SetContactListener(listener);
-	},
+	},	
 
-	_handleButtonCollison = function(bodyB, contact) {
-		var buttonID = bodyB.GetUserData()[1];
-
-		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-			$('body').trigger('doorOpenRequested', buttonID);
-		}
-	},
-
-	_handleGreenBlobCollision = function(bodyA,bodyB, bID, contact) {
-		switch(bID){
-			case EntityConfig.REDBLOBID:
-				if(isStretchActive == true) {
-					$("body").trigger("trampolinAnimationChanged", {"animationKey" : AnimationKeys.STRETCH});
-				}
-			break;
-
-			case EntityConfig.VERTICALBORDERID:
-			break;		
-
-			case EntityConfig.HORIZONTALBORDERID:	
-			break;			
-
-			case EntityConfig.BUTTONID:
-				_handleButtonCollison(bodyB, contact);
-			break;
-			
-			case EntityConfig.KEYID:
-				_pickUpKey(bodyA, bodyB);
-				return;
-			break;
-			case EntityConfig.GOALID:
-				_attemptFinish(EntityConfig.GREENBLOBID);
-				return;
-			break;
-
-			case EntityConfig.HELITRIGGER:
-				_playerInTriggerZone("greenBlob", "heli");
-				return;
-			break;
-
-			case EntityConfig.TELETRIGGER:
-				_playerInTriggerZone("greenBlob", "tele");
-				return;
-			break;
-		}
-
-		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-			$('body').trigger('onReAllowJump', bodyA);
-		}
-	},
-
-	_handleRedBlobCollision = function(bodyA,bodyB, bID, contact) {
-		var notTramped = true;
-
-		switch(bID) {
-			case EntityConfig.GREENBLOBID:
-				if(isTrampolinActive == true) {
-					notTramped = false;
-					if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-						y = contact.m_fixtureA.m_body.GetLinearVelocity().y;
-						_applyForceJump(null, {"entity" : bodyA, "directionX" : 0, "directionY" : -2.2 * y});
-					}
-					$("body").trigger("trampolinAnimationChanged", {"animationKey" : AnimationKeys.BOUNCE});
-				}				
-			break;
-
-			case EntityConfig.VERTICALBORDERID:
-			break;
-
-			case EntityConfig.HORIZONTALBORDERID:
-			break;
-
-			case EntityConfig.BUTTONID:
-				_handleButtonCollison(bodyB, contact);
-			break;
-
-			case EntityConfig.KEYID:
-				_pickUpKey(bodyA, bodyB);
-				return;
-			break;
-
-			case EntityConfig.GOALID:
-				_attemptFinish(EntityConfig.REDBLOBID);
-				return;
-			break;
-
-			case EntityConfig.HELITRIGGER:
-				_playerInTriggerZone("redBlob", "heli");
-				return;
-
-			case EntityConfig.TELETRIGGER:
-				_playerInTriggerZone("redBlob", "tele");
-				return;
-		}
-
-		if(contact.m_manifold.m_localPlaneNormal.y > 0 && notTramped) {
-			$('body').trigger('onReAllowJump', bodyA);
-		}
-	},
-
-	_handleHeliCollision = function(bodyA, bodyB, bID, contact) {
-		switch(bID) {
-			case EntityConfig.HELISTOPTRIGGER:
-				_stopHeli();
-			break;
-		}
-	},
-
-	_handleRedBlobEndCollision = function(bodyA, bodyB, bID, contact) {
-		switch(bID) {
-			case EntityConfig.HELITRIGGER : 
-			case EntityConfig.TELETRIGGER :
-				_playerLeftTriggerZone("redBlob");
-			break;
-		}
-	},
-
-	_handleGreenBlobEndCollision = function(bodyA, bodyB, bID, contact) {
-		switch(bID) {
-			case EntityConfig.HELITRIGGER : 
-			case EntityConfig.TELETRIGGER :
-				_playerLeftTriggerZone("greenBlob");
-			break;
-		}
-	},
-
-	_playerInTriggerZone = function(player, zoneName) {
-			$('body').trigger(player+"InTriggerZone", {name: zoneName});
-	},
-
-	_playerLeftTriggerZone = function(player) {
-			$('body').trigger(player+"LeftTriggerZone");
-	},
-
-	_attemptFinish = function(blobID) {
-		if(blobID == EntityConfig.REDBLOBID) {
-			$('body').trigger('blobFinishAttempt', PLAYER_ONE_NAME);
-		} else if(blobID == EntityConfig.GREENBLOBID) {
-			$('body').trigger('blobFinishAttempt', PLAYER_TWO_NAME);
-		}
-	},
-
-	_pickUpKey = function(bodyA, bodyB) {
-		bodiesToRemove.push(bodyB);
+	_pickUpKey = function(event, data) {
+		bodiesToRemove.push(data.body);
 		$('body').trigger('keyPickedUp');
 	},	
 
