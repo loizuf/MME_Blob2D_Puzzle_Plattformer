@@ -44,7 +44,9 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 				jumpRight: [60, 79, "jumpEndRight"],
 				jumpEndRight: [79],
 				jumpLeft: [80, 99, "jumpEndLeft"],
-				jumpEndLeft: [99]
+				jumpEndLeft: [99],
+				teleport: [100, 119, "afterTeleport"],
+				afterTeleport: [119, 100, "idle1"]
 			}
 		}
 
@@ -76,12 +78,14 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 	},
 
 	_listeners = function() {
-		$('body').on('blobanimationChanged', _animate);
+		$('body').on('blobanimationChanged', _animate);		
+		$('body').on('onTick', _checkIfTeleAnimationFinished);
+
 	},
 
 	_animate = function(event, data) {
 			if(blobID==data.blobID) {
-		
+
 			switch(data.animationKey) {
 				case AnimationKeys.IDLE1:
 					sprite.gotoAndPlay("idle1");
@@ -102,8 +106,19 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 				case AnimationKeys.JUMPLEFT:
 					sprite.gotoAndPlay("jumpLeft");
 				break;
+
+				case AnimationKeys.TELEPORT:
+					sprite.gotoAndPlay("teleport");
+				break;
 			}
 		}
+	},
+
+	_checkIfTeleAnimationFinished = function() {
+		if(sprite.currentAnimation == "teleport" && blobID == EntityConfig.REDBLOBID && sprite.currentAnimationFrame == 19 ) {
+			$('body').trigger('teleportRequested');
+		}
+
 	};
 
 	this.prototype.init();

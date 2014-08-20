@@ -15,10 +15,13 @@ BlobApp.BlobPlayer1 = (function() {
 
 	_initListeners = function() {
 		$('body').on("startHeli", thisVar.initHeli);
-		$('body').on("greenBlobInHeliZone", _setDownAction);
+		$('body').on("greenBlobInTriggerZone", _setDownAction);
 		$('body').on("greenBlobLeftTriggerZone", _setDownAction);
 		$('body').on('heliStopRequested', _resetControls);
 		$('body').on('trampolinInitRequested', _setTrampolin);
+
+		$('body').on('startTele', thisVar.initTele);
+		$('body').on('physTeleportFinished', _resetControls);
 	},
 
 	this.tryToInit = function(skill) {
@@ -26,12 +29,14 @@ BlobApp.BlobPlayer1 = (function() {
 			case "heli":
 				thisVar.setIdle(skill);
 			break;
+			case "tele":
+				thisVar.setIdle(skill);
+			break;
 		}
 	},
 
 	_setTrampolin = function() {
 		prototypeVar.setSingleSpecialAllowed(true);
-		console.log("set trampolin");
 	},
 
 	_setDownAction = function(event, what) {
@@ -42,7 +47,7 @@ BlobApp.BlobPlayer1 = (function() {
 			return;
 		} 
 
-		if(what.name == "heli") {
+		if(what.name == "heli" || what.name == "tele") {
 			prototypeVar.setCurrentDown(function() {
 				thisVar.tryToInit(what.name);
 			});
@@ -84,6 +89,7 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	_resetControls = function() {
+		console.log("Meh");
 		prototypeVar.setSingleSpecialAllowed(true);
 		prototypeVar.setCurrentUp(prototypeVar._jump);
 		prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
@@ -108,6 +114,18 @@ BlobApp.BlobPlayer1 = (function() {
 
 		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : skill});		
 	},
+
+	// START: Teleportation special skill
+	this.initTele = function() {
+		prototypeVar.setCurrentUp(function(){});
+		prototypeVar.setCurrentLeft(function(){});
+		prototypeVar.setCurrentRight(function(){});
+		prototypeVar.setCurrentDown(function(){});
+
+		$('body').trigger('blobanimationChanged', {'blobID' : EntityConfig.GREENBLOBID, 'animationKey' : AnimationKeys.TELEPORT});
+	},
+
+	// END: Teleport
 
 	// START: Helicopter special skill:
 	heliSpeedX = 0.1,

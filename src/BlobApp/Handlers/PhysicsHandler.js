@@ -532,11 +532,37 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('heliStopRequested', _disassembleHeli);
 		// END: DUMMY HELI
 
+		$('body').on('teleportRequested', _doTeleport);
+
 		$('body').on("restartPhys", _restartPhys);
 		$('body').on("destroyPhysics", _destroyWorld);
 		$('body').on("resetGame", _resetGame);
 
 		_registerCollisionHandler();
+	},
+
+	_doTeleport = function() {
+		var greenBlobEntity = undefined;
+		var redBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				greenBlobEntity = bodies[i];
+			} else 	if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+				redBlobEntity = bodies[i];
+			}
+		}
+
+		redX = redBlobEntity.m_xf.position.x;
+		redY = redBlobEntity.m_xf.position.y;
+
+		greenX = greenBlobEntity.m_xf.position.x;
+		greenY = greenBlobEntity.m_xf.position.y;
+
+		greenBlobEntity.SetPosition(new b2Vec2(redX, redY+11/SCALE));
+		redBlobEntity.SetPosition(new b2Vec2(greenX, greenY-13/SCALE));
+
+		$('body').trigger('physTeleportFinished');
 	},
 
 	_activateTrampolin = function() {
@@ -741,7 +767,12 @@ BlobApp.PhysicsHandler = (function() {
 			break;
 
 			case EntityConfig.HELITRIGGER:
-				_playerInHeliZone("greenBlob");
+				_playerInTriggerZone("greenBlob", "heli");
+				return;
+			break;
+
+			case EntityConfig.TELETRIGGER:
+				_playerInTriggerZone("greenBlob", "tele");
 				return;
 			break;
 		}
@@ -787,7 +818,11 @@ BlobApp.PhysicsHandler = (function() {
 			break;
 
 			case EntityConfig.HELITRIGGER:
-				_playerInHeliZone("redBlob");
+				_playerInTriggerZone("redBlob", "heli");
+				return;
+
+			case EntityConfig.TELETRIGGER:
+				_playerInTriggerZone("redBlob", "tele");
 				return;
 		}
 
@@ -807,6 +842,7 @@ BlobApp.PhysicsHandler = (function() {
 	_handleRedBlobEndCollision = function(bodyA, bodyB, bID, contact) {
 		switch(bID) {
 			case EntityConfig.HELITRIGGER : 
+			case EntityConfig.TELETRIGGER :
 				_playerLeftTriggerZone("redBlob");
 			break;
 		}
@@ -815,13 +851,14 @@ BlobApp.PhysicsHandler = (function() {
 	_handleGreenBlobEndCollision = function(bodyA, bodyB, bID, contact) {
 		switch(bID) {
 			case EntityConfig.HELITRIGGER : 
+			case EntityConfig.TELETRIGGER :
 				_playerLeftTriggerZone("greenBlob");
 			break;
 		}
 	},
 
-	_playerInHeliZone = function(player) {
-			$('body').trigger(player+"InHeliZone", {name: "heli"});
+	_playerInTriggerZone = function(player, zoneName) {
+			$('body').trigger(player+"InTriggerZone", {name: zoneName});
 	},
 
 	_playerLeftTriggerZone = function(player) {

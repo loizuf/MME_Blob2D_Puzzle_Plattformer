@@ -15,15 +15,21 @@ BlobApp.BlobPlayer2 = (function() {
 
 	_initListeners = function() {
 		$('body').on("startHeli", thisVar.initHeli);
-		$('body').on("redBlobInHeliZone", _setDownAction);
+		$('body').on("redBlobInTriggerZone", _setDownAction);
 		$('body').on("redBlobLeftTriggerZone", _setDownAction);
 		$('body').on('heliStopRequested', _resetControls);
 		$('body').on('stretchInitRequested', _setStretch);
+
+		$('body').on('startTele', thisVar.initTele);
+		$('body').on('physTeleportFinished', _resetControls);
 	},
 
 	this.tryToInit = function(skill) {
 		switch(skill) {
 			case "heli":
+				thisVar.setIdle(skill);
+			break;
+			case "tele":
 				thisVar.setIdle(skill);
 			break;
 		}
@@ -108,7 +114,19 @@ BlobApp.BlobPlayer2 = (function() {
 		prototypeVar.setCurrentRight(restore);
 		
 		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p2", "waiting" : skill});
-	}
+	},
+
+	// START: Teleportation special skill
+	this.initTele = function() {
+		prototypeVar.setCurrentUp(function(){});
+		prototypeVar.setCurrentLeft(function(){});
+		prototypeVar.setCurrentRight(function(){});
+		prototypeVar.setCurrentDown(function(){});
+
+		$('body').trigger('blobanimationChanged', {'blobID' : EntityConfig.REDBLOBID, 'animationKey' : AnimationKeys.TELEPORT});
+	};
+
+	// END: Teleport
 
 	// START: Helicopter special skill:
 	var heliSpeedY = -1;

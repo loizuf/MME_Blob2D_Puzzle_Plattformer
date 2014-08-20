@@ -186,20 +186,28 @@ BlobApp.ModelController = (function() {
 		if(waiting != false) {
 			if(player == _blobPlayerOne) {
 				if(waiting == _blobPlayerTwo.prototype.getWaitingForOther()) {
-					$('body').trigger("startHeli");
-					_inputHandler.changeControls();
-					_blobPlayerOne.prototype.setWaitingForOther(false);
-					_blobPlayerTwo.prototype.setWaitingForOther(false);
+					_startSpecial(waiting);
 				}
 			} else {
-				if(waiting == _blobPlayerOne.prototype.getWaitingForOther()) {
-					$('body').trigger("startHeli");
-					_inputHandler.changeControls();
-					_blobPlayerOne.prototype.setWaitingForOther(false);
-					_blobPlayerTwo.prototype.setWaitingForOther(false);
+				if(waiting == _blobPlayerOne.prototype.getWaitingForOther()) {	
+					_startSpecial(waiting);			
 				}
 			}
 		}
+	},
+
+	_startSpecial = function(specialName) {
+		if(specialName == "heli") {
+			$('body').trigger("startHeli");
+			_inputHandler.changeControls();
+			_blobPlayerOne.prototype.setWaitingForOther(false);
+			_blobPlayerTwo.prototype.setWaitingForOther(false);
+		} else if(specialName == "tele") {
+			$('body').trigger("startTele");
+			_blobPlayerOne.prototype.setWaitingForOther(false);
+			_blobPlayerTwo.prototype.setWaitingForOther(false);
+		}
+
 	};
 
 	that.init = init;
