@@ -183,11 +183,6 @@ BlobApp.ViewController = (function() {
 		$('body').trigger(onTickRequest);		
 	},
 
-	_deleteDoor = function(event , data){
-		var childIndex = stage.getChildIndex(data.sprite);
-		stage.removeChildAt(childIndex);
-	},
-
 	_onLevelFinished = function() {
 		$gamecanvas.css('display', 'none');
 		_showMenu();
@@ -207,7 +202,6 @@ BlobApp.ViewController = (function() {
 		$('body').on('stretchStopRequested', removeStretch);
 
 		$('body').on('backgroundAdded', applyBackground);
-		$('body').on('viewOpenDoor', _deleteDoor);
 		$('body').on('onPause', _displayPauseScreen);
 		$('body').on('levelFinished', _onLevelFinished);
 	};
