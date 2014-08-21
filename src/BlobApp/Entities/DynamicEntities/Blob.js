@@ -46,7 +46,10 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 				jumpLeft: [80, 99, "jumpEndLeft"],
 				jumpEndLeft: [99],
 				teleport: [100, 119, "afterTeleport"],
-				afterTeleport: [119, 100, "idle1"]
+				afterTeleport: {
+					frames : [119,118,117,116,115,114,113,112,111,110,109,108,107,106,105,104,103,102,101,100], 
+					next: "idle1"
+				}
 			}
 		}
 
