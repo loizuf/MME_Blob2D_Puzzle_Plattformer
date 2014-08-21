@@ -377,6 +377,10 @@ BlobApp.LevelLoader = (function() {
 			case 99:
 				mapDataJson = LevelConfig.OVER1;
 			break;
+
+			case 9001:
+				mapDataJson = LevelConfig.SPECIALTEST;
+			break;
 		}
 	};
 

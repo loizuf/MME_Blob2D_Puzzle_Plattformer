@@ -11,6 +11,8 @@ BlobApp.BlobGame = (function() {
 
 	$TestMenu = $('#TestMenu'),
 
+	$specialTestLevel = $('#specialTestLevel'),
+
 	$Over0 = $('#Over0'),
 	$Over1 = $('#Over1'),
 
@@ -85,10 +87,14 @@ BlobApp.BlobGame = (function() {
 		$Over0.unbind("click");
 		$Over1.unbind("click");
 
+		$specialTestLevel.unbind("click");
+
 		$selectLevel1.on('click', {lvlID:1}, _startGame);
 		$selectLevel2.on('click', {lvlID:2}, _startGame);
 		$selectLevel3.on('click', {lvlID:3}, _startGame);
 		$selectLevel4.on('click', {lvlID:4}, _startGame);
+
+		$specialTestLevel.on('click', {lvlID: 9001}, _startGame);
 
 		$TestMenu.on('click', {lvlID:0}, _startGame);
 		$Over0.on('click', {lvlID:98}, _startGame);
