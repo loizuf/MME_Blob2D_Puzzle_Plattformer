@@ -478,6 +478,7 @@ BlobApp.PhysicsHandler = (function() {
 		_recreateBlob(sprite2, userData2);
 
 		$('body').trigger('removeHeliFromView', {"sprites" : data.sprites});
+		heliIsActive = false;
 
 		bodiesToRemove.push(heliBody);
 	},
@@ -693,6 +694,8 @@ BlobApp.PhysicsHandler = (function() {
 
 		bodies.length = 0;
 
+		_resetVariables();
+
 		$('body').trigger("onReloadGame");
 	},
 
@@ -718,6 +721,10 @@ BlobApp.PhysicsHandler = (function() {
 				bodiesToRemove.push(bodies[i]);
 			}
 		}
+	},
+
+	_resetVariables = function() {
+		heliIsActive = false;
 	};
 
 	that.init = init;

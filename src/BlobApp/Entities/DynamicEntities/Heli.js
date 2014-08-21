@@ -86,6 +86,7 @@ BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 
 	_checkIfStopFinished = function() {
 		if(!removedSprite && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 19) {
+			$('body').trigger('specialFinished', {'specialName' : "heli"});
 			$('body').trigger('heliStopRequested', {"sprites" : blobSprites});
 			sprite.stop();
 			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)

@@ -59,6 +59,8 @@ BlobApp.ModelController = (function() {
 		$('body').on('keyPickedUp', _onKeyPickedUp);
 		$('body').on('blobFinishAttempt', _onBlobFinishAttempt);
 		//$('body').on('levelFinished', _onLevelFinished);
+
+		$('body').on('specialFinished', _onSpecialFinished);
 	},
 
 	_onKeyPickedUp = function() {
@@ -208,6 +210,12 @@ BlobApp.ModelController = (function() {
 			_blobPlayerTwo.prototype.setWaitingForOther(false);
 		}
 
+	},
+
+	_onSpecialFinished = function(event, data) {
+		if(data.specialName == "heli") {
+			_inputHandler.changeControls();
+		}
 	};
 
 	that.init = init;

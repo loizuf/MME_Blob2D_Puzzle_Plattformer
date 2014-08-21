@@ -236,7 +236,8 @@ BlobApp.BlobSuperClass = function() {
 	},
 
 	this.onButtonMash = function() {
-		_currentMash();
+		if(_currentMash)
+			_currentMash();
 	},
 
 	// These functions can be called from outside(?) to change what happens when a button is pressed
