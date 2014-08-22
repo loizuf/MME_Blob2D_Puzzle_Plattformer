@@ -14,10 +14,10 @@ BlobApp.SoundHandler = (function() {
             {id:"test", src:"test.ogg"},
         ];
 
-        //createjs.Sound.alternateExtensions = ["mp3"];
+        createjs.Sound.alternateExtensions = ["mp3"];
          //TODO: maybe exract this to a preload module
         preload = new createjs.LoadQueue(true, assetsPath);
-        preload.installPlugin(createjs.Sound);
+         preload.installPlugin(createjs.Sound);
         preload.addEventListener("complete", _doneLoading);
         preload.loadManifest(manifest);
 
@@ -27,8 +27,7 @@ BlobApp.SoundHandler = (function() {
     },
 
     _doneLoading = function() {
-          createjs.Sound.play("test", {interrupt:createjs.Sound.INTERRUPT_NONE, loop:-1, volume:0.4});
-
+        //TODO: maybe check if already loaded before game starts?
     };
 
     _listeners = function(){
