@@ -119,6 +119,8 @@ BlobApp.CollisionHandler = (function() {
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 			$('body').trigger('onReAllowJump', bodyA);
+			// TODO put this somewhere where it belongs
+			_addJuice(bodyA, 1);
 		}
 	},
 
@@ -170,6 +172,8 @@ BlobApp.CollisionHandler = (function() {
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 			$('body').trigger('onReAllowJump', bodyA);
+			// TODO put this somewhere where it belongs
+			_addJuice(bodyA, 2);
 		}
 	},
 
@@ -218,6 +222,16 @@ BlobApp.CollisionHandler = (function() {
 
 	_pickUpKey = function(bodyA, bodyB) {
 		$('body').trigger("onKeyPickedUp", {body:bodyB});
+	},
+
+	_addJuice = function(bodyA, blobHeight) {
+		var xPos = bodyA.m_xf.position.x,
+			yPos = (blobHeight == 1)? bodyA.m_xf.position.y : bodyA.m_xf.position.y+12.5/30,
+			width = 25,
+			height = 25;
+		var sprite = new BlobApp.Juice(xPos*30, yPos*30, width, height).sprite;
+
+		$('body').trigger('juiceRequested', {sprite: sprite});
 	};
 	
 	that.init = init;

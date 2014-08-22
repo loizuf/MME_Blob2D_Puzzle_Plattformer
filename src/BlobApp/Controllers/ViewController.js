@@ -18,7 +18,11 @@ BlobApp.ViewController = (function() {
 
 	applyEntity = function(event, data) {
 		if(!b2ddebug){
-			stage.addChild(data.sprite);
+			stage.addChild(data.sprite);	
+			if(data.remove)
+				for(var i = 0; i < data.remove.length; i++) {
+					stage.removeChild(data.remove[i]);
+				}
 		}
 	},
 
@@ -207,7 +211,10 @@ BlobApp.ViewController = (function() {
 	},
 
 	_listener = function(){
-		$('body').on('genericRequested',applyEntity);
+		// TODO change all the other requests to this one, then rename it!!
+		$('body').on('juiceRequested', applyEntity);
+
+		$('body').on('genericRequested', applyEntity);
 		$('body').on('blobRequested', applyEntity);
 
 		$('body').on('heliEntityRequested', applyHeli);
