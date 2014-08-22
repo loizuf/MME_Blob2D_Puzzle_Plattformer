@@ -208,6 +208,10 @@ BlobApp.ModelController = (function() {
 			$('body').trigger("startTele");
 			_blobPlayerOne.prototype.setWaitingForOther(false);
 			_blobPlayerTwo.prototype.setWaitingForOther(false);
+		} else if(specialName == "bridge") {
+			$('body').trigger("startBridge");
+			_blobPlayerOne.prototype.setWaitingForOther(false);
+			_blobPlayerTwo.prototype.setWaitingForOther(false);
 		}
 
 	},

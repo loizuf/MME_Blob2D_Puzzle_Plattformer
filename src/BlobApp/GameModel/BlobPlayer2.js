@@ -22,6 +22,8 @@ BlobApp.BlobPlayer2 = (function() {
 
 		$('body').on('startTele', thisVar.initTele);
 		$('body').on('physTeleportFinished', _resetControls);
+
+		$('body').on('startBridge', thisVar.initBridge);
 	},
 
 	this.tryToInit = function(skill) {
@@ -29,7 +31,12 @@ BlobApp.BlobPlayer2 = (function() {
 			case "heli":
 				thisVar.setIdle(skill);
 			break;
+
 			case "tele":
+				thisVar.setIdle(skill);
+			break;
+
+			case "bridge":
 				thisVar.setIdle(skill);
 			break;
 		}
@@ -149,6 +156,26 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').trigger('heliMove', {"speed" : heliSpeedY, "dir" : "y"});
 	}
 	// END: Heli
+
+	//START: Bridge special skill
+	this.initBridge = function() {
+		prototypeVar.setSingleSpecialAllowed(false);
+
+		prototypeVar.setCurrentUp(function(){});
+		prototypeVar.setCurrentDown(function(){});
+
+		prototypeVar.setCurrentLeft(_bridgeMoveLeft);
+		prototypeVar.setCurrentRight(_bridgeMoveRight);		
+	},
+
+	_bridgeMoveLeft = function() {
+
+	},
+
+	_bridgeMoveRight = function() {
+
+	};
+	//END:
 
 	this.setup(); 
 });

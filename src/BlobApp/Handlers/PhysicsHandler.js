@@ -344,13 +344,17 @@ BlobApp.PhysicsHandler = (function() {
 
 		var heliEnt = new BlobApp.Heli(greenBlobEntity.m_xf.position.x * SCALE, 
 			greenBlobEntity.m_xf.position.y * SCALE -15, 50, 50);
+
 		sprite = heliEnt.sprite;
 
 		$('body').trigger("heliEntityRequested", {"sprite" : sprite});
 
 		_setHeliSprites(heliEnt);
 
-		if(heliIsActive) return;
+		if(heliIsActive) {
+			return;
+		}
+
 		heliIsActive = true;
 
 		blobBodies = [];
@@ -424,6 +428,58 @@ BlobApp.PhysicsHandler = (function() {
 
 		bodies.push(entity); 
 		heliBody = entity;	
+	},
+
+	_initBridge = function() {
+		greenBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				greenBlobEntity = bodies[i];
+				break;
+			}
+		}
+
+		var bridgeEntity = new BlobApp.Bridge(greenBlobEntity.m_xf.position.x * SCALE + 50,
+			greenBlobEntity.m_xf.y * SCALE + 12.5, 150, 75);
+		
+		sprite = bridgeEntity.sprite;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID 
+				|| bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+				bodiesToRemove.push(bodies[i]);
+			}
+		}
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				bodies.splice(i, 1);
+			}
+		}
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+				bodies.splice(i, 1);
+			}
+		}
+
+		// Create Bridge (= Create Blob)
+		//sprite = spriteAndNumber["sprite"];
+		userData = "Bridge";
+		var x = greenBlobEntity.m_xf.position.x + 75 / SCALE;
+		var y = greenBlobEntity.m_xf.position.y
+
+		var width = TILESIZEX / SCALE * 7;
+		var height = TILESIZEY / SCALE;
+
+		var entity = createDefaultBoxEntity(x, y, width, height, false);
+		entity.SetUserData(userData);
+
+		var actor = new _actorObject(entity, sprite);
+
+		bodies.push(entity);		
+		bridgeBody = entity;
+
+		console.log(entity);
 	},
 
 	_setHeliSprites = function(heliEntity) {
@@ -534,6 +590,9 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('heliMove', _moveHeli);
 		$('body').on('heliStopRequested', _disassembleHeli);
 		// END: DUMMY HELI
+
+		//START: DUMMY BRIDGE
+		$('body').on('startBridge', _initBridge);
 
 		$('body').on('teleportRequested', _doTeleport);
 

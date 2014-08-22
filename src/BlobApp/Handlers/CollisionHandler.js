@@ -14,8 +14,6 @@ BlobApp.CollisionHandler = (function() {
 	var contactListener;
 
 	init = function() {
-		console.log("init ch");
-
 		contactListener = new Box2D.Dynamics.b2ContactListener;
 
 		_handleContacts();
@@ -97,21 +95,26 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.KEYID:
 				_pickUpKey(bodyA, bodyB);
 				return;
-			break;
+			
 			case EntityConfig.GOALID:
 				_attemptFinish(EntityConfig.GREENBLOBID);
 				return;
-			break;
-
+			
 			case EntityConfig.HELITRIGGER:
 				_playerInTriggerZone("greenBlob", "heli");
 				return;
-			break;
-
+			
 			case EntityConfig.TELETRIGGER:
 				_playerInTriggerZone("greenBlob", "tele");
 				return;
-			break;
+
+			case EntityConfig.BRIDGELEFTTRIGGER:
+				_playerInTriggerZone("greenBlob", "bridge");
+				return;
+
+			case EntityConfig.BRIDGERIGHTTRIGGER:
+				_playerInTriggerZone("greenBlob", "bridge");
+				return;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -142,20 +145,26 @@ BlobApp.CollisionHandler = (function() {
 
 			case EntityConfig.KEYID:
 				_pickUpKey(bodyA, bodyB);
-				return;
-			break;
+				return;		
 
 			case EntityConfig.GOALID:
 				_attemptFinish(EntityConfig.REDBLOBID);
 				return;
-			break;
-
+			
 			case EntityConfig.HELITRIGGER:
 				_playerInTriggerZone("redBlob", "heli");
 				return;
-
+			
 			case EntityConfig.TELETRIGGER:
 				_playerInTriggerZone("redBlob", "tele");
+				return;
+			
+			case EntityConfig.BRIDGELEFTTRIGGER:
+				_playerInTriggerZone("redBlob", "bridge");
+				return;
+
+			case EntityConfig.BRIDGERIGHTTRIGGER:
+				_playerInTriggerZone("redBlob", "bridge");
 				return;
 		}
 
