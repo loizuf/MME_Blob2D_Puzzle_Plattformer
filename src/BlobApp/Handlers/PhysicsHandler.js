@@ -349,7 +349,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		$('body').trigger("heliEntityRequested", {"sprite" : sprite});
 
-		_setHeliSprites(heliEnt);
+		_setSprites(heliEnt);
 
 		if(heliIsActive) {
 			return;
@@ -430,6 +430,9 @@ BlobApp.PhysicsHandler = (function() {
 		heliBody = entity;	
 	},
 
+	bridgeIsActive = false,
+	bridgeBody = undefined,
+
 	_initBridge = function() {
 		greenBlobEntity = undefined;
 
@@ -446,6 +449,14 @@ BlobApp.PhysicsHandler = (function() {
 		sprite = bridgeEntity.sprite;
 
 		$('body').trigger("bridgeEntityRequested", {"sprite" : sprite});
+
+		_setSprites(bridgeEntity);
+
+		if(bridgeIsActive) {
+			return;
+		}
+
+		bridgeIsActive = true;
 
 
 		for(var i = 0; i < bodies.length; i++) {
@@ -481,12 +492,42 @@ BlobApp.PhysicsHandler = (function() {
 
 		bodies.push(entity);		
 		bridgeBody = entity;
-
-		console.log(entity);
 	},
 
-	_setHeliSprites = function(heliEntity) {
+	_disassembleBridge = function() {
+		if(data.sprites[0].name == "blobRed") {
+			sprite1 = data.sprites[0];
+			sprite2 = data.sprites[1];
+		} else {
+			sprite1 = data.sprites[1];
+			sprite2 = data.sprites[0];
+		}
+
+		userData1 = (sprite1.name == "blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
+		userData2 = (userData1 == EntityConfig.REDBLOBID) ? EntityConfig.GREENBLOBID : EntityConfig.REDBLOBID;
+
+		var xPos = heliBody.m_xf.position.x;
+		var yPos = heliBody.m_xf.position.y;
+
+		sprite1.x = (xPos * SCALE) + 12.5;
+		sprite2.x = (xPos * SCALE) - 12.5;
+
+
+		sprite1.y = (yPos * SCALE) - 3;
+		sprite2.y = (yPos * SCALE) - 3;
+		
+		_recreateBlob(sprite1, userData1);
+		_recreateBlob(sprite2, userData2);
+
+		$('body').trigger('removeBridgeFromView', {"sprites" : data.sprites});
+		heliIsActive = false;
+
+		bodiesToRemove.push(heliBody);
+	},
+
+	_setSprites = function(entity) {
 		sprites = [];
+
 		for(var i = 0; i < actors.length; i++) {
 			if(actors[i].body.GetUserData()[0] == EntityConfig.GREENBLOBID
 				|| actors[i].body.GetUserData()[0] == EntityConfig.REDBLOBID) {
@@ -494,7 +535,7 @@ BlobApp.PhysicsHandler = (function() {
 			}
 		}
 
-		heliEntity.setBlobSprites(sprites);
+		entity.setBlobSprites(sprites);
 	},
 
 	_moveHeli = function(event, data) {
@@ -596,6 +637,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		//START: DUMMY BRIDGE
 		$('body').on('startBridge', _initBridge);
+		$('body').on('bridgeStopRequested', _disassembleBridge);
 
 		$('body').on('teleportRequested', _doTeleport);
 
@@ -624,8 +666,8 @@ BlobApp.PhysicsHandler = (function() {
 		greenX = greenBlobEntity.m_xf.position.x;
 		greenY = greenBlobEntity.m_xf.position.y;
 
-		greenBlobEntity.SetPosition(new b2Vec2(redX, redY+11/SCALE));
-		redBlobEntity.SetPosition(new b2Vec2(greenX, greenY-13/SCALE));
+		greenBlobEntity.SetPosition(new b2Vec2(redX, redY + 11 / SCALE));
+		redBlobEntity.SetPosition(new b2Vec2(greenX, greenY - 13 / SCALE));
 
 		$('body').trigger('physTeleportFinished');
 	},
