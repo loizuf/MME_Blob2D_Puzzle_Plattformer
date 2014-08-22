@@ -2,7 +2,7 @@ BlobApp.ViewController = (function() {
 	var that = {},
 	canvas, context, debugCanvas, debugContext, stage,
 
-	b2ddebug = true,
+	b2ddebug = false,
 
 	init = function() {
 		_initView();
@@ -38,6 +38,15 @@ BlobApp.ViewController = (function() {
 		if(!b2ddebug){
 			stage.addChild(data.sprites[0]);
 			stage.addChild(data.sprites[1]);
+		}
+	},
+
+	applyBridge = function(event, data) {
+		stage.removeChild(stage.getChildByName("blobRed"));
+		stage.removeChild(stage.getChildByName("blobGreen"));
+
+		if(!b2ddebug){
+			stage.addChild(data.sprite);
 		}
 	},
 
@@ -194,6 +203,8 @@ BlobApp.ViewController = (function() {
 
 		$('body').on('heliEntityRequested', applyHeli);
 		$('body').on('removeHeliFromView', removeHeli);
+
+		$('body').on('bridgeEntityRequested', applyBridge);
 
 		$('body').on('trampolinEntityRequested', applyTrampolin);
 		$('body').on('trampolinStopRequested', removeTrampolin);

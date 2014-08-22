@@ -441,9 +441,12 @@ BlobApp.PhysicsHandler = (function() {
 		}
 
 		var bridgeEntity = new BlobApp.Bridge(greenBlobEntity.m_xf.position.x * SCALE + 50,
-			greenBlobEntity.m_xf.y * SCALE + 12.5, 150, 75);
+			greenBlobEntity.m_xf.y * SCALE + 12.5, 175, 75);
 		
 		sprite = bridgeEntity.sprite;
+
+		$('body').trigger("bridgeEntityRequested", {"sprite" : sprite});
+
 
 		for(var i = 0; i < bodies.length; i++) {
 			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID 
