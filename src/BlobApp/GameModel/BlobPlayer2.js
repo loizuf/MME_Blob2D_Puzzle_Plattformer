@@ -18,6 +18,7 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on("redBlobInTriggerZone", _setDownAction);
 		$('body').on("redBlobLeftTriggerZone", _setDownAction);
 		$('body').on('heliStopRequested', _resetControls);
+		$('body').on('bridgeStopRequested', _resetControls);
 		$('body').on('stretchInitRequested', _setStretch);
 
 		$('body').on('startTele', thisVar.initTele);

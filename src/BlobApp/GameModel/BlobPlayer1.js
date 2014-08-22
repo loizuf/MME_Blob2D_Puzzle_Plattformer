@@ -18,6 +18,7 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on("greenBlobInTriggerZone", _setDownAction);
 		$('body').on("greenBlobLeftTriggerZone", _setDownAction);
 		$('body').on('heliStopRequested', _resetControls);
+		$('body').on('bridgeStopRequested', _resetControls);
 		$('body').on('trampolinInitRequested', _setTrampolin);
 
 		$('body').on('startTele', thisVar.initTele);

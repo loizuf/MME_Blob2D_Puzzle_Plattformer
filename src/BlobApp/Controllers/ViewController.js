@@ -50,6 +50,15 @@ BlobApp.ViewController = (function() {
 		}
 	},
 
+	removeBridge = function(event, data) {
+		stage.removeChild(stage.getChildByName("bridge"));
+
+		if(!b2ddebug){
+			stage.addChild(data.sprites[0]);
+			stage.addChild(data.sprites[1]);
+		}
+	},
+
 	applyTrampolin = function(event, data) {
 		stage.removeChild(stage.getChildByName("blobGreen"));
 		
@@ -205,6 +214,7 @@ BlobApp.ViewController = (function() {
 		$('body').on('removeHeliFromView', removeHeli);
 
 		$('body').on('bridgeEntityRequested', applyBridge);
+		$('body').on('removeBridgeFromView', removeBridge);
 
 		$('body').on('trampolinEntityRequested', applyTrampolin);
 		$('body').on('trampolinStopRequested', removeTrampolin);

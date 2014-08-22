@@ -494,7 +494,7 @@ BlobApp.PhysicsHandler = (function() {
 		bridgeBody = entity;
 	},
 
-	_disassembleBridge = function() {
+	_disassembleBridge = function(event, data) {
 		if(data.sprites[0].name == "blobRed") {
 			sprite1 = data.sprites[0];
 			sprite2 = data.sprites[1];
@@ -506,8 +506,8 @@ BlobApp.PhysicsHandler = (function() {
 		userData1 = (sprite1.name == "blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
 		userData2 = (userData1 == EntityConfig.REDBLOBID) ? EntityConfig.GREENBLOBID : EntityConfig.REDBLOBID;
 
-		var xPos = heliBody.m_xf.position.x;
-		var yPos = heliBody.m_xf.position.y;
+		var xPos = bridgeBody.m_xf.position.x;
+		var yPos = bridgeBody.m_xf.position.y;
 
 		sprite1.x = (xPos * SCALE) + 12.5;
 		sprite2.x = (xPos * SCALE) - 12.5;
@@ -522,7 +522,7 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').trigger('removeBridgeFromView', {"sprites" : data.sprites});
 		heliIsActive = false;
 
-		bodiesToRemove.push(heliBody);
+		bodiesToRemove.push(bridgeBody);
 	},
 
 	_setSprites = function(entity) {
