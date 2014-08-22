@@ -132,7 +132,7 @@ BlobApp.CollisionHandler = (function() {
 					}	
 
 					notTramped = true;
-				}										
+				}
 			break;
 
 			case EntityConfig.VERTICALBORDERID:
