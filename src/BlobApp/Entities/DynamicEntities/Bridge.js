@@ -31,7 +31,10 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
 			
 			animations : {
 				startAni: [0, 19, "stable"],
-				stable: [19, 19]
+				stable: [19, 19],
+				stop: {
+					frames: [19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0]
+				}
 			}
 		}
 
@@ -58,6 +61,8 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
 
 	_listeners = function() {
 		$('body').on('onTick', _checkIfStopFinished);
+		$('body').on('onBridgeDirectionLeftChosen', _animate);
+		$('body').on('onBridgeDirectionRightChosen' _animate);
 	},
 
 	_animate = function(event, data) {
