@@ -115,6 +115,8 @@ BlobApp.LevelLoader = (function() {
 						case EntityConfig.HELITILE:
 						case EntityConfig.HELISTOPTILE:
 						case EntityConfig.TELE:
+						case EntityConfig.BRIDGELEFTTILE:
+						case EntityConfig.BRIDGERIGHTTILE:
 							_createTriggerZone(xcoords, ycoords, layerData.data[idx]+1000);
 							borders[y][x] = true;
 							_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
