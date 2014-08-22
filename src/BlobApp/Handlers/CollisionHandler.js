@@ -120,19 +120,15 @@ BlobApp.CollisionHandler = (function() {
 	},
 
 	_handleRedBlobCollision = function(bodyA,bodyB, bID, contact) {
-		var notTramped = true
 
 		switch(bID) {
 			case EntityConfig.GREENBLOBID:							
-				if(notTramped = true) {
 					if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 						y = contact.m_fixtureA.m_body.GetLinearVelocity().y;					
-						$('body').trigger("onTrampolinContact", {yVel: y});
-						notTramped = false;
-					}	
+						$('body').trigger("onTrampolinContact", {body: bodyA, yVel: y});
 
-					notTramped = true;
 				}
+				return;
 			break;
 
 			case EntityConfig.VERTICALBORDERID:
@@ -164,7 +160,7 @@ BlobApp.CollisionHandler = (function() {
 				return;
 		}
 
-		if(contact.m_manifold.m_localPlaneNormal.y > 0 && notTramped) {
+		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 			$('body').trigger('onReAllowJump', bodyA);
 		}
 	},

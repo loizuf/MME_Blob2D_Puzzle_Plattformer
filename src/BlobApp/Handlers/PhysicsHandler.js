@@ -627,8 +627,7 @@ BlobApp.PhysicsHandler = (function() {
 
 	_handleTrampolinContact = function(event, data) {
 		if(isTrampolinActive == true) {
-			console.log(data);
-			_applyForceJump(null, {"entity" : bodyA, "directionX" : 0, "directionY" : -2.2 * data.yVel});
+			_applyForceJump(null, {"entity" : data.body, "directionX" : 0, "directionY" : -2.2 * data.yVel});
 			$("body").trigger("trampolinAnimationChanged", {"animationKey" : AnimationKeys.BOUNCE});
 		}
 	},
