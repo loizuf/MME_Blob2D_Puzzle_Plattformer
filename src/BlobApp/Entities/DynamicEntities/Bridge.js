@@ -67,7 +67,7 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
 	_animate = function(event, data) {
 		switch(data.animationKey) {
 			case AnimationKeys.STOP:
-				if(data.direction=="left") {
+				if(data.direction == "left") {
 					sprite.gotoAndPlay("stop");
 				} else {
 					sprite.scaleX = 1;

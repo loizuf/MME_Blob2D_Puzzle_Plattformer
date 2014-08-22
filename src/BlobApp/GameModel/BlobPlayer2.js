@@ -37,7 +37,11 @@ BlobApp.BlobPlayer2 = (function() {
 				thisVar.setIdle(skill);
 			break;
 
-			case "bridge":
+			case "bridgeLeft":
+				thisVar.setIdle(skill);
+			break;
+
+			case "bridgeRight":
 				thisVar.setIdle(skill);
 			break;
 		}

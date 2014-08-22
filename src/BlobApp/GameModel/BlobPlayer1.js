@@ -37,7 +37,11 @@ BlobApp.BlobPlayer1 = (function() {
 				thisVar.setIdle(skill);
 			break;
 
-			case "bridge":
+			case "bridgeLeft":
+				thisVar.setIdle(skill);
+			break;
+
+			case "bridgeRight":
 				thisVar.setIdle(skill);
 			break;
 		}
@@ -159,7 +163,7 @@ BlobApp.BlobPlayer1 = (function() {
 	// END: Heli */
 
 	// START BRIDGE
-	this.initBridge = function() {
+	this.initBridge = function(event, data) {
 		$('body').unbind("greenBlobLeftTriggerZone");
 
 		prototypeVar.setSingleSpecialAllowed(false);

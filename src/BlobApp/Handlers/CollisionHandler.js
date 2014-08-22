@@ -109,11 +109,11 @@ BlobApp.CollisionHandler = (function() {
 				return;
 
 			case EntityConfig.BRIDGELEFTTRIGGER:
-				_playerInTriggerZone("greenBlob", "bridge");
+				_playerInTriggerZone("greenBlob", "bridgeLeft");
 				return;
 
 			case EntityConfig.BRIDGERIGHTTRIGGER:
-				_playerInTriggerZone("greenBlob", "bridge");
+				_playerInTriggerZone("greenBlob", "bridgeRight");
 				return;
 		}
 
@@ -160,11 +160,11 @@ BlobApp.CollisionHandler = (function() {
 				return;
 			
 			case EntityConfig.BRIDGELEFTTRIGGER:
-				_playerInTriggerZone("redBlob", "bridge");
+				_playerInTriggerZone("redBlob", "bridgeLeft");
 				return;
 
 			case EntityConfig.BRIDGERIGHTTRIGGER:
-				_playerInTriggerZone("redBlob", "bridge");
+				_playerInTriggerZone("redBlob", "bridgeRight");
 				return;
 		}
 
@@ -201,6 +201,7 @@ BlobApp.CollisionHandler = (function() {
 
 	_playerInTriggerZone = function(player, zoneName) {
 			$('body').trigger(player+"InTriggerZone", {name: zoneName});
+			console.log("player in trigger zone", zoneName);
 	},
 
 	_playerLeftTriggerZone = function(player) {

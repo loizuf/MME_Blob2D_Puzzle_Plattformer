@@ -432,9 +432,13 @@ BlobApp.PhysicsHandler = (function() {
 
 	bridgeIsActive = false,
 	bridgeBody = undefined,
+	bridgeStart = undefined,
+	bridgeClimbDirection = undefined,
 
-	_initBridge = function() {
+	_initBridge = function(event, data) {
 		greenBlobEntity = undefined;
+
+		bridgeStart = data.direction;
 
 		for(var i = 0; i < bodies.length; i++) {
 			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
@@ -478,12 +482,13 @@ BlobApp.PhysicsHandler = (function() {
 
 		// Create Bridge (= Create Blob)
 		//sprite = spriteAndNumber["sprite"];
-		userData = "Bridge";
-		var x = greenBlobEntity.m_xf.position.x + 75 / SCALE;
+		userData = "Bridge"
+		
+		var x = (greenBlobEntity.m_xf.position.x + 75 / SCALE); 
 		var y = greenBlobEntity.m_xf.position.y
 
-		var width = TILESIZEX / SCALE * 7;
-		var height = TILESIZEY / SCALE;
+		var width = TILESIZEX / SCALE;
+		var height = TILESIZEY / SCALE;	 	
 
 		var entity = createDefaultBoxEntity(x, y, width, height, false);
 		entity.SetUserData(userData);
@@ -509,12 +514,36 @@ BlobApp.PhysicsHandler = (function() {
 		var xPos = bridgeBody.m_xf.position.x;
 		var yPos = bridgeBody.m_xf.position.y;
 
-		sprite1.x = (xPos * SCALE) + 12.5;
-		sprite2.x = (xPos * SCALE) - 12.5;
+		if(bridgeStart == "left") {
+			if(bridgeClimbDirection == "left") {
+				sprite1.x = (xPos * SCALE) + 12.5 - 80;
+				sprite2.x = (xPos * SCALE) - 12.5 - 80;		
 
+				sprite1.y = (yPos * SCALE) - 3;
+				sprite2.y = (yPos * SCALE) - 3;
+			} else {
+				sprite1.x = (xPos * SCALE) + 12.5 + 115;
+				sprite2.x = (xPos * SCALE) - 12.5 + 115;		
 
-		sprite1.y = (yPos * SCALE) - 3;
-		sprite2.y = (yPos * SCALE) - 3;
+				sprite1.y = (yPos * SCALE) - 3;
+				sprite2.y = (yPos * SCALE) - 3;
+			}
+
+		} else {
+			if(bridgeClimbDirection == "left") {
+				sprite1.x = (xPos * SCALE) + 12.5 - 240;
+				sprite2.x = (xPos * SCALE) - 12.5 - 240;		
+
+				sprite1.y = (yPos * SCALE) - 3;
+				sprite2.y = (yPos * SCALE) - 3;
+			} else {
+				sprite1.x = (xPos * SCALE) + 12.5
+				sprite2.x = (xPos * SCALE) - 12.5	
+
+				sprite1.y = (yPos * SCALE) - 3;
+				sprite2.y = (yPos * SCALE) - 3;
+			}
+		}		
 		
 		_recreateBlob(sprite1, userData1);
 		_recreateBlob(sprite2, userData2);
@@ -638,6 +667,7 @@ BlobApp.PhysicsHandler = (function() {
 		//START: DUMMY BRIDGE
 		$('body').on('startBridge', _initBridge);
 		$('body').on('bridgeStopRequested', _disassembleBridge);
+		$('body').on('onBridgeDirectionChosen', _setBridgeClimbDirection)
 
 		$('body').on('teleportRequested', _doTeleport);
 
@@ -646,6 +676,14 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on("resetGame", _resetGame);
 
 		_registerCollisionHandler();
+	},
+
+	_setBridgeClimbDirection = function(event, data) {
+		if(data.direction == "left") {
+			bridgeClimbDirection = "left";
+		} else if(data.direction == "right") {
+			bridgeClimbDirection = "right";
+		}
 	},
 
 	_doTeleport = function() {

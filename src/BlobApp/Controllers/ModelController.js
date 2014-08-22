@@ -81,13 +81,11 @@ BlobApp.ModelController = (function() {
 
 	_setBridgeDisassemblyDirectionPlayer1 = function(event, data) {
 		player1BridgeDisassemblyDirection = data.dir;
-		console.log("p1", data.dir, "input");
 		$(thisVar).trigger('onDirectionChosen');
 	},
 
 	_setBridgeDisassemblyDirectionPlayer2 = function(event, data) {
 		player2BridgeDisassemblyDirection = data.dir;
-		console.log("p2", data.dir, "input");
 		$(thisVar).trigger('onDirectionChosen');
 	},
 
@@ -208,13 +206,17 @@ BlobApp.ModelController = (function() {
 	},
 
 	_onPlayerWaitingChange = function(event, data) {
+		console.log(data.playerName);
 		player = (data.playerName == "p1") ? _blobPlayerOne : _blobPlayerTwo;
 		waiting = data.waiting;
 
 		player.prototype.setWaitingForOther(waiting);
 
+		console.log(data.waiting);
+
 		if(waiting != false) {
 			if(player == _blobPlayerOne) {
+				console.log(data.waiting);
 				if(waiting == _blobPlayerTwo.prototype.getWaitingForOther()) {
 					_startSpecial(waiting);
 				}
@@ -246,8 +248,12 @@ BlobApp.ModelController = (function() {
 			$('body').trigger("startTele");
 			_blobPlayerOne.prototype.setWaitingForOther(false);
 			_blobPlayerTwo.prototype.setWaitingForOther(false);
-		} else if(specialName == "bridge") {
-			$('body').trigger("startBridge");
+		} else if(specialName == "bridgeLeft") {
+			$('body').trigger("startBridge", {"direction": "left"});
+			_blobPlayerOne.prototype.setWaitingForOther(false);
+			_blobPlayerTwo.prototype.setWaitingForOther(false);
+		} else if(specialName == "bridgeRight") {
+			$('body').trigger("startBridge", {"direction": "right"});
 			_blobPlayerOne.prototype.setWaitingForOther(false);
 			_blobPlayerTwo.prototype.setWaitingForOther(false);
 		}
