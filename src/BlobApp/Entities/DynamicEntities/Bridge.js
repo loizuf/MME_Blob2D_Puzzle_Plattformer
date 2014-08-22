@@ -61,13 +61,19 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
 
 	_listeners = function() {
 		$('body').on('onTick', _checkIfStopFinished);
-		$('body').on('onBridgeDirectionLeftChosen', _animate);
-		$('body').on('onBridgeDirectionRightChosen' _animate);
+		$('body').on('onBridgeDirectionChosen', _animate);
 	},
 
 	_animate = function(event, data) {
 		switch(data.animationKey) {
-
+			case AnimationKeys.STOP:
+				if(data.direction=="left") {
+					sprite.gotoAndPlay("stop");
+				} else {
+					sprite.scaleX = 1;
+					sprite.gotoAndPlay("stop");
+				}
+			break;
 		}
 	},
 

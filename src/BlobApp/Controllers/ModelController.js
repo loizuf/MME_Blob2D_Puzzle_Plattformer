@@ -229,9 +229,9 @@ BlobApp.ModelController = (function() {
 	_onBridgeDisassembleChoice = function() {
 		if(player1BridgeDisassemblyDirection != null && player2BridgeDisassemblyDirection != null) {
 			if(player1BridgeDisassemblyDirection === "left" && player2BridgeDisassemblyDirection === "left") {
-				$('body').trigger('onBridgeDirectionLeftChosen', animationKeys.STOP);
+				$('body').trigger('onBridgeDirectionChosen', {"animationKey": AnimationKeys.STOP, "direction" : "left"});
 			} else if(player1BridgeDisassemblyDirection === "right" && player2BridgeDisassemblyDirection === "right") {
-				$('body').trigger('onBridgeDirectionRightChosen', animationKeys.STOP);
+				$('body').trigger('onBridgeDirectionChosen', {"animationKey": AnimationKeys.STOP, "direction" : "right"});
 			}
 		}
 	},
