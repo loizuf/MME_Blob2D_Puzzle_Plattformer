@@ -2,11 +2,18 @@
 	This Controller handles the Interaction with all modules of the Model and initializes them.
 */
 BlobApp.ModelController = (function() {
+
 	var that = {},
+
+	thisVar = this,
+
 	_blobPlayerOne,
 	_blobPlayerTwo,
 	_screenStateHandler,
 	_inputHandler,
+
+	player1BridgeDisassemblyDirection,
+	player2BridgeDisassemblyDirection,
 
 	init = function(p1ControlsID, p2ControlsID) {
 		//Initialize all Modules from Model
@@ -25,6 +32,8 @@ BlobApp.ModelController = (function() {
 	},
 
 	_registerListener = function() {
+		$(thisVar).on("onDirectionChosen", _onBridgeDisassembleChoice);
+
 		$(_inputHandler).on("p1ArrowUpStarted",_onP1ArrowUpStarted);
 		$(_inputHandler).on("p1ArrowRightStarted",_onP1ArrowRightStarted);
 		$(_inputHandler).on("p1ArrowLeftStarted",_onP1ArrowLeftStarted);
@@ -61,6 +70,24 @@ BlobApp.ModelController = (function() {
 		//$('body').on('levelFinished', _onLevelFinished);
 
 		$('body').on('specialFinished', _onSpecialFinished);
+
+		$('body').on('onStartLocationRequestedPlayer1', _setBridgeDisassemblyDirectionPlayer1);
+		$('body').on('onEndLocationRequestedPlayer1', _setBridgeDisassemblyDirectionPlayer1);
+
+		$('body').on('onStartLocationRequestedPlayer2', _setBridgeDisassemblyDirectionPlayer2);
+		$('body').on('onEndLocationRequestedPlayer2', _setBridgeDisassemblyDirectionPlayer2);
+	},
+
+	_setBridgeDisassemblyDirectionPlayer1 = function(event, data) {
+		player1BridgeDisassemblyDirection = data.dir;
+		console.log("p1", data.dir, "input");
+		$(thisVar).trigger('onDirectionChosen');
+	},
+
+	_setBridgeDisassemblyDirectionPlayer2 = function(event, data) {
+		player2BridgeDisassemblyDirection = data.dir;
+		console.log("p1", data.dir, "input");
+		$(thisVar).trigger('onDirectionChosen');
 	},
 
 	_onKeyPickedUp = function() {
@@ -194,6 +221,18 @@ BlobApp.ModelController = (function() {
 				if(waiting == _blobPlayerOne.prototype.getWaitingForOther()) {	
 					_startSpecial(waiting);			
 				}
+			}
+		}
+	},
+
+	_onBridgeDisassembleChoice = function() {
+		if(player1BridgeDisassemblyDirection != null && player2BridgeDisassemblyDirection != null) {
+			if(player1BridgeDisassemblyDirection === "left" && player2BridgeDisassemblyDirection === "left") {
+				console.log("left");
+				$('body').trigger('onBridgeDirectionLeftChosen');
+			} else if(player2BridgeDisassemblyDirection === "right" && player2BridgeDisassemblyDirection === "right") {
+				console.log("right");
+				$('body').trigger('onBridgeDirectionRightChosen');
 			}
 		}
 	},

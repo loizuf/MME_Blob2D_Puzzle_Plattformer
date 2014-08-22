@@ -520,7 +520,7 @@ BlobApp.PhysicsHandler = (function() {
 		_recreateBlob(sprite2, userData2);
 
 		$('body').trigger('removeBridgeFromView', {"sprites" : data.sprites});
-		heliIsActive = false;
+		bridgeIsActive = false;
 
 		bodiesToRemove.push(bridgeBody);
 	},

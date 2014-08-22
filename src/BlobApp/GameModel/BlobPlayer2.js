@@ -165,16 +165,16 @@ BlobApp.BlobPlayer2 = (function() {
 		prototypeVar.setCurrentUp(function(){});
 		prototypeVar.setCurrentDown(function(){});
 
-		prototypeVar.setCurrentLeft(_bridgeMoveLeft);
-		prototypeVar.setCurrentRight(_bridgeMoveRight);		
+		prototypeVar.setCurrentLeft(thisVar.bridgeMoveLeft);
+		prototypeVar.setCurrentRight(thisVar.bridgeMoveRight);		
 	},
 
-	_bridgeMoveLeft = function() {
-
+	this.bridgeMoveLeft = function() {
+		$('body').trigger('onStartLocationRequestedPlayer2', {"dir": "left"});
 	},
 
-	_bridgeMoveRight = function() {
-
+	this.bridgeMoveRight = function() {
+		$('body').trigger('onEndLocationRequestedPlayer2', {"dir": "right"});
 	};
 	//END:
 
