@@ -123,12 +123,11 @@ BlobApp.CollisionHandler = (function() {
 
 		switch(bID) {
 			case EntityConfig.GREENBLOBID:							
-					if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-						y = contact.m_fixtureA.m_body.GetLinearVelocity().y;					
-						$('body').trigger("onTrampolinContact", {body: bodyA, yVel: y});
-
+				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+					y = contact.m_fixtureA.m_body.GetLinearVelocity().y;					
+					$('body').trigger("onTrampolinContact", {body: bodyA, yVel: y});
+					
 				}
-				return;
 			break;
 
 			case EntityConfig.VERTICALBORDERID:
