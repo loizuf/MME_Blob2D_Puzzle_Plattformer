@@ -86,7 +86,7 @@ BlobApp.ModelController = (function() {
 
 	_setBridgeDisassemblyDirectionPlayer2 = function(event, data) {
 		player2BridgeDisassemblyDirection = data.dir;
-		console.log("p1", data.dir, "input");
+		console.log("p2", data.dir, "input");
 		$(thisVar).trigger('onDirectionChosen');
 	},
 
@@ -228,11 +228,9 @@ BlobApp.ModelController = (function() {
 	_onBridgeDisassembleChoice = function() {
 		if(player1BridgeDisassemblyDirection != null && player2BridgeDisassemblyDirection != null) {
 			if(player1BridgeDisassemblyDirection === "left" && player2BridgeDisassemblyDirection === "left") {
-				console.log("left");
-				$('body').trigger('onBridgeDirectionLeftChosen');
-			} else if(player2BridgeDisassemblyDirection === "right" && player2BridgeDisassemblyDirection === "right") {
-				console.log("right");
-				$('body').trigger('onBridgeDirectionRightChosen');
+				$('body').trigger('onBridgeDirectionLeftChosen', animationKeys.STOP);
+			} else if(player1BridgeDisassemblyDirection === "right" && player2BridgeDisassemblyDirection === "right") {
+				$('body').trigger('onBridgeDirectionRightChosen', animationKeys.STOP);
 			}
 		}
 	},
