@@ -52,7 +52,6 @@ BlobApp.Juice = (function Juice(x_pos, y_pos, sizeX, sizeY) {
 
 	_checkIfFinished = function() {
 		if(sprite.currentAnimationFrame == 7) {		
-			console.log("Yay");
 			$('body').trigger('juiceRequested', {remove: [sprite]});
 			sprite.stop();
 		}

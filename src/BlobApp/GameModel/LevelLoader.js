@@ -114,6 +114,7 @@ BlobApp.LevelLoader = (function() {
 
 						case EntityConfig.HELITILE:
 						case EntityConfig.HELISTOPTILE:
+						case EntityConfig.SPHERETILE:
 						case EntityConfig.TELE:
 						case EntityConfig.BRIDGELEFTTILE:
 						case EntityConfig.BRIDGERIGHTTILE:

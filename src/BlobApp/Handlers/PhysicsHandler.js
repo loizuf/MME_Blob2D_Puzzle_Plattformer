@@ -430,6 +430,70 @@ BlobApp.PhysicsHandler = (function() {
 		heliBody = entity;	
 	},
 
+	sphereIsActive = false,
+	sphereBody = undefined,
+
+	_initSphere = function() {
+		greenBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				greenBlobEntity = bodies[i];
+				break;
+			}
+		}
+
+		var sphereEntity = new BlobApp.Sphere(greenBlobEntity.m_xf.position.x * SCALE + 50,
+			greenBlobEntity.m_xf.y * SCALE + 12.5, 75, 75);
+		
+		sprite = sphereEntity.sprite;
+
+		$('body').trigger("sphereEntityRequested", {"sprite" : sprite});
+
+		_setSprites(sphereEntity);
+
+		if(sphereIsActive) {
+			return;
+		}
+
+		sphereIsActive = true;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID 
+				|| bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+				bodiesToRemove.push(bodies[i]);
+			}
+		}
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				bodies.splice(i, 1);
+			}
+		}
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+				bodies.splice(i, 1);
+			}
+		}
+
+		// Create Sphere (= Create Blob)
+		//sprite = spriteAndNumber["sprite"];
+		userData = "Sphere"
+
+		var x = greenBlobEntity.m_xf.position.x + 50 / SCALE; 
+		var y = greenBlobEntity.m_xf.position.y - 10 / SCALE;
+
+		var width = TILESIZEX / SCALE * 1.5;
+		var height = TILESIZEY / SCALE * 1.5;	 	
+
+		var entity = createDefaultBoxEntity(x, y, width, height, false);
+		entity.SetUserData(userData);
+
+		var actor = new _actorObject(entity, sprite);
+
+		bodies.push(entity);		
+		sphereBodyBody = entity;
+	},
+
 	bridgeIsActive = false,
 	bridgeBody = undefined,
 	bridgeStart = undefined,
@@ -669,8 +733,13 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('bridgeStopRequested', _disassembleBridge);
 		$('body').on('onBridgeDirectionChosen', _setBridgeClimbDirection)
 
+		//START: DUMMY  SPHERE
+		$('body').on('startSphere', _initSphere);
+
+		//START: DUMMY TELEPORT
 		$('body').on('teleportRequested', _doTeleport);
 
+		// DESTRUCTION
 		$('body').on("restartPhys", _restartPhys);
 		$('body').on("destroyPhysics", _destroyWorld);
 		$('body').on("resetGame", _resetGame);

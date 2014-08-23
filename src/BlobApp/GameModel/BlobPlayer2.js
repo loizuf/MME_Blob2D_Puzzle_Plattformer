@@ -4,6 +4,7 @@ BlobApp.BlobPlayer2 = (function() {
 	var thisVar = this;
 	var prototypeVar = this.prototype;
 	var isStretched = false;
+	var sphereSpeedX = 0.3;
 
 	this.setup = function() {	
 		_initListeners();
@@ -25,6 +26,8 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on('physTeleportFinished', _resetControls);
 
 		$('body').on('startBridge', thisVar.initBridge);
+
+		$('body').on('startSphere', thisVar.initSphere);
 	},
 
 	this.tryToInit = function(skill) {
@@ -42,6 +45,11 @@ BlobApp.BlobPlayer2 = (function() {
 			break;
 
 			case "bridgeRight":
+				thisVar.setIdle(skill);
+			break;
+
+			case "sphere":
+				console.log("try to init sphere")
 				thisVar.setIdle(skill);
 			break;
 		}
@@ -180,7 +188,29 @@ BlobApp.BlobPlayer2 = (function() {
 	this.bridgeMoveRight = function() {
 		$('body').trigger('onEndLocationRequestedPlayer2', {"dir": "right"});
 	};
-	//END:
+	//END: Bridge
+
+	//START: Sphere
+	this.initSphere = function() {
+		$('body').unbind("greenBlobLeftTriggerZone");
+
+		prototypeVar.setSingleSpecialAllowed(false);
+
+		prototypeVar.setCurrentUp(function(){});
+		prototypeVar.setCurrentDown(function(){});
+
+		prototypeVar.setCurrentLeft(thisVar.sphereMoveLeft);
+		prototypeVar.setCurrentRight(thisVar.sphereMoveRight);
+	},
+
+	this.sphereMoveLeft = function() {
+		$('body').trigger('sphereMove', {"speed" : sphereSpeedX, "dir" : "x"});
+	},
+
+	this.sphereMoveRight = function() {
+		$('body').trigger('sphereMove', {"speed" : -sphereSpeedX, "dir" : "x"});
+	};
+	//END: Sphere
 
 	this.setup(); 
 });

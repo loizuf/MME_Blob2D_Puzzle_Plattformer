@@ -115,6 +115,10 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.BRIDGERIGHTTRIGGER:
 				_playerInTriggerZone("greenBlob", "bridgeRight");
 				return;
+
+			case EntityConfig.SPHERETRIGGER:
+				_playerInTriggerZone("greenBlob", "sphere");
+				return;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -125,7 +129,6 @@ BlobApp.CollisionHandler = (function() {
 	},
 
 	_handleRedBlobCollision = function(bodyA,bodyB, bID, contact) {
-
 		switch(bID) {
 			case EntityConfig.GREENBLOBID:							
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -168,6 +171,10 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.BRIDGERIGHTTRIGGER:
 				_playerInTriggerZone("redBlob", "bridgeRight");
 				return;
+
+			case EntityConfig.SPHERETRIGGER:
+				_playerInTriggerZone("redBlob", "sphere");
+				return;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -205,7 +212,6 @@ BlobApp.CollisionHandler = (function() {
 
 	_playerInTriggerZone = function(player, zoneName) {
 			$('body').trigger(player+"InTriggerZone", {name: zoneName});
-			console.log("player in trigger zone", zoneName);
 	},
 
 	_playerLeftTriggerZone = function(player) {
