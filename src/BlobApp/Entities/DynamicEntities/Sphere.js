@@ -1,4 +1,4 @@
-BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
+BlobApp.Sphere = (function Sphere(x_pos, y_pos, sizeX, sizeY) {
 
 	var that = this,
 
@@ -12,9 +12,7 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
 
 	this.prototype.init = function() {
 		tileset = new Image();
-		tileset.src = "res/img/Bridg.png"; // mapdata.tilesets[0].image
-
-		var height = sizeY;
+		tileset.src = "res/img/Sphere.png"; // mapdata.tilesets[0].image
 
 		_listeners();
 
@@ -30,23 +28,19 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
 			},
 			
 			animations : {
-				startAni: [0, 19, "stable"],
-				stable: [19, 19],
-				stop: {
-					frames: [19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0]
-				}
+				//needs stuff
 			}
 		}
 
 		tilesetSheet = new createjs.SpriteSheet(imageData);
 
 		sprite = new createjs.Sprite(tilesetSheet);
-		sprite.name = "bridge";
+		sprite.name = "sphere";
 
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
 
-		sprite.scaleX = -1;
+		//sprite.scaleX = -1;
 
 		sprite.x = x_pos;
 		sprite.y = y_pos;
@@ -56,25 +50,15 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
-		sprite.gotoAndPlay("startAni");
+		//sprite.gotoAndPlay("startAni");
 	},
 
 	_listeners = function() {
 		$('body').on('onTick', _checkIfStopFinished);
-		$('body').on('onBridgeDirectionChosen', _animate);
 	},
 
 	_animate = function(event, data) {
-		switch(data.animationKey) {
-			case AnimationKeys.STOP:
-				if(data.direction == "left") {
-					sprite.gotoAndPlay("stop");
-				} else {
-					sprite.scaleX = 1;
-					sprite.gotoAndPlay("stop");
-				}
-			break;
-		}
+		//needs stuff
 	},
 
 	_checkIfStopFinished = function() {
