@@ -204,11 +204,11 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	this.sphereMoveLeft = function() {
-		$('body').trigger('sphereMove', {"speed" : sphereSpeedX, "dir" : "x"});
+		$('body').trigger('sphereMove', {"speed" : -sphereSpeedX, "dir" : "x"});
 	},
 
 	this.sphereMoveRight = function() {
-		$('body').trigger('sphereMove', {"speed" : -sphereSpeedX, "dir" : "x"});
+		$('body').trigger('sphereMove', {"speed" : sphereSpeedX, "dir" : "x"});
 	};
 
 	this.setup();

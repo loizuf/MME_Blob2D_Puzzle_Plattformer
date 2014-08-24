@@ -504,6 +504,10 @@ BlobApp.PhysicsHandler = (function() {
 		sphereBody = entity;
 	},
 
+	_moveSphere = function(event, data) {
+		sphereBody.ApplyImpulse(new b2Vec2(data.speed, 0), sphereBody.GetPosition());
+	},
+
 	bridgeIsActive = false,
 	bridgeBody = undefined,
 	bridgeStart = undefined,
@@ -745,6 +749,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		//START: DUMMY  SPHERE
 		$('body').on('startSphere', _initSphere);
+		$('body').on('sphereMove', _moveSphere);
 
 		//START: DUMMY TELEPORT
 		$('body').on('teleportRequested', _doTeleport);
