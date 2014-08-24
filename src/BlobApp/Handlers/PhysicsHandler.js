@@ -489,7 +489,6 @@ BlobApp.PhysicsHandler = (function() {
 		var bodyDef = new b2BodyDef;
 
 		bodyDef.type = b2Body.b2_dynamicBody;
-		bodyDef.fixedRotation = true;
 		bodyDef.position.x = greenBlobEntity.m_xf.position.x / SCALE + 320 / SCALE;
 		bodyDef.position.y = greenBlobEntity.m_xf.position.y / SCALE + 210 / SCALE;
 
