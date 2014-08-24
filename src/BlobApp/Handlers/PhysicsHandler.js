@@ -444,9 +444,9 @@ BlobApp.PhysicsHandler = (function() {
 		}
 
 		var sphereEntity = new BlobApp.Sphere(greenBlobEntity.m_xf.position.x * SCALE + 50,
-			greenBlobEntity.m_xf.y * SCALE + 12.5, 75, 75);
+			greenBlobEntity.m_xf.y * SCALE -15, 50, 50);
 		
-		sprite = sphereEntity.sprite;
+		var sprite = sphereEntity.sprite;
 
 		$('body').trigger("sphereEntityRequested", {"sprite" : sprite});
 
@@ -479,19 +479,29 @@ BlobApp.PhysicsHandler = (function() {
 		//sprite = spriteAndNumber["sprite"];
 		userData = "Sphere"
 
-		var x = greenBlobEntity.m_xf.position.x + 50 / SCALE; 
-		var y = greenBlobEntity.m_xf.position.y - 10 / SCALE;
+		var fixture = new b2FixtureDef;
 
-		var width = TILESIZEX / SCALE * 1.5;
-		var height = TILESIZEY / SCALE * 1.5;	 	
+		fixture.density = 1;
+		fixture.restitution = 0.5;
+		fixture.friction = 0.1;
+		fixture.shape = new b2CircleShape(25 / SCALE);
 
-		var entity = createDefaultBoxEntity(x, y, width, height, false);
+		var bodyDef = new b2BodyDef;
+
+		bodyDef.type = b2Body.b2_dynamicBody;
+		bodyDef.fixedRotation = true;
+		bodyDef.position.x = greenBlobEntity.m_xf.position.x / SCALE + 320 / SCALE;
+		bodyDef.position.y = greenBlobEntity.m_xf.position.y / SCALE + 210 / SCALE;
+
+		var entity = world.CreateBody(bodyDef);
+
+		entity.CreateFixture(fixture);
 		entity.SetUserData(userData);
 
 		var actor = new _actorObject(entity, sprite);
 
-		bodies.push(entity);		
-		sphereBodyBody = entity;
+		bodies.push(entity);
+		sphereBody = entity;
 	},
 
 	bridgeIsActive = false,
