@@ -978,6 +978,8 @@ BlobApp.PhysicsHandler = (function() {
 
 	_resetVariables = function() {
 		heliIsActive = false;
+		sphereIsActive = false;
+		bridgeIsActive = false;
 	};
 
 	that.init = init;
