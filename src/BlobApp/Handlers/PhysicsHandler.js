@@ -713,6 +713,25 @@ BlobApp.PhysicsHandler = (function() {
 		bodiesToRemove.push(heliBody);
 	},
 
+	shootSlingshot = function(event, data) {
+		console.log(data);
+		var angle = data.angle,
+			tension = 5;
+
+		greenBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				greenBlobEntity = bodies[i];
+				break;
+			}
+		}
+
+		var degrees = angle/Math.PI*180;
+
+		greenBlobEntity.ApplyImpulse(new b2Vec2(Math.cos(degrees)*tension,-Math.sin(degrees)*tension), greenBlobEntity.GetPosition());
+	},
+
 	_recreateBlob = function(sprite, userData) {
 		var width = (TILESIZEX - 1) / SCALE,
 			height = (userData == EntityConfig.REDBLOBID) ? ((TILESIZEY * 2) - 3 ) / SCALE : (TILESIZEY - 1) / SCALE;
@@ -779,6 +798,9 @@ BlobApp.PhysicsHandler = (function() {
 
 		//START: DUMMY TELEPORT
 		$('body').on('teleportRequested', _doTeleport);
+
+		//DUMMY SLINGSHOT
+		$('body').on('onSlingshotShot', shootSlingshot);
 
 		// DESTRUCTION
 		$('body').on("restartPhys", _restartPhys);

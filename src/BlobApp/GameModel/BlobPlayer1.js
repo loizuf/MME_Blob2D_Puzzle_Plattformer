@@ -236,7 +236,7 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	this.shootSlingshot = function() {
-		$('body').trigger('onSlingshotRelease', {"tension": 20});
+		$('body').trigger('onSlingshotRelease', {"tension": 10});
 	},
 
 	this.clutchSlingshot = function() {
