@@ -196,6 +196,10 @@ BlobApp.CollisionHandler = (function() {
 		switch(bID) {
 			case EntityConfig.HELITRIGGER : 
 			case EntityConfig.TELETRIGGER :
+			case EntityConfig.BRIDGELEFTTRIGGER :
+			case EntityConfig.BRIDGERIGHTTRIGGER :
+			case EntityConfig.SPHERETRIGGER :
+
 				_playerLeftTriggerZone("redBlob");
 			break;
 		}
@@ -205,6 +209,10 @@ BlobApp.CollisionHandler = (function() {
 		switch(bID) {
 			case EntityConfig.HELITRIGGER : 
 			case EntityConfig.TELETRIGGER :
+			case EntityConfig.BRIDGELEFTTRIGGER :
+			case EntityConfig.BRIDGERIGHTTRIGGER :
+			case EntityConfig.SPHERETRIGGER :
+			
 				_playerLeftTriggerZone("greenBlob");
 			break;
 		}
