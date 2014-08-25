@@ -29,6 +29,8 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on('startBridge', thisVar.initBridge);
 
 		$('body').on('startSphere', thisVar.initSphere);
+
+		$('body').on('startSlingshot', thisVar.initSlingshot);
 	},
 
 	this.tryToInit = function(skill) {
@@ -219,6 +221,30 @@ BlobApp.BlobPlayer1 = (function() {
 	this.tryToStopSphere = function() {
 		prototypeVar.setCurrentDown(function(){});
 		$('body').trigger('stopSphere');
+	},
+
+	this.initSlingshot = function() {
+		$('body').unbind("greenBlobLeftTriggerZone");
+
+		prototypeVar.setSingleSpecialAllowed(false);
+
+		prototypeVar.setCurrentUp(function(){});
+		prototypeVar.setCurrentDown(thisVar.shootSlingshot);
+
+		prototypeVar.setCurrentLeft(thisVar.clutchSlingshot);
+		prototypeVar.setCurrentRight(thisVar.loosenSlingshot);
+	},
+
+	this.shootSlingshot = function() {
+		$('body').trigger('onSlingshotRelease', {"tension": 20});
+	},
+
+	this.clutchSlingshot = function() {
+
+	},
+
+	this.loosenSlingshot = function() {
+
 	};
 
 	this.setup();

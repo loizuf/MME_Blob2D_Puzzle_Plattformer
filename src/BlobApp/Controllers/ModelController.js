@@ -80,6 +80,12 @@ BlobApp.ModelController = (function() {
 
 		$('body').on('onStartLocationRequestedPlayer2', _setBridgeDisassemblyDirectionPlayer2);
 		$('body').on('onEndLocationRequestedPlayer2', _setBridgeDisassemblyDirectionPlayer2);
+
+		$('body').on('onSlingshotRelease', _setSlingshotReleaseForce)
+	},
+
+	_setSlingshotReleaseForce = function(event, data) {
+		$('body').trigger('onSlingshotShot', {"force": data.tension, "angle": 60});
 	},
 
 	_setBridgeDisassemblyDirectionPlayer1 = function(event, data) {
