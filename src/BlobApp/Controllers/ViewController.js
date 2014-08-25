@@ -2,7 +2,7 @@ BlobApp.ViewController = (function() {
 	var that = {},
 	canvas, context, debugCanvas, debugContext, stage,
 
-	b2ddebug = false,
+	b2ddebug = true,
 
 	init = function() {
 		_initView();

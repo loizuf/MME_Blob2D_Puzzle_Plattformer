@@ -50,7 +50,10 @@ BlobApp.BlobPlayer1 = (function() {
 			break;
 
 			case "sphere":
-				console.log("try to init sphere")
+				thisVar.setIdle(skill);
+			break;
+
+			case "slingshot":
 				thisVar.setIdle(skill);
 			break;
 		}

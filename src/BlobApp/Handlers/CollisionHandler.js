@@ -119,6 +119,10 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.SPHERETRIGGER:
 				_playerInTriggerZone("greenBlob", "sphere");
 				return;
+
+			case EntityConfig.SLINGSHOTTRIGGER:
+				_playerInTriggerZone("greenBlob", "slingshot");
+				return;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -174,6 +178,10 @@ BlobApp.CollisionHandler = (function() {
 
 			case EntityConfig.SPHERETRIGGER:
 				_playerInTriggerZone("redBlob", "sphere");
+				return;
+
+			case EntityConfig.SLINGSHOTTRIGGER:
+				_playerInTriggerZone("redBlob", "slingshot");
 				return;
 		}
 
