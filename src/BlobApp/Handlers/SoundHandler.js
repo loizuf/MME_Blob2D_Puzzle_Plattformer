@@ -17,7 +17,7 @@ BlobApp.SoundHandler = (function() {
         createjs.Sound.alternateExtensions = ["mp3"];
          //TODO: maybe exract this to a preload module
         preload = new createjs.LoadQueue(true, assetsPath);
-         preload.installPlugin(createjs.Sound);
+        preload.installPlugin(createjs.Sound);
         preload.addEventListener("complete", _doneLoading);
         preload.loadManifest(manifest);
 
@@ -31,7 +31,7 @@ BlobApp.SoundHandler = (function() {
     };
 
     _listeners = function(){
-          //TODO: register events fired for the sound handler
+        //TODO: register events fired for the sound handler
     }
 
     that.init = init;

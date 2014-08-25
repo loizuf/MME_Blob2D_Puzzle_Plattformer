@@ -10,7 +10,6 @@ body {
 }
 
 h1 {
-
 	font-family: 'Sigmar One', cursive;
 	text-align: center;
 	font-size: 400%;
@@ -99,14 +98,32 @@ h1 {
 	background-image: url(img/menudummy.png);	
 }
 
-.menu-item{
+.menu-div{
 	margin-top: 50px;
 	border: 3px solid black;
 	font-family: 'Sigmar One', cursive;
 	font-size: 200%;
-	width: 300px;
-	height: 60px;
 	display: inline-block;
 	text-align: center;
+	
+}
+
+.menu-item{
+	width: 300px;
+	height: 60px;
 	background-image: url(img/menuitembg.png);	
+}
+
+.control{
+	width: 300px;
+	height: 300px;
+}
+
+.hint{
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.ingame{
+	margin-top: 30px;
+	font-size: 230%;
 }
