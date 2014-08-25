@@ -474,7 +474,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		// Create Sphere (= Create Blob)
 		//sprite = spriteAndNumber["sprite"];
-		userData = "Sphere"
+		userData = "Sphere";
 
 		var fixture = new b2FixtureDef;
 
