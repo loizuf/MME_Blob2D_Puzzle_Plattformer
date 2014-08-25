@@ -504,7 +504,7 @@ BlobApp.PhysicsHandler = (function() {
 		sphereBody.ApplyImpulse(new b2Vec2(data.speed, 0), sphereBody.GetPosition());
 	}
 
-	_disassembleSphere = function() {
+	_disassembleSphere = function(event, data) {
 		if(data.sprites[0].name == "blobRed") {
 			sprite1 = data.sprites[0];
 			sprite2 = data.sprites[1];
@@ -775,6 +775,7 @@ BlobApp.PhysicsHandler = (function() {
 		//START: DUMMY  SPHERE
 		$('body').on('startSphere', _initSphere);
 		$('body').on('sphereMove', _moveSphere);
+		$('body').on('sphereStopRequested', _disassembleSphere);
 
 		//START: DUMMY TELEPORT
 		$('body').on('teleportRequested', _doTeleport);

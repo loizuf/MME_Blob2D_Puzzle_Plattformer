@@ -20,6 +20,7 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on("redBlobLeftTriggerZone", _setDownAction);
 		$('body').on('heliStopRequested', _resetControls);
 		$('body').on('bridgeStopRequested', _resetControls);
+		$('body').on('sphereStopRequested', _resetControls);
 		$('body').on('stretchInitRequested', _setStretch);
 
 		$('body').on('startTele', thisVar.initTele);
@@ -198,6 +199,7 @@ BlobApp.BlobPlayer2 = (function() {
 
 		prototypeVar.setCurrentUp(function(){});
 		prototypeVar.setCurrentDown(function(){});
+		setTimeout(function(){prototypeVar.setCurrentDown(thisVar.tryToStopSphere)}, 1500);
 
 		prototypeVar.setCurrentLeft(thisVar.sphereMoveLeft);
 		prototypeVar.setCurrentRight(thisVar.sphereMoveRight);
@@ -209,6 +211,11 @@ BlobApp.BlobPlayer2 = (function() {
 
 	this.sphereMoveRight = function() {
 		$('body').trigger('sphereMove', {"speed" : sphereSpeedX, "dir" : "x"});
+	},
+
+	this.tryToStopSphere = function() {
+		prototypeVar.setCurrentDown(function(){});
+		$('body').trigger('stopSphere');
 	};
 	//END: Sphere
 
