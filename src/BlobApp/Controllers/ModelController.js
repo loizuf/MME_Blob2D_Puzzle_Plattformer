@@ -35,6 +35,8 @@ BlobApp.ModelController = (function() {
 	_registerListener = function() {
 		$(thisVar).on("onDirectionChosen", _onBridgeDisassembleChoice);
 
+		$(_inputHandler).unbind();
+
 		$(_inputHandler).on("p1ArrowUpStarted",_onP1ArrowUpStarted);
 		$(_inputHandler).on("p1ArrowRightStarted",_onP1ArrowRightStarted);
 		$(_inputHandler).on("p1ArrowLeftStarted",_onP1ArrowLeftStarted);
@@ -70,6 +72,7 @@ BlobApp.ModelController = (function() {
 		$('body').on('blobFinishAttempt', _onBlobFinishAttempt);
 		//$('body').on('levelFinished', _onLevelFinished);
 
+		$('body').unbind('specialFinished');
 		$('body').on('specialFinished', _onSpecialFinished);
 
 		$('body').on('onStartLocationRequestedPlayer1', _setBridgeDisassemblyDirectionPlayer1);
@@ -238,6 +241,7 @@ BlobApp.ModelController = (function() {
 		if(specialName == "heli") {
 			$('body').trigger("startHeli");
 			_inputHandler.changeControls();
+			console.log("startspecial");
 			_blobPlayerOne.prototype.setWaitingForOther(false);
 			_blobPlayerTwo.prototype.setWaitingForOther(false);
 		} else if(specialName == "tele") {

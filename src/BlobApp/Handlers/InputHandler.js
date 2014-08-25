@@ -85,6 +85,7 @@ BlobApp.InputHandler = (function() {
         _initGamepads(p1ControlsID, p2ControlsID);
 
         $('body').on('onReloadGame', _checkInput);
+        isHeliActive = false;
         
         return that;
     },
