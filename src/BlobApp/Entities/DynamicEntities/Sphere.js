@@ -28,7 +28,8 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos, sizeX, sizeY) {
 			},
 			
 			animations : {
-				//needs stuff
+				startAni : [0, 33, "roll"],
+				roll: [33, 33]
 			}
 		}
 
@@ -40,8 +41,6 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos, sizeX, sizeY) {
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
 
-		//sprite.scaleX = -1;
-
 		sprite.x = x_pos;
 		sprite.y = y_pos;
 
@@ -50,7 +49,7 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos, sizeX, sizeY) {
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
-		//sprite.gotoAndPlay("startAni");
+		sprite.gotoAndPlay("startAni");
 	},
 
 	_listeners = function() {

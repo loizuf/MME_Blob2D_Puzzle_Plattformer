@@ -321,7 +321,7 @@ BlobApp.PhysicsHandler = (function() {
 		this.body = body;
 		this.skin = skin;
 		this.update = function() {
-			//this.skin.rotation = this.body.GetAngle() * (180 / Math.PI);
+			this.skin.rotation = this.body.GetAngle() * (180 / Math.PI);
 			this.skin.x = (this.body.GetWorldCenter().x * SCALE);
 			this.skin.y = (this.body.GetWorldCenter().y * SCALE);
 		}

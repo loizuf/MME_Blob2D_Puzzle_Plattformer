@@ -2,7 +2,7 @@ BlobApp.ViewController = (function() {
 	var that = {},
 	canvas, context, debugCanvas, debugContext, stage,
 
-	b2ddebug = true,
+	b2ddebug = false,
 
 	init = function() {
 		_initView();
@@ -222,6 +222,9 @@ BlobApp.ViewController = (function() {
 
 		$('body').on('bridgeEntityRequested', applyBridge);
 		$('body').on('removeBridgeFromView', removeBridge);
+
+		$('body').on('sphereEntityRequested', applyHeli);
+		$('body').on('removeSphereFromView', applyHeli);
 
 		$('body').on('trampolinEntityRequested', applyTrampolin);
 		$('body').on('trampolinStopRequested', removeTrampolin);
