@@ -490,7 +490,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		bodyDef.type = b2Body.b2_dynamicBody;
 		bodyDef.position.x = greenBlobEntity.m_xf.position.x;
-		bodyDef.position.y = greenBlobEntity.m_xf.position.y - 25 / SCALE;
+		bodyDef.position.y = greenBlobEntity.m_xf.position.y - 12.5 / SCALE;
 
 		var entity = world.CreateBody(bodyDef);
 
