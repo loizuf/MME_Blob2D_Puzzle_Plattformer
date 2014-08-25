@@ -42,12 +42,11 @@ BlobApp.MainController = (function() {
 	},
 
 	_reload = function(){
-		_modelController = undefined,
-		_levelloader = undefined;
-		_modelController = BlobApp.ModelController;
-		_levelloader = BlobApp.LevelLoader;
-		_modelController.init(p1ID, p2ID);
-		_levelloader.init(lID);
+		$('body').unbind();
+		_registerListeners();
+
+		setTimeout(function(){_initModules();}, 1);
+
 	},
 
 	_reset = function() {

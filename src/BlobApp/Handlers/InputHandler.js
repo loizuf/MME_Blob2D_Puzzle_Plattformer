@@ -83,6 +83,9 @@ BlobApp.InputHandler = (function() {
         $body.on('keydown',_onKeyDown);
 
         _initGamepads(p1ControlsID, p2ControlsID);
+
+        $('body').on('onReloadGame', _checkInput);
+        isHeliActive = false;
         
         return that;
     },
@@ -417,6 +420,10 @@ BlobApp.InputHandler = (function() {
                 $(that).trigger('p2ArrowDownStopped');
             break;
         }
+    },
+
+    _checkInput = function() {
+        isHeliActive = false;
     };
 
     that.init = init;

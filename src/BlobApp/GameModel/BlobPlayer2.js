@@ -20,6 +20,7 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on("redBlobLeftTriggerZone", _setDownAction);
 		$('body').on('heliStopRequested', _resetControls);
 		$('body').on('bridgeStopRequested', _resetControls);
+		$('body').on('sphereStopRequested', _resetControls);
 		$('body').on('stretchInitRequested', _setStretch);
 
 		$('body').on('startTele', thisVar.initTele);
@@ -28,6 +29,7 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on('startBridge', thisVar.initBridge);
 
 		$('body').on('startSphere', thisVar.initSphere);
+		$('body').on('startSlingshot', thisVar.initSlingshot);
 	},
 
 	this.tryToInit = function(skill) {
@@ -49,7 +51,10 @@ BlobApp.BlobPlayer2 = (function() {
 			break;
 
 			case "sphere":
-				console.log("try to init sphere")
+				thisVar.setIdle(skill);
+			break;
+
+			case "slingshot":
 				thisVar.setIdle(skill);
 			break;
 		}
@@ -198,6 +203,7 @@ BlobApp.BlobPlayer2 = (function() {
 
 		prototypeVar.setCurrentUp(function(){});
 		prototypeVar.setCurrentDown(function(){});
+		setTimeout(function(){prototypeVar.setCurrentDown(thisVar.tryToStopSphere)}, 1500);
 
 		prototypeVar.setCurrentLeft(thisVar.sphereMoveLeft);
 		prototypeVar.setCurrentRight(thisVar.sphereMoveRight);
@@ -209,8 +215,37 @@ BlobApp.BlobPlayer2 = (function() {
 
 	this.sphereMoveRight = function() {
 		$('body').trigger('sphereMove', {"speed" : sphereSpeedX, "dir" : "x"});
+	},
+
+	this.tryToStopSphere = function() {
+		prototypeVar.setCurrentDown(function(){});
+		$('body').trigger('stopSphere');
 	};
 	//END: Sphere
+
+	// START: Slingshot
+
+
+	this.initSlingshot = function() {
+		$('body').unbind("greenBlobLeftTriggerZone");
+		prototypeVar.setSingleSpecialAllowed(false);
+
+		prototypeVar.setCurrentUp(thisVar.increaseSlingshotAngle);
+		prototypeVar.setCurrentDown(thisVar.decreaseSlingshotAngle);
+		prototypeVar.setCurrentLeft(function(){});
+		prototypeVar.setCurrentRight(function(){});
+		
+	},
+
+	this.increaseSlingshotAngle = function() {
+		// Trigger something in the model controller
+	},
+
+	this.decreaseSlingshotAngle = function() {
+		// Trigger something in the model controller
+	};
+
+	// END: Slingshot
 
 	this.setup(); 
 });

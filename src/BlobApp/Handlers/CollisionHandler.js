@@ -119,6 +119,10 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.SPHERETRIGGER:
 				_playerInTriggerZone("greenBlob", "sphere");
 				return;
+
+			case EntityConfig.SLINGSHOTTRIGGER:
+				_playerInTriggerZone("greenBlob", "slingshot");
+				return;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -175,6 +179,10 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.SPHERETRIGGER:
 				_playerInTriggerZone("redBlob", "sphere");
 				return;
+
+			case EntityConfig.SLINGSHOTTRIGGER:
+				_playerInTriggerZone("redBlob", "slingshot");
+				return;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -196,6 +204,10 @@ BlobApp.CollisionHandler = (function() {
 		switch(bID) {
 			case EntityConfig.HELITRIGGER : 
 			case EntityConfig.TELETRIGGER :
+			case EntityConfig.BRIDGELEFTTRIGGER :
+			case EntityConfig.BRIDGERIGHTTRIGGER :
+			case EntityConfig.SPHERETRIGGER :
+
 				_playerLeftTriggerZone("redBlob");
 			break;
 		}
@@ -205,6 +217,10 @@ BlobApp.CollisionHandler = (function() {
 		switch(bID) {
 			case EntityConfig.HELITRIGGER : 
 			case EntityConfig.TELETRIGGER :
+			case EntityConfig.BRIDGELEFTTRIGGER :
+			case EntityConfig.BRIDGERIGHTTRIGGER :
+			case EntityConfig.SPHERETRIGGER :
+			
 				_playerLeftTriggerZone("greenBlob");
 			break;
 		}

@@ -20,6 +20,7 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on("greenBlobLeftTriggerZone", _setDownAction);
 		$('body').on('heliStopRequested', _resetControls);
 		$('body').on('bridgeStopRequested', _resetControls);
+		$('body').on('sphereStopRequested', _resetControls);
 		$('body').on('trampolinInitRequested', _setTrampolin);
 
 		$('body').on('startTele', thisVar.initTele);
@@ -28,6 +29,8 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on('startBridge', thisVar.initBridge);
 
 		$('body').on('startSphere', thisVar.initSphere);
+
+		$('body').on('startSlingshot', thisVar.initSlingshot);
 	},
 
 	this.tryToInit = function(skill) {
@@ -49,7 +52,10 @@ BlobApp.BlobPlayer1 = (function() {
 			break;
 
 			case "sphere":
-				console.log("try to init sphere")
+				thisVar.setIdle(skill);
+			break;
+
+			case "slingshot":
 				thisVar.setIdle(skill);
 			break;
 		}
@@ -198,6 +204,7 @@ BlobApp.BlobPlayer1 = (function() {
 
 		prototypeVar.setCurrentUp(function(){});
 		prototypeVar.setCurrentDown(function(){});
+		setTimeout(function(){prototypeVar.setCurrentDown(thisVar.tryToStopSphere)}, 1500);
 
 		prototypeVar.setCurrentLeft(thisVar.sphereMoveLeft);
 		prototypeVar.setCurrentRight(thisVar.sphereMoveRight);
@@ -209,6 +216,35 @@ BlobApp.BlobPlayer1 = (function() {
 
 	this.sphereMoveRight = function() {
 		$('body').trigger('sphereMove', {"speed" : sphereSpeedX, "dir" : "x"});
+	},
+
+	this.tryToStopSphere = function() {
+		prototypeVar.setCurrentDown(function(){});
+		$('body').trigger('stopSphere');
+	},
+
+	this.initSlingshot = function() {
+		$('body').unbind("greenBlobLeftTriggerZone");
+
+		prototypeVar.setSingleSpecialAllowed(false);
+
+		prototypeVar.setCurrentUp(function(){});
+		prototypeVar.setCurrentDown(thisVar.shootSlingshot);
+
+		prototypeVar.setCurrentLeft(thisVar.clutchSlingshot);
+		prototypeVar.setCurrentRight(thisVar.loosenSlingshot);
+	},
+
+	this.shootSlingshot = function() {
+		$('body').trigger('onSlingshotRelease', {"tension": 10});
+	},
+
+	this.clutchSlingshot = function() {
+
+	},
+
+	this.loosenSlingshot = function() {
+
 	};
 
 	this.setup();

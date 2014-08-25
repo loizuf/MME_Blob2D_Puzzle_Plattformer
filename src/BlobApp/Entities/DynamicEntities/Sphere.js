@@ -6,7 +6,8 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos, sizeX, sizeY) {
 	tilesetSheet,
 	tileset,
 	blobSprites,
-	removedSprite;
+	removedSprite,
+	stopStarted;
 
 	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
 
@@ -28,7 +29,12 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos, sizeX, sizeY) {
 			},
 			
 			animations : {
-				//needs stuff
+				startAni : [0, 33, "roll"],
+				roll: [33, 33],
+				stop: {
+					frames: [33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20,
+						19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+					}
 			}
 		}
 
@@ -40,8 +46,6 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos, sizeX, sizeY) {
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
 
-		//sprite.scaleX = -1;
-
 		sprite.x = x_pos;
 		sprite.y = y_pos;
 
@@ -50,21 +54,33 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos, sizeX, sizeY) {
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
-		//sprite.gotoAndPlay("startAni");
+		sprite.gotoAndPlay("startAni");
 	},
 
 	_listeners = function() {
+		$('body').on('stopSphere', _stopSphere);
 		$('body').on('onTick', _checkIfStopFinished);
 	},
 
 	_animate = function(event, data) {
-		//needs stuff
+		switch(data.animationKey) {
+			case AnimationKeys.STOP:
+				sprite.gotoAndPlay("stop");
+			break;
+		}	
+	},
+
+	_stopSphere = function() {
+		if(!stopStarted) {
+			stopStarted = true;
+			_animate(null, {"animationKey" : AnimationKeys.STOP})
+		}
 	},
 
 	_checkIfStopFinished = function() {
-		if(!removedSprite && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 19) {
-			$('body').trigger('specialFinished', {'specialName' : "bridge"});
-			$('body').trigger('bridgeStopRequested', {"sprites" : blobSprites});
+		if(!removedSprite && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 32) {
+			$('body').trigger('specialFinished', {'specialName' : "sphere"});
+			$('body').trigger('sphereStopRequested', {"sprites" : blobSprites});
 			sprite.stop();
 
 			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)

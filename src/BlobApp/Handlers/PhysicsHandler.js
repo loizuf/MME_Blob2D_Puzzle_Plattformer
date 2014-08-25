@@ -35,6 +35,10 @@ BlobApp.PhysicsHandler = (function() {
 	var isTrampolinActive = false;
 	var isStretchActive = false;
 
+	var bridgeIsActive = false,	bridgeBody = undefined,	bridgeStart = undefined, bridgeClimbDirection = undefined;
+	var heliIsActive = false, heliBody = undefined;
+	var sphereIsActive = false,	sphereBody = undefined;
+
 	init = function(){
 		_setupPhysics();
 		_registerListener();
@@ -316,12 +320,11 @@ BlobApp.PhysicsHandler = (function() {
 		entity.SetUserData(data.userData);
 	},
 
-
 	_actorObject = function(body, skin) {
 		this.body = body;
 		this.skin = skin;
 		this.update = function() {
-			//this.skin.rotation = this.body.GetAngle() * (180 / Math.PI);
+			this.skin.rotation = this.body.GetAngle() * (180 / Math.PI);
 			this.skin.x = (this.body.GetWorldCenter().x * SCALE);
 			this.skin.y = (this.body.GetWorldCenter().y * SCALE);
 		}
@@ -329,9 +332,6 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	/* Heli stuff */
-	heliIsActive = false,
-	heliBody = undefined,
-
 	_initHeli = function() {
 		greenBlobEntity = undefined;
 
@@ -422,16 +422,13 @@ BlobApp.PhysicsHandler = (function() {
 		entity.CreateFixture(fixture);
 
 		// assign actor
-		entity.SetUserData([userData,undefined]);  // set the actor as user data of the body so we can use it later: body.GetUserData()
+		entity.SetUserData([userData, undefined]);  // set the actor as user data of the body so we can use it later: body.GetUserData()
 		
 		var actor = new _actorObject(entity, sprite);
 
 		bodies.push(entity); 
 		heliBody = entity;	
 	},
-
-	sphereIsActive = false,
-	sphereBody = undefined,
 
 	_initSphere = function() {
 		greenBlobEntity = undefined;
@@ -477,7 +474,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		// Create Sphere (= Create Blob)
 		//sprite = spriteAndNumber["sprite"];
-		userData = "Sphere"
+		userData = "Sphere";
 
 		var fixture = new b2FixtureDef;
 
@@ -489,8 +486,8 @@ BlobApp.PhysicsHandler = (function() {
 		var bodyDef = new b2BodyDef;
 
 		bodyDef.type = b2Body.b2_dynamicBody;
-		bodyDef.position.x = greenBlobEntity.m_xf.position.x / SCALE + 320 / SCALE;
-		bodyDef.position.y = greenBlobEntity.m_xf.position.y / SCALE + 210 / SCALE;
+		bodyDef.position.x = greenBlobEntity.m_xf.position.x;
+		bodyDef.position.y = greenBlobEntity.m_xf.position.y - 12.5 / SCALE;
 
 		var entity = world.CreateBody(bodyDef);
 
@@ -505,12 +502,39 @@ BlobApp.PhysicsHandler = (function() {
 
 	_moveSphere = function(event, data) {
 		sphereBody.ApplyImpulse(new b2Vec2(data.speed, 0), sphereBody.GetPosition());
-	},
+	}
 
-	bridgeIsActive = false,
-	bridgeBody = undefined,
-	bridgeStart = undefined,
-	bridgeClimbDirection = undefined,
+	_disassembleSphere = function(event, data) {
+		if(data.sprites[0].name == "blobRed") {
+			sprite1 = data.sprites[0];
+			sprite2 = data.sprites[1];
+		} else {
+			sprite1 = data.sprites[1];
+			sprite2 = data.sprites[0];
+		}
+
+
+		userData1 = (sprite1.name=="blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
+		userData2 = (userData1 == EntityConfig.REDBLOBID) ? EntityConfig.GREENBLOBID : EntityConfig.REDBLOBID;
+
+		var xPos = sphereBody.m_xf.position.x;
+		var yPos = sphereBody.m_xf.position.y;
+
+		sprite1.x = (xPos * SCALE) + 12.5;
+		sprite2.x = (xPos * SCALE) - 12.5;
+
+
+		sprite1.y = (yPos * SCALE) - 3;
+		sprite2.y = (yPos * SCALE) - 3;
+		
+		_recreateBlob(sprite1, userData1);
+		_recreateBlob(sprite2, userData2);
+
+		$('body').trigger('removeSphereFromView', {"sprites" : data.sprites});
+		sphereIsActive = false;
+
+		bodiesToRemove.push(sphereBody);
+	},
 
 	_initBridge = function(event, data) {
 		greenBlobEntity = undefined;
@@ -689,9 +713,28 @@ BlobApp.PhysicsHandler = (function() {
 		bodiesToRemove.push(heliBody);
 	},
 
+	shootSlingshot = function(event, data) {
+		console.log(data);
+		var angle = data.angle,
+			tension = 5;
+
+		greenBlobEntity = undefined;
+
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
+				greenBlobEntity = bodies[i];
+				break;
+			}
+		}
+
+		var degrees = angle/Math.PI*180;
+
+		greenBlobEntity.ApplyImpulse(new b2Vec2(Math.cos(degrees)*tension,-Math.sin(degrees)*tension), greenBlobEntity.GetPosition());
+	},
+
 	_recreateBlob = function(sprite, userData) {
 		var width = (TILESIZEX - 1) / SCALE,
-			height = (userData == EntityConfig.REDBLOBID) ? ((TILESIZEY * 2) - 3 )/ SCALE : (TILESIZEY - 1) / SCALE;
+			height = (userData == EntityConfig.REDBLOBID) ? ((TILESIZEY * 2) - 3 ) / SCALE : (TILESIZEY - 1) / SCALE;
 
 		var fixture = createDefaultBoxFixture(width, height);
 		var bodyDef = new b2BodyDef;
@@ -703,9 +746,11 @@ BlobApp.PhysicsHandler = (function() {
 
 		var entity = world.CreateBody(bodyDef);
 
+		userData == EntityConfig.REDBLOBID ? redBlobBody = entity : greenBlobBody = entity;
+
 		entity.CreateFixture(fixture);
 
-		entity.SetUserData([userData,undefined]);
+		entity.SetUserData([userData, undefined]);
 		
 		var actor = new _actorObject(entity, sprite);
 		var blobEntityCreated = $.Event('blobEntityCreated');
@@ -749,9 +794,13 @@ BlobApp.PhysicsHandler = (function() {
 		//START: DUMMY  SPHERE
 		$('body').on('startSphere', _initSphere);
 		$('body').on('sphereMove', _moveSphere);
+		$('body').on('sphereStopRequested', _disassembleSphere);
 
 		//START: DUMMY TELEPORT
 		$('body').on('teleportRequested', _doTeleport);
+
+		//DUMMY SLINGSHOT
+		$('body').on('onSlingshotShot', shootSlingshot);
 
 		// DESTRUCTION
 		$('body').on("restartPhys", _restartPhys);
@@ -951,6 +1000,8 @@ BlobApp.PhysicsHandler = (function() {
 
 	_resetVariables = function() {
 		heliIsActive = false;
+		sphereIsActive = false;
+		bridgeIsActive = false;
 	};
 
 	that.init = init;
