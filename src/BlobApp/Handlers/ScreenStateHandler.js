@@ -27,11 +27,11 @@ BlobApp.ScreenState = ( function() {
 	// Nicht aufgenommen / Aufgenommen
 	keyPickedUp,
 
-	PLAYER_STATES = ["dead", "alive", "goal"],
+	PLAYER_STATES = ["dead", "alive", "goal", "reset"],
 	PLAYER_1_NAME = "p1",
 	PLAYER_2_NAME = "p2",
 
-	// Tot / Wartet auf wiederbelebung / Lebendig / fertig
+	// Tot / Wartet auf wiederbelebung / Lebendig / fertig / wartet auf neues spiel
 	player1State,
 
 	// Wie player1State
@@ -75,6 +75,18 @@ BlobApp.ScreenState = ( function() {
 		}
 	},
 
+	onPlayerRequestsNewGame = function(player) {
+		if(player == PLAYER_1_NAME) {
+			player1State = PLAYER_STATES[3];
+		} else {
+			player2State = PLAYER_STATES[3];
+		}
+
+		if(player1State == PLAYER_STATES[3] && player2State == PLAYER_STATES[3]) {
+			$("body").trigger('resetEverything');
+		}
+	},
+
 	onPickupKey = function() {
 		keyPickedUp=true;
 	},
@@ -98,6 +110,7 @@ BlobApp.ScreenState = ( function() {
 	that.onPickupKey = onPickupKey;
 	that.onPlayerReachGoal = onPlayerReachGoal;
 	that.doorCreated = doorCreated;
+	that.onPlayerRequestsNewGame = onPlayerRequestsNewGame;
 	that.init = init;
 
 	return that;
