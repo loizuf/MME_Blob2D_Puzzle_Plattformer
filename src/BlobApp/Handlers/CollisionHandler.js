@@ -30,6 +30,8 @@ BlobApp.CollisionHandler = (function() {
 
 	_handleContacts = function() {
 		contactListener.BeginContact = function(contact) {
+
+			console.log(contact);
 			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
 			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
 
@@ -51,6 +53,7 @@ BlobApp.CollisionHandler = (function() {
 		},
 
 		contactListener.EndContact = function(contact) {
+
 			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
 			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
 
@@ -135,8 +138,7 @@ BlobApp.CollisionHandler = (function() {
 
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
-				console.log(bodyB);
-				_levelLoadRequested();
+				_levelLoadRequested(bodyB);
 				return;
 		}
 
@@ -210,8 +212,7 @@ BlobApp.CollisionHandler = (function() {
 
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
-				console.log(bodyB);
-				_levelLoadRequested();
+				_levelLoadRequested(bodyB);
 				return;
 		}
 
@@ -280,8 +281,9 @@ BlobApp.CollisionHandler = (function() {
 		$('body').trigger('continueRequest');
 	},
 
-	_levelLoadRequested = function() {
-		$('body').trigger('levelLoadRequest');
+	_levelLoadRequested = function(bodyB) {
+		var levelID = bodyB.GetUserData()[1];
+		$('body').trigger('levelLoadRequest', levelID);
 	},
 
 	_pickUpKey = function(bodyA, bodyB) {

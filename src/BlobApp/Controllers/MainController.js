@@ -32,13 +32,19 @@ BlobApp.MainController = (function() {
 		_modelController.init(p1ID, p2ID);
 		_viewController.init();
 		_physicsHandler.init();
-		_levelloader.init(lvlID);
+		_levelloader.init(lID);
 	},
 
 	_registerListeners = function() {
 		$("body").on('onTick', _sceneUpdate);
 		$("body").on('onReloadGame', _reload);
 		$('body').on('onResetGame', _reset);
+		$('body').on('levelLoadRequest', _onLevelLoadRequest);
+	},
+
+
+	_onLevelLoadRequest = function(event, LevelID) {
+		lID = LevelID;
 	},
 
 	_reload = function() {

@@ -345,7 +345,7 @@ BlobApp.LevelLoader = (function() {
 		var entity = new BlobApp.LevelDoor(x, y+12.5, 25, 50, levelDoorLevelID);
 
 		_createRequestObject["sprite"] = entity.sprite;
-		_createRequestObject["userData"] = [EntityConfig.LEVELDOOR];
+		_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID];
 		_createRequestObject["height"] = 2;
 		
 		$('body').trigger('entityRequested', _createRequestObject);

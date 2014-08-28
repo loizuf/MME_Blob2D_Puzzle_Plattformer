@@ -219,7 +219,14 @@ BlobApp.ViewController = (function() {
 		_showMenu();
 	},
 
-	_onNewGameRequest = function() {
+	_onLevelLoadRequest = function() {
+		_clearScene();
+
+		$('body').trigger("levelIDChanged");
+		$('body').trigger("destroyPhysics");
+
+		_tick();
+		_resumeGame();
 	},
 
 	_listener = function(){
@@ -248,7 +255,7 @@ BlobApp.ViewController = (function() {
 		$('body').on('onPause', _displayPauseScreen);
 		$('body').on('levelFinished', _onLevelFinished);
 
-		$('body').on('newGameRequest', _onNewGameRequest);
+		$('body').on('levelLoadRequest', _onLevelLoadRequest)
 	};
 
 	that.init = init;
