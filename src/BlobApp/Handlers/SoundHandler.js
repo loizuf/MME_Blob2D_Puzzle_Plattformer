@@ -23,7 +23,7 @@ BlobApp.SoundHandler = (function() {
         preload.addEventListener("complete", _doneLoading);
         preload.loadManifest(manifest);
 
-        //_listeners();
+        _listeners();
 
         return that;
     },
@@ -33,6 +33,7 @@ BlobApp.SoundHandler = (function() {
     },
 
     _listeners = function(){
+        logg("listeners");
         //TODO: register events fired for the sound handler
         //jump sound for both players
         $('body').on('soundJump', _playJumpSound);

@@ -78,7 +78,6 @@ BlobApp.ModelController = (function() {
 		$('body').on('newGameRequest', _onNewGameRequest);
 		//$('body').on('levelFinished', _onLevelFinished);
 
-		$('body').unbind('specialFinished');
 		$('body').on('specialFinished', _onSpecialFinished);
 
 		$('body').on('onStartLocationRequestedPlayer1', _setBridgeDisassemblyDirectionPlayer1);
