@@ -1,4 +1,4 @@
-BlobApp.MenuDoor = (function LevelDoor(x_pos, y_pos, sizeX, sizeY, LevelID) {
+BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, sizeX, sizeY, LevelID) {
 	this.prototype = new BlobApp.DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY);
 
 	var sprite, tilesetSheet, LvlID;
