@@ -716,7 +716,7 @@ BlobApp.PhysicsHandler = (function() {
 	shootSlingshot = function(event, data) {
 		console.log(data);
 		var angle = data.angle,
-			tension = 5;
+			tension = data.force;
 
 		greenBlobEntity = undefined;
 
@@ -727,7 +727,7 @@ BlobApp.PhysicsHandler = (function() {
 			}
 		}
 
-		var degrees = angle/Math.PI*180;
+		var degrees = angle*Math.PI/180;
 
 		greenBlobEntity.ApplyImpulse(new b2Vec2(Math.cos(degrees)*tension,-Math.sin(degrees)*tension), greenBlobEntity.GetPosition());
 	},

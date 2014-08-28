@@ -5,6 +5,7 @@ BlobApp.BlobPlayer2 = (function() {
 	var prototypeVar = this.prototype;
 	var isStretched = false;
 	var sphereSpeedX = 0.3;
+	var slingshotAngle = 30;
 
 	this.setup = function() {	
 		_initListeners();
@@ -224,8 +225,6 @@ BlobApp.BlobPlayer2 = (function() {
 	//END: Sphere
 
 	// START: Slingshot
-
-
 	this.initSlingshot = function() {
 		$('body').unbind("greenBlobLeftTriggerZone");
 		prototypeVar.setSingleSpecialAllowed(false);
@@ -233,16 +232,19 @@ BlobApp.BlobPlayer2 = (function() {
 		prototypeVar.setCurrentUp(thisVar.increaseSlingshotAngle);
 		prototypeVar.setCurrentDown(thisVar.decreaseSlingshotAngle);
 		prototypeVar.setCurrentLeft(function(){});
-		prototypeVar.setCurrentRight(function(){});
-		
+		prototypeVar.setCurrentRight(function(){});		
 	},
 
 	this.increaseSlingshotAngle = function() {
-		// Trigger something in the model controller
+		slingshotAngle != 60 ? slingshotAngle += 15 : slingshotAngle = slingshotAngle;
+		console.log("increase", slingshotAngle);
+		$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
 	},
 
 	this.decreaseSlingshotAngle = function() {
-		// Trigger something in the model controller
+		slingshotAngle != 30 ? slingshotAngle -= 15 : slingshotAngle = slingshotAngle;
+		console.log("decrease", slingshotAngle);
+		$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
 	};
 
 	// END: Slingshot

@@ -1,27 +1,16 @@
-BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, sizeX, sizeY, doorType) {
+BlobApp.MenuDoor = (function LevelDoor(x_pos, y_pos, sizeX, sizeY, LevelID) {
 	this.prototype = new BlobApp.DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY);
 
-	var sprite, tilesetSheet;
+	var sprite, tilesetSheet, LvlID;
 
 	this.prototype.init =function() {
 		var tileset = new Image();
-		
+		this.LevelID = LevelID
 
-		tileset.src = _getTileset(tileset, doorType);
+		tileset.src = "res/img/levelDoor.png";
 
 		// callback for loading sprite after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
-	},
-
-	_getTileset = function(tileset, doorType) {
-		switch (doorType){
-			case 0:
-				return "res/img/newGameDoor.png";
-			break;
-			case 1:
-				return "res/img/continueDoor.png";
-			break;
-		}
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -49,6 +38,7 @@ BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, sizeX, sizeY, doorType) {
 		sprite.mouseEnabled = false;
 	},
 
+	this.LevelID = LevelID;	
 	this.prototype.init();
 	this.sprite = sprite;
 });

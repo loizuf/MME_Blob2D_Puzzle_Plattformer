@@ -15,6 +15,8 @@ BlobApp.ModelController = (function() {
 	player1BridgeDisassemblyDirection,
 	player2BridgeDisassemblyDirection,
 
+	slingshotAbilityAngle,
+
 	init = function(p1ControlsID, p2ControlsID) {
 		//Initialize all Modules from Model
 		//Initialize Box2D Engine
@@ -70,7 +72,10 @@ BlobApp.ModelController = (function() {
 		$('body').on('onPlayerWaitingChange', _onPlayerWaitingChange);
 		$('body').on('keyPickedUp', _onKeyPickedUp);
 		$('body').on('blobFinishAttempt', _onBlobFinishAttempt);
+
+		//Menu related listener
 		$('body').on('newGameRequest', _onNewGameRequest);
+		$('body').on('levelLoadRequest', _onLevelLoadRequest);
 		//$('body').on('levelFinished', _onLevelFinished);
 
 		$('body').unbind('specialFinished');
@@ -82,11 +87,17 @@ BlobApp.ModelController = (function() {
 		$('body').on('onStartLocationRequestedPlayer2', _setBridgeDisassemblyDirectionPlayer2);
 		$('body').on('onEndLocationRequestedPlayer2', _setBridgeDisassemblyDirectionPlayer2);
 
+		$('body').on('onSlingshotAngleChange', _storeSlingshotAngle);
+
 		$('body').on('onSlingshotRelease', _setSlingshotReleaseForce)
 	},
 
+	_storeSlingshotAngle = function(event, data) {
+		slingshotAbilityAngle = data.angle;
+	},
+
 	_setSlingshotReleaseForce = function(event, data) {
-		$('body').trigger('onSlingshotShot', {"force": data.tension, "angle": 60});
+		$('body').trigger('onSlingshotShot', {"force": data.tension, "angle": slingshotAbilityAngle});
 	},
 
 	_setBridgeDisassemblyDirectionPlayer1 = function(event, data) {
@@ -113,6 +124,10 @@ BlobApp.ModelController = (function() {
 		} else {
 			_screenStateHandler.onPlayerRequestsNewGame("p2");
 		}
+	},
+
+	_onLevelLoadRequest = function(event, LevelID) {
+		console.log("bubbub");
 	},
 
 	_proceedGame = function() {

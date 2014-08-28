@@ -5,6 +5,7 @@ BlobApp.BlobPlayer1 = (function() {
 	var prototypeVar = this.prototype;
 	var isTrampolin = false;
 	var sphereSpeedX = 0.3;
+	var slingshotTension = 0;
 
 	this.setup = function() {
 		_initListeners();
