@@ -31,6 +31,7 @@ BlobApp.BlobPlayer2 = (function() {
 
 		$('body').on('startSphere', thisVar.initSphere);
 		$('body').on('startSlingshot', thisVar.initSlingshot);
+		$('body').on('onNewAngleStored', _resetAngleFlag);
 	},
 
 	this.tryToInit = function(skill) {
@@ -221,7 +222,7 @@ BlobApp.BlobPlayer2 = (function() {
 	this.tryToStopSphere = function() {
 		prototypeVar.setCurrentDown(function(){});
 		$('body').trigger('stopSphere');
-	};
+	},
 	//END: Sphere
 
 	// START: Slingshot
@@ -235,18 +236,31 @@ BlobApp.BlobPlayer2 = (function() {
 		prototypeVar.setCurrentRight(function(){});		
 	},
 
+	isNextAngleSelected = true,
+
 	this.increaseSlingshotAngle = function() {
-		slingshotAngle != 60 ? slingshotAngle += 15 : slingshotAngle = slingshotAngle;
-		console.log("increase", slingshotAngle);
-		$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
+		if(isNextAngleSelected) {
+			slingshotAngle != 60 ? slingshotAngle += 15 : slingshotAngle += 0;
+			console.log("increase", slingshotAngle);
+			$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
+
+			isNextAngleSelected = false;
+		}
 	},
 
 	this.decreaseSlingshotAngle = function() {
-		slingshotAngle != 30 ? slingshotAngle -= 15 : slingshotAngle = slingshotAngle;
-		console.log("decrease", slingshotAngle);
-		$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
-	};
+		if(isNextAngleSelected) {
+			slingshotAngle != 30 ? slingshotAngle -= 15 : slingshotAngle += 0;
+			console.log("decrease", slingshotAngle);
+			$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
 
+			isNextAngleSelected = false;
+		}
+	},
+
+	_resetAngleFlag = function() {
+		isNextAngleSelected = true;
+	};
 	// END: Slingshot
 
 	this.setup(); 

@@ -15,7 +15,7 @@ BlobApp.ModelController = (function() {
 	player1BridgeDisassemblyDirection,
 	player2BridgeDisassemblyDirection,
 
-	slingshotAbilityAngle,
+	slingshotAbilityAngle = 1,
 
 	init = function(p1ControlsID, p2ControlsID) {
 		//Initialize all Modules from Model
@@ -91,6 +91,7 @@ BlobApp.ModelController = (function() {
 
 	_storeSlingshotAngle = function(event, data) {
 		slingshotAbilityAngle = data.angle;
+		setTimeout(function(){ $('body').trigger('onNewAngleStored'); }, 100);
 	},
 
 	_setSlingshotReleaseForce = function(event, data) {

@@ -6,7 +6,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 	tileset,
 	blobSprites,
 	removedSprite,
-	stopStarted,
+	stopStarted;
 
 	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
 
@@ -74,7 +74,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 	_checkIfStopFinished = function() {
 		if(!removedSprite && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 32) {
 			$('body').trigger('specialFinished', {'specialName' : "slingshot"});
-			$('body').trigger('sphereStopRequested', {"sprites" : blobSprites});
+			$('body').trigger('slingshotStopRequested', {"sprites" : blobSprites});
 			sprite.stop();
 
 			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)

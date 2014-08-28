@@ -691,7 +691,7 @@ BlobApp.PhysicsHandler = (function() {
 		}
 
 
-		userData1 = (sprite1.name=="blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
+		userData1 = (sprite1.name == "blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
 		userData2 = (userData1 == EntityConfig.REDBLOBID) ? EntityConfig.GREENBLOBID : EntityConfig.REDBLOBID;
 
 		var xPos = heliBody.m_xf.position.x;
@@ -729,7 +729,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		var degrees = angle*Math.PI/180;
 
-		greenBlobEntity.ApplyImpulse(new b2Vec2(Math.cos(degrees)*tension,-Math.sin(degrees)*tension), greenBlobEntity.GetPosition());
+		greenBlobEntity.ApplyImpulse(new b2Vec2(Math.cos(degrees) * tension, -Math.sin(degrees) * tension), greenBlobEntity.GetPosition());
 	},
 
 	_recreateBlob = function(sprite, userData) {

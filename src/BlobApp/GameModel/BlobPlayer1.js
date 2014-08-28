@@ -5,7 +5,7 @@ BlobApp.BlobPlayer1 = (function() {
 	var prototypeVar = this.prototype;
 	var isTrampolin = false;
 	var sphereSpeedX = 0.3;
-	var slingshotTension = 0;
+	var slingshotTension = 7;
 
 	this.setup = function() {
 		_initListeners();
@@ -224,6 +224,8 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').trigger('stopSphere');
 	},
 
+	isSlingshotActive = false;
+
 	this.initSlingshot = function() {
 		$('body').unbind("greenBlobLeftTriggerZone");
 
@@ -234,10 +236,15 @@ BlobApp.BlobPlayer1 = (function() {
 
 		prototypeVar.setCurrentLeft(thisVar.clutchSlingshot);
 		prototypeVar.setCurrentRight(thisVar.loosenSlingshot);
+
+		isSlingshotActive = true;
 	},
 
 	this.shootSlingshot = function() {
-		$('body').trigger('onSlingshotRelease', {"tension": 10});
+		if(isSlingshotActive) {
+			$('body').trigger('onSlingshotRelease', {"tension": slingshotTension});
+			isSlingshotActive = false;
+		}
 	},
 
 	this.clutchSlingshot = function() {
