@@ -91,7 +91,7 @@ BlobApp.ModelController = (function() {
 		$('body').on('onSlingshotAngleChange', _storeSlingshotAngle);
 		$('body').on('onSlingshotTensionChange', _storeSlingshotTension);
 
-		$('body').on('onSlingshotRelease', _setSlingshotReleaseForce)
+		$('body').on('onSlingshotRelease', _setSlingshotReleaseForce);
 	},
 
 	_storeSlingshotAngle = function(event, data) {
