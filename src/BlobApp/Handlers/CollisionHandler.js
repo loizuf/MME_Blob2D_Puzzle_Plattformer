@@ -30,8 +30,6 @@ BlobApp.CollisionHandler = (function() {
 
 	_handleContacts = function() {
 		contactListener.BeginContact = function(contact) {
-
-			console.log(contact);
 			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
 			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
 
@@ -96,7 +94,9 @@ BlobApp.CollisionHandler = (function() {
 			break;
 			
 			case EntityConfig.KEYID:
+				console.log("try to pickup key");
 				_pickUpKey(bodyA, bodyB);
+				console.log("key picked");
 				return;
 			
 			case EntityConfig.GOALID:
@@ -287,7 +287,9 @@ BlobApp.CollisionHandler = (function() {
 	},
 
 	_pickUpKey = function(bodyA, bodyB) {
+		console.log("try to fire an event");
 		$('body').trigger("onKeyPickedUp", {body:bodyB});
+		console.log("event fired");
 	},
 
 	_addJuice = function(bodyA, blobHeight) {
