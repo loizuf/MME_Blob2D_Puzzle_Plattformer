@@ -123,6 +123,15 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.SLINGSHOTTRIGGER:
 				_playerInTriggerZone("greenBlob", "slingshot");
 				return;
+
+			//MenuNavigation
+			case EntityConfig.NEWGAMEDOOR:
+				_newGameRequested(EntityConfig.GREENBLOBID);
+				return;
+
+			case EntityConfig.CONTINUEDOOR:
+				_continueRequested();
+				return;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -183,6 +192,15 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.SLINGSHOTTRIGGER:
 				_playerInTriggerZone("redBlob", "slingshot");
 				return;
+
+			//MenuNavigation
+			case EntityConfig.NEWGAMEDOOR:
+				_newGameRequested(EntityConfig.REDBLOBID);
+				return;
+
+			case EntityConfig.CONTINUEDOOR:
+				_continueRequested();
+				return;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -240,6 +258,15 @@ BlobApp.CollisionHandler = (function() {
 		} else if(blobID == EntityConfig.GREENBLOBID) {
 			$('body').trigger('blobFinishAttempt', PLAYER_TWO_NAME);
 		}
+	},
+
+	_newGameRequested = function(blobID) {
+		$('body').trigger('newGameRequest', blobID);
+	},
+
+	_continueRequested = function() {
+		console.log('continue?');
+		$('body').trigger('continueRequest');
 	},
 
 	_pickUpKey = function(bodyA, bodyB) {

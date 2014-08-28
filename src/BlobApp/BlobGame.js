@@ -89,6 +89,8 @@ BlobApp.BlobGame = (function() {
 
 		$specialTestLevel.unbind("click");
 
+		$TestMenu.on('click', {lvlID:0}, _startGame);
+
 		$selectLevel1.on('click', {lvlID:1}, _startGame);
 		$selectLevel2.on('click', {lvlID:2}, _startGame);
 		$selectLevel3.on('click', {lvlID:3}, _startGame);

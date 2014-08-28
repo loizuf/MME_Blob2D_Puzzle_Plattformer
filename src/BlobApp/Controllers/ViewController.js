@@ -219,6 +219,9 @@ BlobApp.ViewController = (function() {
 		_showMenu();
 	},
 
+	_onNewGameRequest = function() {
+	},
+
 	_listener = function(){
 		// TODO change all the other requests to this one, then rename it!!
 		$('body').on('juiceRequested', applyEntity);
@@ -244,6 +247,8 @@ BlobApp.ViewController = (function() {
 		$('body').on('backgroundAdded', applyBackground);
 		$('body').on('onPause', _displayPauseScreen);
 		$('body').on('levelFinished', _onLevelFinished);
+
+		$('body').on('newGameRequest', _onNewGameRequest);
 	};
 
 	that.init = init;
