@@ -2,3 +2,23 @@ http://www.luxanimals.com/blog/article/combining_easel_box2d
 easeljs dokumentation
 http://stackoverflow.com/questions/3779534/how-to-disable-text-selection-with-css-or-js
 disable selection
+
+
+Title:
+    Common Controller
+
+Author:
+    Rahazan
+
+URL:
+    http://opengameart.org/content/common-controller
+
+License(s):
+    * CC-BY 3.0 ( http://creativecommons.org/licenses/by/3.0/legalcode )
+
+File(s):
+    * Common_Controller.png
+    * Common_Controller_1.png
+    * Common_Controller_2.png
+    * Common_Controller_3.png
+    * Common_Controller_4.png

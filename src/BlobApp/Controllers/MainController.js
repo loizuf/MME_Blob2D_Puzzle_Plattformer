@@ -35,13 +35,13 @@ BlobApp.MainController = (function() {
 		_levelloader.init(lvlID);
 	},
 
-	_registerListeners = function(){
+	_registerListeners = function() {
 		$("body").on('onTick', _sceneUpdate);
 		$("body").on('onReloadGame', _reload);
 		$('body').on('onResetGame', _reset);
 	},
 
-	_reload = function(){
+	_reload = function() {
 		$('body').unbind();
 		_registerListeners();
 
