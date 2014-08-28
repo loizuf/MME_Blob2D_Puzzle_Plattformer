@@ -110,6 +110,7 @@ BlobApp.BlobSuperClass = function() {
 	this._jump = function() {
 		// TODO, impossible with easel?? switch between animations mid-jump
 		if(_jumpAllowed) {
+			$('body').trigger('soundJump');
 			if(!keyLeftPressed) {
 				$('body').trigger('blobanimationChanged', {
 					"blobID" : _blobID,
