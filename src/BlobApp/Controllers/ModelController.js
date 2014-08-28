@@ -72,7 +72,10 @@ BlobApp.ModelController = (function() {
 		$('body').on('onPlayerWaitingChange', _onPlayerWaitingChange);
 		$('body').on('keyPickedUp', _onKeyPickedUp);
 		$('body').on('blobFinishAttempt', _onBlobFinishAttempt);
+
+		//Menu related listener
 		$('body').on('newGameRequest', _onNewGameRequest);
+		$('body').on('levelLoadRequest', _onLevelLoadRequest);
 		//$('body').on('levelFinished', _onLevelFinished);
 
 		$('body').unbind('specialFinished');
@@ -122,6 +125,10 @@ BlobApp.ModelController = (function() {
 		} else {
 			_screenStateHandler.onPlayerRequestsNewGame("p2");
 		}
+	},
+
+	_onLevelLoadRequest = function(event, LevelID) {
+		console.log("bubbub");
 	},
 
 	_proceedGame = function() {

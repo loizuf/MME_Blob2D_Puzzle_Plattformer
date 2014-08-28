@@ -132,6 +132,12 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.CONTINUEDOOR:
 				_continueRequested();
 				return;
+
+			//Overworld Navigation
+			case EntityConfig.LEVELDOOR:
+				console.log(bodyB);
+				_levelLoadRequested();
+				return;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -201,6 +207,12 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.CONTINUEDOOR:
 				_continueRequested();
 				return;
+
+			//Overworld Navigation
+			case EntityConfig.LEVELDOOR:
+				console.log(bodyB);
+				_levelLoadRequested();
+				return;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -265,8 +277,11 @@ BlobApp.CollisionHandler = (function() {
 	},
 
 	_continueRequested = function() {
-		console.log('continue?');
 		$('body').trigger('continueRequest');
+	},
+
+	_levelLoadRequested = function() {
+		$('body').trigger('levelLoadRequest');
 	},
 
 	_pickUpKey = function(bodyA, bodyB) {

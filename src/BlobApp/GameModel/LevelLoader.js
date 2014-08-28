@@ -65,7 +65,7 @@ BlobApp.LevelLoader = (function() {
 		borders = new Array();
 
 		//Testvariable zur Übergabe von Infos(Doors)
-		var doorCount = 0, buttonCount = 0;
+		var doorCount = 0, buttonCount = 0, levelDoorCount = 0;
 
 		for ( var y = 0; y < layerData.height; y++) {
 			borders.push(new Array());
@@ -88,6 +88,9 @@ BlobApp.LevelLoader = (function() {
 						case EntityConfig.DOORLOWERID:
 						case EntityConfig.EMPTYTILEID: 
 						case EntityConfig.GOADLLOWERID:
+						case EntityConfig.NEWGAMEDOORLOWERID:
+						case EntityConfig.CONTINUEDOORLOWERID:
+						case EntityConfig.LEVELDOORLOWERID:
 						break;
 
 						case EntityConfig.GREENBLOBID:
@@ -105,20 +108,30 @@ BlobApp.LevelLoader = (function() {
 						break;
 
 						case EntityConfig.KEYID:
+							console.log("case KEYID in levelloader");
 							_createKey(xcoords, ycoords);
 						break;
 
 						case EntityConfig.GOALID:
+							console.log("case GOALID in levelloader");
 							_createGoal(xcoords, ycoords);
 						break;
 
 						case EntityConfig.NEWGAMEDOOR:
+							console.log("case newgamedoor in levelloader");
 							_createNewGameDoor(xcoords, ycoords);
 						break;
 
 						case EntityConfig.CONTINUEDOOR:
+							console.log("case continuedoor in levelloader");
 							_createContinueDoor(xcoords, ycoords);
-						break
+						break;
+
+						case EntityConfig.LEVELDOOR:
+							console.log(levelDoorCount);
+							_createLevelDoor(xcoords, ycoords, layerData, levelDoorCount);
+							levelDoorCount++;
+						break;
 
 						case EntityConfig.HELITILE:
 						case EntityConfig.HELISTOPTILE:
@@ -310,8 +323,7 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_createNewGameDoor = function(x, y){
-		var entity = new BlobApp.MenuDoor(x, y-12.5, 25, 50, 0);
-		console.log('there');
+		var entity = new BlobApp.MenuDoor(x, y+12.5, 25, 50, 0);
 
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.NEWGAMEDOOR];
@@ -322,11 +334,22 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_createContinueDoor = function(x, y){
-		var entity = new BlobApp.MenuDoor(x, y-12.5, 25, 50, 1);
-		console.log('here');
+		var entity = new BlobApp.MenuDoor(x, y+12.5, 25, 50, 1);
 
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.CONTINUEDOOR];
+		_createRequestObject["height"] = 2;
+		
+		$('body').trigger('entityRequested', _createRequestObject);
+		$('body').trigger('genericRequested', _createRequestObject);
+	},
+
+	_createLevelDoor = function(x, y, layerdata, levelDoorCount) {
+		var levelDoorLevelID = layerData.properties.LevelDoorID[levelDoorCount];
+		var entity = new BlobApp.LevelDoor(x, y+12.5, 25, 50, levelDoorLevelID);
+
+		_createRequestObject["sprite"] = entity.sprite;
+		_createRequestObject["userData"] = [EntityConfig.LEVELDOOR];
 		_createRequestObject["height"] = 2;
 		
 		$('body').trigger('entityRequested', _createRequestObject);
@@ -403,7 +426,7 @@ BlobApp.LevelLoader = (function() {
 			break;
 
 			case 4:
-				mapDataJson = LevelConfig.ABAN_HAWKINS;
+				mapDataJson = LevelConfig.OVER0;
 			break;
 
 			case 98:
