@@ -112,6 +112,14 @@ BlobApp.LevelLoader = (function() {
 							_createGoal(xcoords, ycoords);
 						break;
 
+						case EntityConfig.NEWGAMEDOOR:
+							_createNewGameDoor(xcoords, ycoords);
+						break;
+
+						case EntityConfig.CONTINUEDOOR:
+							_createContinueDoor(xcoords, ycoords);
+						break
+
 						case EntityConfig.HELITILE:
 						case EntityConfig.HELISTOPTILE:
 						case EntityConfig.SPHERETILE:
@@ -295,6 +303,30 @@ BlobApp.LevelLoader = (function() {
 
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.DOORID, doorNumber];
+		_createRequestObject["height"] = 2;
+		
+		$('body').trigger('entityRequested', _createRequestObject);
+		$('body').trigger('genericRequested', _createRequestObject);
+	},
+
+	_createNewGameDoor = function(x, y){
+		var entity = new BlobApp.MenuDoor(x, y-12.5, 25, 50, 0);
+		console.log('there');
+
+		_createRequestObject["sprite"] = entity.sprite;
+		_createRequestObject["userData"] = [EntityConfig.NEWGAMEDOOR];
+		_createRequestObject["height"] = 2;
+		
+		$('body').trigger('entityRequested', _createRequestObject);
+		$('body').trigger('genericRequested', _createRequestObject);
+	},
+
+	_createContinueDoor = function(x, y){
+		var entity = new BlobApp.MenuDoor(x, y-12.5, 25, 50, 1);
+		console.log('here');
+
+		_createRequestObject["sprite"] = entity.sprite;
+		_createRequestObject["userData"] = [EntityConfig.CONTINUEDOOR];
 		_createRequestObject["height"] = 2;
 		
 		$('body').trigger('entityRequested', _createRequestObject);

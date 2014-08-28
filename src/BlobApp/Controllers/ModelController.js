@@ -70,6 +70,7 @@ BlobApp.ModelController = (function() {
 		$('body').on('onPlayerWaitingChange', _onPlayerWaitingChange);
 		$('body').on('keyPickedUp', _onKeyPickedUp);
 		$('body').on('blobFinishAttempt', _onBlobFinishAttempt);
+		$('body').on('newGameRequest', _onNewGameRequest);
 		//$('body').on('levelFinished', _onLevelFinished);
 
 		$('body').unbind('specialFinished');
@@ -104,6 +105,14 @@ BlobApp.ModelController = (function() {
 
 	_onBlobFinishAttempt = function(event, blobID) {
 		_screenStateHandler.onPlayerReachGoal(blobID);
+	},
+
+	_onNewGameRequest = function(event, blobID) {
+		if(blobID == EntityConfig.GREENBLOBID){
+			_screenStateHandler.onPlayerRequestsNewGame("p1");
+		} else {
+			_screenStateHandler.onPlayerRequestsNewGame("p2");
+		}
 	},
 
 	_proceedGame = function() {
