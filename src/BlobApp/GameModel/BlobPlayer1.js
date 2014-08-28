@@ -242,17 +242,35 @@ BlobApp.BlobPlayer1 = (function() {
 
 	this.shootSlingshot = function() {
 		if(isSlingshotActive) {
-			$('body').trigger('onSlingshotRelease', {"tension": slingshotTension});
+			$('body').trigger('onSlingshotRelease');
 			isSlingshotActive = false;
 		}
 	},
 
-	this.clutchSlingshot = function() {
+	isNextTensionSelected = true;
 
+	this.clutchSlingshot = function() {
+		if(isNextTensionSelected) {
+			isNextAngleSelected = false;
+			slingshotTension > 8 ? slingshotTension = 8 : slingshotTension += 0;
+			slingshotTension != 8 ? slingshotTension += 0.2 : slingshotTension += 0;
+			
+			console.log("loosen", slingshotTension);
+
+			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});			
+		}		
 	},
 
 	this.loosenSlingshot = function() {
+		if(isNextTensionSelected) {
+			isNextAngleSelected = false;
+			slingshotTension < 7 ? slingshotTension = 7 : slingshotTension += 0;
+			slingshotTension != 7 ? slingshotTension -= 0.2 : slingshotTension += 0;
+			
+			console.log("loosen", slingshotTension);
 
+			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});
+		}		
 	};
 
 	this.setup();

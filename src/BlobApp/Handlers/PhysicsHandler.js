@@ -727,9 +727,9 @@ BlobApp.PhysicsHandler = (function() {
 			}
 		}
 
-		var degrees = angle*Math.PI/180;
+		var radians = angle * Math.PI / 180;
 
-		greenBlobEntity.ApplyImpulse(new b2Vec2(Math.cos(degrees) * tension, -Math.sin(degrees) * tension), greenBlobEntity.GetPosition());
+		greenBlobEntity.ApplyImpulse(new b2Vec2(Math.cos(radians) * tension, -Math.sin(radians) * tension), greenBlobEntity.GetPosition());
 	},
 
 	_recreateBlob = function(sprite, userData) {

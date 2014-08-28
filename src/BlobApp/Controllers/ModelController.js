@@ -16,6 +16,7 @@ BlobApp.ModelController = (function() {
 	player2BridgeDisassemblyDirection,
 
 	slingshotAbilityAngle = 1,
+	slingshotAbilityTension = 0,
 
 	init = function(p1ControlsID, p2ControlsID) {
 		//Initialize all Modules from Model
@@ -88,6 +89,7 @@ BlobApp.ModelController = (function() {
 		$('body').on('onEndLocationRequestedPlayer2', _setBridgeDisassemblyDirectionPlayer2);
 
 		$('body').on('onSlingshotAngleChange', _storeSlingshotAngle);
+		$('body').on('onSlingshotTensionChange', _storeSlingshotTension);
 
 		$('body').on('onSlingshotRelease', _setSlingshotReleaseForce)
 	},
@@ -97,8 +99,13 @@ BlobApp.ModelController = (function() {
 		setTimeout(function(){ $('body').trigger('onNewAngleStored'); }, 100);
 	},
 
-	_setSlingshotReleaseForce = function(event, data) {
-		$('body').trigger('onSlingshotShot', {"force": data.tension, "angle": slingshotAbilityAngle});
+	_storeSlingshotTension = function(event, data) {
+		slingshotAbilityTension = data.tension;	
+		setTimeout(function(){ $('body').trigger('onNewTensionStored'); }, 100);
+	},
+
+	_setSlingshotReleaseForce = function() {
+		$('body').trigger('onSlingshotShot', {"force": slingshotAbilityTension, "angle": slingshotAbilityAngle});
 	},
 
 	_setBridgeDisassemblyDirectionPlayer1 = function(event, data) {
