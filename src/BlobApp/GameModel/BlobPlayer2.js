@@ -23,6 +23,7 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on('bridgeStopRequested', _resetControls);
 		$('body').on('sphereStopRequested', _resetControls);
 		$('body').on('stretchInitRequested', _setStretch);
+		$('body').on('slingshotFinished', _resetControls);
 
 		$('body').on('startTele', thisVar.initTele);
 		$('body').on('physTeleportFinished', _resetControls);
@@ -241,7 +242,6 @@ BlobApp.BlobPlayer2 = (function() {
 	this.increaseSlingshotAngle = function() {
 		if(isNextAngleSelected) {
 			slingshotAngle != 60 ? slingshotAngle += 15 : slingshotAngle += 0;
-			console.log("increase", slingshotAngle);
 			$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
 
 			isNextAngleSelected = false;
@@ -251,7 +251,6 @@ BlobApp.BlobPlayer2 = (function() {
 	this.decreaseSlingshotAngle = function() {
 		if(isNextAngleSelected) {
 			slingshotAngle != 30 ? slingshotAngle -= 15 : slingshotAngle += 0;
-			console.log("decrease", slingshotAngle);
 			$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
 
 			isNextAngleSelected = false;

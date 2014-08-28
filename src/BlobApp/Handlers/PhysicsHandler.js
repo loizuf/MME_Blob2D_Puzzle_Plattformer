@@ -717,18 +717,27 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	shootSlingshot = function(event, data) {
-		console.log(data);
-		var angle = data.angle,
+		var slingX = data.xPos,
+			slingY = data.yPos,
+			angle = data.angle,
 			tension = data.force;
 
+			console.log(data);
+
 		greenBlobEntity = undefined;
+		redBlobEntity = undefined;
 
 		for(var i = 0; i < bodies.length; i++) {
 			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
 				greenBlobEntity = bodies[i];
-				break;
+			} else if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
+				redBlobEntity = bodies[i];
 			}
 		}
+
+		greenBlobEntity.SetPosition(new b2Vec2((slingX+1.5*TILESIZEX) / SCALE, (slingY-TILESIZEY) / SCALE ));
+
+		redBlobEntity.SetPosition(new b2Vec2((slingX+0.5*TILESIZEX) / SCALE, (slingY) / SCALE ));
 
 		var radians = angle * Math.PI / 180;
 
@@ -802,9 +811,8 @@ BlobApp.PhysicsHandler = (function() {
 		//START: DUMMY TELEPORT
 		$('body').on('teleportRequested', _doTeleport);
 
-		//DUMMY SLINGSHOT
-		$('body').on('onSlingshotShot', shootSlingshot);
-
+		//DUMMY SLINGSHOTf
+		$('body').on('slingshotFinished', shootSlingshot);
 		// DESTRUCTION
 		$('body').on("restartPhys", _restartPhys);
 		$('body').on("destroyPhysics", _destroyWorld);

@@ -47,5 +47,7 @@ AnimationKeys = {
 	BIGSHINE: 6,
 	STOP: 7,
 	BOUNCE: 8,
-	TELEPORT: 9
+	TELEPORT: 9,
+	LOAD: 10,
+	FIRE: 11
 }

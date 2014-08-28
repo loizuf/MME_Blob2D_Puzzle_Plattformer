@@ -389,6 +389,12 @@ BlobApp.LevelLoader = (function() {
 		$('body').trigger('genericRequested', _createRequestObject);
 
 		_createRequestObject["width"] = 1.0;
+
+		if(entityID == EntityConfig.SLINGSHOTTRIGGER) {
+			var entity = new BlobApp.Slingshot(x, y-50, 75, 75);
+			_createRequestObject["sprite"] = entity.sprite;
+			$('body').trigger('genericRequested', _createRequestObject);
+		}
 	},
 
 	// utility function for loading assets from server

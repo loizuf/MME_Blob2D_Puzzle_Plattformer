@@ -23,6 +23,7 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on('bridgeStopRequested', _resetControls);
 		$('body').on('sphereStopRequested', _resetControls);
 		$('body').on('trampolinInitRequested', _setTrampolin);
+		$('body').on('slingshotFinished', _resetControls);
 
 		$('body').on('startTele', thisVar.initTele);
 		$('body').on('physTeleportFinished', _resetControls);
@@ -228,6 +229,7 @@ BlobApp.BlobPlayer1 = (function() {
 
 	this.initSlingshot = function() {
 		$('body').unbind("greenBlobLeftTriggerZone");
+		$('body').trigger('animateSlingshot', {animationKey : AnimationKeys.LOAD});
 
 		prototypeVar.setSingleSpecialAllowed(false);
 
@@ -255,7 +257,6 @@ BlobApp.BlobPlayer1 = (function() {
 			slingshotTension > 8 ? slingshotTension = 8 : slingshotTension += 0;
 			slingshotTension != 8 ? slingshotTension += 0.2 : slingshotTension += 0;
 			
-			console.log("loosen", slingshotTension);
 
 			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});			
 		}		
@@ -267,7 +268,6 @@ BlobApp.BlobPlayer1 = (function() {
 			slingshotTension < 7 ? slingshotTension = 7 : slingshotTension += 0;
 			slingshotTension != 7 ? slingshotTension -= 0.2 : slingshotTension += 0;
 			
-			console.log("loosen", slingshotTension);
 
 			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});
 		}		

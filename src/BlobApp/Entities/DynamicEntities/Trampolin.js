@@ -96,7 +96,6 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 	_checkIfInitFinished = function() {
 		if(sprite.currentAnimation == "init" && sprite.currentAnimationFrame == 19) {
 			$('body').trigger('trampolinInitRequested');
-			console.log("init finished");
 		}
 	},
 

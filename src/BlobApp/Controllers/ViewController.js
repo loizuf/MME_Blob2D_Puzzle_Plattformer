@@ -228,6 +228,19 @@ BlobApp.ViewController = (function() {
 		_resumeGame();
 	},
 
+	_onSlingshotStarted = function(event, data) {
+		data.slingshotEntity.setBlobSprites([stage.getChildByName("blobRed"), stage.getChildByName("blobGreen")]);
+
+		stage.removeChild(stage.getChildByName("blobRed"));
+		stage.removeChild(stage.getChildByName("blobGreen"));
+
+	},
+
+	_onSlingshotStopped = function(event, data) {
+		stage.addChild(data.sprites[0]);
+		stage.addChild(data.sprites[1]);
+	},
+
 	_listener = function(){
 		// TODO change all the other requests to this one, then rename it!!
 		$('body').on('juiceRequested', applyEntity);
@@ -254,7 +267,10 @@ BlobApp.ViewController = (function() {
 		$('body').on('onPause', _displayPauseScreen);
 		$('body').on('levelFinished', _onLevelFinished);
 
-		$('body').on('levelLoadRequest', _onLevelLoadRequest)
+		$('body').on('levelLoadRequest', _onLevelLoadRequest);
+
+		$('body').on('onStartSlingshot', _onSlingshotStarted);
+		$('body').on('slingshotStopRequested', _onSlingshotStopped);
 	};
 
 	that.init = init;

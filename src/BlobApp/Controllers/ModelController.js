@@ -274,7 +274,6 @@ BlobApp.ModelController = (function() {
 		if(specialName == "heli") {
 			$('body').trigger("startHeli");
 			_inputHandler.changeControls();
-			console.log("startspecial");
 			_blobPlayerOne.prototype.setWaitingForOther(false);
 			_blobPlayerTwo.prototype.setWaitingForOther(false);
 		} else if(specialName == "tele") {
