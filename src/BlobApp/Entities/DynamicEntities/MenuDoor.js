@@ -13,17 +13,6 @@ BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, sizeX, sizeY, doorType) {
 		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
 	},
 
-	_getTileset = function(tileset, doorType) {
-		switch (doorType){
-			case 0:
-				return "res/img/newGameDoor.png";
-			break;
-			case 1:
-				return "res/img/continueDoor.png";
-			break;
-		}
-	},
-
 	_initSprite = function(tileset, width, height) {
 		var imageData = {
 			images : [ tileset ],
@@ -47,6 +36,17 @@ BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, sizeX, sizeY, doorType) {
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
+	},
+
+	_getTileset = function(tileset, doorType) {
+		switch (doorType){
+			case 0:
+				return "res/img/newGameDoor.png";
+			break;
+			case 1:
+				return "res/img/continueDoor.png";
+			break;
+		}
 	},
 
 	this.prototype.init();

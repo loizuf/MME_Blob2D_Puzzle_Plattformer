@@ -17,6 +17,7 @@ BlobApp.LevelLoader = (function() {
 		_initBackground();
 		_getLevelMapData(levelID);
 
+
 		mapData = mapDataJson;
 
 		// create EaselJS image for tileset
@@ -108,27 +109,22 @@ BlobApp.LevelLoader = (function() {
 						break;
 
 						case EntityConfig.KEYID:
-							console.log("case KEYID in levelloader");
 							_createKey(xcoords, ycoords);
 						break;
 
 						case EntityConfig.GOALID:
-							console.log("case GOALID in levelloader");
 							_createGoal(xcoords, ycoords);
 						break;
 
 						case EntityConfig.NEWGAMEDOOR:
-							console.log("case newgamedoor in levelloader");
 							_createNewGameDoor(xcoords, ycoords);
 						break;
 
 						case EntityConfig.CONTINUEDOOR:
-							console.log("case continuedoor in levelloader");
 							_createContinueDoor(xcoords, ycoords);
 						break;
 
 						case EntityConfig.LEVELDOOR:
-							console.log(levelDoorCount);
 							_createLevelDoor(xcoords, ycoords, layerData, levelDoorCount);
 							levelDoorCount++;
 						break;
@@ -344,7 +340,7 @@ BlobApp.LevelLoader = (function() {
 		$('body').trigger('genericRequested', _createRequestObject);
 	},
 
-	_createLevelDoor = function(x, y, layerdata, levelDoorCount) {
+	_createLevelDoor = function(x, y, layerData, levelDoorCount) {
 		var levelDoorLevelID = layerData.properties.LevelDoorID[levelDoorCount];
 		var entity = new BlobApp.LevelDoor(x, y+12.5, 25, 50, levelDoorLevelID);
 
