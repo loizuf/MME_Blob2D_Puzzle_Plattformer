@@ -222,7 +222,6 @@ BlobApp.ViewController = (function() {
 	_onLevelLoadRequest = function() {
 		_clearScene();
 
-		$('body').trigger("levelIDChanged");
 		$('body').trigger("destroyPhysics");
 
 		_tick();

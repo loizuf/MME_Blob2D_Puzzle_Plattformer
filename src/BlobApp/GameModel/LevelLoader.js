@@ -109,7 +109,9 @@ BlobApp.LevelLoader = (function() {
 						break;
 
 						case EntityConfig.KEYID:
+							console.log("keyloading");
 							_createKey(xcoords, ycoords);
+							console.log("keyloaded");
 						break;
 
 						case EntityConfig.GOALID:
@@ -148,8 +150,9 @@ BlobApp.LevelLoader = (function() {
 					}
 				}
 			}
-
+		console.log("borders loading");
 		_initBorders(borders);
+		console.log("borders loaded");
 	},
 
 	_informModel = function(layerData, doorCount) {
