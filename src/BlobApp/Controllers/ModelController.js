@@ -71,7 +71,7 @@ BlobApp.ModelController = (function() {
 		$('body').on('onReAllowJump', _reAllowJump);
 		$('body').on("doorCreated", _onDoorCreated);
 		$('body').on('onPlayerWaitingChange', _onPlayerWaitingChange);
-		$('body').on('keyPickedUp', _onKeyPickedUp);
+		$('body').on('onKeyPickedUp', _onKeyPickedUp);
 		$('body').on('blobFinishAttempt', _onBlobFinishAttempt);
 
 		//Menu related listener
@@ -116,7 +116,7 @@ BlobApp.ModelController = (function() {
 		$(thisVar).trigger('onDirectionChosen');
 	},
 
-	_onKeyPickedUp = function() {
+	_onKeyPickedUp = function(event, data) {
 		_screenStateHandler.onPickupKey();
 	},
 

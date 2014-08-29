@@ -12,12 +12,16 @@ BlobApp.CollisionHandler = (function() {
 	var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
 
 	var contactListener;
+	var keyPickedUp;
 
 	init = function() {
 		contactListener = new Box2D.Dynamics.b2ContactListener;
 
 		_handleContacts();
 		_registerListeners();
+
+		keyPickedUp = false;
+		console.log(keyPickedUp);
 	},
 
 	getContactListener = function() {
@@ -94,9 +98,7 @@ BlobApp.CollisionHandler = (function() {
 			break;
 			
 			case EntityConfig.KEYID:
-				console.log("try to pickup key");
 				_pickUpKey(bodyA, bodyB);
-				console.log("key picked");
 				return;
 			
 			case EntityConfig.GOALID:
@@ -171,7 +173,7 @@ BlobApp.CollisionHandler = (function() {
 
 			case EntityConfig.KEYID:
 				_pickUpKey(bodyA, bodyB);
-				return;		
+				return;
 
 			case EntityConfig.GOALID:
 				_attemptFinish(EntityConfig.REDBLOBID);
@@ -287,9 +289,10 @@ BlobApp.CollisionHandler = (function() {
 	},
 
 	_pickUpKey = function(bodyA, bodyB) {
-		console.log("try to fire an event");
-		$('body').trigger("onKeyPickedUp", {body:bodyB});
-		console.log("event fired");
+		if(!keyPickedUp) {
+			keyPickedUp = true;
+			$('body').trigger('onKeyPickedUp', {body:bodyB});
+		}
 	},
 
 	_addJuice = function(bodyA, blobHeight) {

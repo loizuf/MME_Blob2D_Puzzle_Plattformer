@@ -997,7 +997,6 @@ BlobApp.PhysicsHandler = (function() {
 
 	_pickUpKey = function(event, data) {
 		bodiesToRemove.push(data.body);
-		$('body').trigger('keyPickedUp');
 	},	
 
 
