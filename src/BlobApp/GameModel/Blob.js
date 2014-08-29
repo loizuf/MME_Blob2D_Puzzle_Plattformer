@@ -46,6 +46,15 @@ BlobApp.BlobSuperClass = function() {
 	_currentDown,
 	_currentMash,
 
+	_upPressed = function(){},
+	_upReleased = function(){},
+	_downPressed = function(){},
+	_downReleased = function(){},
+	_leftPressed = function(){},
+	_leftReleased = function(){},
+	_rightPressed = function(){},
+	_rightReleased = function(){},
+
 	keyUpPressed,
 	keyDownPressed,
 	keyLeftPressed,
@@ -178,18 +187,21 @@ BlobApp.BlobSuperClass = function() {
 	// These functions are called when a button is pressed
 	this.onLeftPressed = function(pressed) {
 		if(pressed) {
-			keyLeftPressed = true;
-			keyRightPressed = false;
+			if(!keyLeftPressed) {
+				keyLeftPressed = true;
+				keyRightPressed = false;
 
-			if(_jumpAllowed) {
-				$('body').trigger('blobanimationChanged', {
-					"blobID" : _blobID,
-					"animationKey" : AnimationKeys.MOVELEFT
-				});
+				if(_jumpAllowed) {
+					$('body').trigger('blobanimationChanged', {
+						"blobID" : _blobID,
+						"animationKey" : AnimationKeys.MOVELEFT
+					});
+				}
+				_leftPressed();
 			}
-
 		} else {
 			keyLeftPressed = false;
+			_leftReleased();
 		}
 
 		if(_blobID == EntityConfig.GREENBLOBID) {
@@ -199,18 +211,22 @@ BlobApp.BlobSuperClass = function() {
 
 	this.onRightPressed = function(pressed) {
 		if(pressed) {
-			keyRightPressed = true;
-			keyLeftPressed = false;
+			if(!keyRightPressed) {
+				keyRightPressed = true;
+				keyLeftPressed = false;
 
-			if(_jumpAllowed) {	
-				$('body').trigger('blobanimationChanged', {
-					"blobID" : _blobID,
-					"animationKey" : AnimationKeys.MOVERIGHT
-				});
+				if(_jumpAllowed) {	
+					$('body').trigger('blobanimationChanged', {
+						"blobID" : _blobID,
+						"animationKey" : AnimationKeys.MOVERIGHT
+					});
+				}
+
+				_rightPressed();
 			}
-
 		} else {
 			keyRightPressed = false;
+			_rightReleased();
 		}
 
 		if(_blobID == EntityConfig.GREENBLOBID) {
@@ -220,19 +236,27 @@ BlobApp.BlobSuperClass = function() {
 
 	this.onUpPressed = function(pressed) {
 		if(pressed) {
-			keyUpPressed = true;
-			keyDownPressed = false;
+			if(!keyUpPressed) {
+				keyUpPressed = true;
+				keyDownPressed = false;
+				_upPressed();
+			}
 		} else {
 			keyUpPressed = false;
+			_upReleased();
 		}
 	},
 
 	this.onDownPressed = function(pressed) {
 		if(pressed) {
-			keyDownPressed = true;
-			keyUpPressed = false;
+			if(!keyDownPressed) {
+				keyDownPressed = true;
+				keyUpPressed = false;
+				_downPressed();
+			}
 		} else {
 			keyDownPressed = false;
+			_downReleased();
 		}
 	},
 
@@ -260,6 +284,35 @@ BlobApp.BlobSuperClass = function() {
 
 	this.setCurrentMash = function(currentMash) {
 		_currentMash = currentMash;
+	},
+
+	this.setFunction = function(name, newFunction) {
+		switch(name) {
+			case "upPressed":
+				_upPressed = newFunction;
+				break;
+			case "upReleased":
+				_upReleased = newFunction;
+				break;
+			case "downPressed":
+				_downPressed = newFunction;
+				break;
+			case "downReleased":
+				_downReleased = newFunction;
+				break;
+			case "leftPressed":
+				_leftPressed = newFunction;
+				break;
+			case "leftReleased":
+				_leftReleased = newFunction;
+				break;
+			case "rightPressed":
+				_rightPressed = newFunction;
+				break;
+			case "rightReleased":
+				_rightReleased = newFunction;
+				break;
+		}
 	},
 
 	this.setEntity = function(entity){
