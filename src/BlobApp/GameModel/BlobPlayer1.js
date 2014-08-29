@@ -57,7 +57,7 @@ BlobApp.BlobPlayer1 = (function() {
 				thisVar.setIdle(skill);
 			break;
 
-			case "slingshot":
+			case "slingshotLeft":
 				thisVar.setIdle(skill);
 			break;
 		}
@@ -82,7 +82,7 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	this.initTrampolin = function() {
-		console.log("called");
+		console.log("initTrampolin called");
 		if(prototypeVar.getSingleSpecialAllowed() && !isTrampolin) {
 			prototypeVar.setSingleSpecialAllowed(false);
 
@@ -144,6 +144,7 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setCurrentUp(restore);
 		prototypeVar.setCurrentLeft(restore);
 		prototypeVar.setCurrentRight(restore);
+		prototypeVar.setFunction("downPressed", function(){});
 
 		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : skill});		
 	},
@@ -247,7 +248,7 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setCurrentRight(function(){});
 
 		prototypeVar.setFunction("leftPressed", thisVar.clutchSlingshot);
-		prototypeVar.setFunction("rightPressed", thisVar.losenSlingshot);
+		prototypeVar.setFunction("rightPressed", thisVar.loosenSlingshot);
 		prototypeVar.setFunction("downPressed", thisVar.shootSlingshot);
 
 		isSlingshotActive = true;
@@ -269,7 +270,8 @@ BlobApp.BlobPlayer1 = (function() {
 			slingshotTension != 8 ? slingshotTension += 0.2 : slingshotTension += 0;
 			
 
-			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});			
+			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});		
+			$('body').trigger('animateSlingshot', {"animationKey" : AnimationKeys.CLUTCH});	
 		}		
 	},
 
@@ -280,7 +282,8 @@ BlobApp.BlobPlayer1 = (function() {
 			slingshotTension != 7 ? slingshotTension -= 0.2 : slingshotTension += 0;
 			
 
-			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});
+			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});	
+			$('body').trigger('animateSlingshot', {"animationKey" : AnimationKeys.LOOSEN});	
 		}		
 	};
 

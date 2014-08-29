@@ -137,11 +137,12 @@ BlobApp.LevelLoader = (function() {
 						case EntityConfig.TELE:
 						case EntityConfig.BRIDGELEFTTILE:
 						case EntityConfig.BRIDGERIGHTTILE:
-						case EntityConfig.SLINGSHOTTILE:
+						case EntityConfig.SLINGSHOTTILELEFT:
+						case EntityConfig.SLINGSHOTTRIGGERRIGHT:
 							_createTriggerZone(xcoords, ycoords, layerData.data[idx]+1000);
 							borders[y][x] = true;
 							_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
-							break;
+						break;
 
 						default:
 							borders[y][x] = true;
@@ -390,10 +391,14 @@ BlobApp.LevelLoader = (function() {
 
 		_createRequestObject["width"] = 1.0;
 
-		if(entityID == EntityConfig.SLINGSHOTTRIGGER) {
+		if(entityID == EntityConfig.SLINGSHOTTRIGGERLEFT) {
 			var entity = new BlobApp.Slingshot(x, y-50, 75, 75);
 			_createRequestObject["sprite"] = entity.sprite;
 			$('body').trigger('genericRequested', _createRequestObject);
+		}
+
+		if(entityID == EntityConfig.SLINGSHOTTRIGGERRIGHT) {
+
 		}
 	},
 

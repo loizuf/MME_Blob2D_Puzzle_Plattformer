@@ -289,7 +289,7 @@ BlobApp.ModelController = (function() {
 			$('body').trigger("startSphere");
 			_blobPlayerOne.prototype.setWaitingForOther(false);
 			_blobPlayerTwo.prototype.setWaitingForOther(false);
-		} else if(specialName == "slingshot") {
+		} else if(specialName == "slingshotLeft") {
 			$('body').trigger('startSlingshot');
 			_blobPlayerOne.prototype.setWaitingForOther(false);
 			_blobPlayerTwo.prototype.setWaitingForOther(false);
