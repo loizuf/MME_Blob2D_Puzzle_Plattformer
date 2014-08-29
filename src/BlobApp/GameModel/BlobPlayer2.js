@@ -85,9 +85,9 @@ BlobApp.BlobPlayer2 = (function() {
 			prototypeVar.setSingleSpecialAllowed(false);
 
 			prototypeVar.setCurrentUp(function() {});
-			prototypeVar.setCurrentDown(function() {
-				thisVar.stopStretch();
-			});
+			prototypeVar.setCurrentDown(function() {});
+
+			prototypeVar.setFunction("downPressed", function() {thisVar.stopStretch();});
 
 			prototypeVar.setCurrentRight(function(){});
 			prototypeVar.setCurrentLeft(function(){});
@@ -102,9 +102,9 @@ BlobApp.BlobPlayer2 = (function() {
 			prototypeVar.setSingleSpecialAllowed(false);
 
 			prototypeVar.setCurrentUp(prototypeVar._jump);
-			prototypeVar.setCurrentDown(function() {
-				thisVar.initStretch();
-			});
+			prototypeVar.setCurrentDown(function() {});
+
+			prototypeVar.setFunction("downPressed", function() {thisVar.initStretch();});
 
 			prototypeVar.setCurrentRight(prototypeVar._moveRight);
 			prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
@@ -120,12 +120,10 @@ BlobApp.BlobPlayer2 = (function() {
 		prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
 		prototypeVar.setCurrentRight(prototypeVar._moveRight);
 		prototypeVar.setCurrentMash(function(){});
-		prototypeVar.setCurrentDown(function() {
-			thisVar.initStretch();
-		});
+		prototypeVar.setCurrentDown(function() {});
 		prototypeVar.setFunction("upPressed", function(){});
 		prototypeVar.setFunction("upReleased", function(){});
-		prototypeVar.setFunction("downPressed", function(){});
+		prototypeVar.setFunction("downPressed", function(){thisVar.initStretch();});
 		prototypeVar.setFunction("downReleased", function(){});
 		prototypeVar.setFunction("leftPressed", function(){});
 		prototypeVar.setFunction("leftReleased", function(){});

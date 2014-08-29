@@ -82,13 +82,14 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	this.initTrampolin = function() {
+		console.log("called");
 		if(prototypeVar.getSingleSpecialAllowed() && !isTrampolin) {
 			prototypeVar.setSingleSpecialAllowed(false);
 
 			prototypeVar.setCurrentUp(function(){});
-			prototypeVar.setCurrentDown(function(){
-				thisVar.stopTrampolin();
-			});
+			prototypeVar.setCurrentDown(function(){});
+			
+			prototypeVar.setFunction("downPressed", function(){thisVar.stopTrampolin();});
 
 			prototypeVar.setCurrentRight(function(){});
 			prototypeVar.setCurrentLeft(function(){});
@@ -103,12 +104,12 @@ BlobApp.BlobPlayer1 = (function() {
 			prototypeVar.setSingleSpecialAllowed(false);
 
 			prototypeVar.setCurrentUp(prototypeVar._jump);
-			prototypeVar.setCurrentDown(function() {
-				thisVar.initTrampolin();
-			});
+			prototypeVar.setCurrentDown({});
 
 			prototypeVar.setCurrentRight(prototypeVar._moveRight);
 			prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
+
+			prototypeVar.setFunction("downPressed", function() {thisVar.initTrampolin();});
 
 			$('body').trigger("onTrampolinInactive");
 			isTrampolin = false;	
@@ -120,12 +121,10 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setCurrentUp(prototypeVar._jump);
 		prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
 		prototypeVar.setCurrentRight(prototypeVar._moveRight);
-		prototypeVar.setCurrentDown(function() {
-				thisVar.initTrampolin();
-		});
+		prototypeVar.setCurrentDown(function() {});
 		prototypeVar.setFunction("upPressed", function(){});
 		prototypeVar.setFunction("upReleased", function(){});
-		prototypeVar.setFunction("downPressed", function(){});
+		prototypeVar.setFunction("downPressed", function(){thisVar.initTrampolin();});
 		prototypeVar.setFunction("downReleased", function(){});
 		prototypeVar.setFunction("leftPressed", function(){});
 		prototypeVar.setFunction("leftReleased", function(){});
