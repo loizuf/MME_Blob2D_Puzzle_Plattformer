@@ -94,12 +94,10 @@ BlobApp.ModelController = (function() {
 
 	_storeSlingshotAngle = function(event, data) {
 		slingshotAbilityAngle = data.angle;
-		setTimeout(function(){ $('body').trigger('onNewAngleStored'); }, 100);
 	},
 
 	_storeSlingshotTension = function(event, data) {
 		slingshotAbilityTension = data.tension;	
-		setTimeout(function(){ $('body').trigger('onNewTensionStored'); }, 100);
 	},
 
 	_setSlingshotReleaseForce = function() {
