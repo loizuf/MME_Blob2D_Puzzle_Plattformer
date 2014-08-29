@@ -23,7 +23,7 @@ BlobApp.SoundHandler = (function() {
         preload.addEventListener("complete", _doneLoading);
         preload.loadManifest(manifest);
 
-        _listeners();
+        //_listeners();
 
         return that;
     },
@@ -106,7 +106,7 @@ BlobApp.SoundHandler = (function() {
     },
 
     _stopSpecial = function(event, data) {  
-        console.log(data)
+        console.log(data.specialName)
         switch(data.specialName){
             case "heli":
             _stopHeliSound();
@@ -118,11 +118,11 @@ BlobApp.SoundHandler = (function() {
 
             case "bridgeLeft":
             case "bridgeRight":
-            _stopBridgeSound
+            _stopBridgeSound();
             break;
 
             case "sphere":
-            _stopSphereSound
+            _stopSphereSound();
             break;
 
             case "slingshot":
