@@ -49,5 +49,7 @@ AnimationKeys = {
 	BOUNCE: 8,
 	TELEPORT: 9,
 	LOAD: 10,
-	FIRE: 11
+	FIRE: 11,
+	CLUTCH: 12,
+	LOOSEN: 13
 }
