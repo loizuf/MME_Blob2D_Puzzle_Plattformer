@@ -213,6 +213,8 @@ BlobApp.PhysicsHandler = (function() {
 			}
 		}
 
+		if(greenBlobEntity == undefined) return;
+
 		if(trampolinSize <= TRAMPOLIN_WIDTH) {
 			var fixture = createDefaultBoxFixture(trampolinSize * (TILESIZEX - 1) / SCALE, (TILESIZEY - 1) / SCALE);
 

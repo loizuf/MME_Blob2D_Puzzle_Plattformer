@@ -33,7 +33,37 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 				stable : [0,0],
 				load: [1, 18, "loaded"],
 				loaded: [18, 18],
-				stop: [19, 20, "stable"]
+				stop: [19, 20, "stable"],
+				clutch1 : [26, 29, "clutch1after"],
+				clutch1after : [29, 29],
+				clutch2 : [39, 42, "clutch2after"],
+				clutch2after : [42, 42],
+				clutch3 : [52, 55, "clutch3after"],
+				clutch3after : [55, 55],
+				clutch4 : [65, 68, "clutch4after"],
+				clutch4after : [68, 68],
+				clutch5: [78, 81, "clutch5after"],
+				clutch5after: [81, 81],
+				loosen1 : {
+						frames: [29, 27, 28, 26],
+						next: "loaded"
+					},
+				loosen2 : {
+						frames: [42, 41, 40, 39],
+						next: "clutch1after"
+					},
+				loosen3 : {
+						frames: [55, 54, 53, 52],
+						next: "clutch2after"
+					},
+				loosen4 : {
+						frames: [68, 67, 66, 65],
+						next: "clutch3after"
+					},
+				loosen5 : {
+						frames: [81, 80, 79, 78],
+						next: "clutch4after"
+					}
 			}
 		}
 
@@ -75,7 +105,64 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 			break;
 			case AnimationKeys.STOP:	
 			break;
+			case AnimationKeys.CLUTCH:
+				_clutchSlingshot();
+			break;
+			case AnimationKeys.LOOSEN:
+				_loosenSlingshot();
+			break;
 		}	
+	},
+
+	_clutchSlingshot = function() {
+		animationName = "";
+		switch(sprite.currentAnimation) {
+			case "loaded":
+				animationName = "clutch1";
+				break;
+			case "clutch1after" :
+				animationName = "clutch2";
+				break;
+			case "clutch2after" :
+				animationName = "clutch3";
+				break;
+			case "clutch3after" :
+				animationName = "clutch4";
+				break;
+			case "clutch4after" :
+				animationName = "clutch5";
+				break;
+			default:
+				return;
+		}
+
+		sprite.gotoAndPlay(animationName);
+	},
+
+	_loosenSlingshot = function() {
+		animationName = "";
+		switch(sprite.currentAnimation) {
+			case "clutch1after" :
+				animationName = "loosen1";
+				break;
+			case "clutch2after" :
+				animationName = "loosen2";
+				break;
+			case "clutch3after" :
+				animationName = "loosen3";
+				break;
+			case "clutch4after" :
+				animationName = "loosen4";
+				break;
+			case "clutch5after" :
+				animationName = "loosen5";
+				break;
+			default: return;
+
+		}
+
+		sprite.gotoAndPlay(animationName);
+
 	},
 
 	_triggerSlingshotStart = function() {
