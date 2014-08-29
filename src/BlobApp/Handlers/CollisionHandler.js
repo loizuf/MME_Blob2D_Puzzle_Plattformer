@@ -125,8 +125,12 @@ BlobApp.CollisionHandler = (function() {
 				_playerInTriggerZone("greenBlob", "sphere");
 				return;
 
-			case EntityConfig.SLINGSHOTTRIGGER:
-				_playerInTriggerZone("greenBlob", "slingshot");
+			case EntityConfig.SLINGSHOTTRIGGERLEFT:
+				_playerInTriggerZone("greenBlob", "slingshotLeft");
+				return;
+
+			case EntityConfig.SLINGSHOTTRIGGERRIGHT:
+				_playerInTriggerZone("greenBlob", "slingshotRight");
 				return;
 
 			//MenuNavigation
@@ -199,8 +203,12 @@ BlobApp.CollisionHandler = (function() {
 				_playerInTriggerZone("redBlob", "sphere");
 				return;
 
-			case EntityConfig.SLINGSHOTTRIGGER:
-				_playerInTriggerZone("redBlob", "slingshot");
+			case EntityConfig.SLINGSHOTTRIGGERLEFT:
+				_playerInTriggerZone("redBlob", "slingshotLeft");
+				return;
+
+			case EntityConfig.SLINGSHOTTRIGGERRIGHT:
+				_playerInTriggerZone("redBlob", "slingshotRight");
 				return;
 
 			//MenuNavigation

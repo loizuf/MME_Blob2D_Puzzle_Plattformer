@@ -57,7 +57,7 @@ BlobApp.BlobPlayer2 = (function() {
 				thisVar.setIdle(skill);
 			break;
 
-			case "slingshot":
+			case "slingshotLeft":
 				thisVar.setIdle(skill);
 			break;
 		}

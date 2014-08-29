@@ -57,7 +57,7 @@ BlobApp.BlobPlayer1 = (function() {
 				thisVar.setIdle(skill);
 			break;
 
-			case "slingshot":
+			case "slingshotLeft":
 				thisVar.setIdle(skill);
 			break;
 		}
@@ -82,7 +82,7 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	this.initTrampolin = function() {
-		console.log("called");
+		console.log("initTrampolin called");
 		if(prototypeVar.getSingleSpecialAllowed() && !isTrampolin) {
 			prototypeVar.setSingleSpecialAllowed(false);
 
@@ -144,6 +144,7 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setCurrentUp(restore);
 		prototypeVar.setCurrentLeft(restore);
 		prototypeVar.setCurrentRight(restore);
+		prototypeVar.setFunction("downPressed", function(){});
 
 		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : skill});		
 	},
