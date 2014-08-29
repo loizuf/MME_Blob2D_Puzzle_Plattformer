@@ -431,7 +431,27 @@ BlobApp.LevelLoader = (function() {
 			break;
 
 			case 4:
-				mapDataJson = LevelConfig.OVER0;
+				mapDataJson = LevelConfig.SIMPLEJUMP;
+			break;
+
+			case 5:
+				mapDataJson = LevelConfig.ROULETTE;
+			break;
+
+			case 6:
+				mapDataJson = LevelConfig.PRECISION;
+			break;
+
+			case 7:
+				mapDataJson = LevelConfig.TEMPLE;
+			break;
+
+			case 8:
+				mapDataJson = LevelConfig.TEMPLECLEAN;
+			break;
+
+			case 9:
+				mapDataJson = LevelConfig.HELI;
 			break;
 
 			case 98:
