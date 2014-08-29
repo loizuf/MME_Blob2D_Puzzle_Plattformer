@@ -123,6 +123,14 @@ BlobApp.BlobPlayer2 = (function() {
 		prototypeVar.setCurrentDown(function() {
 			thisVar.initStretch();
 		});
+		prototypeVar.setFunction("upPressed", function(){});
+		prototypeVar.setFunction("upReleased", function(){});
+		prototypeVar.setFunction("downPressed", function(){});
+		prototypeVar.setFunction("downReleased", function(){});
+		prototypeVar.setFunction("leftPressed", function(){});
+		prototypeVar.setFunction("leftReleased", function(){});
+		prototypeVar.setFunction("rightPressed", function(){});
+		prototypeVar.setFunction("rightReleased", function(){});
 	},
 
 	// For when the blob is waiting for the other blob to do something
@@ -231,10 +239,13 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').unbind("greenBlobLeftTriggerZone");
 		prototypeVar.setSingleSpecialAllowed(false);
 
-		prototypeVar.setCurrentUp(thisVar.increaseSlingshotAngle);
-		prototypeVar.setCurrentDown(thisVar.decreaseSlingshotAngle);
+		prototypeVar.setCurrentUp(function(){});
+		prototypeVar.setCurrentDown(function(){});
 		prototypeVar.setCurrentLeft(function(){});
-		prototypeVar.setCurrentRight(function(){});		
+		prototypeVar.setCurrentRight(function(){});
+
+		prototypeVar.setFunction("upPressed", thisVar.increaseSlingshotAngle);
+		prototypeVar.setFunction("downPressed", thisVar.decreaseSlingshotAngle);
 	},
 
 	isNextAngleSelected = true,

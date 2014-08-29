@@ -123,6 +123,14 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setCurrentDown(function() {
 				thisVar.initTrampolin();
 		});
+		prototypeVar.setFunction("upPressed", function(){});
+		prototypeVar.setFunction("upReleased", function(){});
+		prototypeVar.setFunction("downPressed", function(){});
+		prototypeVar.setFunction("downReleased", function(){});
+		prototypeVar.setFunction("leftPressed", function(){});
+		prototypeVar.setFunction("leftReleased", function(){});
+		prototypeVar.setFunction("rightPressed", function(){});
+		prototypeVar.setFunction("rightReleased", function(){});
 	},
 
 	// For when the blob is waiting for the other blob to do something
@@ -234,10 +242,14 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setSingleSpecialAllowed(false);
 
 		prototypeVar.setCurrentUp(function(){});
-		prototypeVar.setCurrentDown(thisVar.shootSlingshot);
+		prototypeVar.setCurrentDown(function(){});
 
-		prototypeVar.setCurrentLeft(thisVar.clutchSlingshot);
-		prototypeVar.setCurrentRight(thisVar.loosenSlingshot);
+		prototypeVar.setCurrentLeft(function(){});
+		prototypeVar.setCurrentRight(function(){});
+
+		prototypeVar.setFunction("leftPressed", thisVar.clutchSlingshot);
+		prototypeVar.setFunction("rightPressed", thisVar.losenSlingshot);
+		prototypeVar.setFunction("downPressed", thisVar.shootSlingshot);
 
 		isSlingshotActive = true;
 	},
