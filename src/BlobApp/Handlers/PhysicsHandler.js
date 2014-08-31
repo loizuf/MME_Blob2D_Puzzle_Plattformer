@@ -354,8 +354,6 @@ BlobApp.PhysicsHandler = (function() {
 
 		$('body').trigger("heliEntityRequested", {"sprite" : sprite});
 
-		_setSprites(heliEnt);
-
 		if(heliIsActive) {
 			return;
 		}
@@ -668,29 +666,25 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_disassembleHeli = function(event, data) {
+		var xPos = heliBody.m_xf.position.x;
+		var yPos = heliBody.m_xf.position.y;
 
-		if(data.sprites[0].name == "blobRed") {
-			sprite1 = data.sprites[0];
-			sprite2 = data.sprites[1];
-		} else {
-			sprite1 = data.sprites[1];
-			sprite2 = data.sprites[0];
-		}
+		sprite1X = (xPos * SCALE) + 12.5;
+		sprite2X = (xPos * SCALE) - 12.5;
 
+		sprite1Y = (yPos * SCALE) - 3;
+		sprite2Y = (yPos * SCALE) - 3;		
+
+		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, 25, 50, EntityConfig.REDBLOBID);
+		var sprite1 = blob1.sprite;		
+
+		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, 25, 25, EntityConfig.GREENBLOBID);
+		var sprite2 = blob2.sprite;
 
 		userData1 = (sprite1.name == "blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
 		userData2 = (userData1 == EntityConfig.REDBLOBID) ? EntityConfig.GREENBLOBID : EntityConfig.REDBLOBID;
 
-		var xPos = heliBody.m_xf.position.x;
-		var yPos = heliBody.m_xf.position.y;
-
-		sprite1.x = (xPos * SCALE) + 12.5;
-		sprite2.x = (xPos * SCALE) - 12.5;
-
-		sprite1.y = (yPos * SCALE) - 3;
-		sprite2.y = (yPos * SCALE) - 3;		
-
-		$('body').trigger('removeHeliFromView', {"sprites" : data.sprites});
+		$('body').trigger('removeHeliFromView', {"sprites" : [blob1.sprite, blob2.sprite]});
 		
 		_recreateBlob(sprite1, userData1);
 		_recreateBlob(sprite2, userData2);
