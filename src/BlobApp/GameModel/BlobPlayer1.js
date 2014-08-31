@@ -158,8 +158,6 @@ BlobApp.BlobPlayer1 = (function() {
 	heliSpeedX = 0.1,
 
 	this.initHeli = function() {		
-		$('body').unbind("greenBlobLeftTriggerZone");
-
 		prototypeVar.setSingleSpecialAllowed(false);
 		// BlobPlayer2 controls up and down movements:
 		prototypeVar.setCurrentUp(function(){});
