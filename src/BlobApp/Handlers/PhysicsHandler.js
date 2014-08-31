@@ -423,6 +423,17 @@ BlobApp.PhysicsHandler = (function() {
 
 		bodies.push(entity); 
 		heliBody = entity;	
+
+		for(var i = 0; i < actors.length; i++) {
+			if(actors[i].body.GetUserData[0] == EntityConfig.GREENBLOBID) {
+				actors.splice(i, 1);
+			}	
+		}
+		for(var i = 0; i < actors.length; i++) {
+			if(actors[i].body.GetUserData[0] == EntityConfig.REDBLOBID) {
+				actors.splice(i, 1);
+			}	
+		}
 	},
 
 	_initSphere = function() {
@@ -732,6 +743,8 @@ BlobApp.PhysicsHandler = (function() {
 	
 		blobEntity.SetPosition(new b2Vec2(sprite.x / SCALE, sprite.y / SCALE));
 		blobEntity.CreateFixture(fixture);
+
+		actor = new _actorObject(blobEntity, sprite);
 	},
 
 	_registerListener = function() {
