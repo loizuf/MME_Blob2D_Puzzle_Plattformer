@@ -179,8 +179,6 @@ BlobApp.BlobPlayer1 = (function() {
 
 	// START BRIDGE
 	this.initBridge = function(event, data) {
-		$('body').unbind("greenBlobLeftTriggerZone");
-
 		prototypeVar.setSingleSpecialAllowed(false);
 
 		prototypeVar.setCurrentUp(function(){});
@@ -199,8 +197,6 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	this.initSphere = function() {
-		$('body').unbind("greenBlobLeftTriggerZone");
-
 		prototypeVar.setSingleSpecialAllowed(false);
 
 		prototypeVar.setCurrentUp(function(){});

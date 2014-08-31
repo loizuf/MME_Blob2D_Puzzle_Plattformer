@@ -451,8 +451,6 @@ BlobApp.PhysicsHandler = (function() {
 
 		$('body').trigger("sphereEntityRequested", {"sprite" : sprite});
 
-		_setSprites(sphereEntity);
-
 		if(sphereIsActive) {
 			return;
 		}
@@ -500,28 +498,25 @@ BlobApp.PhysicsHandler = (function() {
 	}
 
 	_disassembleSphere = function(event, data) {
-		if(data.sprites[0].name == "blobRed") {
-			sprite1 = data.sprites[0];
-			sprite2 = data.sprites[1];
-		} else {
-			sprite1 = data.sprites[1];
-			sprite2 = data.sprites[0];
-		}
+		var xPos = sphereBody.m_xf.position.x;
+		var yPos = sphereBody.m_xf.position.y;
 
+		sprite1X = (xPos * SCALE) + 12.5;
+		sprite2X = (xPos * SCALE) - 12.5;
+
+		sprite1Y = (yPos * SCALE) - 3;
+		sprite2Y = (yPos * SCALE) - 3;		
+
+		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, 25, 50, EntityConfig.REDBLOBID);
+		var sprite1 = blob1.sprite;		
+
+		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, 25, 25, EntityConfig.GREENBLOBID);
+		var sprite2 = blob2.sprite;
 
 		userData1 = (sprite1.name=="blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
 		userData2 = (userData1 == EntityConfig.REDBLOBID) ? EntityConfig.GREENBLOBID : EntityConfig.REDBLOBID;
 
-		var xPos = sphereBody.m_xf.position.x;
-		var yPos = sphereBody.m_xf.position.y;
-
-		sprite1.x = (xPos * SCALE) + 12.5;
-		sprite2.x = (xPos * SCALE) - 12.5;
-
-
-		sprite1.y = (yPos * SCALE) - 3;
-		sprite2.y = (yPos * SCALE) - 3;
-		$('body').trigger('removeSphereFromView', {"sprites" : data.sprites});
+		$('body').trigger('removeSphereFromView', {"sprites" : [sprite1, sprite2]});
 		
 		_recreateBlob(sprite1, userData1);
 		_recreateBlob(sprite2, userData2);
@@ -549,8 +544,6 @@ BlobApp.PhysicsHandler = (function() {
 		sprite = bridgeEntity.sprite;
 
 		$('body').trigger("bridgeEntityRequested", {"sprite" : sprite});
-
-		_setSprites(bridgeEntity);
 
 		if(bridgeIsActive) {
 			return;
@@ -586,55 +579,53 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_disassembleBridge = function(event, data) {
-		if(data.sprites[0].name == "blobRed") {
-			sprite1 = data.sprites[0];
-			sprite2 = data.sprites[1];
-		} else {
-			sprite1 = data.sprites[1];
-			sprite2 = data.sprites[0];
-		}
-
-		userData1 = (sprite1.name == "blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
-		userData2 = (userData1 == EntityConfig.REDBLOBID) ? EntityConfig.GREENBLOBID : EntityConfig.REDBLOBID;
-
 		var xPos = bridgeBody.m_xf.position.x;
 		var yPos = bridgeBody.m_xf.position.y;
 
 		if(bridgeStart == "left") {
 			if(bridgeClimbDirection == "left") {
-				sprite1.x = (xPos * SCALE) + 12.5 - 80;
-				sprite2.x = (xPos * SCALE) - 12.5 - 80;		
+				sprite1X = (xPos * SCALE) + 12.5 - 80;
+				sprite2X = (xPos * SCALE) - 12.5 - 80;
 
-				sprite1.y = (yPos * SCALE) - 3;
-				sprite2.y = (yPos * SCALE) - 3;
+				sprite1Y = (yPos * SCALE) - 3;
+				sprite2Y = (yPos * SCALE) - 3;	
 			} else {
-				sprite1.x = (xPos * SCALE) + 12.5 + 115;
-				sprite2.x = (xPos * SCALE) - 12.5 + 115;		
+				sprite1X = (xPos * SCALE) + 12.5 + 115;
+				sprite2X = (xPos * SCALE) - 12.5 + 115;
 
-				sprite1.y = (yPos * SCALE) - 3;
-				sprite2.y = (yPos * SCALE) - 3;
+				sprite1Y = (yPos * SCALE) - 3;
+				sprite2Y = (yPos * SCALE) - 3;	
 			}
-
 		} else {
 			if(bridgeClimbDirection == "left") {
-				sprite1.x = (xPos * SCALE) + 12.5 - 240;
-				sprite2.x = (xPos * SCALE) - 12.5 - 240;		
+				sprite1X = (xPos * SCALE) + 12.5 - 240;
+				sprite2X = (xPos * SCALE) - 12.5 - 240;
 
-				sprite1.y = (yPos * SCALE) - 3;
-				sprite2.y = (yPos * SCALE) - 3;
+				sprite1Y = (yPos * SCALE) - 3;
+				sprite2Y = (yPos * SCALE) - 3;	
 			} else {
-				sprite1.x = (xPos * SCALE) + 12.5
-				sprite2.x = (xPos * SCALE) - 12.5	
+				sprite1X = (xPos * SCALE) + 12.5;
+				sprite2X = (xPos * SCALE) - 12.5;
 
-				sprite1.y = (yPos * SCALE) - 3;
-				sprite2.y = (yPos * SCALE) - 3;
-			}
-		}		
+				sprite1Y = (yPos * SCALE) - 3;
+				sprite2Y = (yPos * SCALE) - 3;	
+			}			
+		}
+	
+
+		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, 25, 50, EntityConfig.REDBLOBID);
+		var sprite1 = blob1.sprite;		
+
+		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, 25, 25, EntityConfig.GREENBLOBID);
+		var sprite2 = blob2.sprite;
+
+		userData1 = (sprite1.name == "blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
+		userData2 = (userData1 == EntityConfig.REDBLOBID) ? EntityConfig.GREENBLOBID : EntityConfig.REDBLOBID;
 		
 		_recreateBlob(sprite1, userData1);
 		_recreateBlob(sprite2, userData2);
 
-		$('body').trigger('removeBridgeFromView', {"sprites" : data.sprites});
+		$('body').trigger('removeBridgeFromView', {"sprites" : [sprite1, sprite2]});
 		bridgeIsActive = false;
 
 		bodiesToRemove.push(bridgeBody);
