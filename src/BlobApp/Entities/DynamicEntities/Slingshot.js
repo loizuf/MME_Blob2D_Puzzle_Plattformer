@@ -5,7 +5,6 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 	tilesetSheet,
 	tileset,
 	blobSprites,
-	removedSprite,
 	stopStarted,
 	strength,
 	angle;
@@ -179,7 +178,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 	},
 
 	_checkIfStopFinished = function() {
-		if(!removedSprite && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 1) {
+		if(sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 1) {
 			$('body').trigger('specialFinished', {'specialName' : "slingshot"});
 			$('body').trigger('slingshotFinished', {'xPos' : x_pos,
 												    'yPos' : y_pos,
@@ -188,7 +187,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 			$('body').trigger('slingshotStopRequested', {"sprites" : blobSprites});
 
 			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)
-			removedSprite = true;
+			stopStarted = false;
 		}
 	},
 

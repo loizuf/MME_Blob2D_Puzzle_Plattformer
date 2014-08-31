@@ -229,6 +229,7 @@ BlobApp.BlobPlayer2 = (function() {
 	this.initSlingshot = function() {
 		$('body').unbind("greenBlobLeftTriggerZone");
 		prototypeVar.setSingleSpecialAllowed(false);
+		slingshotAngle = 30;
 
 		prototypeVar.setCurrentUp(function(){});
 		prototypeVar.setCurrentDown(function(){});
