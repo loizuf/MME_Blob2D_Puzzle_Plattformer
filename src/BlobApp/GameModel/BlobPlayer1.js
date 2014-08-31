@@ -9,10 +9,8 @@ BlobApp.BlobPlayer1 = (function() {
 
 	this.setup = function() {
 		_initListeners();
-		
-		prototypeVar.setCurrentDown(function() {
-			thisVar.initTrampolin();
-		});
+				
+		prototypeVar.setFunction("downPressed", function(){thisVar.initTrampolin();});
 	},
 
 	_initListeners = function() {
@@ -69,7 +67,7 @@ BlobApp.BlobPlayer1 = (function() {
 
 	_setDownAction = function(event, what) {
 		if(!what) {
-			prototypeVar.setFunction(function(){thisVar.stopTrampolin();});
+			prototypeVar.setFunction("downPressed", function(){thisVar.initTrampolin();});
 			return;
 		} 
 					

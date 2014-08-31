@@ -10,9 +10,7 @@ BlobApp.BlobPlayer2 = (function() {
 	this.setup = function() {	
 		_initListeners();
 
-		prototypeVar.setCurrentDown(function() {
-			thisVar.initStretch();
-		});
+		prototypeVar.setFunction("downPressed", function(){thisVar.initStretch();});
 	},
 
 	_initListeners = function() {
@@ -68,7 +66,7 @@ BlobApp.BlobPlayer2 = (function() {
 
 	_setDownAction = function(event, what) {
 		if(!what) {
-			prototypeVar.setFunction(function(){thisVar.initStretch();});
+			prototypeVar.setFunction("downPressed", function(){thisVar.initStretch();});
 			return;
 		} 
 		
