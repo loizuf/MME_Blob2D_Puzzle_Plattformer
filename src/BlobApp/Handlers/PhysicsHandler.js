@@ -495,7 +495,7 @@ BlobApp.PhysicsHandler = (function() {
 
 	_moveSphere = function(event, data) {
 		sphereBody.ApplyImpulse(new b2Vec2(data.speed, 0), sphereBody.GetPosition());
-	}
+	},
 
 	_disassembleSphere = function(event, data) {
 		var xPos = sphereBody.m_xf.position.x;
@@ -685,13 +685,11 @@ BlobApp.PhysicsHandler = (function() {
 		bodiesToRemove.push(heliBody);
 	},
 
-	shootSlingshot = function(event, data) {
+	_fireSlingshot = function(event, data) {			
 		var slingX = data.xPos,
 			slingY = data.yPos,
 			angle = data.angle,
 			tension = data.force;
-
-			console.log(data);
 
 		greenBlobEntity = undefined;
 		redBlobEntity = undefined;
@@ -749,7 +747,7 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('onStretchInactive', _deactivateStretch);
 
 		$('body').on('openDoor',_openDoor);
-		$('body').on('onKeyPickedUp', _pickUpKey);
+		$('body').on('onKeyPickedUp', _pickUpKeyPhysics);
 		$('body').on('onTrampolinContact', _handleTrampolinContact);
 		
 		// START: DUMMY HELI
@@ -771,8 +769,8 @@ BlobApp.PhysicsHandler = (function() {
 		//START: DUMMY TELEPORT
 		$('body').on('teleportRequested', _doTeleport);
 
-		//DUMMY SLINGSHOTf
-		$('body').on('slingshotFinished', shootSlingshot);
+		//DUMMY SLINGSHOT
+		$('body').on('slingshotFinished', _fireSlingshot);
 		// DESTRUCTION
 		$('body').on("restartPhys", _restartPhys);
 		$('body').on("destroyPhysics", _destroyWorld);
@@ -955,7 +953,7 @@ BlobApp.PhysicsHandler = (function() {
 		world.SetContactListener(listener);
 	},	
 
-	_pickUpKey = function(event, data) {
+	_pickUpKeyPhysics = function(event, data) {
 		bodiesToRemove.push(data.body);
 	},	
 

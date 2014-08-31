@@ -90,7 +90,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 		$('body').on('animateSlingshot', _animate);
 		$('body').on('startSlingshot', _triggerSlingshotStart);
 
-		$('body').on('onSlingshotShot', shootSlingshot);
+		$('body').on('onSlingshotShot', _shootSlingshot);
 
 	},
 
@@ -168,7 +168,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 		$('body').trigger('onStartSlingshot', {slingshotEntity : that});
 	},
 
-	shootSlingshot = function(event, data) {
+	_shootSlingshot = function(event, data) {
 		strength = data.force;
 		angle = data.angle;	
 		if(!stopStarted) {	
