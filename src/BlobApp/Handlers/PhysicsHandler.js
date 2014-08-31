@@ -366,17 +366,7 @@ BlobApp.PhysicsHandler = (function() {
 		for(var i = 0; i < bodies.length; i++) {
 			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID 
 				|| bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
-				bodiesToRemove.push(bodies[i]);
-			}
-		}
-		for(var i = 0; i < bodies.length; i++) {
-			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
-				bodies.splice(i, 1);
-			}
-		}
-		for(var i = 0; i < bodies.length; i++) {
-			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
-				bodies.splice(i, 1);
+				bodies[i].DestroyFixture(bodies[i].GetFixtureList());
 			}
 		}
 
@@ -460,20 +450,11 @@ BlobApp.PhysicsHandler = (function() {
 
 		sphereIsActive = true;
 
+		blobBodies = [];
 		for(var i = 0; i < bodies.length; i++) {
 			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID 
 				|| bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
-				bodiesToRemove.push(bodies[i]);
-			}
-		}
-		for(var i = 0; i < bodies.length; i++) {
-			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
-				bodies.splice(i, 1);
-			}
-		}
-		for(var i = 0; i < bodies.length; i++) {
-			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
-				bodies.splice(i, 1);
+				bodies[i].DestroyFixture(bodies[i].GetFixtureList());
 			}
 		}
 
@@ -531,11 +512,11 @@ BlobApp.PhysicsHandler = (function() {
 
 		sprite1.y = (yPos * SCALE) - 3;
 		sprite2.y = (yPos * SCALE) - 3;
+		$('body').trigger('removeSphereFromView', {"sprites" : data.sprites});
 		
 		_recreateBlob(sprite1, userData1);
 		_recreateBlob(sprite2, userData2);
 
-		$('body').trigger('removeSphereFromView', {"sprites" : data.sprites});
 		sphereIsActive = false;
 
 		bodiesToRemove.push(sphereBody);
@@ -568,21 +549,11 @@ BlobApp.PhysicsHandler = (function() {
 
 		bridgeIsActive = true;
 
-
+		blobBodies = [];
 		for(var i = 0; i < bodies.length; i++) {
 			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID 
 				|| bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
-				bodiesToRemove.push(bodies[i]);
-			}
-		}
-		for(var i = 0; i < bodies.length; i++) {
-			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
-				bodies.splice(i, 1);
-			}
-		}
-		for(var i = 0; i < bodies.length; i++) {
-			if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
-				bodies.splice(i, 1);
+				bodies[i].DestroyFixture(bodies[i].GetFixtureList());
 			}
 		}
 
@@ -705,14 +676,14 @@ BlobApp.PhysicsHandler = (function() {
 		sprite1.x = (xPos * SCALE) + 12.5;
 		sprite2.x = (xPos * SCALE) - 12.5;
 
-
 		sprite1.y = (yPos * SCALE) - 3;
-		sprite2.y = (yPos * SCALE) - 3;
+		sprite2.y = (yPos * SCALE) - 3;		
+
+		$('body').trigger('removeHeliFromView', {"sprites" : data.sprites});
 		
 		_recreateBlob(sprite1, userData1);
 		_recreateBlob(sprite2, userData2);
 
-		$('body').trigger('removeHeliFromView', {"sprites" : data.sprites});
 		heliIsActive = false;
 
 		bodiesToRemove.push(heliBody);
@@ -751,27 +722,16 @@ BlobApp.PhysicsHandler = (function() {
 			height = (userData == EntityConfig.REDBLOBID) ? ((TILESIZEY * 2) - 3 ) / SCALE : (TILESIZEY - 1) / SCALE;
 
 		var fixture = createDefaultBoxFixture(width, height);
-		var bodyDef = new b2BodyDef;
 
-		bodyDef.type = b2Body.b2_dynamicBody;
-		bodyDef.position.x = (sprite.x) / SCALE;
-		bodyDef.position.y = (sprite.y) / SCALE;
-		bodyDef.fixedRotation = true;
-
-		var entity = world.CreateBody(bodyDef);
-
-		userData == EntityConfig.REDBLOBID ? redBlobBody = entity : greenBlobBody = entity;
-
-		entity.CreateFixture(fixture);
-
-		entity.SetUserData([userData, undefined]);
-		
-		var actor = new _actorObject(entity, sprite);
-		var blobEntityCreated = $.Event('blobEntityCreated');
-
-		$("body").trigger(blobEntityCreated, entity);
-
-		bodies.push(entity); 
+		var blobEntity = undefined;
+		for(var i = 0; i < bodies.length; i++) {
+			if(bodies[i].GetUserData()[0] == userData) {
+				blobEntity = bodies[i];
+			}
+		}
+	
+		blobEntity.SetPosition(new b2Vec2(sprite.x / SCALE, sprite.y / SCALE));
+		blobEntity.CreateFixture(fixture);
 	},
 
 	_registerListener = function() {

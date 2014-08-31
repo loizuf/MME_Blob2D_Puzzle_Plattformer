@@ -31,6 +31,7 @@ BlobApp.ViewController = (function() {
 		stage.removeChild(stage.getChildByName("blobRed"));
 		stage.removeChild(stage.getChildByName("blobGreen"));
 
+		$('body').trigger("blobSpritesRemoved");
 		if(!b2ddebug){
 			stage.addChild(data.sprite);
 		}
@@ -39,6 +40,7 @@ BlobApp.ViewController = (function() {
 	removeHeli = function(event, data) {
 		stage.removeChild(stage.getChildByName("heli"));
 
+		$('body').trigger("blobSpritesAdded");
 		if(!b2ddebug){
 			stage.addChild(data.sprites[0]);
 			stage.addChild(data.sprites[1]);
@@ -49,6 +51,7 @@ BlobApp.ViewController = (function() {
 		stage.removeChild(stage.getChildByName("blobRed"));
 		stage.removeChild(stage.getChildByName("blobGreen"));
 
+		$('body').trigger("blobSpritesRemoved");
 		if(!b2ddebug){
 			stage.addChild(data.sprite);
 		}
@@ -57,6 +60,7 @@ BlobApp.ViewController = (function() {
 	removeBridge = function(event, data) {
 		stage.removeChild(stage.getChildByName("bridge"));
 
+		$('body').trigger("blobSpritesAdded");
 		if(!b2ddebug){
 			stage.addChild(data.sprites[0]);
 			stage.addChild(data.sprites[1]);
@@ -66,6 +70,7 @@ BlobApp.ViewController = (function() {
 	removeSphere = function(event, data) {
 		stage.removeChild(stage.getChildByName("sphere"));
 
+		$('body').trigger("blobSpritesAdded");
 		if(!b2ddebug){
 			stage.addChild(data.sprites[0]);
 			stage.addChild(data.sprites[1]);
@@ -234,11 +239,14 @@ BlobApp.ViewController = (function() {
 		stage.removeChild(stage.getChildByName("blobRed"));
 		stage.removeChild(stage.getChildByName("blobGreen"));
 
+		$('body').trigger("blobSpritesRemoved");
+
 	},
 
 	_onSlingshotStopped = function(event, data) {
 		stage.addChild(data.sprites[0]);
 		stage.addChild(data.sprites[1]);
+		$('body').trigger("blobSpritesAdded");
 	},
 
 	_listener = function(){

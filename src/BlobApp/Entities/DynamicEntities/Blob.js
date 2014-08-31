@@ -5,7 +5,8 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 	blobID = blobID,
 	sprite, 
 	tilesetSheet, 
-	tileset;
+	tileset,
+	animateBlobs = true;
 
 	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
 	
@@ -77,18 +78,28 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
-		sprite.gotoAndPlay("idle1");
+		sprite.gotoAndPlay("jumpRight");
 	},
 
 	_listeners = function() {
 		$('body').on('blobanimationChanged', _animate);		
 		$('body').on('onTick', _checkIfTeleAnimationFinished);
+		$('body').on('blobSpritesRemoved', _stopAnimatingBlobs);
+		$('body').on('blobSpritesAdded', _allowAnimatingBlobs);
 
 	},
 
-	_animate = function(event, data) {
-			if(blobID==data.blobID) {
+	_stopAnimatingBlobs = function() {
+		animateBlobs = false;
+	},
 
+	_allowAnimatingBlobs = function() {
+		animateBlobs = true;
+		sprite.gotoAndPlay("jumpLeft");
+	},
+
+	_animate = function(event, data) {					
+			if(animateBlobs && blobID==data.blobID) {				
 			switch(data.animationKey) {
 				case AnimationKeys.IDLE1:
 					sprite.gotoAndPlay("idle1");
