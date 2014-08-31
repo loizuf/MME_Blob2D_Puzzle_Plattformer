@@ -108,6 +108,9 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.HELITRIGGER:
 				_playerInTriggerZone("greenBlob", "heli");
 				return;
+
+			case EntityConfig.HELISTOPTRIGGER:
+				return;
 			
 			case EntityConfig.TELETRIGGER:
 				_playerInTriggerZone("greenBlob", "tele");
@@ -186,6 +189,9 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.HELITRIGGER:
 				_playerInTriggerZone("redBlob", "heli");
 				return;
+
+			case EntityConfig.HELISTOPTRIGGER:
+				return;
 			
 			case EntityConfig.TELETRIGGER:
 				_playerInTriggerZone("redBlob", "tele");
@@ -248,6 +254,8 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.BRIDGELEFTTRIGGER :
 			case EntityConfig.BRIDGERIGHTTRIGGER :
 			case EntityConfig.SPHERETRIGGER :
+			case EntityConfig.SLINGSHOTTRIGGERLEFT :
+			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
 
 				_playerLeftTriggerZone("redBlob");
 			break;
@@ -261,6 +269,8 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.BRIDGELEFTTRIGGER :
 			case EntityConfig.BRIDGERIGHTTRIGGER :
 			case EntityConfig.SPHERETRIGGER :
+			case EntityConfig.SLINGSHOTTRIGGERLEFT :
+			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
 			
 				_playerLeftTriggerZone("greenBlob");
 			break;

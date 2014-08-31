@@ -68,15 +68,11 @@ BlobApp.BlobPlayer2 = (function() {
 
 	_setDownAction = function(event, what) {
 		if(!what) {
-			prototypeVar.setCurrentDown(function() {
-				thisVar.initStretch();
-			});
+			prototypeVar.setFunction(function(){thisVar.initStretch();});
 			return;
 		} 
 		
-		prototypeVar.setCurrentDown(function() {
-			thisVar.tryToInit(what.name);
-		});
+		prototypeVar.setFunction("downPressed", function(){thisVar.tryToInit(what.name);});
 	},
 
 	this.initStretch = function() {

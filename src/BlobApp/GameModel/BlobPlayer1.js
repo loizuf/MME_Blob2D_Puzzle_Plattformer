@@ -69,16 +69,11 @@ BlobApp.BlobPlayer1 = (function() {
 
 	_setDownAction = function(event, what) {
 		if(!what) {
-			prototypeVar.setCurrentDown(function() {
-				thisVar.initTrampolin();
-			});
+			prototypeVar.setFunction(function(){thisVar.stopTrampolin();});
 			return;
 		} 
-		
-		prototypeVar.setCurrentDown(function() {
-			thisVar.tryToInit(what.name);
-		});
-		
+					
+		prototypeVar.setFunction("downPressed", function(){thisVar.tryToInit(what.name);});
 	},
 
 	this.initTrampolin = function() {
@@ -104,7 +99,7 @@ BlobApp.BlobPlayer1 = (function() {
 			prototypeVar.setSingleSpecialAllowed(false);
 
 			prototypeVar.setCurrentUp(prototypeVar._jump);
-			prototypeVar.setCurrentDown({});
+			prototypeVar.setCurrentDown(function(){});
 
 			prototypeVar.setCurrentRight(prototypeVar._moveRight);
 			prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
