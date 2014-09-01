@@ -15,8 +15,8 @@ BlobApp.BlobPlayer1 = (function() {
 
 	_initListeners = function() {
 		$('body').on("startHeli", thisVar.initHeli);
-		$('body').on("greenBlobInTriggerZone", _setDownAction);
-		$('body').on("greenBlobLeftTriggerZone", _setDownAction);
+		$('body').on("greenBlobInTriggerZone", _setDownActionP1);
+		$('body').on("greenBlobLeftTriggerZone", _setDownActionP1);
 		$('body').on('heliStopRequested', _resetControls);
 		$('body').on('bridgeStopRequested', _resetControls);
 		$('body').on('sphereStopRequested', _resetControls);
@@ -34,6 +34,8 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	this.tryToInit = function(skill) {
+		_preventUniqueAbilityTriggerActivationP1();
+
 		switch(skill) {
 			case "heli":
 				thisVar.setIdle(skill);
@@ -61,11 +63,18 @@ BlobApp.BlobPlayer1 = (function() {
 		}
 	},
 
+	_preventUniqueAbilityTriggerActivationP1 = function() {
+		if(isTrampolin) {
+			thisVar.stopTrampolin();
+			return;
+		}
+	},
+
 	_setTrampolin = function() {
 		prototypeVar.setSingleSpecialAllowed(true);
 	},
 
-	_setDownAction = function(event, what) {
+	_setDownActionP1 = function(event, what) {
 		if(!what) {
 			prototypeVar.setFunction("downPressed", function(){thisVar.initTrampolin();});
 			return;
@@ -75,7 +84,6 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	this.initTrampolin = function() {
-		console.log("initTrampolin called");
 		if(prototypeVar.getSingleSpecialAllowed() && !isTrampolin) {
 			prototypeVar.setSingleSpecialAllowed(false);
 
@@ -99,10 +107,10 @@ BlobApp.BlobPlayer1 = (function() {
 			prototypeVar.setCurrentUp(prototypeVar._jump);
 			prototypeVar.setCurrentDown(function(){});
 
-			prototypeVar.setCurrentRight(prototypeVar._moveRight);
-			prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
-
 			prototypeVar.setFunction("downPressed", function() {thisVar.initTrampolin();});
+
+			prototypeVar.setCurrentRight(prototypeVar._moveRight);
+			prototypeVar.setCurrentLeft(prototypeVar._moveLeft);			
 
 			$('body').trigger("onTrampolinInactive");
 			isTrampolin = false;	
@@ -127,8 +135,10 @@ BlobApp.BlobPlayer1 = (function() {
 
 	// For when the blob is waiting for the other blob to do something
 	this.setIdle = function(skill) {
+
 		function restore() {
 			$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : false});
+			
 			prototypeVar.setCurrentUp(prototypeVar._jump);
 			prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
 			prototypeVar.setCurrentRight(prototypeVar._moveRight);
@@ -137,7 +147,6 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setCurrentUp(restore);
 		prototypeVar.setCurrentLeft(restore);
 		prototypeVar.setCurrentRight(restore);
-		prototypeVar.setFunction("downPressed", function(){});
 
 		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : skill});		
 	},

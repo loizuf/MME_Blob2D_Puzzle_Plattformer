@@ -29,10 +29,13 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on('startBridge', thisVar.initBridge);
 
 		$('body').on('startSphere', thisVar.initSphere);
+
 		$('body').on('startSlingshot', thisVar.initSlingshot);
 	},
 
 	this.tryToInit = function(skill) {
+		_preventUniqueAbilityTriggerActivationP2();
+
 		switch(skill) {
 			case "heli":
 				thisVar.setIdle(skill);
@@ -57,6 +60,13 @@ BlobApp.BlobPlayer2 = (function() {
 			case "slingshotLeft":
 				thisVar.setIdle(skill);
 			break;
+		}
+	},
+
+	_preventUniqueAbilityTriggerActivationP2 = function() {
+		if(isStretched) {
+			thisVar.stopStretch();
+			return;
 		}
 	},
 
@@ -126,8 +136,8 @@ BlobApp.BlobPlayer2 = (function() {
 
 	// For when the blob is waiting for the other blob to do something
 	this.setIdle = function(skill) {
-		function restore() {
-			prototypeVar.setupMovementFunctions();
+
+		function restore() {			
 			$('body').trigger("onPlayerWaitingChange", {"playerName" : "p2", "waiting" : false});
 
 			prototypeVar.setCurrentUp(prototypeVar._jump);
@@ -199,7 +209,7 @@ BlobApp.BlobPlayer2 = (function() {
 
 	//START: Sphere
 	this.initSphere = function() {
-		$('body').unbind("greenBlobLeftTriggerZone");
+		$('body').unbind("redBlobLeftTriggerZone");
 
 		prototypeVar.setSingleSpecialAllowed(false);
 
@@ -227,7 +237,7 @@ BlobApp.BlobPlayer2 = (function() {
 
 	// START: Slingshot
 	this.initSlingshot = function() {
-		$('body').unbind("greenBlobLeftTriggerZone");
+		$('body').unbind("redBlobLeftTriggerZone");
 		prototypeVar.setSingleSpecialAllowed(false);
 		slingshotAngle = 30;
 

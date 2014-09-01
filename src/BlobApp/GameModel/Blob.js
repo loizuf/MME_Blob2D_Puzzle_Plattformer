@@ -296,6 +296,7 @@ BlobApp.BlobSuperClass = function() {
 				break;
 			case "downPressed":
 				_downPressed = newFunction;
+				console.log("switched function in setFunction", _downPressed);
 				break;
 			case "downReleased":
 				_downReleased = newFunction;
