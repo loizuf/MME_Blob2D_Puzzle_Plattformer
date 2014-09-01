@@ -18,6 +18,8 @@ BlobApp.MainController = (function() {
 		lID = lvlID;
 		p1ID = p1ControlsID;
 		p2ID = p2ControlsID;
+		Controls.p1 = p1ControlsID;
+		Controls.p2 = p2ControlsID;
 
 		_initModules();
 		_registerListeners();

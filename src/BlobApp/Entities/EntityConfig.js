@@ -52,4 +52,10 @@ AnimationKeys = {
 	FIRE: 11,
 	CLUTCH: 12,
 	LOOSEN: 13
+},
+
+// 1 = keyboard, 2 = controller
+Controls = {
+	p1 : undefined,
+	p2 : undefined
 }

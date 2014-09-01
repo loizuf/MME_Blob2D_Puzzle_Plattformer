@@ -9,7 +9,7 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, sizeX, sizeY, additional
 
 	this.prototype.init = function() {
 		var tileset = new Image();
-		tileset.src = "res/img/sign.png"
+		tileset.src = "res/img/sign.png";
 
 		_listeners();
 
@@ -26,7 +26,9 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, sizeX, sizeY, additional
 			},
 
 			animations : {
-				blink: [0, 1, "blink", 0.035]
+				blinkController: [0, 1, "blinkController", 0.035],
+				blinkPlayer1: [4, 5, "blinkPlayer1", 0.035],
+				blinkPlayer2: [2, 3, "blinkPlayer2", 0.035],
 			}
 		}
 
@@ -47,7 +49,22 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, sizeX, sizeY, additional
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 
-		sprite.gotoAndPlay("blink");
+		var aniName;
+		if(thisVar.hintID == "bubblegreenBlob") {
+			if(Controls.p1 == 1) {
+				aniName = "blinkPlayer1";
+			} else {
+				aniName = "blinkController";
+			}
+		} else {
+			if(Controls.p2 == 1) {
+				aniName = "blinkPlayer2";
+			} else {
+				aniName = "blinkController";
+			}
+		}
+ 
+		sprite.gotoAndPlay(aniName);
 	},
 
 	this.prototype.init();
