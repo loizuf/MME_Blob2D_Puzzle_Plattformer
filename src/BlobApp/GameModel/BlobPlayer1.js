@@ -232,7 +232,6 @@ BlobApp.BlobPlayer1 = (function() {
 	isSlingshotActive = false;
 
 	this.initSlingshot = function() {
-		$('body').unbind("greenBlobLeftTriggerZone");
 		$('body').trigger('animateSlingshot', {animationKey : AnimationKeys.LOAD});
 		slingshotTension = 7;
 

@@ -209,8 +209,6 @@ BlobApp.BlobPlayer2 = (function() {
 
 	//START: Sphere
 	this.initSphere = function() {
-		$('body').unbind("redBlobLeftTriggerZone");
-
 		prototypeVar.setSingleSpecialAllowed(false);
 
 		prototypeVar.setCurrentUp(function(){});
@@ -237,7 +235,6 @@ BlobApp.BlobPlayer2 = (function() {
 
 	// START: Slingshot
 	this.initSlingshot = function() {
-		$('body').unbind("redBlobLeftTriggerZone");
 		prototypeVar.setSingleSpecialAllowed(false);
 		slingshotAngle = 30;
 
