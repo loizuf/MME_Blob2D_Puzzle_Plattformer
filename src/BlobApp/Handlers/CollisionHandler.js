@@ -106,34 +106,34 @@ BlobApp.CollisionHandler = (function() {
 				return;
 			
 			case EntityConfig.HELITRIGGER:
-				_playerInTriggerZone("greenBlob", "heli");
+				_playerInTriggerZone("greenBlob", "heli", bodyB);
 				return;
 
 			case EntityConfig.HELISTOPTRIGGER:
 				return;
 			
 			case EntityConfig.TELETRIGGER:
-				_playerInTriggerZone("greenBlob", "tele");
+				_playerInTriggerZone("greenBlob", "tele", bodyB);
 				return;
 
 			case EntityConfig.BRIDGELEFTTRIGGER:
-				_playerInTriggerZone("greenBlob", "bridgeLeft");
+				_playerInTriggerZone("greenBlob", "bridgeLeft", bodyB);
 				return;
 
 			case EntityConfig.BRIDGERIGHTTRIGGER:
-				_playerInTriggerZone("greenBlob", "bridgeRight");
+				_playerInTriggerZone("greenBlob", "bridgeRight", bodyB);
 				return;
 
 			case EntityConfig.SPHERETRIGGER:
-				_playerInTriggerZone("greenBlob", "sphere");
+				_playerInTriggerZone("greenBlob", "sphere", bodyB);
 				return;
 
 			case EntityConfig.SLINGSHOTTRIGGERLEFT:
-				_playerInTriggerZone("greenBlob", "slingshotLeft");
+				_playerInTriggerZone("greenBlob", "slingshotLeft", bodyB);
 				return;
 
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT:
-				_playerInTriggerZone("greenBlob", "slingshotRight");
+				_playerInTriggerZone("greenBlob", "slingshotRight", bodyB);
 				return;
 
 			//MenuNavigation
@@ -187,34 +187,34 @@ BlobApp.CollisionHandler = (function() {
 				return;
 			
 			case EntityConfig.HELITRIGGER:
-				_playerInTriggerZone("redBlob", "heli");
+				_playerInTriggerZone("redBlob", "heli", bodyB);
 				return;
 
 			case EntityConfig.HELISTOPTRIGGER:
 				return;
 			
 			case EntityConfig.TELETRIGGER:
-				_playerInTriggerZone("redBlob", "tele");
+				_playerInTriggerZone("redBlob", "tele", bodyB);
 				return;
 			
 			case EntityConfig.BRIDGELEFTTRIGGER:
-				_playerInTriggerZone("redBlob", "bridgeLeft");
+				_playerInTriggerZone("redBlob", "bridgeLeft", bodyB);
 				return;
 
 			case EntityConfig.BRIDGERIGHTTRIGGER:
-				_playerInTriggerZone("redBlob", "bridgeRight");
+				_playerInTriggerZone("redBlob", "bridgeRight", bodyB);
 				return;
 
 			case EntityConfig.SPHERETRIGGER:
-				_playerInTriggerZone("redBlob", "sphere");
+				_playerInTriggerZone("redBlob", "sphere", bodyB);
 				return;
 
 			case EntityConfig.SLINGSHOTTRIGGERLEFT:
-				_playerInTriggerZone("redBlob", "slingshotLeft");
+				_playerInTriggerZone("redBlob", "slingshotLeft", bodyB);
 				return;
 
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT:
-				_playerInTriggerZone("redBlob", "slingshotRight");
+				_playerInTriggerZone("redBlob", "slingshotRight", bodyB);
 				return;
 
 			//MenuNavigation
@@ -277,12 +277,15 @@ BlobApp.CollisionHandler = (function() {
 		}
 	},
 
-	_playerInTriggerZone = function(player, zoneName) {
+	_playerInTriggerZone = function(player, zoneName, bodyB) {
 			$('body').trigger(player+"InTriggerZone", {name: zoneName});
+			_showHintBubble(bodyB, player);
 	},
 
 	_playerLeftTriggerZone = function(player) {
 			$('body').trigger(player+"LeftTriggerZone");
+			// removes the hint bubble.
+			$('body').trigger("juiceRequested", {removeByName : ["bubble"+player]});
 	},
 
 	_attemptFinish = function(blobID) {
@@ -321,6 +324,21 @@ BlobApp.CollisionHandler = (function() {
 		var sprite = new BlobApp.Juice(xPos*30, yPos*30, width, height).sprite;
 
 		$('body').trigger('juiceRequested', {sprite: sprite});
+	},
+
+	_showHintBubble = function(body, player) {
+		var bubbleX = bodyB.m_xf.position.x * 30,
+			bubbleY = bodyB.m_xf.position.y * 30 - 75,
+			width = 100,
+			height = 75;
+		var bubbleID = "bubble"+player;
+		var bubble = new BlobApp.HintBubble(bubbleX, bubbleY, width, height, 
+			{
+				bubbleType : "down",
+				id : bubbleID
+			});
+
+		$('body').trigger('juiceRequested', {sprite : bubble.sprite});
 	};
 	
 	that.init = init;

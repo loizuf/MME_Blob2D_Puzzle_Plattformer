@@ -18,11 +18,18 @@ BlobApp.ViewController = (function() {
 
 	applyEntity = function(event, data) {
 		if(!b2ddebug){
-			stage.addChild(data.sprite);	
-			if(data.remove)
+			stage.addChild(data.sprite);
+			if(data.remove) {
 				for(var i = 0; i < data.remove.length; i++) {
 					stage.removeChild(data.remove[i]);
 				}
+			}
+			if(data.removeByName) {
+				for(var i = 0; i < data.removeByName.length; i++) {
+			console.log(data.removeByName[i]);	
+					stage.removeChild(stage.getChildByName(data.removeByName[i]));
+				}
+			}
 		}
 	},
 

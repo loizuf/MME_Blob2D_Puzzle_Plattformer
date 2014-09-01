@@ -32,7 +32,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 				stable : [0,0],
 				load: [1, 18, "loaded"],
 				loaded: [18, 18],
-				stop: [19, 20, "stable"],
+				stop: [19, 25, "stable"],
 				clutch1 : [26, 29, "clutch1after"],
 				clutch1after : [29, 29],
 				clutch2 : [39, 42, "clutch2after"],
