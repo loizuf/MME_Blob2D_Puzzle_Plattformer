@@ -75,6 +75,11 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	_setDownActionP1 = function(event, what) {
+		if(isTrampolin) {
+			prototypeVar.setFunction("downPressed", function(){thisVar.stopTrampolin();});
+			return;
+		}
+
 		if(!what) {
 			prototypeVar.setFunction("downPressed", function(){thisVar.initTrampolin();});
 			return;
