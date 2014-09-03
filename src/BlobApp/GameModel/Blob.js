@@ -153,10 +153,22 @@ BlobApp.BlobSuperClass = function() {
 	this.allowJump = function() {
 		_jumpAllowed = true;
 
-		$('body').trigger('blobanimationChanged', {
-			"blobID" : _blobID,
-			"animationKey" : AnimationKeys.IDLE1
-		});
+		if(keyLeftPressed) {
+			$('body').trigger('blobanimationChanged', {
+				"blobID" : _blobID,
+				"animationKey" : AnimationKeys.MOVELEFT
+			});
+		} else if(keyRightPressed) {
+			$('body').trigger('blobanimationChanged', {
+				"blobID" : _blobID,
+				"animationKey" : AnimationKeys.MOVERIGHT
+			});
+		} else {
+			$('body').trigger('blobanimationChanged', {
+				"blobID" : _blobID,
+				"animationKey" : AnimationKeys.IDLE1
+			});
+		}
 	},
 
 	_callDirections = function() {
@@ -202,6 +214,12 @@ BlobApp.BlobSuperClass = function() {
 		} else {
 			keyLeftPressed = false;
 			_leftReleased();
+			if(!keyRightPressed && _jumpAllowed) {
+				$('body').trigger('blobanimationChanged', {
+					"blobID" : _blobID,
+					"animationKey" : AnimationKeys.IDLE1
+				});
+			}
 		}
 
 		if(_blobID == EntityConfig.GREENBLOBID) {
@@ -227,6 +245,12 @@ BlobApp.BlobSuperClass = function() {
 		} else {
 			keyRightPressed = false;
 			_rightReleased();
+			if(!keyLeftPressed && _jumpAllowed) {
+				$('body').trigger('blobanimationChanged', {
+					"blobID" : _blobID,
+					"animationKey" : AnimationKeys.IDLE1
+				});
+			}
 		}
 
 		if(_blobID == EntityConfig.GREENBLOBID) {
