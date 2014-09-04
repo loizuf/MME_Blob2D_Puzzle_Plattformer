@@ -41,14 +41,14 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 			animations: {
 				runRight: [0,19],
 				runLeft: [20,39],
-				idle1: [40,59],
-				jumpRight: [60, 79, "jumpEndRight"],
-				jumpEndRight: [79],
-				jumpLeft: [80, 99, "jumpEndLeft"],
-				jumpEndLeft: [99],
-				teleport: [100, 119, "afterTeleport"],
+				idle1: [40,79],
+				jumpRight: [80, 99, "jumpEndRight"],
+				jumpEndRight: [99],
+				jumpLeft: [100, 119, "jumpEndLeft"],
+				jumpEndLeft: [119],
+				teleport: [120, 139, "afterTeleport"],
 				afterTeleport: {
-					frames : [119,118,117,116,115,114,113,112,111,110,109,108,107,106,105,104,103,102,101,100], 
+					frames : [139,138,137,136,135,134,133,132,131,130,129,128,127,126,125,124,123,122,121,120], 
 					next: "idle1"
 				}
 			}
