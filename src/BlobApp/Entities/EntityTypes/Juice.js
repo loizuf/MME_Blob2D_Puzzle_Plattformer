@@ -24,7 +24,7 @@ BlobApp.Juice = (function Juice(x_pos, y_pos, sizeX, sizeY) {
 			},
 
 			animations: {
-				play : [0, 7, "", 1],
+				play : [0, 15, "", 1],
 			}
 		}
 
@@ -51,7 +51,7 @@ BlobApp.Juice = (function Juice(x_pos, y_pos, sizeX, sizeY) {
 	},
 
 	_checkIfFinished = function() {
-		if(sprite.currentAnimationFrame == 7) {		
+		if(sprite.currentAnimationFrame == 15) {		
 			$('body').trigger('juiceRequested', {remove: [sprite]});
 			sprite.stop();
 		}

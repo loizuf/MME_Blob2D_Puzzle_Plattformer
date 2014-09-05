@@ -33,8 +33,6 @@ BlobApp.ScreenState = ( function() {
 
 	// Tot / Wartet auf wiederbelebung / Lebendig / fertig / wartet auf neues spiel
 	player1State,
-
-	// Wie player1State
 	player2State,
 
 	init = function() {

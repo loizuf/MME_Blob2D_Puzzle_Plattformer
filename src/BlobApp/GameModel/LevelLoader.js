@@ -278,7 +278,7 @@ BlobApp.LevelLoader = (function() {
 
 
 	_createRedBlob = function(x, y) {
-		var blob1 = new BlobApp.Blob(x, y, 25, 50, EntityConfig.REDBLOBID);
+		var blob1 = new BlobApp.Blob(x, y, 50, 50, EntityConfig.REDBLOBID);
 
 		_createRequestObject["sprite"] = blob1.sprite;
 		_createRequestObject["userData"] = [EntityConfig.REDBLOBID, undefined];
@@ -287,7 +287,7 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_createGreenBlob = function(x, y) {
-		var blob2 = new BlobApp.Blob(x, y, 25, 25, EntityConfig.GREENBLOBID);
+		var blob2 = new BlobApp.Blob(x, y, 50, 25, EntityConfig.GREENBLOBID);
 
 		_createRequestObject["sprite"] = blob2.sprite;
 		_createRequestObject["userData"] = [EntityConfig.GREENBLOBID,undefined];
