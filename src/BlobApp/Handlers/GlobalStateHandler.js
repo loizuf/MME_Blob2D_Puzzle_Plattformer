@@ -17,7 +17,11 @@ BlobApp.GlobalState = (function() {
 	},
 
 	_load = function() {
-		_gameState = JSON.parse(localStorage.getItem(_gameStateKey));
+		if(localStorage.getItem(_gameStateKey) != null) {
+			_gameState = JSON.parse(localStorage.getItem(_gameStateKey));
+		} else {
+			_save();
+		}		
 	},
 
 	// Has to be called when the level is finished.

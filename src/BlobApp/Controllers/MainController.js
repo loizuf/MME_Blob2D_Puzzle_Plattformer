@@ -65,7 +65,7 @@ BlobApp.MainController = (function() {
 	},
 
 	_saveGameProgress = function() {
-		_globalStateHandler.onFinishLevel(lID, owID);
+		_globalStateHandler.onFinishLevel(lID, 1);
 	},
 
 	_onLevelLoadRequest = function(event, LevelID) {
