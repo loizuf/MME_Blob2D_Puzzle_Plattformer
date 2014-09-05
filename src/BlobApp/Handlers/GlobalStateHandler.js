@@ -2,7 +2,7 @@ BlobApp.GlobalState = (function() {
 	// public interface
 	var that = {},
 	
-	_gameStateKey = "gameState";
+	_gameStateKey = "gameState",
 
 	
 	_gameState = {

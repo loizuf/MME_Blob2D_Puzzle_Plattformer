@@ -33,9 +33,8 @@ BlobApp.MainController = (function() {
 		_viewController = BlobApp.ViewController;
 		_physicsHandler = BlobApp.PhysicsHandler;
 		_levelloader = BlobApp.LevelLoader;
-		_globalStateHandler = BlobApp.GlobalStateHandler;
+		_globalStateHandler = BlobApp.GlobalState;
 
-		//_globalStateHandler.init(); //needed?
 		_modelController.init(p1ID, p2ID);
 		_viewController.init();
 		_physicsHandler.init();
