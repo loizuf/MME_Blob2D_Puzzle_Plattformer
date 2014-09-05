@@ -95,6 +95,7 @@ BlobApp.BlobPlayer1 = (function() {
 			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(levelID);});
 		} else {
 			prototypeVar.setFunction("upPressed", function(){});
+		}
 	},
 
 	this.tryLevelLoad = function(levelID) {
