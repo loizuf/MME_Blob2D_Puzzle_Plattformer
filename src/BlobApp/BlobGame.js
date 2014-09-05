@@ -112,6 +112,7 @@ BlobApp.BlobGame = (function() {
 	_startGame = function(event) {
 		lvlID = event.data.lvlID;
 
+
 		$('body').unbind();
 		
 		$levelSelectContainer.css('display', 'none');	
