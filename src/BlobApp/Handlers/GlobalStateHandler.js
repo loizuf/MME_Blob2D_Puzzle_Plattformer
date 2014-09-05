@@ -1,4 +1,4 @@
-BlobApp.GlobalState = (function() {
+BlobApp.GlobalStateHandler = (function() {
 	// public interface
 	var that = {},
 	
@@ -6,8 +6,8 @@ BlobApp.GlobalState = (function() {
 
 	
 	_gameState = {
-		currentOverworldMapID : null //integer
-		finishedLevel : null
+		currentOverworldMapID : 1, //integer
+		finishedLevel : 1
 	},
 
 	init = function() {

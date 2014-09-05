@@ -16,12 +16,15 @@ BlobApp.MainController = (function() {
 	p1ID,
 	p2ID,
 
-	init = function(lvlID, owID, p1ControlsID, p2ControlsID) {
+	init = function(lvlID, overworldID, p1ControlsID, p2ControlsID) {
 		lID = lvlID;
+		owID = overworldID;
+
 		p1ID = p1ControlsID;
 		p2ID = p2ControlsID;
-		Controls.p1 = p1ControlsID;
-		Controls.p2 = p2ControlsID;
+
+		//Controls.p1 = p1ControlsID;
+		//Controls.p2 = p2ControlsID;
 
 		_initModules();
 		_registerListeners();
@@ -34,7 +37,7 @@ BlobApp.MainController = (function() {
 		_levelloader = BlobApp.LevelLoader;
 		_globalStateHandler = BlobApp.GlobalStateHandler;
 
-		//_globalStateHandler.init(); //needed?
+		_globalStateHandler.init(); //needed?
 		_modelController.init(p1ID, p2ID);
 		_viewController.init();
 		_physicsHandler.init();
@@ -46,7 +49,7 @@ BlobApp.MainController = (function() {
 		$("body").on('onReloadGame', _reload);
 		$('body').on('onResetGame', _reset);
 		$('body').on('levelLoadRequest', _onLevelLoadRequest);
-		$('body').on)('levelFinished', _saveGameProgress);
+		$('body').on('levelFinished', _saveGameProgress);
 	},
 
 	_saveGameProgress = function() {
