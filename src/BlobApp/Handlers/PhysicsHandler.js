@@ -117,8 +117,7 @@ BlobApp.PhysicsHandler = (function() {
 			width = TILESIZEX / SCALE,
 			height = (entityID == EntityConfig.DOORID
 						||entityID == EntityConfig.NEWGAMEDOOR
-						||entityID == EntityConfig.CONTINUEDOOR
-						||entityID == EntityConfig.LEVELDOOR) ? TILESIZEY * 2 / SCALE : TILESIZEY / SCALE;
+						||entityID == EntityConfig.CONTINUEDOOR) ? TILESIZEY * 2 / SCALE : TILESIZEY / SCALE;
 
 		var entity = createDefaultBoxEntity(x, y, width, height);
 

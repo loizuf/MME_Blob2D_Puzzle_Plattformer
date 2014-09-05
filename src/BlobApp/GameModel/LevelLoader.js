@@ -354,7 +354,7 @@ BlobApp.LevelLoader = (function() {
 		_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID];
 		_createRequestObject["height"] = 2;
 		
-		$('body').trigger('entityRequested', _createRequestObject);
+		$('body').trigger('sensorRequested', _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
 	},
 	

@@ -148,7 +148,7 @@ BlobApp.CollisionHandler = (function() {
 
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
-				_levelLoadRequested(bodyB);
+				_levelLoadRequested("greenBlob", bodyB);
 				return;
 		}
 
@@ -229,7 +229,7 @@ BlobApp.CollisionHandler = (function() {
 
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
-				_levelLoadRequested(bodyB);
+				_levelLoadRequested("redBlob", bodyB);
 				return;
 		}
 
@@ -259,6 +259,8 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
 
 				_playerLeftTriggerZone("redBlob");
+			case EntityConfig.LEVELDOOR:
+				_playerLeftLevelLoadTriggerZone("redBlob");
 			break;
 		}
 	},
@@ -274,6 +276,9 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
 			
 				_playerLeftTriggerZone("greenBlob");
+			break;
+			case EntityConfig.LEVELDOOR:
+				_playerLeftLevelLoadTriggerZone("greenBlob");
 			break;
 		}
 	},
@@ -305,9 +310,14 @@ BlobApp.CollisionHandler = (function() {
 		$('body').trigger('continueRequest');
 	},
 
-	_levelLoadRequested = function(bodyB) {
+	_levelLoadRequested = function(player, bodyB) {
 		var levelID = bodyB.GetUserData()[1];
-		$('body').trigger('levelLoadRequest', levelID);
+		$('body').trigger(player+'InLevelLoadTriggerZone', levelID);
+		//$('body').trigger('levelLoadRequest', levelID);
+	},
+
+	_playerLeftLevelLoadTriggerZone = function(player) {
+		$('body').trigger(player + 'LeftLevelLoadTriggerZone');
 	},
 
 	_pickUpKey = function(bodyA, bodyB) {

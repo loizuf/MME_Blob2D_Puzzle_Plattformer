@@ -20,7 +20,6 @@ BlobApp.MainController = (function() {
 		localStorage.clear();
 
 		lID = lvlID;
-		owID = overworldID;
 		p1ID = p1ControlsID;
 		p2ID = p2ControlsID;
 		Controls.p1 = p1ControlsID;

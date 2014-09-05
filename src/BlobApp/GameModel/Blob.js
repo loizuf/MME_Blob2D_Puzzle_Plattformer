@@ -171,6 +171,10 @@ BlobApp.BlobSuperClass = function() {
 		}
 	},
 
+	this.loadLevel = function(levelID) {
+		$('body').trigger('levelLoadRequest', levelID);
+	},
+
 	_callDirections = function() {
 		if(keyLeftPressed) {
 			_currentLeft();

@@ -17,6 +17,8 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on("startHeli", thisVar.initHeli);
 		$('body').on("greenBlobInTriggerZone", _setDownActionP1);
 		$('body').on("greenBlobLeftTriggerZone", _setDownActionP1);
+		$('body').on("greenBlobInLevelLoadTriggerZone", _setUpActionP1);
+		$('body').on("greenBlobLeftLevelLoadTriggerZone", _setUpActionP1);
 		$('body').on('heliStopRequested', _resetControls);
 		$('body').on('bridgeStopRequested', _resetControls);
 		$('body').on('sphereStopRequested', _resetControls);
@@ -86,6 +88,17 @@ BlobApp.BlobPlayer1 = (function() {
 		} 
 					
 		prototypeVar.setFunction("downPressed", function(){thisVar.tryToInit(what.name);});
+	},
+
+	_setUpActionP1 = function(event, levelID) {
+		if(levelID != undefined){
+			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(levelID);});
+		} else {
+			prototypeVar.setFunction("upPressed", function(){});
+	},
+
+	this.tryLevelLoad = function(levelID) {
+		prototypeVar.loadLevel(levelID);
 	},
 
 	this.initTrampolin = function() {
