@@ -303,6 +303,8 @@ BlobApp.LevelLoader = (function() {
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.BUTTONID, buttonNumber, layerData.properties.Doors[buttonCount]];
 
+		entity.setUserData(_createRequestObject["userData"]);
+
 		$('body').trigger('entityRequested', _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
 	},

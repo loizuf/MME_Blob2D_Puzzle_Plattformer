@@ -1,7 +1,9 @@
 BlobApp.TriggerButton = (function Button(x_pos, y_pos, sizeX, sizeY) {
 	var that = this,
 
-	sprite, tilesetSheet;
+	sprite, 
+	tilesetSheet,
+	userData;
 
 	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
 	
@@ -22,6 +24,12 @@ BlobApp.TriggerButton = (function Button(x_pos, y_pos, sizeX, sizeY) {
 			frames : {
 				width : width,
 				height : height,
+			},
+
+			animations : {
+				"idle" : [0, 0, "idle"],
+				"press" : [1, 5, "pressed"],
+				"pressed" : [6, 6, "pressed"]
 			}
 		}
 
@@ -39,14 +47,26 @@ BlobApp.TriggerButton = (function Button(x_pos, y_pos, sizeX, sizeY) {
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
+		sprite.gotoAndPlay("idle");
 	},
 
-	_listeners = function(){},
+	_listeners = function(){
+		$("body").on("buttonActivated", _animate);
+	},
 
-	_animate = function(event, data){};
+	_animate = function(event, data){
+		if(data.userData == userData) {
+			sprite.gotoAndPlay("press");
+		}
+	},
+
+	setUserData = function(data) {
+		userData = data;
+	};
 
 	this.prototype.init();
 	this.sprite = sprite;
+	this.setUserData = setUserData;
 });
 
 

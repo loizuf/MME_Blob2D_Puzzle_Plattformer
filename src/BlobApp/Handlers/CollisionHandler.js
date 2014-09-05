@@ -79,6 +79,7 @@ BlobApp.CollisionHandler = (function() {
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 			$('body').trigger('doorOpenRequested', buttonID);
+			$('body').trigger('buttonActivated', {userData : bodyB.GetUserData(), body: bodyB});
 		}
 	},
 

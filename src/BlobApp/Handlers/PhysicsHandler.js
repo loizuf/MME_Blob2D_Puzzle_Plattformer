@@ -748,6 +748,7 @@ BlobApp.PhysicsHandler = (function() {
 
 		$('body').on('openDoor',_openDoor);
 		$('body').on('onKeyPickedUp', _pickUpKeyPhysics);
+		$('body').on('buttonActivated', _removeButtonBody);
 		$('body').on('onTrampolinContact', _handleTrampolinContact);
 		
 		// START: DUMMY HELI
@@ -957,6 +958,9 @@ BlobApp.PhysicsHandler = (function() {
 		bodiesToRemove.push(data.body);
 	},	
 
+	_removeButtonBody = function(event, data) {
+		bodiesToRemove.push(data.body);
+	},
 
 	_openDoor = function(event, doorID) {
 		for(var i = 0; i < bodies.length; i++) {
