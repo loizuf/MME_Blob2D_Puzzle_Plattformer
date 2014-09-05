@@ -318,9 +318,9 @@ BlobApp.CollisionHandler = (function() {
 
 	_addJuice = function(bodyA, blobHeight) {
 		var xPos = bodyA.m_xf.position.x,
-			yPos = (blobHeight == 1)? bodyA.m_xf.position.y : bodyA.m_xf.position.y+12.5/30,
-			width = 25,
-			height = 25;
+			yPos = (blobHeight == 1)? bodyA.m_xf.position.y-+12.5/30 : bodyA.m_xf.position.y,
+			width = 50,
+			height = 50;
 		var sprite = new BlobApp.Juice(xPos*30, yPos*30, width, height).sprite;
 
 		$('body').trigger('juiceRequested', {sprite: sprite});

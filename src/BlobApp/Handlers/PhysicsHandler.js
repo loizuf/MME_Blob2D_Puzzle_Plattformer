@@ -507,10 +507,10 @@ BlobApp.PhysicsHandler = (function() {
 		sprite1Y = (yPos * SCALE) - 3;
 		sprite2Y = (yPos * SCALE) - 3;		
 
-		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, 25, 50, EntityConfig.REDBLOBID);
+		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, 50, 50, EntityConfig.REDBLOBID);
 		var sprite1 = blob1.sprite;		
 
-		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, 25, 25, EntityConfig.GREENBLOBID);
+		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, 50, 25, EntityConfig.GREENBLOBID);
 		var sprite2 = blob2.sprite;
 
 		userData1 = (sprite1.name=="blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
@@ -613,10 +613,10 @@ BlobApp.PhysicsHandler = (function() {
 		}
 	
 
-		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, 25, 50, EntityConfig.REDBLOBID);
+		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, 50, 50, EntityConfig.REDBLOBID);
 		var sprite1 = blob1.sprite;		
 
-		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, 25, 25, EntityConfig.GREENBLOBID);
+		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, 50, 25, EntityConfig.GREENBLOBID);
 		var sprite2 = blob2.sprite;
 
 		userData1 = (sprite1.name == "blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
@@ -666,10 +666,10 @@ BlobApp.PhysicsHandler = (function() {
 		sprite1Y = (yPos * SCALE) - 3;
 		sprite2Y = (yPos * SCALE) - 3;		
 
-		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, 25, 50, EntityConfig.REDBLOBID);
+		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, 50, 50, EntityConfig.REDBLOBID);
 		var sprite1 = blob1.sprite;		
 
-		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, 25, 25, EntityConfig.GREENBLOBID);
+		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, 50, 25, EntityConfig.GREENBLOBID);
 		var sprite2 = blob2.sprite;
 
 		userData1 = (sprite1.name == "blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
