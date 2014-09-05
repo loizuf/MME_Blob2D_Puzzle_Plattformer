@@ -16,8 +16,9 @@ BlobApp.MainController = (function() {
 	p1ID,
 	p2ID,
 
-	init = function(lvlID, owID, p1ControlsID, p2ControlsID) {
+	init = function(lvlID, overworldID, p1ControlsID, p2ControlsID) {
 		lID = lvlID;
+		owID = overworldID;
 		p1ID = p1ControlsID;
 		p2ID = p2ControlsID;
 		Controls.p1 = p1ControlsID;
@@ -46,7 +47,7 @@ BlobApp.MainController = (function() {
 		$("body").on('onReloadGame', _reload);
 		$('body').on('onResetGame', _reset);
 		$('body').on('levelLoadRequest', _onLevelLoadRequest);
-		$('body').on)('levelFinished', _saveGameProgress);
+		$('body').on('levelFinished', _saveGameProgress);
 	},
 
 	_saveGameProgress = function() {
