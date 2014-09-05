@@ -1,4 +1,4 @@
-BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEntity) {
+BlobApp.Stretch = (function Stretch (x_pos, y_pos, sizeX, sizeY, redBlobEntity) {
 
 	var that = this,
 
@@ -7,21 +7,19 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 	tileset,
 	oldSprite,
 	actor, 
-	removedSpriteStop;
+	removedSprite;
 
-	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
-	
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
+
 	this.prototype.init = function() {
 		tileset = new Image();
 
-		tileset.src = "res/img/trampolin.png"//mapData.tilesets[0].image;
+		tileset.src = "res/img/stretch.png";
 
-		// getting imagefile from first tileset
 		_listeners();
 
-		// callback for loading layers after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX, sizeY);		
-	},
+		tileset.onLoad = _initSprite(tileset, sizeX, sizeY);
+	}
 
 	_initSprite = function(tileset, width, height) {
 		var imageData = {
@@ -34,8 +32,7 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 			animations: {
 				init: [0, 19, "idle"],
 				idle: [20, 39],
-				bounce: [40, 46, "idle"],
-				stop: [60, 79],
+				stop: [40, 59]
 			}
 		}
 
@@ -44,7 +41,7 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 
 		sprite = new createjs.Sprite(tilesetSheet);
 
-		sprite.name = "trampolin";
+		sprite.name = "stretch";
 
 		/* koordinaten kommen aus dem levelloader */
 		sprite.regX = width / 2;
@@ -63,7 +60,7 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 	},
 
 	_listeners = function() {
-		$('body').on('trampolinAnimationChanged', _animate);
+		$('body').on('stretchAnimationChanged', _animate);
 		$('body').on('onTick', _checkIfStopFinished);
 		$('body').on('onTick', _checkIfInitFinished);
 	},
@@ -76,26 +73,26 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 			case AnimationKeys.STOP:
 				sprite.gotoAndPlay("stop");
 			break;
-			case AnimationKeys.BOUNCE:
-				sprite.gotoAndPlay("bounce");
+			case AnimationKeys.STRETCH:
+				sprite.gotoAndPlay("stretch");
 			break;
 		}
 	},
 
 	_checkIfStopFinished = function() {
-		if(!removedSpriteStop && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 19) {
+		if(!removedSprite && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 19) {
 			actor.skin = oldSprite;
-			$('body').trigger('trampolinStopRequested', {"sprite" : oldSprite});
+			$('body').trigger('stretchStopRequested', {"sprite" : oldSprite});
 			sprite.stop();
 			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)
-			removedSpriteStop = true;
-			$('body').trigger('trampolinInitRequested');
+			removedSprite = true;
+			$('body').trigger('stretchInitRequested');
 		}
 	},
 
 	_checkIfInitFinished = function() {
 		if(sprite.currentAnimation == "init" && sprite.currentAnimationFrame == 19) {
-			$('body').trigger('trampolinInitRequested');
+			$('body').trigger('stretchInitRequested');
 		}
 	},
 

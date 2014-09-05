@@ -9,7 +9,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 	strength,
 	angle;
 
-	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
 
 	this.prototype.init = function() {
 		tileset = new Image();

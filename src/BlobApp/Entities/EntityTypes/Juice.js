@@ -1,19 +1,18 @@
-BlobApp.TriggerButton = (function Button(x_pos, y_pos, sizeX, sizeY) {
+BlobApp.Juice = (function Juice(x_pos, y_pos, sizeX, sizeY) {
 	var that = this,
 
 	sprite, tilesetSheet;
 
-	this.prototype = new BlobApp.DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
 	
 	this.prototype.init =function() {
-		tileset = new Image();
-		tileset.src = "res/img/button.png"//mapData.tilesets[0].image;
+		var tileset = new Image();
 
-		// getting imagefile from first tileset
-		_listeners();
+		tileset.src = "res/img/dust.png"
 
-		// callback for loading layers after tileset is loaded
+		// callback for loading sprite after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		_listeners();
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -21,7 +20,11 @@ BlobApp.TriggerButton = (function Button(x_pos, y_pos, sizeX, sizeY) {
 			images : [ tileset ],
 			frames : {
 				width : width,
-				height : height,
+				height : height
+			},
+
+			animations: {
+				play : [0, 7, "", 1],
 			}
 		}
 
@@ -33,17 +36,27 @@ BlobApp.TriggerButton = (function Button(x_pos, y_pos, sizeX, sizeY) {
 		/* koordinaten kommen aus dem levelloader */
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
-		
+
 		sprite.x = x_pos;
 		sprite.y = y_pos;
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
+
+		sprite.gotoAndPlay("play");
 	},
 
-	_listeners = function(){},
+	_listeners = function() {
+		$('body').on('onTick', _checkIfFinished);
+	},
 
-	_animate = function(event, data){};
+	_checkIfFinished = function() {
+		if(sprite.currentAnimationFrame == 7) {		
+			$('body').trigger('juiceRequested', {remove: [sprite]});
+			sprite.stop();
+		}
+	};
+	
 
 	this.prototype.init();
 	this.sprite = sprite;

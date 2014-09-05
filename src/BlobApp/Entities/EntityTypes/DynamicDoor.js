@@ -3,7 +3,7 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY, doorID) 
 
 	sprite, tilesetSheet, doorID, easleID, isOpening;
 
-	this.prototype = new BlobApp.DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
 	
 	this.prototype.init =function() {
 		this.doorID  = doorID;

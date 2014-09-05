@@ -8,7 +8,7 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 	tileset,
 	animateBlobs = true;
 
-	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
 	
 	this.prototype.init =function() {
 		tileset = new Image();

@@ -1,17 +1,16 @@
-BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, sizeX, sizeY, LevelID) {
-	this.prototype = new BlobApp.DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY);
+BlobApp.Goal = (function Goal(x_pos, y_pos, sizeX, sizeY, GOALID) {
+	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
 
-	var sprite, tilesetSheet, LvlID;
+	var sprite, tilesetSheet;
 
 	this.prototype.init =function() {
 		var tileset = new Image();
-		this.LevelID = LevelID
 
-		tileset.src = "res/img/levelDoor.png";
+		tileset.src = "res/img/goal.png"
 
 		// callback for loading sprite after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
-	},
+	},	
 
 	_initSprite = function(tileset, width, height) {
 		var imageData = {
@@ -22,6 +21,7 @@ BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, sizeX, sizeY, LevelID) {
 				count: 1
 			}
 		}
+
 		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
 
@@ -38,7 +38,7 @@ BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, sizeX, sizeY, LevelID) {
 		sprite.mouseEnabled = false;
 	},
 
-	this.LevelID = LevelID;	
 	this.prototype.init();
+	this.keyID = GOALID;
 	this.sprite = sprite;
 });

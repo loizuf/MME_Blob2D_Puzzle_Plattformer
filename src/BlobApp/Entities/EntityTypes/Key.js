@@ -1,5 +1,5 @@
 BlobApp.Key = (function Key(x_pos, y_pos, sizeX, sizeY, keyID) {
-	this.prototype = new BlobApp.DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
 
 	var sprite, tilesetSheet;
 

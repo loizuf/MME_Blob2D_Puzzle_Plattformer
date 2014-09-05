@@ -1,5 +1,5 @@
 BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, sizeX, sizeY, doorType) {
-	this.prototype = new BlobApp.DynamicEntity(sprite, x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
 
 	var sprite, tilesetSheet;
 

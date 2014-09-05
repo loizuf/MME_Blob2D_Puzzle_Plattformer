@@ -349,6 +349,8 @@ BlobApp.InputHandler = (function() {
             break;
 
             case keyMap.p2Jump:
+                //disabled scrolling
+                e.preventDefault();
                 $(that).trigger('p2ArrowUpStarted');
             break;
 
@@ -368,7 +370,9 @@ BlobApp.InputHandler = (function() {
                 }
             break;
 
-            case keyMap.p2Trigger:     
+            case keyMap.p2Trigger:
+                //disabled scrolling
+                e.preventDefault();     
                  $(that).trigger('p2ArrowDownStarted');
             break;
 

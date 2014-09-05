@@ -9,7 +9,7 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos, sizeX, sizeY) {
 	removedSprite,
 	stopStarted;
 
-	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
 
 	this.prototype.init = function() {
 		tileset = new Image();

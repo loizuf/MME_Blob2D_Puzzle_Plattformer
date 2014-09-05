@@ -8,7 +8,7 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
 	blobSprites,
 	removedSprite;
 
-	this.prototype = new BlobApp.DynamicEntity(x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
 
 	this.prototype.init = function() {
 		tileset = new Image();
