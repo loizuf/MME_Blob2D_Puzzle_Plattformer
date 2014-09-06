@@ -179,7 +179,7 @@ BlobApp.ViewController = (function() {
 		$('body').trigger("restartPhys");
 		
 
-		$gamecanvas.fadeIn(1000, function() {
+		$gamecanvas.fadeIn(1250, function() {
 			createjs.Ticker.setFPS(30);
 		});
 	},
@@ -236,7 +236,7 @@ BlobApp.ViewController = (function() {
 	},
 
 	_onLevelLoadRequest = function() {
-		$gamecanvas.fadeOut(1000, function() {
+		$gamecanvas.fadeOut(1250, function() {
 			_clearScene();
 
 			$('body').trigger("destroyPhysics");
@@ -259,6 +259,11 @@ BlobApp.ViewController = (function() {
 		stage.addChild(data.sprites[0]);
 		stage.addChild(data.sprites[1]);
 		$('body').trigger("blobSpritesAdded");
+	},
+
+	_shakeCanvas = function() {
+		console.log("shake");
+		$gamecanvas.effect("shake");
 	},
 
 	_listener = function(){
@@ -291,6 +296,8 @@ BlobApp.ViewController = (function() {
 
 		$('body').on('onStartSlingshot', _onSlingshotStarted);
 		$('body').on('slingshotStopRequested', _onSlingshotStopped);
+
+		$('body').on('onCameraShakeRequested', _shakeCanvas);
 	};
 
 	that.init = init;
