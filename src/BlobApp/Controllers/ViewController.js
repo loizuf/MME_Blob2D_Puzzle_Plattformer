@@ -177,7 +177,11 @@ BlobApp.ViewController = (function() {
 
 	_resumeGame = function() {
 		$('body').trigger("restartPhys");
-		createjs.Ticker.setFPS(30);
+		
+
+		$gamecanvas.fadeIn(1000, function() {
+			createjs.Ticker.setFPS(30);
+		});
 	},
 
 	_showMenu = function() {
@@ -232,12 +236,14 @@ BlobApp.ViewController = (function() {
 	},
 
 	_onLevelLoadRequest = function() {
-		_clearScene();
+		$gamecanvas.fadeOut(1000, function() {
+			_clearScene();
 
-		$('body').trigger("destroyPhysics");
+			$('body').trigger("destroyPhysics");
 
-		_tick();
-		_resumeGame();
+			_tick();
+			_resumeGame();
+		});
 	},
 
 	_onSlingshotStarted = function(event, data) {
@@ -247,7 +253,6 @@ BlobApp.ViewController = (function() {
 		stage.removeChild(stage.getChildByName("blobGreen"));
 
 		$('body').trigger("blobSpritesRemoved");
-
 	},
 
 	_onSlingshotStopped = function(event, data) {
