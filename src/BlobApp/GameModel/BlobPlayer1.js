@@ -19,14 +19,14 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on("greenBlobLeftTriggerZone", _setDownActionP1);
 		$('body').on("greenBlobInLevelLoadTriggerZone", _setUpActionP1);
 		$('body').on("greenBlobLeftLevelLoadTriggerZone", _setUpActionP1);
-		$('body').on('heliStopRequested', _resetControls);
-		$('body').on('bridgeStopRequested', _resetControls);
-		$('body').on('sphereStopRequested', _resetControls);
+		$('body').on('heliStopRequested', thisVar._resetControls);
+		$('body').on('bridgeStopRequested', thisVar._resetControls);
+		$('body').on('sphereStopRequested', thisVar._resetControls);
 		$('body').on('trampolinInitRequested', _setTrampolin);
-		$('body').on('slingshotFinished', _resetControls);
+		$('body').on('slingshotFinished', thisVar._resetControls);
 
 		$('body').on('startTele', thisVar.initTele);
-		$('body').on('physTeleportFinished', _resetControls);
+		$('body').on('physTeleportFinished', thisVar.stopTeleP1);
 
 		$('body').on('startBridge', thisVar.initBridge);
 
@@ -136,7 +136,7 @@ BlobApp.BlobPlayer1 = (function() {
 		}
 	},
 
-	_resetControls = function() {
+	this._resetControls = function() {
 		prototypeVar.setSingleSpecialAllowed(true);
 		prototypeVar.setFunction("currentUp", prototypeVar._jump);
 		prototypeVar.setFunction("currentLeft", prototypeVar._moveLeft);
@@ -172,12 +172,12 @@ BlobApp.BlobPlayer1 = (function() {
 
 	// START: Teleportation special skill
 	this.initTele = function() {
-		prototypeVar.setFunction("currentUp", function(){});
-		prototypeVar.setFunction("currentLeft", function(){});
-		prototypeVar.setFunction("currentRight", function(){});
-		prototypeVar.setFunction("currentDown", function(){});
-
 		$('body').trigger('blobanimationChanged', {'blobID' : EntityConfig.GREENBLOBID, 'animationKey' : AnimationKeys.TELEPORT});
+	},
+
+	this.stopTeleP1 = function() {
+		thisVar._resetControls();
+		_setDownActionP1(null, {name: "tele"});
 	},
 
 	// END: Teleport

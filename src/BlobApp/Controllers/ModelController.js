@@ -261,8 +261,10 @@ BlobApp.ModelController = (function() {
 		if(player1BridgeDisassemblyDirection != null && player2BridgeDisassemblyDirection != null) {
 			if(player1BridgeDisassemblyDirection === "left" && player2BridgeDisassemblyDirection === "left") {
 				$('body').trigger('onBridgeDirectionChosen', {"animationKey": AnimationKeys.STOP, "direction" : "left"});
+				$('body').trigger("disableAllMovements");
 			} else if(player1BridgeDisassemblyDirection === "right" && player2BridgeDisassemblyDirection === "right") {
 				$('body').trigger('onBridgeDirectionChosen', {"animationKey": AnimationKeys.STOP, "direction" : "right"});
+				$('body').trigger("disableAllMovements");
 			}
 		}
 	},
@@ -275,6 +277,7 @@ BlobApp.ModelController = (function() {
 			_blobPlayerTwo.prototype.setWaitingForOther(false);
 		} else if(specialName == "tele") {
 			$('body').trigger("startTele");
+			$('body').trigger("disableAllMovements");
 			_blobPlayerOne.prototype.setWaitingForOther(false);
 			_blobPlayerTwo.prototype.setWaitingForOther(false);
 		} else if(specialName == "bridgeLeft") {

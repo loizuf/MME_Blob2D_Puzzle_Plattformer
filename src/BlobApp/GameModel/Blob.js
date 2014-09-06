@@ -75,6 +75,7 @@ BlobApp.BlobSuperClass = function() {
 
 		// listener methods
 		$("body").on("onTick", _callDirections);
+		$("body").on("disableAllMovements", _disableAllMovements);
 	},
 
 	_setPropertiesOfBlob = function(pX, pY, v, dir) {
@@ -198,6 +199,13 @@ BlobApp.BlobSuperClass = function() {
 				"animationKey" : AnimationKeys.IDLE1
 			});
 		} */
+	},
+
+	_disableAllMovements = function() {
+		emptyFunction = function(){};
+		_currentMash = _currentUp = _currentDown = _currentRight = _currentLeft = 
+		_upPressed = _upReleased = _downPressed = _downReleased = 
+		_leftPressed = _leftReleased = _rightPressed = _rightReleased = emptyFunction;
 	},
 
 	// These functions are called when a button is pressed
