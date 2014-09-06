@@ -171,8 +171,8 @@ BlobApp.BlobSuperClass = function() {
 		}
 	},
 
-	this.loadLevel = function(levelID) {
-		$('body').trigger('levelLoadRequest', levelID);
+	this.loadLevel = function(levelID, owID) {
+		$('body').trigger('levelLoadRequest', {lvlID: levelID, owID: owID});
 	},
 
 	_callDirections = function() {

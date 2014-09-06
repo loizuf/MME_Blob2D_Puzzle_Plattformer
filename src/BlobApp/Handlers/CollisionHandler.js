@@ -21,7 +21,6 @@ BlobApp.CollisionHandler = (function() {
 		_registerListeners();
 
 		keyPickedUp = false;
-		console.log(keyPickedUp);
 	},
 
 	getContactListener = function() {
@@ -36,7 +35,6 @@ BlobApp.CollisionHandler = (function() {
 		contactListener.BeginContact = function(contact) {
 			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
 			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
-			console.log(aID, bID);
 
 			bodyA = contact.GetFixtureA().GetBody();
 			bodyB = contact.GetFixtureB().GetBody();
@@ -334,9 +332,10 @@ BlobApp.CollisionHandler = (function() {
 	},
 
 	_levelLoadRequested = function(player, bodyB) {
-		if(bodyB.GetUserData()[2]){
+		if(bodyB.GetUserData()[3]){
 			var levelID = bodyB.GetUserData()[1];
-			$('body').trigger(player+'InLevelLoadTriggerZone', levelID);
+			var overID = bodyB.GetUserData()[2];
+			$('body').trigger(player+'InLevelLoadTriggerZone', {lvlID: levelID, owID: overID});
 		}
 
 		//_showHintBubble(bodyB, player);

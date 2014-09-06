@@ -263,7 +263,7 @@ BlobApp.ViewController = (function() {
 
 	_shakeCanvas = function() {
 		console.log("shake");
-		$gamecanvas.effect("shake");
+		$gamecanvas.effect("shake", {distance:5}, 200);
 	},
 
 	_listener = function(){

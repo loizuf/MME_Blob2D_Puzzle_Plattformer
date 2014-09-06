@@ -90,16 +90,16 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setFunction("downPressed", function(){thisVar.tryToInit(what.name);});
 	},
 
-	_setUpActionP1 = function(event, levelID) {
-		if(levelID != undefined){
-			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(levelID);});
+	_setUpActionP1 = function(event, IDS) {
+		if(IDS != undefined){
+			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(IDS.lvlID, IDS.owID);});
 		} else {
 			prototypeVar.setFunction("upPressed", function(){});
 		}
 	},
 
-	this.tryLevelLoad = function(levelID) {
-		prototypeVar.loadLevel(levelID);
+	this.tryLevelLoad = function(levelID, owID) {
+		prototypeVar.loadLevel(levelID, owID);
 	},
 
 	this.initTrampolin = function() {
