@@ -5,6 +5,10 @@
          "height":25,
          "name":"Kachelebene 1",
          "opacity":1,
+         "properties":
+         {
+            "OverWorldID":1
+         },
          "type":"tilelayer",
          "visible":true,
          "width":33,

@@ -12,7 +12,7 @@ BlobApp.MainController = (function() {
 	_levelloader = null,
 	
 	lID,
-	owID,
+	//owID,
 	p1ID,
 	p2ID,
 
@@ -40,7 +40,8 @@ BlobApp.MainController = (function() {
 		_modelController.init(p1ID, p2ID);
 		_viewController.init();
 		_physicsHandler.init();
-		_levelloader.init(lID);		
+		console.log(lID, _globalStateHandler, _levelloader);
+		_levelloader.init(lID, _globalStateHandler);		
 	},
 
 	_registerListeners = function() {
@@ -57,7 +58,7 @@ BlobApp.MainController = (function() {
 		var state = _globalStateHandler.getGameState();
 
 		lID = state.finishedLevel;
-		owID = state.currentOverWorldMapID;
+		//owID = state.currentOverWorldMapID;
 	},	
 
 	_startNewGame = function() {
