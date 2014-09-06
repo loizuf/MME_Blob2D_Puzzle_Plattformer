@@ -252,24 +252,30 @@ BlobApp.CollisionHandler = (function() {
 				_stopHeli();
 			break;
 		}
+
+		var xVelocityBorder = 4, yVelocityBorder = 4;
+
+		_enableCameraShaking(bodyA, xVelocityBorder, yVelocityBorder, contact);
 	},
 
 	_handleSphereCollision = function(bodyA, bodyB, bID, contact) {
+		var xVelocityBorder = 6, yVelocityBorder = 5;
+
+		_enableCameraShaking(bodyA, xVelocityBorder, yVelocityBorder, contact);
+	},
+
+	_enableCameraShaking = function(bodyA, xVelocityBorder, yVelocityBorder, contact) {
 		if((contact.m_manifold.m_localPlaneNormal.x < 0 
 				|| contact.m_manifold.m_localPlaneNormal.x > 0) 
-			&& (bodyA.GetLinearVelocity().x > 6 
-				|| bodyA.GetLinearVelocity().x < -6)) {
+			&& (bodyA.GetLinearVelocity().x > xVelocityBorder
+				|| bodyA.GetLinearVelocity(bodyA).x < -xVelocityBorder)) {
 
 			$('body').trigger('onCameraShakeRequested', {direction: "left"});
 		}
 
-		if(bodyA.GetLinearVelocity().y > 5) {
+		if(bodyA.GetLinearVelocity().y > yVelocityBorder || bodyA.GetLinearVelocity().y < -yVelocityBorder) {
 			$('body').trigger('onCameraShakeRequested', {direction: "up"});
 		}
-	},
-
-	_shakeCameraOnImpact = function() {
-		
 	},
 
 	_handleRedBlobEndCollision = function(bodyA, bodyB, bID, contact) {
