@@ -311,8 +311,12 @@ BlobApp.CollisionHandler = (function() {
 	},
 
 	_levelLoadRequested = function(player, bodyB) {
-		var levelID = bodyB.GetUserData()[1];
-		$('body').trigger(player+'InLevelLoadTriggerZone', levelID);
+		if(bodyB.GetUserData()[2]){
+			var levelID = bodyB.GetUserData()[1];
+			$('body').trigger(player+'InLevelLoadTriggerZone', levelID);
+		}
+
+		//_showHintBubble(bodyB, player);
 		//$('body').trigger('levelLoadRequest', levelID);
 	},
 
