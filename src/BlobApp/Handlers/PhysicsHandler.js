@@ -484,7 +484,7 @@ BlobApp.PhysicsHandler = (function() {
 		var entity = world.CreateBody(bodyDef);
 
 		entity.CreateFixture(fixture);
-		entity.SetUserData(userData);
+		entity.SetUserData([userData, undefined]);
 
 		var actor = new _actorObject(entity, sprite);
 

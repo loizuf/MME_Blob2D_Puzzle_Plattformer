@@ -55,8 +55,7 @@ BlobApp.CollisionHandler = (function() {
 				break;
 			} 
 
-			if(bID === "S") {
-				console.log("collide");
+			if(bID === "Sphere") {
 				_handleSphereCollision(bodyB, bodyA, aID, contact);
 			}
 		},
