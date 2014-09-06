@@ -450,7 +450,7 @@ BlobApp.LevelLoader = (function() {
 			break;
 
 			case 8:
-				mapDataJson = LevelConfig.TEMPLECLEAN;
+				mapDataJson = LevelConfig.FINISHTEST;
 			break;
 
 			case 9:
