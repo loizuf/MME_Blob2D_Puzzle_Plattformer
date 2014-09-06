@@ -261,9 +261,10 @@ BlobApp.ViewController = (function() {
 		$('body').trigger("blobSpritesAdded");
 	},
 
-	_shakeCanvas = function() {
-		console.log("shake");
-		$gamecanvas.effect("shake");
+	_shakeCanvas = function(event, data) {
+		console.log("shake", data.direction);
+		//$gamecanvas.effect('shake', data.direction, data.distance, data.times);
+		$gamecanvas.effect('shake', {direction: data.direction, distance: 5}, 200);
 	},
 
 	_listener = function(){

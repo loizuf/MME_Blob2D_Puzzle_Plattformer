@@ -255,20 +255,21 @@ BlobApp.CollisionHandler = (function() {
 	},
 
 	_handleSphereCollision = function(bodyA, bodyB, bID, contact) {
-		switch(bID) {
-			case EntityConfig.VERTICALBORDERID:
-				_shakeCameraOnImpact();
-			break;
+		if((contact.m_manifold.m_localPlaneNormal.x < 0 
+				|| contact.m_manifold.m_localPlaneNormal.x > 0) 
+			&& (bodyA.GetLinearVelocity().x > 6 
+				|| bodyA.GetLinearVelocity().x < -6)) {
 
-			case EntityConfig.HORIZONTALBORDERID:
-				_shakeCameraOnImpact();
-			break;
+			$('body').trigger('onCameraShakeRequested', {direction: "left"});
+		}
+
+		if(bodyA.GetLinearVelocity().y > 5) {
+			$('body').trigger('onCameraShakeRequested', {direction: "up"});
 		}
 	},
 
 	_shakeCameraOnImpact = function() {
-		console.log("shake");
-		$('body').trigger('onCameraShakeRequested');
+		
 	},
 
 	_handleRedBlobEndCollision = function(bodyA, bodyB, bID, contact) {
