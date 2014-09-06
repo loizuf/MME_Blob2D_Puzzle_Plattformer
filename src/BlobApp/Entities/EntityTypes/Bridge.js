@@ -1,4 +1,4 @@
-BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
+BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY, direction) {
 
 	var that = this,
 
@@ -12,7 +12,7 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
 
 	this.prototype.init = function() {
 		tileset = new Image();
-		tileset.src = "res/img/Bridg.png"; // mapdata.tilesets[0].image
+		tileset.src = "res/img/bridge.png"; // mapdata.tilesets[0].image
 
 		var height = sizeY;
 
@@ -30,11 +30,12 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
 			},
 			
 			animations : {
-				startAni: [0, 19, "stable"],
-				stable: [19, 19],
-				stop: {
-					frames: [19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0]
-				}
+				startAni: [0, 29, "idle"],
+				idle: [30, 39, "idle", 0.1],
+				stopSameSide : {
+					frames: [29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0]
+				},
+				stopOtherSide : [40, 59]
 			}
 		}
 
@@ -46,7 +47,9 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
 
-		sprite.scaleX = -1;
+		if(direction == "left") {
+			sprite.scaleX = -1;
+		}
 
 		sprite.x = x_pos;
 		sprite.y = y_pos;
@@ -67,18 +70,19 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY) {
 	_animate = function(event, data) {
 		switch(data.animationKey) {
 			case AnimationKeys.STOP:
-				if(data.direction == "left") {
-					sprite.gotoAndPlay("stop");
+				if(data.direction == direction) {
+					sprite.gotoAndPlay("stopSameSide");
 				} else {
-					sprite.scaleX = 1;
-					sprite.gotoAndPlay("stop");
+					sprite.gotoAndPlay("stopOtherSide");
 				}
 			break;
 		}
 	},
 
 	_checkIfStopFinished = function() {
-		if(!removedSprite && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 19) {
+		if(!removedSprite && 
+			((sprite.currentAnimation == "stopSameSide" && sprite.currentAnimationFrame == 29) || 
+				(sprite.currentAnimation == "stopOtherSide" && sprite.currentAnimationFrame == 19))) {
 			$('body').trigger('specialFinished', {'specialName' : "bridge"});
 			$('body').trigger('bridgeStopRequested', {"sprites" : blobSprites});
 			sprite.stop();

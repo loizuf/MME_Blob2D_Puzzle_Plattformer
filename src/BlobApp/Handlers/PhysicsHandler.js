@@ -526,7 +526,11 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	_initBridge = function(event, data) {
-		greenBlobEntity = undefined;
+		direction = data.direction;
+		
+		// get bridge trigger for positions
+		greenBlobEntity = undefined,
+		triggerZoneEntity = undefined;
 
 		bridgeStart = data.direction;
 
@@ -537,8 +541,21 @@ BlobApp.PhysicsHandler = (function() {
 			}
 		}
 
-		var bridgeEntity = new BlobApp.Bridge(greenBlobEntity.m_xf.position.x * SCALE + 50,
-			greenBlobEntity.m_xf.y * SCALE + 12.5, 175, 75);
+		contact = greenBlobEntity.GetContactList().contact;
+
+		do {
+			currentBody = contact.GetFixtureB().GetBody();
+			if(currentBody.GetUserData()[0] == EntityConfig.BRIDGELEFTTRIGGER ||
+				currentBody.GetUserData()[0] == EntityConfig.BRIDGERIGHTTRIGGER) {
+				triggerZoneEntity = currentBody;
+				break;
+
+			}
+			contact = contact.GetNext();
+		} while(contact);
+
+		var bridgeEntity = new BlobApp.Bridge(triggerZoneEntity.m_xf.position.x * SCALE + 75,
+			triggerZoneEntity.m_xf.y * SCALE + 12.5, 275, 75, direction);
 		
 		sprite = bridgeEntity.sprite;
 
@@ -560,10 +577,11 @@ BlobApp.PhysicsHandler = (function() {
 
 		// Create Bridge (= Create Blob)
 		//sprite = spriteAndNumber["sprite"];
-		userData = "Bridge"
+		userData = "Bridge";
 		
-		var x = (greenBlobEntity.m_xf.position.x + 75 / SCALE); 
-		var y = greenBlobEntity.m_xf.position.y
+		var x = (direction == "left") ? 
+			(triggerZoneEntity.m_xf.position.x + 100 / SCALE) : (triggerZoneEntity.m_xf.position.x - 100 / SCALE) ; 
+		var y = triggerZoneEntity.m_xf.position.y
 
 		var width = TILESIZEX / SCALE;
 		var height = TILESIZEY / SCALE;	 	
@@ -583,28 +601,28 @@ BlobApp.PhysicsHandler = (function() {
 
 		if(bridgeStart == "left") {
 			if(bridgeClimbDirection == "left") {
-				sprite1X = (xPos * SCALE) + 12.5 - 80;
-				sprite2X = (xPos * SCALE) - 12.5 - 80;
+				sprite1X = (xPos * SCALE) + 12.5 - 112.5;
+				sprite2X = (xPos * SCALE) - 12.5 - 112.5;
 
 				sprite1Y = (yPos * SCALE) - 3;
 				sprite2Y = (yPos * SCALE) - 3;	
 			} else {
-				sprite1X = (xPos * SCALE) + 12.5 + 115;
-				sprite2X = (xPos * SCALE) - 12.5 + 115;
+				sprite1X = (xPos * SCALE) + 12.5 + 110;
+				sprite2X = (xPos * SCALE) - 12.5 + 110;
 
 				sprite1Y = (yPos * SCALE) - 3;
 				sprite2Y = (yPos * SCALE) - 3;	
 			}
 		} else {
 			if(bridgeClimbDirection == "left") {
-				sprite1X = (xPos * SCALE) + 12.5 - 240;
-				sprite2X = (xPos * SCALE) - 12.5 - 240;
+				sprite1X = (xPos * SCALE) - 12.5 - 110;
+				sprite2X = (xPos * SCALE) + 12.5 - 110;
 
 				sprite1Y = (yPos * SCALE) - 3;
 				sprite2Y = (yPos * SCALE) - 3;	
 			} else {
-				sprite1X = (xPos * SCALE) + 12.5;
-				sprite2X = (xPos * SCALE) - 12.5;
+				sprite1X = (xPos * SCALE) - 12.5 + 112.5;
+				sprite2X = (xPos * SCALE) + 12.5 + 112.5;
 
 				sprite1Y = (yPos * SCALE) - 3;
 				sprite2Y = (yPos * SCALE) - 3;	

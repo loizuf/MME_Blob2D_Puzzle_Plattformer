@@ -106,13 +106,13 @@ BlobApp.BlobPlayer1 = (function() {
 		if(prototypeVar.getSingleSpecialAllowed() && !isTrampolin) {
 			prototypeVar.setSingleSpecialAllowed(false);
 
-			prototypeVar.setCurrentUp(function(){});
-			prototypeVar.setCurrentDown(function(){});
+			prototypeVar.setFunction("currentUp", function(){});
+			prototypeVar.setFunction("currentDown", function(){});
 			
 			prototypeVar.setFunction("downPressed", function(){thisVar.stopTrampolin();});
 
-			prototypeVar.setCurrentRight(function(){});
-			prototypeVar.setCurrentLeft(function(){});
+			prototypeVar.setFunction("currentRight", function(){});
+			prototypeVar.setFunction("currentLeft", function(){});
 
 			$('body').trigger("onTrampolinActive");
 			isTrampolin = true;
@@ -123,13 +123,13 @@ BlobApp.BlobPlayer1 = (function() {
 		if (prototypeVar.getSingleSpecialAllowed() && isTrampolin) {
 			prototypeVar.setSingleSpecialAllowed(false);
 
-			prototypeVar.setCurrentUp(prototypeVar._jump);
-			prototypeVar.setCurrentDown(function(){});
+			prototypeVar.setFunction("currentUp", prototypeVar._jump);
+			prototypeVar.setFunction("currentDown", function(){});
 
 			prototypeVar.setFunction("downPressed", function() {thisVar.initTrampolin();});
 
-			prototypeVar.setCurrentRight(prototypeVar._moveRight);
-			prototypeVar.setCurrentLeft(prototypeVar._moveLeft);			
+			prototypeVar.setFunction("currentRight", prototypeVar._moveRight);
+			prototypeVar.setFunction("currentLeft", prototypeVar._moveLeft);			
 
 			$('body').trigger("onTrampolinInactive");
 			isTrampolin = false;	
@@ -138,10 +138,10 @@ BlobApp.BlobPlayer1 = (function() {
 
 	_resetControls = function() {
 		prototypeVar.setSingleSpecialAllowed(true);
-		prototypeVar.setCurrentUp(prototypeVar._jump);
-		prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
-		prototypeVar.setCurrentRight(prototypeVar._moveRight);
-		prototypeVar.setCurrentDown(function() {});
+		prototypeVar.setFunction("currentUp", prototypeVar._jump);
+		prototypeVar.setFunction("currentLeft", prototypeVar._moveLeft);
+		prototypeVar.setFunction("currentRight", prototypeVar._moveRight);
+		prototypeVar.setFunction("currentDown", function() {});
 		prototypeVar.setFunction("upPressed", function(){});
 		prototypeVar.setFunction("upReleased", function(){});
 		prototypeVar.setFunction("downPressed", function(){thisVar.initTrampolin();});
@@ -158,24 +158,24 @@ BlobApp.BlobPlayer1 = (function() {
 		function restore() {
 			$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : false});
 			
-			prototypeVar.setCurrentUp(prototypeVar._jump);
-			prototypeVar.setCurrentLeft(prototypeVar._moveLeft);
-			prototypeVar.setCurrentRight(prototypeVar._moveRight);
+			prototypeVar.setFunction("currentUp", prototypeVar._jump);
+			prototypeVar.setFunction("currentLeft", prototypeVar._moveLeft);
+			prototypeVar.setFunction("currentRight", prototypeVar._moveRight);
 		}
 
-		prototypeVar.setCurrentUp(restore);
-		prototypeVar.setCurrentLeft(restore);
-		prototypeVar.setCurrentRight(restore);
+		prototypeVar.setFunction("currentUp", restore);
+		prototypeVar.setFunction("currentLeft", restore);
+		prototypeVar.setFunction("currentRight", restore);
 
 		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : skill});		
 	},
 
 	// START: Teleportation special skill
 	this.initTele = function() {
-		prototypeVar.setCurrentUp(function(){});
-		prototypeVar.setCurrentLeft(function(){});
-		prototypeVar.setCurrentRight(function(){});
-		prototypeVar.setCurrentDown(function(){});
+		prototypeVar.setFunction("currentUp", function(){});
+		prototypeVar.setFunction("currentLeft", function(){});
+		prototypeVar.setFunction("currentRight", function(){});
+		prototypeVar.setFunction("currentDown", function(){});
 
 		$('body').trigger('blobanimationChanged', {'blobID' : EntityConfig.GREENBLOBID, 'animationKey' : AnimationKeys.TELEPORT});
 	},
@@ -188,12 +188,12 @@ BlobApp.BlobPlayer1 = (function() {
 	this.initHeli = function() {		
 		prototypeVar.setSingleSpecialAllowed(false);
 		// BlobPlayer2 controls up and down movements:
-		prototypeVar.setCurrentUp(function(){});
-		prototypeVar.setCurrentDown(function(){});
+		prototypeVar.setFunction("currentUp", function(){});
+		prototypeVar.setFunction("currentDown", function(){});
 
 		// BlobPlayer1 (this blob) controls left and right movements for heli:
-		prototypeVar.setCurrentLeft(_heliMoveLeft);
-		prototypeVar.setCurrentRight(_heliMoveRight);
+		prototypeVar.setFunction("currentLeft", _heliMoveLeft);
+		prototypeVar.setFunction("currentRight", _heliMoveRight);
 	},
 
 	_heliMoveRight = function() {		
@@ -209,11 +209,11 @@ BlobApp.BlobPlayer1 = (function() {
 	this.initBridge = function(event, data) {
 		prototypeVar.setSingleSpecialAllowed(false);
 
-		prototypeVar.setCurrentUp(function(){});
-		prototypeVar.setCurrentDown(function(){});
+		prototypeVar.setFunction("currentUp", function(){});
+		prototypeVar.setFunction("currentDown", function(){});
 
-		prototypeVar.setCurrentLeft(thisVar.bridgeMoveLeft);
-		prototypeVar.setCurrentRight(thisVar.bridgeMoveRight);		
+		prototypeVar.setFunction("currentLeft", thisVar.bridgeMoveLeft);
+		prototypeVar.setFunction("currentRight", thisVar.bridgeMoveRight);		
 	},
 
 	this.bridgeMoveLeft = function() {
@@ -227,12 +227,12 @@ BlobApp.BlobPlayer1 = (function() {
 	this.initSphere = function() {
 		prototypeVar.setSingleSpecialAllowed(false);
 
-		prototypeVar.setCurrentUp(function(){});
-		prototypeVar.setCurrentDown(function(){});
-		setTimeout(function(){prototypeVar.setCurrentDown(thisVar.tryToStopSphere)}, 1500);
+		prototypeVar.setFunction("currentUp", function(){});
+		prototypeVar.setFunction("currentDown", function(){});
+		setTimeout(function(){prototypeVar.setFunction("currentDown", thisVar.tryToStopSphere)}, 1500);
 
-		prototypeVar.setCurrentLeft(thisVar.sphereMoveLeft);
-		prototypeVar.setCurrentRight(thisVar.sphereMoveRight);
+		prototypeVar.setFunction("currentLeft", thisVar.sphereMoveLeft);
+		prototypeVar.setFunction("currentRight", thisVar.sphereMoveRight);
 	},
 
 	this.sphereMoveLeft = function() {
@@ -244,7 +244,7 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	this.tryToStopSphere = function() {
-		prototypeVar.setCurrentDown(function(){});
+		prototypeVar.setFunction("currentDown", function(){});
 		$('body').trigger('stopSphere');
 	},
 
@@ -256,11 +256,11 @@ BlobApp.BlobPlayer1 = (function() {
 
 		prototypeVar.setSingleSpecialAllowed(false);
 
-		prototypeVar.setCurrentUp(function(){});
-		prototypeVar.setCurrentDown(function(){});
+		prototypeVar.setFunction("currentUp", function(){});
+		prototypeVar.setFunction("currentDown", function(){});
 
-		prototypeVar.setCurrentLeft(function(){});
-		prototypeVar.setCurrentRight(function(){});
+		prototypeVar.setFunction("currentLeft", function(){});
+		prototypeVar.setFunction("currentRight", function(){});
 
 		prototypeVar.setFunction("leftPressed", thisVar.clutchSlingshot);
 		prototypeVar.setFunction("rightPressed", thisVar.loosenSlingshot);

@@ -250,23 +250,30 @@ BlobApp.CollisionHandler = (function() {
 				_stopHeli();
 			break;
 		}
+
+		var xVelocityBorder = 6, yVelocityBorder = 6;
+
+		_enableCameraShaking(bodyA, xVelocityBorder, yVelocityBorder, contact);
 	},
 
 	_handleSphereCollision = function(bodyA, bodyB, bID, contact) {
-		switch(bID) {
-			case EntityConfig.VERTICALBORDERID:
-				_shakeCameraOnImpact();
-			break;
+		var xVelocityBorder = 6, yVelocityBorder = 5;
 
-			case EntityConfig.HORIZONTALBORDERID:
-				_shakeCameraOnImpact();
-			break;
-		}
+		_enableCameraShaking(bodyA, xVelocityBorder, yVelocityBorder, contact);
 	},
 
-	_shakeCameraOnImpact = function() {
-		console.log("shake");
-		$('body').trigger('onCameraShakeRequested');
+	_enableCameraShaking = function(bodyA, xVelocityBorder, yVelocityBorder, contact) {
+		if((contact.m_manifold.m_localPlaneNormal.x < 0 
+				|| contact.m_manifold.m_localPlaneNormal.x > 0) 
+			&& (bodyA.GetLinearVelocity().x > xVelocityBorder
+				|| bodyA.GetLinearVelocity(bodyA).x < -xVelocityBorder)) {
+
+			$('body').trigger('onCameraShakeRequested', {direction: "left"});
+		}
+
+		if(bodyA.GetLinearVelocity().y > yVelocityBorder || bodyA.GetLinearVelocity().y < -yVelocityBorder) {
+			$('body').trigger('onCameraShakeRequested', {direction: "up"});
+		}
 	},
 
 	_handleRedBlobEndCollision = function(bodyA, bodyB, bID, contact) {

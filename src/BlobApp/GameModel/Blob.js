@@ -293,27 +293,7 @@ BlobApp.BlobSuperClass = function() {
 			_currentMash();
 	},
 
-	// These functions can be called from outside(?) to change what happens when a button is pressed
-	this.setCurrentDown = function(currentDown) {
-		_currentDown = currentDown;
-	},
-
-	this.setCurrentUp = function(currentUp) {
-		_currentUp = currentUp;
-	},
-
-	this.setCurrentLeft = function(currentLeft) {
-		_currentLeft = currentLeft;
-	},
-
-	this.setCurrentRight = function(currentRight) {
-		_currentRight = currentRight;
-	},
-
-	this.setCurrentMash = function(currentMash) {
-		_currentMash = currentMash;
-	},
-
+	// This function can be called from BlobPlayer1 and BlobPlayer2 to change what happens when a button is pressed
 	this.setFunction = function(name, newFunction) {
 		switch(name) {
 			case "upPressed":
@@ -339,6 +319,21 @@ BlobApp.BlobSuperClass = function() {
 				break;
 			case "rightReleased":
 				_rightReleased = newFunction;
+				break;
+			case "currentUp":
+				_currentUp = newFunction;
+				break;
+			case "currentDown":
+				_currentDown = newFunction;
+				break;
+			case "currentLeft":
+				_currentLeft = newFunction;
+				break;
+			case "currentRight":
+				_currentRight = newFunction;
+				break;
+			case "currentMash":
+				_currentMash = newFunction;
 				break;
 		}
 	},
