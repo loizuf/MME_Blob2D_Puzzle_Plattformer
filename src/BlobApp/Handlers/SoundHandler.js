@@ -14,7 +14,7 @@ BlobApp.SoundHandler = (function() {
         manifest = [
             {id:"test", src:"test.ogg"},
         ];
-        console.log(manifest);
+        //console.log(manifest);
 
         createjs.Sound.alternateExtensions = ["mp3"];
          //TODO: maybe exract this to a preload module

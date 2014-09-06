@@ -92,6 +92,8 @@ BlobApp.LevelLoader = (function() {
 						case EntityConfig.NEWGAMEDOORLOWERID:
 						case EntityConfig.CONTINUEDOORLOWERID:
 						case EntityConfig.LEVELDOORLOWERID:
+						case EntityConfig.MOVINGGROUNDMIDDLEID:
+						case EntityConfig.MOVINGGROUNDRIGHTID:
 						break;
 
 						case EntityConfig.GREENBLOBID:
@@ -123,6 +125,11 @@ BlobApp.LevelLoader = (function() {
 						case EntityConfig.CONTINUEDOOR:
 							_createContinueDoor(xcoords, ycoords);
 						break;
+
+						case EntityConfig.MOVINGGROUNDID:
+							//_createMovingGround(xcoords, ycoords);
+						break;
+
 
 						case EntityConfig.LEVELDOOR:
 							_createLevelDoor(xcoords, ycoords, layerData, levelDoorCount);
@@ -340,6 +347,15 @@ BlobApp.LevelLoader = (function() {
 		
 		$('body').trigger('entityRequested', _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
+	},
+
+	_createMovingGround = function(x, y){
+		var entity = new BlobApp.MovingGround(x+27.5, y, 25, 75);
+
+		_createRequestObject["sprite"] = entity.sprite;
+		_createRequestObject["userData"] = [EntityConfig.CONTINUEDOOR];
+		
+		$('body').trigger('entityRequested', _createRequestObject);
 	},
 
 	_createLevelDoor = function(x, y, layerData, levelDoorCount) {

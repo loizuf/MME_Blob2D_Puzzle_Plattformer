@@ -114,7 +114,7 @@ BlobApp.PhysicsHandler = (function() {
 		entityID = userData[0];
 
 		var x = (sprite.x) / SCALE,	y = (sprite.y) / SCALE,
-			width = TILESIZEX / SCALE,
+			width = (entityID == EntityConfig.MOVINGGROUNDID )? TILESIZEX * 3 / SCALE : TILESIZEX / SCALE,
 			height = (entityID == EntityConfig.DOORID
 						||entityID == EntityConfig.NEWGAMEDOOR
 						||entityID == EntityConfig.CONTINUEDOOR) ? TILESIZEY * 2 / SCALE : TILESIZEY / SCALE;
