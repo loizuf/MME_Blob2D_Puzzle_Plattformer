@@ -253,7 +253,7 @@ BlobApp.CollisionHandler = (function() {
 			break;
 		}
 
-		var xVelocityBorder = 4, yVelocityBorder = 4;
+		var xVelocityBorder = 6, yVelocityBorder = 6;
 
 		_enableCameraShaking(bodyA, xVelocityBorder, yVelocityBorder, contact);
 	},
