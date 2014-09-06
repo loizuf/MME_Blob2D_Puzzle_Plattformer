@@ -4,15 +4,19 @@ BlobApp.LevelLoader = (function() {
 	tileset,
 	mapData,
 	levelID,
-
+	currentLoadedOverID,
+	_globalStateHandler,
+	_gameState,
 	/* need to be extracted from json!*/
 	_createRequestObject = {
 		"sprite" : undefined,
 		"userData" : undefined
 	},
 
-	init = function(lvlID){
+	init = function(lvlID, globalStateHandler){
 		levelID = lvlID;
+		_globalStateHandler = globalStateHandler;
+		_gameState = _globalStateHandler.getGameState();
 
 		_initBackground();
 		_getLevelMapData(levelID);
@@ -67,6 +71,10 @@ BlobApp.LevelLoader = (function() {
 
 		//Testvariable zur Übergabe von Infos(Doors)
 		var doorCount = 0, buttonCount = 0, levelDoorCount = 0;
+
+		if(layerData.hasOwnProperty('properties') && layerData.properties.hasOwnProperty('OverWorldID')) {
+			currentLoadedOverID = layerData.properties.OverWorldID;
+		}
 
 		for ( var y = 0; y < layerData.height; y++) {
 			borders.push(new Array());
@@ -361,9 +369,17 @@ BlobApp.LevelLoader = (function() {
 	_createLevelDoor = function(x, y, layerData, levelDoorCount) {
 		var levelDoorLevelID = layerData.properties.LevelDoorID[levelDoorCount];
 		var entity = new BlobApp.LevelDoor(x, y+12.5, 25, 50, levelDoorLevelID);
-
 		_createRequestObject["sprite"] = entity.sprite;
-		_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID];
+		if(currentLoadedOverID<_gameState.currentOverworldMapID){
+			_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, true];
+		} else {
+			if(levelDoorLevelID<=_gameState.currentLevel){
+				_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, true];
+			} else {
+				_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, false];
+				//console.log("false");
+			}
+		}
 		_createRequestObject["height"] = 2;
 		
 		$('body').trigger('sensorRequested', _createRequestObject);

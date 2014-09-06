@@ -36,6 +36,7 @@ BlobApp.CollisionHandler = (function() {
 		contactListener.BeginContact = function(contact) {
 			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
 			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
+			console.log(aID, bID);
 
 			bodyA = contact.GetFixtureA().GetBody();
 			bodyB = contact.GetFixtureB().GetBody();
@@ -48,10 +49,15 @@ BlobApp.CollisionHandler = (function() {
 				case EntityConfig.REDBLOBID: 
 					_handleRedBlobCollision(bodyA,bodyB, bID, contact);
 				break;
+
 				case "Heli":
 					_handleHeliCollision(bodyA, bodyB, bID, contact);
 				break;
 			} 
+
+			if(bID === "Sphere") {
+				_handleSphereCollision(bodyB, bodyA, aID, contact);
+			}
 		},
 
 		contactListener.EndContact = function(contact) {
@@ -248,6 +254,23 @@ BlobApp.CollisionHandler = (function() {
 		}
 	},
 
+	_handleSphereCollision = function(bodyA, bodyB, bID, contact) {
+		switch(bID) {
+			case EntityConfig.VERTICALBORDERID:
+				_shakeCameraOnImpact();
+			break;
+
+			case EntityConfig.HORIZONTALBORDERID:
+				_shakeCameraOnImpact();
+			break;
+		}
+	},
+
+	_shakeCameraOnImpact = function() {
+		console.log("shake");
+		$('body').trigger('onCameraShakeRequested');
+	},
+
 	_handleRedBlobEndCollision = function(bodyA, bodyB, bID, contact) {
 		switch(bID) {
 			case EntityConfig.HELITRIGGER : 
@@ -311,8 +334,12 @@ BlobApp.CollisionHandler = (function() {
 	},
 
 	_levelLoadRequested = function(player, bodyB) {
-		var levelID = bodyB.GetUserData()[1];
-		$('body').trigger(player+'InLevelLoadTriggerZone', levelID);
+		if(bodyB.GetUserData()[2]){
+			var levelID = bodyB.GetUserData()[1];
+			$('body').trigger(player+'InLevelLoadTriggerZone', levelID);
+		}
+
+		//_showHintBubble(bodyB, player);
 		//$('body').trigger('levelLoadRequest', levelID);
 	},
 

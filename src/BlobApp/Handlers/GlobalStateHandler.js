@@ -7,7 +7,7 @@ BlobApp.GlobalState = (function() {
 	
 	_gameState = {
 		currentOverworldMapID : 1, //integer
-		finishedLevel : 1
+		currentLevel : 1
 	},
 
 	init = function() {

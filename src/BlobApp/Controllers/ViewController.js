@@ -177,7 +177,11 @@ BlobApp.ViewController = (function() {
 
 	_resumeGame = function() {
 		$('body').trigger("restartPhys");
-		createjs.Ticker.setFPS(30);
+		
+
+		$gamecanvas.fadeIn(1250, function() {
+			createjs.Ticker.setFPS(30);
+		});
 	},
 
 	_showMenu = function() {
@@ -232,12 +236,14 @@ BlobApp.ViewController = (function() {
 	},
 
 	_onLevelLoadRequest = function() {
-		_clearScene();
+		$gamecanvas.fadeOut(1250, function() {
+			_clearScene();
 
-		$('body').trigger("destroyPhysics");
+			$('body').trigger("destroyPhysics");
 
-		_tick();
-		_resumeGame();
+			_tick();
+			_resumeGame();
+		});
 	},
 
 	_onSlingshotStarted = function(event, data) {
@@ -247,13 +253,17 @@ BlobApp.ViewController = (function() {
 		stage.removeChild(stage.getChildByName("blobGreen"));
 
 		$('body').trigger("blobSpritesRemoved");
-
 	},
 
 	_onSlingshotStopped = function(event, data) {
 		stage.addChild(data.sprites[0]);
 		stage.addChild(data.sprites[1]);
 		$('body').trigger("blobSpritesAdded");
+	},
+
+	_shakeCanvas = function() {
+		console.log("shake");
+		$gamecanvas.effect("shake");
 	},
 
 	_listener = function(){
@@ -286,6 +296,8 @@ BlobApp.ViewController = (function() {
 
 		$('body').on('onStartSlingshot', _onSlingshotStarted);
 		$('body').on('slingshotStopRequested', _onSlingshotStopped);
+
+		$('body').on('onCameraShakeRequested', _shakeCanvas);
 	};
 
 	that.init = init;
