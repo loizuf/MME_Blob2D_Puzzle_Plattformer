@@ -27,7 +27,7 @@ BlobApp.GlobalState = (function() {
 	// Has to be called when the level is finished.
 	onFinishLevel = function(levelId, overworldID) {
 		_gameState.currentOverworldMapID = overworldID;
-		_gameState.finishedLevel = levelId;
+		_gameState.currentLevel = levelId+1;
 		_save();
 	},
 
