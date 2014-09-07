@@ -284,7 +284,10 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 					_movingGroundEntered(bodyA,bodyB,true);
-				}	
+				}
+			case EntityConfig.SPIKEID:
+				_playerOnSpikes("heli");
+			break;
 			break;
 		}
 
@@ -301,7 +304,7 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 					_movingGroundEntered(bodyA,bodyB,true);
-				}	
+				}
 			break;
 		}
 	},
