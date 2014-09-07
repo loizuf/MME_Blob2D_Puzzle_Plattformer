@@ -402,7 +402,7 @@ BlobApp.LevelLoader = (function() {
 	_createLevelDoor = function(x, y, layerData, levelDoorCount) {
 		var levelDoorLevelID = layerData.properties.LevelDoorID[levelDoorCount];
 		var levelDoorOverID = layerData.properties.OverWorldID;
-		var entity = new BlobApp.LevelDoor(x, y+12.5, 25, 50, levelDoorLevelID);
+		var entity = new BlobApp.LevelDoor(x, y+10, 50, 60, levelDoorLevelID, levelDoorOverID);
 		_createRequestObject["sprite"] = entity.sprite;
 		if(currentLoadedOverID<_gameState.currentOverworldMapID){
 			_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, levelDoorOverID, true];

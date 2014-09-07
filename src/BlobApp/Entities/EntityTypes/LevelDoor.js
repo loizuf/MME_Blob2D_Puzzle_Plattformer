@@ -1,16 +1,23 @@
-BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, sizeX, sizeY, LevelID) {
+BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, sizeX, sizeY, LevelID, owID) {
 	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
 
 	var sprite, tilesetSheet, LvlID;
+	var thisVar = this;
 
 	this.prototype.init =function() {
 		var tileset = new Image();
-		this.LevelID = LevelID
+		thisVar.LevelID = LevelID
+		thisVar.owID = owID;
 
 		tileset.src = "res/img/levelDoor.png";
 
 		// callback for loading sprite after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		_listeners();
+	},
+
+	_listeners = function() {
+		$("body").on("animateLevelDoor", thisVar._animate);
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -18,8 +25,15 @@ BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, sizeX, sizeY, LevelID) {
 			images : [ tileset ],
 			frames : {
 				width : width,
-				height : height,
-				count: 1
+				height : height
+			},
+
+			animations: {
+				idle: [0, 0, "idle"],
+				open: [0, 9, "opened"],
+				opened: [9, 9],
+				locked: [10, 10, "locked"],
+				unlock: [10, 17, "idle"]
 			}
 		}
 		// create spritesheet for generic objects (ground e.g.)
@@ -36,7 +50,23 @@ BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, sizeX, sizeY, LevelID) {
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
+
+		gameState = BlobApp.GlobalState.getGameState();
+
+		if(gameState.currentOverworldMapID > thisVar.owID || 
+			(gameState.currentOverworldMapID == thisVar.owID && gameState.currentLevel >= thisVar.LevelID)) {
+			sprite.gotoAndPlay("idle");
+		} else {
+			sprite.gotoAndPlay("locked");
+		}
+
 	},
+
+	thisVar._animate = function(event, data) {
+		if(LevelID == data.lvlID) {
+			sprite.gotoAndPlay("open");
+		}
+	};
 
 	this.LevelID = LevelID;	
 	this.prototype.init();

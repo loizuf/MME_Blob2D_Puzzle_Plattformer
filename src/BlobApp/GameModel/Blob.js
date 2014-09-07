@@ -173,6 +173,7 @@ BlobApp.BlobSuperClass = function() {
 	},
 
 	this.loadLevel = function(levelID, owID) {
+		$('body').trigger('animateLevelDoor', {lvlID: levelID, owID: owID});
 		$('body').trigger('levelLoadRequest', {lvlID: levelID, owID: owID});
 	},
 
