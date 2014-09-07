@@ -21,7 +21,6 @@ BlobApp.CollisionHandler = (function() {
 		_registerListeners();
 
 		keyPickedUp = false;
-		console.log(keyPickedUp);
 	},
 
 	getContactListener = function() {
@@ -36,7 +35,6 @@ BlobApp.CollisionHandler = (function() {
 		contactListener.BeginContact = function(contact) {
 			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
 			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
-			console.log(aID, bID);
 
 			bodyA = contact.GetFixtureA().GetBody();
 			bodyB = contact.GetFixtureB().GetBody();
@@ -252,24 +250,30 @@ BlobApp.CollisionHandler = (function() {
 				_stopHeli();
 			break;
 		}
+
+		var xVelocityBorder = 6, yVelocityBorder = 6;
+
+		_enableCameraShaking(bodyA, xVelocityBorder, yVelocityBorder, contact);
 	},
 
 	_handleSphereCollision = function(bodyA, bodyB, bID, contact) {
+		var xVelocityBorder = 6, yVelocityBorder = 5;
+
+		_enableCameraShaking(bodyA, xVelocityBorder, yVelocityBorder, contact);
+	},
+
+	_enableCameraShaking = function(bodyA, xVelocityBorder, yVelocityBorder, contact) {
 		if((contact.m_manifold.m_localPlaneNormal.x < 0 
 				|| contact.m_manifold.m_localPlaneNormal.x > 0) 
-			&& (bodyA.GetLinearVelocity().x > 6 
-				|| bodyA.GetLinearVelocity().x < -6)) {
+			&& (bodyA.GetLinearVelocity().x > xVelocityBorder
+				|| bodyA.GetLinearVelocity(bodyA).x < -xVelocityBorder)) {
 
 			$('body').trigger('onCameraShakeRequested', {direction: "left"});
 		}
 
-		if(bodyA.GetLinearVelocity().y > 5) {
+		if(bodyA.GetLinearVelocity().y > yVelocityBorder || bodyA.GetLinearVelocity().y < -yVelocityBorder) {
 			$('body').trigger('onCameraShakeRequested', {direction: "up"});
 		}
-	},
-
-	_shakeCameraOnImpact = function() {
-		
 	},
 
 	_handleRedBlobEndCollision = function(bodyA, bodyB, bID, contact) {
@@ -335,9 +339,10 @@ BlobApp.CollisionHandler = (function() {
 	},
 
 	_levelLoadRequested = function(player, bodyB) {
-		if(bodyB.GetUserData()[2]){
+		if(bodyB.GetUserData()[3]){
 			var levelID = bodyB.GetUserData()[1];
-			$('body').trigger(player+'InLevelLoadTriggerZone', levelID);
+			var overID = bodyB.GetUserData()[2];
+			$('body').trigger(player+'InLevelLoadTriggerZone', {lvlID: levelID, owID: overID});
 		}
 
 		//_showHintBubble(bodyB, player);

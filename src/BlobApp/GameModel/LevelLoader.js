@@ -3,7 +3,6 @@ BlobApp.LevelLoader = (function() {
 
 	tileset,
 	mapData,
-	levelID,
 	currentLoadedOverID,
 	_globalStateHandler,
 	_gameState,
@@ -13,13 +12,14 @@ BlobApp.LevelLoader = (function() {
 		"userData" : undefined
 	},
 
-	init = function(lvlID, globalStateHandler){
-		levelID = lvlID;
+	init = function(lvlID, overID, globalStateHandler){
+		var levelID = lvlID;
+		var owID = overID;
 		_globalStateHandler = globalStateHandler;
 		_gameState = _globalStateHandler.getGameState();
 
 		_initBackground();
-		_getLevelMapData(levelID);
+		_getLevelMapData(levelID, owID);
 
 
 		mapData = mapDataJson;
@@ -371,16 +371,16 @@ BlobApp.LevelLoader = (function() {
 
 	_createLevelDoor = function(x, y, layerData, levelDoorCount) {
 		var levelDoorLevelID = layerData.properties.LevelDoorID[levelDoorCount];
+		var levelDoorOverID = layerData.properties.OverWorldID;
 		var entity = new BlobApp.LevelDoor(x, y+12.5, 25, 50, levelDoorLevelID);
 		_createRequestObject["sprite"] = entity.sprite;
 		if(currentLoadedOverID<_gameState.currentOverworldMapID){
-			_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, true];
+			_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, levelDoorOverID, true];
 		} else {
 			if(levelDoorLevelID<=_gameState.currentLevel){
-				_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, true];
+				_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, levelDoorOverID, true];
 			} else {
-				_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, false];
-				//console.log("false");
+				_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, levelDoorOverID, false];
 			}
 		}
 		_createRequestObject["height"] = 2;
@@ -450,7 +450,21 @@ BlobApp.LevelLoader = (function() {
 		return JSON.parse(responseText);
 	},
 
-	_getLevelMapData = function(levelNumber) {
+	_getLevelMapData = function(levelNumber, overworldNumber) {
+		switch (overworldNumber){
+			case 0:
+				mapDataJson = LevelConfig.MENU;
+				break;
+
+			case 1:
+				loadLevelOverOne(levelNumber);
+				break;
+
+			case 2:
+				loadLevelOverTwo(levelNumber);
+				break;
+		}
+		/*
 		switch (levelNumber){
 			case 0:
 				mapDataJson = LevelConfig.MENU;
@@ -503,6 +517,64 @@ BlobApp.LevelLoader = (function() {
 			case 9001:
 				mapDataJson = LevelConfig.SPECIALTEST;
 			break;
+
+			
+		}*/
+	},
+
+	loadLevelOverOne = function(lvlNumber) {
+		switch(lvlNumber){
+			case 0:
+				mapDataJson = LevelConfig.OVER0;
+				break;
+
+			case 1:
+				mapDataJson = LevelConfig.INTRODUCTION;
+				break;
+
+			case 2:
+				mapDataJson = LevelConfig.SNAKES;
+				break;
+
+			case 3:
+				mapDataJson = LevelConfig.ROULETTE;
+				break;
+
+			case 4:
+				mapDataJson = LevelConfig.HELI;
+				break;
+
+			case 5:
+				mapDataJson = LevelConfig.TEMPLE;
+				break;
+		}
+	},
+
+	loadLevelOverTwo = function(lvlNumber) {
+		switch(lvlNumber){
+			case 0:
+				mapDataJson = LevelConfig.OVER1;
+				break;
+
+			case 1:
+				mapDataJson = LevelConfig.PRECISION;
+				break;
+
+			case 2:
+				mapDataJson = LevelConfig.SIMPLEJUMP;
+				break;
+
+			case 3:
+				mapDataJson = LevelConfig.FINISHTEST;
+				break;
+
+			case 4:
+				mapDataJson = LevelConfig.TRAMPOLINE;
+				break;
+
+			case 5:
+				mapDataJson = LevelConfig.SPECIALTEST;
+				break;
 		}
 	};
 

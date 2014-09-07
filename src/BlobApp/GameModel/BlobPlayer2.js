@@ -19,14 +19,14 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on("redBlobLeftTriggerZone", _setDownAction);
 		$('body').on("redBlobInLevelLoadTriggerZone", _setUpActionP2);
 		$('body').on("redBlobLeftLevelLoadTriggerZone", _setUpActionP2);
-		$('body').on('heliStopRequested', _resetControls);
-		$('body').on('bridgeStopRequested', _resetControls);
-		$('body').on('sphereStopRequested', _resetControls);
+		$('body').on('heliStopRequested', thisVar._resetControls);
+		$('body').on('bridgeStopRequested', thisVar._resetControls);
+		$('body').on('sphereStopRequested', thisVar._resetControls);
 		$('body').on('stretchInitRequested', _setStretch);
-		$('body').on('slingshotFinished', _resetControls);
+		$('body').on('slingshotFinished', thisVar._resetControls);
 
 		$('body').on('startTele', thisVar.initTele);
-		$('body').on('physTeleportFinished', _resetControls);
+		$('body').on('physTeleportFinished', thisVar.stopTeleP2);
 
 		$('body').on('startBridge', thisVar.initBridge);
 
@@ -90,16 +90,16 @@ BlobApp.BlobPlayer2 = (function() {
 		prototypeVar.setFunction("downPressed", function(){thisVar.tryToInit(what.name);});
 	},
 
-	_setUpActionP2 = function(event, levelID) {
-		if(levelID != undefined){
-			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(levelID);});
+	_setUpActionP2 = function(event, IDS) {
+		if(IDS != undefined){
+			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(IDS.lvlID, IDS.owID);});
 		} else {
 			prototypeVar.setFunction("upPressed", function(){});
 		}
 	},
 
-	this.tryLevelLoad = function(levelID) {
-		prototypeVar.loadLevel(levelID);
+	this.tryLevelLoad = function(levelID, owID) {
+		prototypeVar.loadLevel(levelID, owID);
 	},
 
 	this.initStretch = function() {
@@ -136,7 +136,7 @@ BlobApp.BlobPlayer2 = (function() {
 		}
 	},
 
-	_resetControls = function() {
+	this._resetControls = function() {
 		prototypeVar.setSingleSpecialAllowed(true);
 		prototypeVar.setFunction("currentUp", prototypeVar._jump);
 		prototypeVar.setFunction("currentLeft", prototypeVar._moveLeft);
@@ -174,14 +174,13 @@ BlobApp.BlobPlayer2 = (function() {
 
 	// START: Teleportation special skill
 	this.initTele = function() {
-		prototypeVar.setFunction("currentUp", function(){});
-		prototypeVar.setFunction("currentLeft", function(){});
-		prototypeVar.setFunction("currentRight", function(){});
-		prototypeVar.setFunction("currentDown", function(){});
-
 		$('body').trigger('blobanimationChanged', {'blobID' : EntityConfig.REDBLOBID, 'animationKey' : AnimationKeys.TELEPORT});
-	};
+	},
 
+	this.stopTeleP2 = function() {
+		thisVar._resetControls();
+		_setDownAction(null, {name: "tele"});
+	};
 	// END: Teleport
 
 	// START: Helicopter special skill:

@@ -12,7 +12,6 @@ BlobApp.GlobalState = (function() {
 
 	init = function() {
 		_load();
-
 		return that;
 	},
 
@@ -25,15 +24,26 @@ BlobApp.GlobalState = (function() {
 	},
 
 	// Has to be called when the level is finished.
-	onFinishLevel = function(levelId, overworldID) {
+	onFinishLevel = function(levelID, overworldID) {
+		if(overworldID == _gameState.currentOverworldMapID && levelID == _gameState.currentLevel){
+			_setNewGameState(levelID, overworldID);
+		}
+	},
+
+	_setNewGameState = function(levelId, overworldID) {
+		levelId++;
+		if(levelId==6){
+			overworldID++;
+			levelId=1;
+		}
 		_gameState.currentOverworldMapID = overworldID;
-		_gameState.currentLevel = levelId+1;
+		_gameState.currentLevel = levelId;
 		_save();
 	},
 
 	getGameState = function() {
 		return _gameState;
-	}
+	},
 
 	_save = function() {
 		localStorage.setItem(_gameStateKey, JSON.stringify(_gameState));

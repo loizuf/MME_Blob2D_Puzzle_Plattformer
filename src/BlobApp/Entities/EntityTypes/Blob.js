@@ -99,7 +99,8 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 	},
 
 	_animate = function(event, data) {					
-			if(animateBlobs && blobID==data.blobID) {				
+		if(sprite.currentAnimation == "teleport" || sprite.currentAnimation == "afterTeleport") return;
+		if(animateBlobs && blobID==data.blobID) {				
 			switch(data.animationKey) {
 				case AnimationKeys.IDLE1:
 					sprite.gotoAndPlay("idle1");
@@ -131,6 +132,8 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 	_checkIfTeleAnimationFinished = function() {
 		if(sprite.currentAnimation == "teleport" && blobID == EntityConfig.REDBLOBID && sprite.currentAnimationFrame == 19 ) {
 			$('body').trigger('teleportRequested');
+		} else if (sprite.currentAnimation == "afterTeleport" && blobID == EntityConfig.REDBLOBID && sprite.currentAnimationFrame == 19 ) {
+			$('body').trigger('physTeleportFinished');
 		}
 
 	};

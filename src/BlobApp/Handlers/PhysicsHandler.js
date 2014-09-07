@@ -829,8 +829,6 @@ BlobApp.PhysicsHandler = (function() {
 
 		greenBlobEntity.SetPosition(new b2Vec2(redX, redY + 11 / SCALE));
 		redBlobEntity.SetPosition(new b2Vec2(greenX, greenY - 13 / SCALE));
-
-		$('body').trigger('physTeleportFinished');
 	},
 
 	_activateTrampolin = function() {
