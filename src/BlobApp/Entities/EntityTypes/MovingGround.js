@@ -44,6 +44,7 @@ var that = this,
 		
 		sprite.x = x_pos;
 		sprite.y = y_pos;
+		startY = y_pos/30;
 		
 
 		sprite.snapToPixel = true;
@@ -62,7 +63,7 @@ var that = this,
 	_animate = function(event, data){
 		// not working atm o0
 		var x_pos = body.m_xf.position.x;
-		var y_pos = body.m_xf.position.y;
+		//var y_pos = body.m_xf.position.y;
 		if(started){
 			if(movedBy == MOVINGRANGE){
 				movingRight  = false;
@@ -81,7 +82,7 @@ var that = this,
 				movedBy--;
 			}
 		
-			body.SetPosition(new Box2D.Common.Math.b2Vec2(x_pos,y_pos));
+			body.SetPosition(new Box2D.Common.Math.b2Vec2(x_pos,startY));
 			
 		}
 	},
@@ -89,21 +90,18 @@ var that = this,
 		if(data.cont[0] == myNum){
 			body = data.cont[1];
 			//body.m_fixtureList.m_friction = 2;
-			console.log(body.GetUserData());
-			startX = body.m_xf.position.x;
+			//console.log(body.GetUserData());
 			started = true;
 		}
 		
 	},
 	_entityEnteredMe = function(event, data){
-		console.log(myNum,data.cont[0]);
 		if(myNum == data.cont[0]){
 			bodiesOnMe.push(data.cont[1]);
 			console.log(bodiesOnMe);
 		}
 	},
 	_entityLeftMe = function(event, data){
-		console.log(myNum,data.cont[0]);
 		if(myNum == data.cont[0]){
 			bodiesOnMe.splice(bodiesOnMe.indexOf(data.cont[1]),1);
 			console.log(bodiesOnMe);

@@ -89,6 +89,20 @@ BlobApp.PhysicsHandler = (function() {
 		return entity;
 	},
 
+	createDynamicBoxEntity = function(x, y, width, height, sensor) {
+		var fixture = createDefaultBoxFixture(width, height, sensor);
+		var bodyDef = new b2BodyDef;
+
+		bodyDef.type = b2Body.b2_staticBody;
+		bodyDef.position.x = x;
+		bodyDef.position.y = y;
+
+		var entity = world.CreateBody(bodyDef);
+		entity.CreateFixture(fixture);
+
+		return entity;
+	},
+
 	createDefaultBoxFixture = function(width, height, sensor) {
 		var fixture = new b2FixtureDef;
 
@@ -135,8 +149,12 @@ BlobApp.PhysicsHandler = (function() {
 				height = TILESIZEY*0.5 / SCALE;
 				break;
 		}
-
-		var entity = createDefaultBoxEntity(x, y, width, height);
+		if(entityID==EntityConfig.MOVINGGROUNDID){
+			var entity = createDynamicBoxEntity(x, y, width, height);
+		}else{
+			var entity = createDefaultBoxEntity(x, y, width, height);
+		}
+		
 
 		entity.SetUserData(userData);  
 		
