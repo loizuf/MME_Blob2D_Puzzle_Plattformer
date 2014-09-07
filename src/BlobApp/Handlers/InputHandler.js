@@ -23,6 +23,7 @@ BlobApp.InputHandler = (function() {
     _requestAnimFrame,
     isChrome,
     haveEvents,
+    isSlingshot,
 
     XBOX_AXES = {
         LEFT_STICK_X: 0,
@@ -49,8 +50,8 @@ BlobApp.InputHandler = (function() {
 
         HOME: 10,
 
-        DPAD_UP: 11,
-        DPAD_DOWN: 12,
+        DPAD_UP: 12,
+        DPAD_DOWN: 13,
         DPAD_LEFT: 14,
         DPAD_RIGHT: 15
     };
@@ -77,15 +78,24 @@ BlobApp.InputHandler = (function() {
         player1 = p1ControlsID;
         player2 = p2ControlsID;
 
+        isHeliActive = false;
+        isSlingshot = false;
+
         $body = $('body');
 
         $body.on('keyup',_onKeyUp);
         $body.on('keydown',_onKeyDown);
+        $body.on('startSlingshot', function() {
+            isSlingshot = true;
+        });
+
+        $body.on('onSlingshotFinished', function() {
+            isSlingshot = false;
+        });
 
         _initGamepads(p1ControlsID, p2ControlsID);
 
-        $('body').on('onReloadGame', _checkInput);
-        isHeliActive = false;
+        
         
         return that;
     },
@@ -199,6 +209,18 @@ BlobApp.InputHandler = (function() {
                     break;
                 }       
             break;
+
+            case XBOX_AXES.LEFT_STICK_Y:
+                if(id == ID_CONTROLLER_TWO) {
+                    if(isSlingshot) {
+                         if(controller2.axes[position] > GAMEPAD_ANALOG_STICK_DEADZONE) {
+                            _onKeyDown({keyCode:keyMap.p2Trigger});
+                        } else if(controller2.axes[position] < -GAMEPAD_ANALOG_STICK_DEADZONE) { 
+                            _onKeyDown({keyCode:keyMap.p2Jump});
+                        } 
+                    }
+                }
+            break;
         }
     },
 
@@ -250,7 +272,6 @@ BlobApp.InputHandler = (function() {
                 }
             break;
 
-            // used for heli button mashing
             case XBOX_BUTTONS.LB:
                 if(id == ID_CONTROLLER_TWO) {
                     _onKeyUp({keyCode:keyMap.p2Left});
@@ -290,6 +311,22 @@ BlobApp.InputHandler = (function() {
                     break;
                 }        
 
+            break;
+
+            case XBOX_BUTTONS.DPAD_UP:
+                if(id == ID_CONTROLLER_TWO) {
+                    if(isSlingshot) {
+                        _onKeyDown({keyCode:keyMap.p2Jump});
+                    }
+                }
+            break;
+
+            case XBOX_BUTTONS.DPAD_DOWN:
+                if(id == ID_CONTROLLER_TWO) {
+                    if(isSlingshot) {
+                        _onKeyDown({keyCode: keyMap.p2Trigger});
+                    }
+                }
             break;
 
             case XBOX_BUTTONS.X:
@@ -349,8 +386,6 @@ BlobApp.InputHandler = (function() {
             break;
 
             case keyMap.p2Jump:
-                //disabled scrolling
-                e.preventDefault();
                 $(that).trigger('p2ArrowUpStarted');
             break;
 
@@ -371,9 +406,7 @@ BlobApp.InputHandler = (function() {
             break;
 
             case keyMap.p2Trigger:
-                //disabled scrolling
-                e.preventDefault();     
-                 $(that).trigger('p2ArrowDownStarted');
+                $(that).trigger('p2ArrowDownStarted');
             break;
 
             case keyMap.pause:
@@ -424,10 +457,6 @@ BlobApp.InputHandler = (function() {
                 $(that).trigger('p2ArrowDownStopped');
             break;
         }
-    },
-
-    _checkInput = function() {
-        isHeliActive = false;
     };
 
     that.init = init;
