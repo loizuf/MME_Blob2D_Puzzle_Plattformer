@@ -1,9 +1,14 @@
-BlobApp.MovingGround = (function MovingGround(x_pos, y_pos, sizeX, sizeY) {
+BlobApp.MovingGround = (function MovingGround(x_pos, y_pos, sizeX, sizeY,num) {
 
 var that = this,
 
 	sprite, 
-	tilesetSheet,
+	tilesetSheet, 
+	body,
+	startX,
+	startY,
+	myNum,
+	started,
 	userData;
 
 	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
@@ -14,7 +19,8 @@ var that = this,
 		console.log("whey?",x_pos,y_pos,sizeX,sizeY);
 		// getting imagefile from first tileset
 		_listeners();
-
+		myNum = num;
+		started = false;
 		// callback for loading layers after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
 	},
@@ -26,12 +32,7 @@ var that = this,
 				width : width,
 				height : height,
 			},
-
-			animations : {
-				/*work in progress*/
-			}
 		}
-
 		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
 
@@ -43,19 +44,37 @@ var that = this,
 		
 		sprite.x = x_pos;
 		sprite.y = y_pos;
+		
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
-		sprite.gotoAndPlay(/*wepo*/);
+		//sprite.gotoAndPlay(/*wepo*/);
 	},
 
 	_listeners = function(){
 		$("body").on("onTick", _animate);
+		$("body").on("onMovingGroundCreated", _startAnimation);
 	},
 
 	_animate = function(event, data){
-		
+		// not working atm o0
+		if(started){
+			var x_pos = body.m_xf.position.x +1, y_pos = body.m_xf.position.y;
+			console.log(x_pos,startX);
+			if(x_pos>=startX+5){
+				body.SetPosition(x_pos,y_pos);
+			}
+		}
 	},
+
+	_startAnimation = function(event,data){
+		if(data.cont[0] == myNum){
+			body = data.cont[1];
+			startX = body.m_xf.position.x;
+			started = true;
+		}
+		
+	}
 
 	setUserData = function(data) {
 		userData = data;

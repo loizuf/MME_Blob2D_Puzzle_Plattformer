@@ -70,7 +70,7 @@ BlobApp.LevelLoader = (function() {
 		borders = new Array();
 
 		//Testvariable zur Übergabe von Infos(Doors)
-		var doorCount = 0, buttonCount = 0, levelDoorCount = 0;
+		var doorCount = 0, buttonCount = 0, levelDoorCount = 0, movingGroundCount = 0;
 
 		if(layerData.hasOwnProperty('properties') && layerData.properties.hasOwnProperty('OverWorldID')) {
 			currentLoadedOverID = layerData.properties.OverWorldID;
@@ -135,7 +135,8 @@ BlobApp.LevelLoader = (function() {
 						break;
 
 						case EntityConfig.MOVINGGROUNDID:
-							//_createMovingGround(xcoords, ycoords);
+							_createMovingGround(xcoords, ycoords,movingGroundCount);
+							movingGroundCount++;
 						break;
 
 
@@ -357,13 +358,15 @@ BlobApp.LevelLoader = (function() {
 		$('body').trigger('genericRequested', _createRequestObject);
 	},
 
-	_createMovingGround = function(x, y){
-		var entity = new BlobApp.MovingGround(x+27.5, y, 25, 75);
+	_createMovingGround = function(x, y, movingGroundCount){
+		var entity = new BlobApp.MovingGround(x+27.5, y, 75, 25, movingGroundCount);
 
 		_createRequestObject["sprite"] = entity.sprite;
-		_createRequestObject["userData"] = [EntityConfig.CONTINUEDOOR];
+		_createRequestObject["userData"] = [EntityConfig.MOVINGGROUNDID];
+		_createRequestObject["num"] = movingGroundCount
 		
 		$('body').trigger('entityRequested', _createRequestObject);
+		$('body').trigger('genericRequested', _createRequestObject);
 	},
 
 	_createLevelDoor = function(x, y, layerData, levelDoorCount) {

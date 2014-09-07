@@ -108,9 +108,9 @@ BlobApp.PhysicsHandler = (function() {
 
 
 	/*das muss vom levelloader aufgerufen werden!*/
-	applyEntity = function(event, spriteAndNumber) {
-		sprite = spriteAndNumber["sprite"];
-		userData = spriteAndNumber["userData"];
+	applyEntity = function(event, data) {
+		sprite = data["sprite"];
+		userData = data["userData"];
 		entityID = userData[0];
 
 		var x = (sprite.x) / SCALE,	y = (sprite.y) / SCALE,
@@ -126,12 +126,16 @@ BlobApp.PhysicsHandler = (function() {
 		var actor = new _actorObject(entity, sprite);
 		
 		bodies.push(entity); 
-		
+
+		if(entityID == EntityConfig.MOVINGGROUNDID){
+			dat = {"cont" : [data.num,entity]}
+			$('body').trigger('onMovingGroundCreated',dat);
+		}	
 	},
 
-	applyBlobEntity = function(event, spriteAndNumber) {
-		sprite = spriteAndNumber["sprite"];
-		userData = spriteAndNumber["userData"][0];
+	applyBlobEntity = function(event, data) {
+		sprite = data["sprite"];
+		userData = data["userData"][0];
 
 		
 		var width = (TILESIZEX - 1) / SCALE,
