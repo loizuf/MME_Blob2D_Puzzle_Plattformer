@@ -8,6 +8,7 @@ var that = this,
 	movingRight = true, /*true right false left*/
 	movedBy = 0,
 	myNum,
+	bodiesOnMe = [],
 	started,
 	userData;
 
@@ -53,6 +54,9 @@ var that = this,
 	_listeners = function(){
 		$("body").on("onTick", _animate);
 		$("body").on("onMovingGroundCreated", _startAnimation);
+		$('body').on("entityLandedOnMe", _entityEnteredMe);
+		$('body').on("entityLeftMe", _entityLeftMe);
+		
 	},
 
 	_animate = function(event, data){
@@ -83,11 +87,23 @@ var that = this,
 		if(data.cont[0] == myNum){
 			body = data.cont[1];
 			//body.m_fixtureList.m_friction = 2;
-			console.log(body.m_fixtureList.m_friction);
+			console.log(body.GetUserData());
 			startX = body.m_xf.position.x;
 			started = true;
 		}
 		
+	},
+	_entityEnteredMe = function(event, data){
+		if(myNum = data.cont[0]){
+			bodiesOnMe.push(data.cont[1]);
+			console.log(bodiesOnMe);
+		}
+	}
+	_entityLeftMe = function(event, data){
+		if(myNum = data.cont[0]){
+			bodiesOnMe.remove(data.cont[1]);
+			console.log(bodiesOnMe);
+		}
 	}
 
 	setUserData = function(data) {

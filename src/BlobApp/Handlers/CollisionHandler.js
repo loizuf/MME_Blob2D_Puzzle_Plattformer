@@ -73,7 +73,14 @@ BlobApp.CollisionHandler = (function() {
 				case EntityConfig.REDBLOBID: 
 					_handleRedBlobEndCollision(bodyA,bodyB, bID, contact);
 				break;
+				case "Heli":
+					_handleHeliCollisionEnd(bodyA, bodyB, bID, contact);
+				break;
 			} 
+
+			if(bID === "Sphere") {
+				_handleSphereCollisionEnd(bodyB, bodyA, aID, contact);
+			}
 
 		};
 	},
@@ -141,6 +148,12 @@ BlobApp.CollisionHandler = (function() {
 				_playerInTriggerZone("greenBlob", "slingshotRight", bodyB);
 				return;
 
+			case EntityConfig.MOVINGGROUNDID:
+				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+					_movingGroundEntered(bodyA,bodyB,true);
+				}
+				break;
+
 			//MenuNavigation
 			case EntityConfig.NEWGAMEDOOR:
 				_newGameRequested(EntityConfig.GREENBLOBID);
@@ -149,6 +162,7 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.CONTINUEDOOR:
 				_continueRequested();
 				return;
+
 
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
@@ -222,6 +236,12 @@ BlobApp.CollisionHandler = (function() {
 				_playerInTriggerZone("redBlob", "slingshotRight", bodyB);
 				return;
 
+			case EntityConfig.MOVINGGROUNDID:
+				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+							_movingGroundEntered(bodyA,bodyB,true);
+				}
+				break;
+
 			//MenuNavigation
 			case EntityConfig.NEWGAMEDOOR:
 				_newGameRequested(EntityConfig.REDBLOBID);
@@ -249,6 +269,11 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.HELISTOPTRIGGER:
 				_stopHeli();
 			break;
+			case EntityConfig.MOVINGGROUNDID:
+				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+					_movingGroundEntered(bodyA,bodyB,true);
+				}	
+			break;
 		}
 
 		var xVelocityBorder = 6, yVelocityBorder = 6;
@@ -260,6 +285,33 @@ BlobApp.CollisionHandler = (function() {
 		var xVelocityBorder = 6, yVelocityBorder = 5;
 
 		_enableCameraShaking(bodyA, xVelocityBorder, yVelocityBorder, contact);
+		switch(bID) {
+			case EntityConfig.MOVINGGROUNDID:
+				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+					_movingGroundEntered(bodyA,bodyB,true);
+				}	
+			break;
+		}
+	},
+
+	_handleHeliCollisionEnd = function(bodyA, bodyB, bID, contact) {
+		switch(bID) {
+			case EntityConfig.MOVINGGROUNDID:
+				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+					_movingGroundEntered(bodyA,bodyB,false);
+				}	
+			break;
+		}
+	},
+
+	_handleSphereCollisionEnd = function(bodyA, bodyB, bID, contact) {
+		switch(bID) {
+			case EntityConfig.MOVINGGROUNDID:
+				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+					_movingGroundEntered(bodyA,bodyB,false);
+				}
+			break;
+		}
 	},
 
 	_enableCameraShaking = function(bodyA, xVelocityBorder, yVelocityBorder, contact) {
@@ -290,6 +342,12 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.LEVELDOOR:
 				_playerLeftLevelLoadTriggerZone("redBlob");
 			break;
+
+			case EntityConfig.MOVINGGROUNDID:
+				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+					_movingGroundEntered(1,bodyB);
+				}
+			return;
 		}
 	},
 
@@ -308,6 +366,12 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.LEVELDOOR:
 				_playerLeftLevelLoadTriggerZone("greenBlob");
 			break;
+
+			case EntityConfig.MOVINGGROUNDID:
+				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+					_movingGroundEntered(1,bodyB);
+				}
+			return;
 		}
 	},
 
@@ -383,6 +447,15 @@ BlobApp.CollisionHandler = (function() {
 			});
 
 		$('body').trigger('juiceRequested', {sprite : bubble.sprite});
+	},
+
+	_movingGroundEntered = function(bodyA, bodyB, entered){
+		console.log(bodyB.GetUserData()[1]);
+		if(entered){
+			$('body').trigger("entityLandedOnMe",{cont:[bodyB.GetUserData()[1],bodyA]});
+		}else{
+			$('body').trigger("entityLeftMe",{cont:[bodyB.GetUserData()[1],bodyA]});
+		}
 	};
 	
 	that.init = init;

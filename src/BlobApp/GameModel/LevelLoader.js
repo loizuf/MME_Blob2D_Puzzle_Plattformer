@@ -362,7 +362,7 @@ BlobApp.LevelLoader = (function() {
 		var entity = new BlobApp.MovingGround(x+27.5, y, 75, 25, movingGroundCount);
 
 		_createRequestObject["sprite"] = entity.sprite;
-		_createRequestObject["userData"] = [EntityConfig.MOVINGGROUNDID];
+		_createRequestObject["userData"] = [EntityConfig.MOVINGGROUNDID, movingGroundCount];
 		_createRequestObject["num"] = movingGroundCount
 		
 		$('body').trigger('entityRequested', _createRequestObject);
