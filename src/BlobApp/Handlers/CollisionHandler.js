@@ -285,9 +285,9 @@ BlobApp.CollisionHandler = (function() {
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 					_movingGroundEntered(bodyA,bodyB,true);
 				}
+			break;
 			case EntityConfig.SPIKEID:
 				_playerOnSpikes("heli");
-			break;
 			break;
 		}
 
