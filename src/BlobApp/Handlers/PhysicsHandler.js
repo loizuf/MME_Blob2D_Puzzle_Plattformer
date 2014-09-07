@@ -113,11 +113,28 @@ BlobApp.PhysicsHandler = (function() {
 		userData = data["userData"];
 		entityID = userData[0];
 
-		var x = (sprite.x) / SCALE,	y = (sprite.y) / SCALE,
-			width = (entityID == EntityConfig.MOVINGGROUNDID )? TILESIZEX * 3 / SCALE : TILESIZEX / SCALE,
-			height = (entityID == EntityConfig.DOORID
-						||entityID == EntityConfig.NEWGAMEDOOR
-						||entityID == EntityConfig.CONTINUEDOOR) ? TILESIZEY * 2 / SCALE : TILESIZEY / SCALE;
+		var x = (sprite.x) / SCALE,
+			y = (sprite.y) / SCALE,
+			width = TILESIZEX / SCALE,
+			height = TILESIZEY / SCALE;
+
+		switch(entityID){
+
+			case EntityConfig.MOVINGGROUNDID:
+				width = TILESIZEX*3 / SCALE;
+				break;
+
+			case EntityConfig.DOORID:
+			case EntityConfig.NEWGAMEDOOR:
+			case EntityConfig.CONTINUEDOOR:
+				height = TILESIZEY*2 / SCALE;
+				break;
+
+			case EntityConfig.SPIKEID:
+				width = TILESIZEX*0.5 / SCALE;
+				height = TILESIZEY*0.5 / SCALE;
+				break;
+		}
 
 		var entity = createDefaultBoxEntity(x, y, width, height);
 
