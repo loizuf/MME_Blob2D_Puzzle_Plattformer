@@ -390,7 +390,7 @@ BlobApp.LevelLoader = (function() {
 	},
 	
 	_createKey = function(x, y) {
-		var entity = new BlobApp.Key(x, y, 25, 25, EntityConfig.KEYID);
+		var entity = new BlobApp.Key(x, y, 30, 30, EntityConfig.KEYID);
 
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.KEYID];
