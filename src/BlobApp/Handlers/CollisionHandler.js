@@ -312,9 +312,7 @@ BlobApp.CollisionHandler = (function() {
 	_handleHeliCollisionEnd = function(bodyA, bodyB, bID, contact) {
 		switch(bID) {
 			case EntityConfig.MOVINGGROUNDID:
-				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-					_movingGroundEntered(bodyA,bodyB,false);
-				}	
+				_movingGroundEntered(bodyA,bodyB,false);	
 			break;
 		}
 	},
@@ -322,9 +320,7 @@ BlobApp.CollisionHandler = (function() {
 	_handleSphereCollisionEnd = function(bodyA, bodyB, bID, contact) {
 		switch(bID) {
 			case EntityConfig.MOVINGGROUNDID:
-				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-					_movingGroundEntered(bodyA,bodyB,false);
-				}
+				_movingGroundEntered(bodyA,bodyB,false);
 			break;
 		}
 	},
