@@ -163,12 +163,10 @@ BlobApp.CollisionHandler = (function() {
 				_continueRequested();
 				return;
 
-<<<<<<< HEAD
-=======
+
 			case EntityConfig.SPIKEID:
 				_playerOnSpikes("greenBlob");
 			break;
->>>>>>> bca12d44fc12eddb4961e0ba9ed3db113ab7e73b
 
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
