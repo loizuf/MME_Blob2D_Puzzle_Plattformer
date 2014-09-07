@@ -402,7 +402,7 @@ BlobApp.LevelLoader = (function() {
 	_createLevelDoor = function(x, y, layerData, levelDoorCount) {
 		var levelDoorLevelID = layerData.properties.LevelDoorID[levelDoorCount];
 		var levelDoorOverID = layerData.properties.OverWorldID;
-		var entity = new BlobApp.LevelDoor(x, y+12.5, 25, 50, levelDoorLevelID);
+		var entity = new BlobApp.LevelDoor(x, y+10, 50, 60, levelDoorLevelID, levelDoorOverID);
 		_createRequestObject["sprite"] = entity.sprite;
 		if(currentLoadedOverID<_gameState.currentOverworldMapID){
 			_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, levelDoorOverID, true];
@@ -493,63 +493,10 @@ BlobApp.LevelLoader = (function() {
 			case 2:
 				loadLevelOverTwo(levelNumber);
 				break;
-		}
-		/*
-		switch (levelNumber){
-			case 0:
-				mapDataJson = LevelConfig.MENU;
-			break;
-
-			case 1:
-				mapDataJson = LevelConfig.INTRODUCTION;
-			break;
-
-			case 2:
-				mapDataJson = LevelConfig.SNAKES;
-			break;
 
 			case 3:
-				mapDataJson = LevelConfig.TRAMPOLINE;
-			break;
-
-			case 4:
-				mapDataJson = LevelConfig.SIMPLEJUMP;
-			break;
-
-			case 5:
-				mapDataJson = LevelConfig.ROULETTE;
-			break;
-
-			case 6:
-				mapDataJson = LevelConfig.PRECISION;
-			break;
-
-			case 7:
-				mapDataJson = LevelConfig.TEMPLE;
-			break;
-
-			case 8:
-				mapDataJson = LevelConfig.FINISHTEST;
-			break;
-
-			case 9:
-				mapDataJson = LevelConfig.HELI;
-			break;
-
-			case 98:
-				mapDataJson = LevelConfig.OVER0;
-			break;
-
-			case 99:
-				mapDataJson = LevelConfig.OVER1;
-			break;
-
-			case 9001:
-				mapDataJson = LevelConfig.SPECIALTEST;
-			break;
-
-			
-		}*/
+				loadLevelOverThree(levelNumber);
+		}
 	},
 
 	loadLevelOverOne = function(lvlNumber) {
@@ -604,6 +551,34 @@ BlobApp.LevelLoader = (function() {
 
 			case 5:
 				mapDataJson = LevelConfig.SPECIALTEST;
+				break;
+		}
+	},
+
+	loadLevelOverThree = function(lvlNumber) {
+		switch(lvlNumber){
+			case 0:
+				mapDataJson = LevelConfig.OVER3;
+				break;
+
+			case 1:
+				mapDataJson = LevelConfig.RECURSIVE;
+				break;
+
+			case 2:
+				mapDataJson = LevelConfig.RECURSIVE;
+				break;
+
+			case 3:
+				mapDataJson = LevelConfig.RECURSIVE;
+				break;
+
+			case 4:
+				mapDataJson = LevelConfig.RECURSIVE;
+				break;
+
+			case 5:
+				mapDataJson = LevelConfig.RECURSIVE;
 				break;
 		}
 	};
