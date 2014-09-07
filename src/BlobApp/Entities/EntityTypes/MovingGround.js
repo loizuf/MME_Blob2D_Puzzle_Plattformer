@@ -82,6 +82,8 @@ var that = this,
 	_startAnimation = function(event,data){
 		if(data.cont[0] == myNum){
 			body = data.cont[1];
+			//body.m_fixtureList.m_friction = 2;
+			console.log(body.m_fixtureList.m_friction);
 			startX = body.m_xf.position.x;
 			started = true;
 		}
