@@ -51,7 +51,7 @@ var that = this,
 	},
 
 	_listeners = function(){
-		//$("body").on("onTick", _animate);
+		$("body").on("onTick", _animate);
 		$("body").on("onMovingGroundCreated", _startAnimation);
 	},
 
