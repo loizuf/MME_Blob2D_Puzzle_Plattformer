@@ -256,6 +256,22 @@ BlobApp.InputHandler = (function() {
                 } 
             break;
 
+            case XBOX_BUTTONS.DPAD_UP:
+                if(id == ID_CONTROLLER_TWO) {
+                    if(isSlingshot) {
+                        _onKeyUp({keyCode:keyMap.p2Jump});
+                    }
+                }
+            break;
+
+            case XBOX_BUTTONS.DPAD_DOWN:
+                if(id == ID_CONTROLLER_TWO) {
+                    if(isSlingshot) {
+                        _onKeyUp({keyCode: keyMap.p2Trigger});
+                    }
+                }
+            break;
+
             case XBOX_BUTTONS.X:
                 switch(id) {
                     case ID_CONTROLLER_ONE: _onKeyUp({keyCode:keyMap.p1Trigger});                                            
@@ -370,7 +386,7 @@ BlobApp.InputHandler = (function() {
     _onKeyDown = function(e) {
         switch(e.keyCode){
             case keyMap.p1Jump:
-                $(that).trigger('p1ArrowUpStarted');
+                $(that).trigger('p1ArrowUpStarted');                
             break;
 
             case keyMap.p1Left:
@@ -383,6 +399,7 @@ BlobApp.InputHandler = (function() {
 
             case keyMap.p1Trigger:
                 $(that).trigger('p1ArrowDownStarted');
+                console.log("called p1");
             break;
 
             case keyMap.p2Jump:
@@ -407,6 +424,7 @@ BlobApp.InputHandler = (function() {
 
             case keyMap.p2Trigger:
                 $(that).trigger('p2ArrowDownStarted');
+                console.log("called p2");
             break;
 
             case keyMap.pause:
