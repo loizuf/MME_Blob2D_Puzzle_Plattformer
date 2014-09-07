@@ -279,11 +279,13 @@ BlobApp.BlobPlayer1 = (function() {
 	isNextTensionSelected = true;
 
 	this.clutchSlingshot = function() {
+		
 		if(isNextTensionSelected) {
 			isNextAngleSelected = false;
 			slingshotTension > 8 ? slingshotTension = 8 : slingshotTension += 0;
 			slingshotTension != 8 ? slingshotTension += 0.2 : slingshotTension += 0;
 			
+			console.log("clutch slingshot", slingshotTension);
 
 			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});		
 			$('body').trigger('animateSlingshot', {"animationKey" : AnimationKeys.CLUTCH});	
@@ -296,6 +298,7 @@ BlobApp.BlobPlayer1 = (function() {
 			slingshotTension < 7 ? slingshotTension = 7 : slingshotTension += 0;
 			slingshotTension != 7 ? slingshotTension -= 0.2 : slingshotTension += 0;
 			
+			console.log("loosen slingshot", slingshotTension);
 
 			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});	
 			$('body').trigger('animateSlingshot', {"animationKey" : AnimationKeys.LOOSEN});	

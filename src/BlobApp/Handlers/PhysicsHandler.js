@@ -747,6 +747,8 @@ BlobApp.PhysicsHandler = (function() {
 		var radians = angle * Math.PI / 180;
 
 		greenBlobEntity.ApplyImpulse(new b2Vec2(Math.cos(radians) * tension, -Math.sin(radians) * tension), greenBlobEntity.GetPosition());
+
+		$('body').trigger('onSlingshotFinished');
 	},
 
 	_recreateBlob = function(sprite, userData) {

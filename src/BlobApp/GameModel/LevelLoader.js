@@ -356,7 +356,7 @@ BlobApp.LevelLoader = (function() {
 		
 		_informModel(layerData, doorCount);
 
-		var entity = new BlobApp.DynamicDoor(x, y, 25, 50, doorNumber);
+		var entity = new BlobApp.DynamicDoor(x, y, 50, 75, doorNumber);
 
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.DOORID, doorNumber];

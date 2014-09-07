@@ -26,8 +26,8 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY, doorID) 
 			},
 
 			animations: {
-				open : [0, 9, "opened", 1],
-				opened: [9, 9]
+				open : [0, 13, "opened", 1],
+				opened: [13, 13]
 			}
 		}
 
@@ -41,7 +41,7 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY, doorID) 
 		sprite.regY = height / 2;
 
 		sprite.x = x_pos;
-		sprite.y = y_pos + 12;
+		sprite.y = y_pos+2;
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
@@ -55,6 +55,7 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY, doorID) 
 	_onOpenDoor = function(event, givenID) {
 		if(!isOpening && doorID == givenID && !(sprite.currentAnimation=="opened")){
 			sprite.gotoAndPlay("open");
+			$('body').trigger("onCameraShakeRequested", {direction: "left"});
 			isOpening = true;	
 		}
 	}

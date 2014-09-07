@@ -267,11 +267,17 @@ BlobApp.BlobPlayer2 = (function() {
 
 	this.increaseSlingshotAngle = function() {
 			slingshotAngle != 60 ? slingshotAngle += 15 : slingshotAngle += 0;
+			
+			console.log("increase angle", slingshotAngle);
+
 			$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
 	},
 
 	this.decreaseSlingshotAngle = function() {
 		slingshotAngle != 30 ? slingshotAngle -= 15 : slingshotAngle += 0;
+
+		console.log("decrease angle", slingshotAngle);
+
 		$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
 	},
 
