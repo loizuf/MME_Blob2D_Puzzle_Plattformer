@@ -62,6 +62,7 @@ var that = this,
 	_animate = function(event, data){
 		// not working atm o0
 		var x_pos = body.m_xf.position.x;
+		var y_pos = body.m_xf.position.y;
 		if(started){
 			if(movedBy == MOVINGRANGE){
 				movingRight  = false;
@@ -71,18 +72,19 @@ var that = this,
 			}
 			if(movingRight && movedBy<=MOVINGRANGE){
 				x_pos +=1/30;
+				_moveBodiesOnMe(movingRight);
 				movedBy++;
 			}
 			if(!movingRight && movedBy >=-MOVINGRANGE){
+				_moveBodiesOnMe(movingRight);
 				x_pos -=1/30;
 				movedBy--;
 			}
-		var y_pos = body.m_xf.position.y;
-				body.SetPosition(new Box2D.Common.Math.b2Vec2(x_pos,y_pos));
+		
+			body.SetPosition(new Box2D.Common.Math.b2Vec2(x_pos,y_pos));
 			
 		}
 	},
-
 	_startAnimation = function(event,data){
 		if(data.cont[0] == myNum){
 			body = data.cont[1];
@@ -94,17 +96,32 @@ var that = this,
 		
 	},
 	_entityEnteredMe = function(event, data){
-		if(myNum = data.cont[0]){
+		console.log(myNum,data.cont[0]);
+		if(myNum == data.cont[0]){
 			bodiesOnMe.push(data.cont[1]);
 			console.log(bodiesOnMe);
 		}
-	}
+	},
 	_entityLeftMe = function(event, data){
-		if(myNum = data.cont[0]){
-			bodiesOnMe.remove(data.cont[1]);
+		console.log(myNum,data.cont[0]);
+		if(myNum == data.cont[0]){
+			bodiesOnMe.splice(bodiesOnMe.indexOf(data.cont[1]),1);
 			console.log(bodiesOnMe);
 		}
-	}
+	},
+	_moveBodiesOnMe = function(movingRight){
+		var i, _length = bodiesOnMe.length;
+		
+		for(i= 0;i<_length;i++){
+			var x_pos = bodiesOnMe[i].m_xf.position.x;
+			var y_pos = bodiesOnMe[i].m_xf.position.y;
+			if(movingRight){
+				bodiesOnMe[i].SetPosition(new Box2D.Common.Math.b2Vec2(x_pos+1/30,y_pos));
+			}else{
+				bodiesOnMe[i].SetPosition(new Box2D.Common.Math.b2Vec2(x_pos-1/30,y_pos));
+			}
+		}
+	},
 
 	setUserData = function(data) {
 		userData = data;

@@ -357,7 +357,7 @@ BlobApp.CollisionHandler = (function() {
 
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-					_movingGroundEntered(1,bodyB);
+					_movingGroundEntered(bodyA,bodyB,false);
 				}
 			return;
 		}
@@ -381,7 +381,7 @@ BlobApp.CollisionHandler = (function() {
 
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-					_movingGroundEntered(1,bodyB);
+					_movingGroundEntered(bodyA,bodyB,false);
 				}
 			return;
 		}
@@ -462,7 +462,6 @@ BlobApp.CollisionHandler = (function() {
 	},
 
 	_movingGroundEntered = function(bodyA, bodyB, entered){
-		console.log(bodyB.GetUserData()[1]);
 		if(entered){
 			$('body').trigger("entityLandedOnMe",{cont:[bodyB.GetUserData()[1],bodyA]});
 		}else{
