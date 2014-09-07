@@ -17,6 +17,7 @@ BlobApp.BlobGame = (function() {
 	$selectLevel11 = $('#level11'),
 	$selectLevel12 = $('#level12'),
 	$selectLevel13 = $('#level13'),
+	$selectLevel14 = $('#level14'),
 
 	$keyboard1 = $('#keyboard1');
 	$keyboard2 = $('#keyboard2');
@@ -93,6 +94,7 @@ BlobApp.BlobGame = (function() {
 		$selectLevel11.unbind("click");
 		$selectLevel12.unbind("click");
 		$selectLevel13.unbind("click");
+		$selectLevel14.unbind("click");
 
 		$selectLevel1.on('click', {lvlID:1, owID:1}, _startGame);
 		$selectLevel2.on('click', {lvlID:2, owID:1}, _startGame);
@@ -107,6 +109,7 @@ BlobApp.BlobGame = (function() {
 		$selectLevel11.on('click', {lvlID:0, owID:0}, _startGame);
 		$selectLevel12.on('click', {lvlID:0, owID:1}, _startGame);
 		$selectLevel13.on('click', {lvlID:0, owID:2}, _startGame);
+		$selectLevel14.on('click', {lvlID:1, owID:3}, _startGame);
 	}
 
 	_startGame = function(event) {
