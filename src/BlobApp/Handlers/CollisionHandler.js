@@ -150,6 +150,10 @@ BlobApp.CollisionHandler = (function() {
 				_continueRequested();
 				return;
 
+			case EntityConfig.SPIKEID:
+				_playerOnSpikes("greenBlob");
+			break;
+
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
 				_levelLoadRequested("greenBlob", bodyB);
@@ -231,6 +235,10 @@ BlobApp.CollisionHandler = (function() {
 				_continueRequested();
 				return;
 
+			case EntityConfig.SPIKEID:
+				_playerOnSpikes("redBlob");
+			break;
+
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
 				_levelLoadRequested("redBlob", bodyB);
@@ -242,6 +250,10 @@ BlobApp.CollisionHandler = (function() {
 			// TODO put this somewhere where it belongs
 			_addJuice(bodyA, 2);
 		}
+	},
+
+	_playerOnSpikes = function(playerName) {
+		$('body').trigger('playerOnSpikes', playerName);
 	},
 
 	_handleHeliCollision = function(bodyA, bodyB, bID, contact) {

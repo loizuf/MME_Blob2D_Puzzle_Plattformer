@@ -297,6 +297,7 @@ BlobApp.ViewController = (function() {
 		$('body').on('slingshotStopRequested', _onSlingshotStopped);
 
 		$('body').on('onCameraShakeRequested', _shakeCanvas);
+		$('body').on('playerOnSpikes', _onLevelLoadRequest);
 	};
 
 	that.init = init;

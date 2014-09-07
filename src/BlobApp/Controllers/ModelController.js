@@ -90,6 +90,11 @@ BlobApp.ModelController = (function() {
 		$('body').on('onSlingshotTensionChange', _storeSlingshotTension);
 
 		$('body').on('onSlingshotRelease', _setSlingshotReleaseForce);
+		//$('body').on('playerOnSpikes', _onPlayerOnSpikes);
+	},
+
+	_onPlayerOnSpikes = function() {
+
 	},
 
 	_storeSlingshotAngle = function(event, data) {
