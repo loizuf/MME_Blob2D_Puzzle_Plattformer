@@ -1,12 +1,12 @@
 BlobApp.MovingGround = (function MovingGround(x_pos, y_pos, sizeX, sizeY,num) {
 
 var that = this,
-
+	MOVINGRANGE = 50, /*for each 25 its moving 1 tile to left and right of the starting position*/
 	sprite, 
 	tilesetSheet, 
 	body,
-	startX,
-	startY,
+	movingRight = true, /*true right false left*/
+	movedBy = 0,
 	myNum,
 	started,
 	userData;
@@ -16,7 +16,6 @@ var that = this,
 	this.prototype.init =function() {
 		tileset = new Image();
 		tileset.src = "res/img/movingGround.png"//mapData.tilesets[0].image;
-		console.log("whey?",x_pos,y_pos,sizeX,sizeY);
 		// getting imagefile from first tileset
 		_listeners();
 		myNum = num;
@@ -52,18 +51,31 @@ var that = this,
 	},
 
 	_listeners = function(){
-		$("body").on("onTick", _animate);
+		//$("body").on("onTick", _animate);
 		$("body").on("onMovingGroundCreated", _startAnimation);
 	},
 
 	_animate = function(event, data){
 		// not working atm o0
+		var x_pos = body.m_xf.position.x;
 		if(started){
-			var x_pos = body.m_xf.position.x +1, y_pos = body.m_xf.position.y;
-			console.log(x_pos,startX);
-			if(x_pos>=startX+5){
-				body.SetPosition(x_pos,y_pos);
+			if(movedBy == MOVINGRANGE){
+				movingRight  = false;
 			}
+			if(movedBy == -MOVINGRANGE){
+				movingRight  = true;
+			}
+			if(movingRight && movedBy<=MOVINGRANGE){
+				x_pos +=1/30;
+				movedBy++;
+			}
+			if(!movingRight && movedBy >=-MOVINGRANGE){
+				x_pos -=1/30;
+				movedBy--;
+			}
+		var y_pos = body.m_xf.position.y;
+				body.SetPosition(new Box2D.Common.Math.b2Vec2(x_pos,y_pos));
+			
 		}
 	},
 
