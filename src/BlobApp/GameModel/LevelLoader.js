@@ -158,6 +158,13 @@ BlobApp.LevelLoader = (function() {
 							_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
 						break;
 
+						case EntityConfig.UPSPIKEID:
+						case EntityConfig.DOWNSPIKEID:
+						case EntityConfig.LEFTSPIKEID:
+						case EntityConfig.RIGHTSIKEID:
+							_loadSpikes(layerData, tilesetSheet, xcoords, ycoords, idx);
+						break;
+
 						default:
 							borders[y][x] = true;
 							_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
@@ -166,6 +173,26 @@ BlobApp.LevelLoader = (function() {
 				}
 			}
 		_initBorders(borders);
+	},
+
+	_loadSpikes = function(layerData, tilesetSheet, x, y, idx) {
+		var cellBitmap = new createjs.Sprite(tilesetSheet);
+		cellBitmap.gotoAndStop(layerData.data[idx] - 1);
+
+		cellBitmap.x = x;
+		cellBitmap.y = y;
+
+		cellBitmap.regX = 12;
+		cellBitmap.regY = 12;
+
+		_createRequestObject["sprite"] = cellBitmap;
+		_createRequestObject["userData"] = [EntityConfig.SPIKEID];
+
+		_createRequestObject["height"] = 0.5;
+		_createRequestObject["width"] = 0.5;
+
+		$('body').trigger('entityRequested', _createRequestObject);
+		$('body').trigger('genericRequested',_createRequestObject);
 	},
 
 	_informModel = function(layerData, doorCount) {
@@ -283,8 +310,11 @@ BlobApp.LevelLoader = (function() {
 		// add bitmap to stage
 
 		_createRequestObject["sprite"] = cellBitmap;
-		_createRequestObject["userData"] = [idx, undefined];
+		/*if(layerData.data[]){
 
+		} else {*/
+			_createRequestObject["userData"] = [idx, undefined];
+		//}
 		$('body').trigger('genericRequested',_createRequestObject);
 	},
 
@@ -326,7 +356,7 @@ BlobApp.LevelLoader = (function() {
 		
 		_informModel(layerData, doorCount);
 
-		var entity = new BlobApp.DynamicDoor(x, y, 25, 50, doorNumber);
+		var entity = new BlobApp.DynamicDoor(x, y, 50, 75, doorNumber);
 
 		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.DOORID, doorNumber];
