@@ -19,6 +19,8 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on("greenBlobLeftTriggerZone", _setDownActionP1);
 		$('body').on("greenBlobInLevelLoadTriggerZone", _setUpActionP1);
 		$('body').on("greenBlobLeftLevelLoadTriggerZone", _setUpActionP1);
+		$('body').on("greenBlobInMenuDoorZone", _setUpActionP1);
+		$('body').on("greenBlobLeftMenuDoorZone", _setUpActionP1);
 		$('body').on('heliStopRequested', thisVar._resetControls);
 		$('body').on('bridgeStopRequested', thisVar._resetControls);
 		$('body').on('sphereStopRequested', thisVar._resetControls);
@@ -95,10 +97,12 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	_setUpActionP1 = function(event, IDS) {
-		if(IDS != undefined){
-			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(IDS.lvlID, IDS.owID);});
-		} else {
+		if(IDS==undefined){
 			prototypeVar.setFunction("upPressed", function(){});
+		} else if(IDS == EntityConfig.NEWGAMEDOOR || IDS == EntityConfig.CONTINUEDOOR) {
+			prototypeVar.setFunction("upPressed", function(){console.log("green");});
+		} else{
+			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(IDS.lvlID, IDS.owID);});
 		}
 	},
 
