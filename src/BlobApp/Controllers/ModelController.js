@@ -248,6 +248,7 @@ BlobApp.ModelController = (function() {
 	},
 
 	_onPlayerWaitingChange = function(event, data) {
+		console.log("onPlayerWaitingChange", data);
 		player = (data.playerName == "p1") ? _blobPlayerOne : _blobPlayerTwo;
 		waiting = data.waiting;
 
@@ -302,11 +303,15 @@ BlobApp.ModelController = (function() {
 			_blobPlayerOne.prototype.setWaitingForOther(false);
 			_blobPlayerTwo.prototype.setWaitingForOther(false);
 		} else if(specialName == "slingshotLeft") {
-			$('body').trigger('startSlingshot');
+			$('body').trigger('startSlingshot', {"direction": "left"});
+			_blobPlayerOne.prototype.setWaitingForOther(false);
+			_blobPlayerTwo.prototype.setWaitingForOther(false);
+		} else if(specialName == "slingshotRight") {
+			$('body').trigger('startSlingshot', {"direction": "right"});
+			console.log("_startSpecial");
 			_blobPlayerOne.prototype.setWaitingForOther(false);
 			_blobPlayerTwo.prototype.setWaitingForOther(false);
 		}
-
 	},
 
 	_onSpecialFinished = function(event, data) {

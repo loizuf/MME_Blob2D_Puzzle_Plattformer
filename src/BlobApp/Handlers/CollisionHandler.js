@@ -358,6 +358,8 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
 
 				_playerLeftTriggerZone("redBlob");
+			break;
+
 			case EntityConfig.LEVELDOOR:
 				_playerLeftLevelLoadTriggerZone("redBlob");
 			break;
@@ -382,6 +384,7 @@ BlobApp.CollisionHandler = (function() {
 			
 				_playerLeftTriggerZone("greenBlob");
 			break;
+
 			case EntityConfig.LEVELDOOR:
 				_playerLeftLevelLoadTriggerZone("greenBlob");
 			break;
