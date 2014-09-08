@@ -30,6 +30,12 @@ BlobApp.GlobalState = (function() {
 		}
 	},
 
+	onResetGameState = function() {
+		_gameState.currentOverworldMapID = 1;
+		_gameState.currentLevel = 1;
+		_save();
+	},
+
 	_setNewGameState = function(levelId, overworldID) {
 		levelId++;
 		if(levelId==6){
@@ -52,6 +58,7 @@ BlobApp.GlobalState = (function() {
 	that.init = init;
 	that.onFinishLevel = onFinishLevel;
 	that.getGameState = getGameState;
+	that.onResetGameState = onResetGameState;
 
 	return that;
 })();

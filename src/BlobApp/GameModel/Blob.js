@@ -177,6 +177,19 @@ BlobApp.BlobSuperClass = function() {
 		$('body').trigger('levelLoadRequest', {lvlID: levelID, owID: owID});
 	},
 
+	this.reactOnMenuDoor = function(doorType) {
+		if(doorType == EntityConfig.NEWGAMEDOOR){
+			$('body').trigger("onNewGameRequested");
+		} else {
+			$('body').trigger("onContinueGameRequested");
+		}
+		
+	},
+
+	this.startNewGame = function() {
+
+	},
+
 	_callDirections = function() {
 		if(keyLeftPressed) {
 			_currentLeft();

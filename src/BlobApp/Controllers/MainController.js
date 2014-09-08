@@ -12,15 +12,14 @@ BlobApp.MainController = (function() {
 	_levelloader = null,
 	
 	lID,
-	owID,
+	overwID,
 	p1ID,
 	p2ID,
 
 	init = function(lvlID, overID, p1ControlsID, p2ControlsID) {
-		localStorage.clear();
 
 		lID = lvlID;
-		owID = overID;
+		overwID = overID;
 		p1ID = p1ControlsID;
 		p2ID = p2ControlsID;
 		Controls.p1 = p1ControlsID;
@@ -43,7 +42,7 @@ BlobApp.MainController = (function() {
 		_modelController.init(p1ID, p2ID);
 		_viewController.init();
 		_physicsHandler.init();
-		_levelloader.init(lID, owID, _globalStateHandler);		
+		_levelloader.init(lID, overwID, _globalStateHandler);		
 	},
 
 	_registerListeners = function() {
@@ -57,21 +56,23 @@ BlobApp.MainController = (function() {
 	},
 
 	_continueGame = function() {
-		lID = state.finishedLevel;
-		owID = state.currentOverWorldMapID;
+		lID = state.currentLevel;
+		overwID = state.currentOverworldMapID;
+		$('body').trigger('levelLoadRequest', {lvlID:0, owID:overwID});
 	},	
 
 	_startNewGame = function() {
-		_globalStateHandler.onFinishLevel(1, 1);
+		_globalStateHandler.onResetGameState();
+		$('body').trigger('levelLoadRequest', {lvlID:0, owID:1});
 	},
 
 	_saveGameProgress = function() {
-		_globalStateHandler.onFinishLevel(lID, owID);
+		_globalStateHandler.onFinishLevel(lID, overwID);
 	},
 
 	_onLevelLoadRequest = function(event, IDS) {
 		lID = IDS.lvlID;
-		owID = IDS.owID;
+		overwID = IDS.owID;
 	},
 
 	_reload = function() {

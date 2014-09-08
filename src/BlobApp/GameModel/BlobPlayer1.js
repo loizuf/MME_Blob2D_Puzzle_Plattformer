@@ -100,10 +100,14 @@ BlobApp.BlobPlayer1 = (function() {
 		if(IDS==undefined){
 			prototypeVar.setFunction("upPressed", function(){});
 		} else if(IDS == EntityConfig.NEWGAMEDOOR || IDS == EntityConfig.CONTINUEDOOR) {
-			prototypeVar.setFunction("upPressed", function(){console.log("green");});
+			prototypeVar.setFunction("upPressed", function(){thisVar.reactOnMenuDoor(IDS);});
 		} else{
 			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(IDS.lvlID, IDS.owID);});
 		}
+	},
+
+	this.reactOnMenuDoor = function(IDS){
+		prototypeVar.reactOnMenuDoor(IDS);
 	},
 
 	this.tryLevelLoad = function(levelID, owID) {
