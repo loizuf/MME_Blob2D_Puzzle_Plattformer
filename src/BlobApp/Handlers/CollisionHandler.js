@@ -154,23 +154,19 @@ BlobApp.CollisionHandler = (function() {
 				}
 				break;
 
-			//MenuNavigation
-			case EntityConfig.NEWGAMEDOOR:
-				_newGameRequested(EntityConfig.GREENBLOBID);
-				return;
-
-			case EntityConfig.CONTINUEDOOR:
-				_continueRequested();
-				return;
-
-
 			case EntityConfig.SPIKEID:
 				_playerOnSpikes("greenBlob");
 			break;
 
+			//MenuNavigation
+			case EntityConfig.NEWGAMEDOOR:
+			case EntityConfig.CONTINUEDOOR:
+				_playerInMenuDoorZone("greenBlob", bodyB);
+				return;
+
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
-				_levelLoadRequested("greenBlob", bodyB);
+				_playerEnteredLevelLoadZone("greenBlob", bodyB);
 				return;
 		}
 
@@ -246,22 +242,19 @@ BlobApp.CollisionHandler = (function() {
 				}
 				break;
 
-			//MenuNavigation
-			case EntityConfig.NEWGAMEDOOR:
-				_newGameRequested(EntityConfig.REDBLOBID);
-				return;
-
-			case EntityConfig.CONTINUEDOOR:
-				_continueRequested();
-				return;
-
 			case EntityConfig.SPIKEID:
 				_playerOnSpikes("redBlob");
 			break;
 
+			//MenuNavigation
+			case EntityConfig.NEWGAMEDOOR:
+			case EntityConfig.CONTINUEDOOR:
+				_playerInMenuDoorZone("redBlob", bodyB);
+				return;
+
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
-				_levelLoadRequested("redBlob", bodyB);
+				_playerEnteredLevelLoadZone("redBlob", bodyB);
 				return;
 		}
 
@@ -362,6 +355,11 @@ BlobApp.CollisionHandler = (function() {
 				_playerLeftLevelLoadTriggerZone("redBlob");
 			break;
 
+			case EntityConfig.NEWGAMEDOOR:
+			case EntityConfig.CONTINUEDOOR:
+				_playerLeftMenuDoorZone("greenBlob");
+			break;
+
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 					_movingGroundEntered(bodyA,bodyB,false);
@@ -382,8 +380,14 @@ BlobApp.CollisionHandler = (function() {
 			
 				_playerLeftTriggerZone("greenBlob");
 			break;
+
 			case EntityConfig.LEVELDOOR:
 				_playerLeftLevelLoadTriggerZone("greenBlob");
+			break;
+
+			case EntityConfig.NEWGAMEDOOR:
+			case EntityConfig.CONTINUEDOOR:
+				_playerLeftMenuDoorZone("greenBlob");
 			break;
 
 			case EntityConfig.MOVINGGROUNDID:
@@ -421,7 +425,7 @@ BlobApp.CollisionHandler = (function() {
 		$('body').trigger('continueRequest');
 	},
 
-	_levelLoadRequested = function(player, bodyB) {
+	_playerEnteredLevelLoadZone = function(player, bodyB) {
 		if(bodyB.GetUserData()[3]){
 			var levelID = bodyB.GetUserData()[1];
 			var overID = bodyB.GetUserData()[2];
@@ -434,6 +438,15 @@ BlobApp.CollisionHandler = (function() {
 
 	_playerLeftLevelLoadTriggerZone = function(player) {
 		$('body').trigger(player + 'LeftLevelLoadTriggerZone');
+	},
+
+	_playerInMenuDoorZone = function(player, bodyB){
+		var doorType = bodyB.GetUserData()[0];
+		$('body').trigger(player+'InMenuDoorZone', doorType);
+	},
+
+	_playerLeftMenuDoorZone = function(player, bodyB) {
+		$('body').trigger(player + 'LeftMenuDoorZone');
 	},
 
 	_pickUpKey = function(bodyA, bodyB) {
