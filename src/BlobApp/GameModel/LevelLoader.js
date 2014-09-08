@@ -152,11 +152,12 @@ BlobApp.LevelLoader = (function() {
 						case EntityConfig.BRIDGELEFTTILE:
 						case EntityConfig.BRIDGERIGHTTILE:
 						case EntityConfig.SLINGSHOTTILELEFT:
-						case EntityConfig.SLINGSHOTTRIGGERRIGHT:
+						case EntityConfig.SLINGSHOTTILERIGHT:
 							_createTriggerZone(xcoords, ycoords, layerData.data[idx]+1000);
 							borders[y][x] = true;
 							_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
 						break;
+
 
 						case EntityConfig.UPSPIKEID:
 						case EntityConfig.DOWNSPIKEID:
@@ -461,7 +462,7 @@ BlobApp.LevelLoader = (function() {
 		}
 
 		if(entityID == EntityConfig.SLINGSHOTTRIGGERRIGHT) {
-
+			
 		}
 	},
 
