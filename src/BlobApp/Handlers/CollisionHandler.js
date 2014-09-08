@@ -453,6 +453,7 @@ BlobApp.CollisionHandler = (function() {
 		if(!keyPickedUp) {
 			keyPickedUp = true;
 			$('body').trigger('onKeyPickedUp', {body:bodyB});
+			$('body').trigger("animateGoal", {animationKey: AnimationKeys.UNLOCK});
 		}
 	},
 

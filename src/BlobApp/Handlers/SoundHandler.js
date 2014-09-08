@@ -12,7 +12,17 @@ BlobApp.SoundHandler = (function() {
         var assetsPath = "res/sound/";
         //TODO: add files here, id is given manually
         manifest = [
-            {id:"test", src:"test.ogg"},
+            {id:"jump", src:"test.ogg"},
+            {id:"startHeli", src:"test.ogg"},
+            {id:"tele", src:"test.ogg"},
+            {id:"startBridge", src:"test.ogg"},
+            {id:"startSphere", src:"test.ogg"},
+            {id:"startSling", src:"test.ogg"},
+            {id:"clutchSling", src:"test.ogg"},
+            {id:"loosenSling", src:"test.ogg"},
+            {id:"finishSling", src:"test.ogg"},
+            {id:"finishHeli", src:"test.ogg"},
+            {id:"finishBridge", src:"test.ogg"},
         ];
         //console.log(manifest);
 
@@ -41,8 +51,15 @@ BlobApp.SoundHandler = (function() {
         $('body').on("startHeli",_playHeliSound);
         $('body').on("startTele",_playTeleSound);
         $('body').on("startBridge",_playBridgeSound);
-        $('body').on("startSphere",_playSphereSound);
-        $('body').on('startSlingshot',_playSlingshotSound);
+
+        $('body').on("startSphere",_playSphereAssembleSound);
+
+        $('body').on('startSlingshot',_playSlingshotStartSound);
+        $('body').on('soundSlingshotClutched',_playSlingshotClutchSound);
+        $('body').on('soundSlingshotLoosened',_playSlingshotLoosenSound);
+        /*thats already done in slingshot*/
+        // $('body').on('slingshotFinished',_playSlingShotFireSound);
+        
         $('body').on('specialFinished',_stopSpecial);
 
         //special ability sounds for greenblob only special
@@ -75,15 +92,29 @@ BlobApp.SoundHandler = (function() {
         createjs.Sound.play("test", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
     },
 
-    _playSphereSound = function() {  
+    _playSphereAssembleSound = function() {  
         logg("sphere start");
         createjs.Sound.play("test", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
     },
 
-    _playSlingshotSound = function() {  
+
+    _playSlingshotStartSound= function() {  
 
         createjs.Sound.play("test", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
     },
+    _playSlingshotClutchSound= function() {  
+
+        createjs.Sound.play("test", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
+    },
+    _playSlingshotLoosenSound= function() {  
+
+        createjs.Sound.play("test", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
+    },
+    _playSlingShotFireSound= function() {  
+
+        createjs.Sound.play("test", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
+    },
+     
 
     _playTrampActSound = function() {  
         logg("tramp start");
@@ -126,7 +157,7 @@ BlobApp.SoundHandler = (function() {
             break;
 
             case "slingshot":
-            //unused
+            _playSlingShotFireSound();
             break;
         }
     },
@@ -160,7 +191,7 @@ BlobApp.SoundHandler = (function() {
             helisound = createjs.Sound.play("test", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
             helisound.addEventListener("complete", _handleHeliSound);
         }else{
-            logg("heli stopped");
+            
         }
     },
 

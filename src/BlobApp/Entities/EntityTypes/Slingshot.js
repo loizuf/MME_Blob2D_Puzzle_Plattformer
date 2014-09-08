@@ -134,7 +134,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 			default:
 				return;
 		}
-
+		$('body').trigger('soundSlingshotClutched');
 		sprite.gotoAndPlay(animationName);
 	},
 
@@ -159,7 +159,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 			default: return;
 
 		}
-
+		$('body').trigger('soundSlingshotLoosened');
 		sprite.gotoAndPlay(animationName);
 
 	},
