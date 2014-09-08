@@ -58,7 +58,8 @@ AnimationKeys = {
 	LOAD: 10,
 	FIRE: 11,
 	CLUTCH: 12,
-	LOOSEN: 13
+	LOOSEN: 13,
+	OPEN: 14
 },
 
 // 1 = keyboard, 2 = controller

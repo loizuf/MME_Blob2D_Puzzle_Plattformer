@@ -6,11 +6,16 @@ BlobApp.Goal = (function Goal(x_pos, y_pos, sizeX, sizeY, GOALID) {
 	this.prototype.init =function() {
 		var tileset = new Image();
 
-		tileset.src = "res/img/goal.png"
+		tileset.src = "res/img/levelDoor.png"
 
 		// callback for loading sprite after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		_listeners();
 	},	
+
+	_listeners = function() {
+		$('body').on("animateGoal", thisVar._animate);
+	},
 
 	_initSprite = function(tileset, width, height) {
 		var imageData = {
@@ -18,7 +23,14 @@ BlobApp.Goal = (function Goal(x_pos, y_pos, sizeX, sizeY, GOALID) {
 			frames : {
 				width : width,
 				height : height,
-				count: 1
+			},
+
+			animations: {
+				idle: [0, 0, "idle"],
+				open: [0, 9, "opened"],
+				opened: [9, 9],
+				locked: [10, 10, "locked"],
+				unlock: [10, 17, "idle"]
 			}
 		}
 
@@ -36,7 +48,20 @@ BlobApp.Goal = (function Goal(x_pos, y_pos, sizeX, sizeY, GOALID) {
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
+
+		sprite.gotoAndPlay("locked");
 	},
+
+	thisVar._animate = function(event, data) {
+		switch(data.animationKey) {
+			case AnimationKeys.OPEN:
+				sprite.gotoAndPlay("open");
+				break;
+			case AnimationKeys.UNLOCK:
+				sprite.gotoAndPlay("unlock");
+				break;
+		}
+	};
 
 	this.prototype.init();
 	this.keyID = GOALID;
