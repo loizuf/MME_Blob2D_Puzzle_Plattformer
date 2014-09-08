@@ -90,11 +90,15 @@ BlobApp.ModelController = (function() {
 		$('body').on('onSlingshotTensionChange', _storeSlingshotTension);
 
 		$('body').on('onSlingshotRelease', _setSlingshotReleaseForce);
-		//$('body').on('playerOnSpikes', _onPlayerOnSpikes);
+		$('body').on('playerOnSpikes', _onPlayerOnSpikes);
 	},
 
-	_onPlayerOnSpikes = function() {
-
+	_onPlayerOnSpikes = function(event, blobID) {
+		if(blobID == EntityConfig.GREENBLOBID){
+			_screenStateHandler.onPlayerDead("p1");
+		} else {
+			_screenStateHandler.onPlayerDead("p2");
+		}
 	},
 
 	_storeSlingshotAngle = function(event, data) {
