@@ -50,12 +50,13 @@ BlobApp.ScreenState = ( function() {
 		$('body').on('doorOpenRequested', _onDoorOpenRequested);
 	},
 	
-	onPlayerDead = function(event, player) {
+	onPlayerDead = function(player) {
 		if(player == PLAYER_1_NAME) {
 			player1State = PLAYER_STATES[0];
 		} else {
-			player2Sate = PLAYER_STATES[0];
+			player2State = PLAYER_STATES[0];
 		}
+		console.log(player1State, player2State);
 	},
 
 	onPlayerReachGoal = function(player) {
@@ -68,6 +69,7 @@ BlobApp.ScreenState = ( function() {
 
 			if(player1State == PLAYER_STATES[2] && player2State == PLAYER_STATES[2]) {
 				$("body").trigger('levelFinished');
+				console.log(player1State, player2State);
 			}
 		}
 	},
@@ -104,6 +106,7 @@ BlobApp.ScreenState = ( function() {
 		}
 	};
 
+	that.onPlayerDead = onPlayerDead;
 	that.onPickupKey = onPickupKey;
 	that.onPlayerReachGoal = onPlayerReachGoal;
 	that.doorCreated = doorCreated;

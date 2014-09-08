@@ -22,6 +22,8 @@ BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 
 		// callback for loading layers after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+
+
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -38,7 +40,11 @@ BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 				moveLeft: [40, 59],
 				stop: [60, 79]
 			}
+
+			
 		}
+
+
 
 		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
@@ -60,6 +66,7 @@ BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("startAni");
+		console.log(sprite);
 	},
 
 

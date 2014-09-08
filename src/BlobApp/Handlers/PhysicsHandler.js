@@ -391,6 +391,7 @@ BlobApp.PhysicsHandler = (function() {
 		sprite = heliEnt.sprite;
 
 		$('body').trigger("heliEntityRequested", {"sprite" : sprite});
+		//console.log(sprite);
 
 		if(heliIsActive) {
 			return;

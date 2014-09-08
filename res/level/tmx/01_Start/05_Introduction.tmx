@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="33" height="25" tilewidth="25" tileheight="25">
  <tileset firstgid="1" name="Tileset" tilewidth="25" tileheight="25">
-  <image source="../../img/Tileset.png" width="400" height="250"/>
+  <image source="../../../img/Tileset.png" width="400" height="250"/>
  </tileset>
  <layer name="Kachelebene 1" width="33" height="25">
   <properties>
@@ -13,7 +13,7 @@
    <property name="Door3" value="013"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJwTYmBgEBrFDI1ArEQF7EWmviYgFmagDkgjU58gFd1QNgjcYEtDNzgSaZYvFdzAjSTOicQm5L8QIA4F4nAgjqDQDdJQmh2IJZHUkOs/UtwwEYiZsOAZaHxmIPYHYkYsagnJEXIDseUIzK2TSJQjlN5IcQO5GDmcsYUJyA3UKieJwco43ECt8oFcMBLdgC3fTMLjBn4SzfcnQg2uPEBKOID8gZy2YWWkKgNx5QE13AAr09DtUWSAtAMImUctN8DyPDZ34Mp/xLqBlwQ34HIHCMDqOFzpD58bZEl0Ay53+OJQS2xZSgjjqyvQ6ztcfh7FuDEA/H0uVg==
+   eJwTYmBgEBrFDI1ArEQF7EWmviYgFmagDkgjU58gFd1QNgjcYEtDNzgSaZYvFdzAjSTOicQm5L8QIA4F4nAgjqDQDdJQmh2IJZHUkOs/UtwwEYiZiMDMQOwPxIxkyBFyA7HlCMytk0iUI5TeSHEDuRg5nLGFCcgN1ConicHKONxArfKBXDAS3YAt30zC4wZ+Es33J0INrjxASjiA/IGctmFlpCoDceUBNdwAK9PQ7VFkgLQDCJlHLTfA8jw2d+DKf8S6gZcEN+ByBwjA6jhc6Q+fG2RJdAMud/jiUEtsWUoI46sriPXzKMaNAX3yLSo=
   </data>
  </layer>
 </map>

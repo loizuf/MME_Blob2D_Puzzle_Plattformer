@@ -4,7 +4,7 @@
   <property name="mapBackground" value="res/img/levelBackground.png"/>
  </properties>
  <tileset firstgid="1" name="Tileset" tilewidth="25" tileheight="25">
-  <image source="../../img/Tileset.png" width="400" height="250"/>
+  <image source="../../../img/Tileset.png" width="400" height="250"/>
  </tileset>
  <layer name="Kachelebene 2" width="33" height="25">
   <data encoding="base64" compression="zlib">

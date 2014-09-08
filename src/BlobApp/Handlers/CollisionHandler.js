@@ -242,7 +242,7 @@ BlobApp.CollisionHandler = (function() {
 
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-							_movingGroundEntered(bodyA,bodyB,true);
+					_movingGroundEntered(bodyA,bodyB,true);
 				}
 				break;
 
@@ -286,9 +286,13 @@ BlobApp.CollisionHandler = (function() {
 					_movingGroundEntered(bodyA,bodyB,true);
 				}
 			break;
+
 			case EntityConfig.SPIKEID:
 				_playerOnSpikes("heli");
 			break;
+
+			case EntityConfig.KEYID:
+				_pickUpKey(bodyA, bodyB);
 		}
 
 		var xVelocityBorder = 6, yVelocityBorder = 6;
@@ -305,6 +309,10 @@ BlobApp.CollisionHandler = (function() {
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 					_movingGroundEntered(bodyA,bodyB,true);
 				}
+			break;
+
+			case EntityConfig.KEYID:
+				_pickUpKey(bodyA, bodyB);
 			break;
 		}
 	},
@@ -432,6 +440,7 @@ BlobApp.CollisionHandler = (function() {
 		if(!keyPickedUp) {
 			keyPickedUp = true;
 			$('body').trigger('onKeyPickedUp', {body:bodyB});
+			$('body').trigger("animateGoal", {animationKey: AnimationKeys.UNLOCK});
 		}
 	},
 
