@@ -261,9 +261,15 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	isSlingshotActive = false;
+	isSlingshotLeft = false;
+	isSlingshotRight = false;
 
-	this.initSlingshot = function() {
-		$('body').trigger('animateSlingshot', {animationKey : AnimationKeys.LOAD});
+	this.initSlingshot = function(event, data) {
+		console.log("sl init");
+		data.direction == "left" ? isSlingshotLeft = true : isSlingshotRight = true;
+
+		$('body').trigger('animateSlingshot', {animationKey : AnimationKeys.LOAD});		
+		
 		slingshotTension = 7;
 
 		prototypeVar.setSingleSpecialAllowed(false);
@@ -285,6 +291,8 @@ BlobApp.BlobPlayer1 = (function() {
 		if(isSlingshotActive) {
 			$('body').trigger('onSlingshotRelease');
 			isSlingshotActive = false;
+			isSlingshotLeft = false;
+			isSlingshotRight = false;
 		}
 	},
 
@@ -297,8 +305,6 @@ BlobApp.BlobPlayer1 = (function() {
 			slingshotTension > 8 ? slingshotTension = 8 : slingshotTension += 0;
 			slingshotTension != 8 ? slingshotTension += 0.2 : slingshotTension += 0;
 			
-			console.log("clutch slingshot", slingshotTension);
-
 			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});		
 			$('body').trigger('animateSlingshot', {"animationKey" : AnimationKeys.CLUTCH});	
 		}		
@@ -310,8 +316,6 @@ BlobApp.BlobPlayer1 = (function() {
 			slingshotTension < 7 ? slingshotTension = 7 : slingshotTension += 0;
 			slingshotTension != 7 ? slingshotTension -= 0.2 : slingshotTension += 0;
 			
-			console.log("loosen slingshot", slingshotTension);
-
 			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});	
 			$('body').trigger('animateSlingshot', {"animationKey" : AnimationKeys.LOOSEN});	
 		}		

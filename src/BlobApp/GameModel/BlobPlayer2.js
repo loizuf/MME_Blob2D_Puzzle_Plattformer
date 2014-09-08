@@ -35,6 +35,11 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on('startSphere', thisVar.initSphere);
 
 		$('body').on('startSlingshot', thisVar.initSlingshot);
+		$('body').on('onSlingshotRelease', function() {
+			isSlingshotActive = false;
+			isSlingshotLeft = false;
+			isSlingshotRight = false;
+		});
 	},
 
 	this.tryToInit = function(skill) {
@@ -62,6 +67,10 @@ BlobApp.BlobPlayer2 = (function() {
 			break;
 
 			case "slingshotLeft":
+				thisVar.setIdle(skill);
+			break;
+
+			case "slingshotRight":
 				thisVar.setIdle(skill);
 			break;
 		}
@@ -261,9 +270,16 @@ BlobApp.BlobPlayer2 = (function() {
 	//END: Sphere
 
 	// START: Slingshot
-	this.initSlingshot = function() {
-		prototypeVar.setSingleSpecialAllowed(false);
+	isSlingshotActive = false;
+	isSlingshotLeft = false;
+	isSlingshotRight = false;
+
+	this.initSlingshot = function(event, data) {
+		console.log("RED BLOCH SL INIT");
+		data.direction == "left" ? isSlingshotLeft = true : isSlingshotRight = true;
 		slingshotAngle = 30;
+
+		prototypeVar.setSingleSpecialAllowed(false);
 
 		prototypeVar.setFunction("currentUp", function(){});
 		prototypeVar.setFunction("currentDown", function(){});
@@ -276,17 +292,11 @@ BlobApp.BlobPlayer2 = (function() {
 
 	this.increaseSlingshotAngle = function() {
 			slingshotAngle != 60 ? slingshotAngle += 15 : slingshotAngle += 0;
-			
-			console.log("increase angle", slingshotAngle);
-
 			$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
 	},
 
 	this.decreaseSlingshotAngle = function() {
 		slingshotAngle != 30 ? slingshotAngle -= 15 : slingshotAngle += 0;
-
-		console.log("decrease angle", slingshotAngle);
-
 		$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
 	},
 
