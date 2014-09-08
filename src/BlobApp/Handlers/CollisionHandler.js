@@ -350,7 +350,7 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.SLINGSHOTTRIGGERLEFT :
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
 
-				_playerLeftTriggerZone("redBlob");
+				_playerLeftTriggerZone("redBlob", bodyB);
 			break;
 
 			case EntityConfig.LEVELDOOR:
@@ -380,7 +380,7 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.SLINGSHOTTRIGGERLEFT :
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
 			
-				_playerLeftTriggerZone("greenBlob");
+				_playerLeftTriggerZone("greenBlob", bodyB);
 			break;
 
 			case EntityConfig.LEVELDOOR:
@@ -402,11 +402,13 @@ BlobApp.CollisionHandler = (function() {
 
 	_playerInTriggerZone = function(player, zoneName, bodyB) {
 			$('body').trigger(player+"InTriggerZone", {name: zoneName});
+			$('body').trigger("coopTriggerAnimationChanged", {animationKey: AnimationKeys.BIGSHINE, triggerID: bodyB.GetUserData()});
 			_showHintBubble(bodyB, player);
 	},
 
-	_playerLeftTriggerZone = function(player) {
-			$('body').trigger(player+"LeftTriggerZone");
+	_playerLeftTriggerZone = function(player, bodyB) {
+			$('body').trigger(player+"LeftTriggerZone");			
+			$('body').trigger("coopTriggerAnimationChanged", {animationKey: AnimationKeys.SMALLSHINE, triggerID: bodyB.GetUserData()});
 			// removes the hint bubble.
 			$('body').trigger("juiceRequested", {removeByName : ["bubble"+player]});
 	},

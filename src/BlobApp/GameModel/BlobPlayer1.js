@@ -169,7 +169,8 @@ BlobApp.BlobPlayer1 = (function() {
 
 		function restore() {
 			$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : false});
-			
+			$('body').trigger("animateHintBubble", {animationKey: AnimationKeys.PRESSBUTTON, blobID: "p1"});
+				
 			prototypeVar.setFunction("currentUp", prototypeVar._jump);
 			prototypeVar.setFunction("currentLeft", prototypeVar._moveLeft);
 			prototypeVar.setFunction("currentRight", prototypeVar._moveRight);
@@ -179,7 +180,9 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setFunction("currentLeft", restore);
 		prototypeVar.setFunction("currentRight", restore);
 
-		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : skill});		
+		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : skill});	
+		$('body').trigger("animateHintBubble", {animationKey: AnimationKeys.WAITING, blobID: "p1"});
+		
 	},
 
 	// START: Teleportation special skill

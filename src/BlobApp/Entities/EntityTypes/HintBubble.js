@@ -15,7 +15,19 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, sizeX, sizeY, additional
 
 		// callback for loading sprite after tileset is loaded
 		tileset.onLoad = thisVar._initSprite(tileset, sizeX, sizeY);		
+		thisVar._listeners();
 	},	
+
+	this._listeners = function() {
+		$('body').on("animateHintBubble", thisVar._animate);		
+		$('body').on("startSlingshot", thisVar._removeBubbles);
+		$('body').on("startTele", thisVar._removeBubbles);
+	},
+
+	this._removeBubbles = function() {
+		$('body').trigger("juiceRequested", {removeByName : ["bubbleredBlob"]});
+		$('body').trigger("juiceRequested", {removeByName : ["bubblegreenBlob"]});
+	},
 
 	this._initSprite = function(tileset, width, height) {
 		var imageData = {
@@ -29,6 +41,8 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, sizeX, sizeY, additional
 				blinkController: [0, 1, "blinkController", 0.035],
 				blinkPlayer1: [4, 5, "blinkPlayer1", 0.035],
 				blinkPlayer2: [2, 3, "blinkPlayer2", 0.035],
+				waitingForPlayer2: [6, 7, "waitingForPlayer2", 0.035],
+				waitingForPlayer1: [8, 9, "waitingForPlayer1", 0.035]
 			}
 		}
 
@@ -66,6 +80,35 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, sizeX, sizeY, additional
  
 		sprite.gotoAndPlay(aniName);
 	},
+
+	this._animate = function(event, data) {
+		var aniName = "";
+		switch(data.animationKey) {
+			case AnimationKeys.PRESSBUTTON:
+				if(thisVar.hintID == "bubblegreenBlob" && data.blobID =="p1") {
+					if(Controls.p1 == 1) {
+						aniName = "blinkPlayer1";
+					} else {
+						aniName = "blinkController";
+					}
+				} else if(thisVar.hintID == "bubbleredBlob" && data.blobID =="p2"){
+					if(Controls.p2 == 1) {
+						aniName = "blinkPlayer2";
+					} else {
+						aniName = "blinkController";
+					}
+				}
+			break;
+			case AnimationKeys.WAITING:
+				if(thisVar.hintID == "bubblegreenBlob" && data.blobID =="p1") {
+					aniName = "waitingForPlayer2";
+				} else if(thisVar.hintID == "bubbleredBlob" && data.blobID =="p2") {
+					aniName = "waitingForPlayer1";
+				}
+			break;
+		}
+		if(aniName != "") sprite.gotoAndPlay(aniName);
+	};
 
 	this.prototype.init();
 	this.sprite = sprite;
