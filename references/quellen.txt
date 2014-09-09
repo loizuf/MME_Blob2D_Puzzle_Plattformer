@@ -24,11 +24,75 @@ File(s):
     * Common_Controller_4.png
 
 
+
+Title:
+    skweaks
+
+Author:
+    Écrivain
+URL:
+   http://opengameart.org/content/skweaks
+
+License(s):
+    * CC0 1.0  http://creativecommons.org/publicdomain/zero/1.0/
+
+File(s):
+    * skweak1.ogg
+ 	* skweak2.ogg
+  	* skweak3.ogg
+
+
+Title:
+   Teleport Spell
+
+Author:
+    Ogrebane
+URL:
+   http://opengameart.org/content/teleport-spell
+
+License(s):
+    * CC0 1.0  http://creativecommons.org/publicdomain/zero/1.0/
+
+File(s):
+    * teleport.ogg
+
+
+
 Front-end credits:
 Shake and Bake
 Music by Matthew Pablo
 http://www.matthewpablo.com
 
+//
+Fly Swatter Squish sound
+
+Author: 
+qubodup
+
+License(s):
+    * CC0 1.0  http://creativecommons.org/publicdomain/zero/1.0/
+
+URL:
+  http://opengameart.org/content/fly-swatter-squish-sound
+
+File(s):
+ * splat.ogg (made from flyswatter.wav)
 
 HeliSound
 http://soundbible.com/323-Military-Helicopter.html
+
+//
+Rumble/explosion
+
+Author: 
+Michel Baradari
+(Submitted by qubodup)
+
+License(s):
+    * CC-BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
+URL:
+ http://opengameart.org/content/rumbleexplosion
+
+File(s):
+ * rumble.ogg

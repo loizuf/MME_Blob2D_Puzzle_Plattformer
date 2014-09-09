@@ -31,6 +31,9 @@ BlobApp.BlobGame = (function() {
 	$menuplay = $('#menu-play'),
 	$menucontainer = $('#menu-container'),
 
+	$stopSound = $('#stop-sound'),
+	$resumeSound = $('#resume-sound'),
+
 	$levelSelectContainer = $('#levelselect-container'),
 
 	$gamecanvas = $('#canvas-container'),
@@ -38,6 +41,12 @@ BlobApp.BlobGame = (function() {
 	init = function(){
 		$menuplay.unbind("click");
 		$menuplay.on('click', _enableControlsSelection);	
+
+		$stopSound.unbind("click");
+		$stopSound.on('click', _stopSound);
+
+		$resumeSound.unbind("click");
+		$resumeSound.on('click', _resumeSound);
 	},
 
 	_enableControlsSelection = function() {
@@ -110,7 +119,15 @@ BlobApp.BlobGame = (function() {
 		$selectLevel12.on('click', {lvlID:0, owID:1}, _startGame);
 		$selectLevel13.on('click', {lvlID:0, owID:2}, _startGame);
 		$selectLevel14.on('click', {lvlID:1, owID:3}, _startGame);
-	}
+	},
+
+	_stopSound = function(){
+		$('body').trigger('soundStop');
+	},
+
+	_resumeSound = function(){
+		$('body').trigger('soundResume');
+	},
 
 	_startGame = function(event) {
 		lvlID = event.data.lvlID;
