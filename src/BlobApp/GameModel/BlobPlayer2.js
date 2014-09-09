@@ -19,6 +19,8 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on("redBlobLeftTriggerZone", _setDownAction);
 		$('body').on("redBlobInLevelLoadTriggerZone", _setUpActionP2);
 		$('body').on("redBlobLeftLevelLoadTriggerZone", _setUpActionP2);
+		$('body').on("redBlobInMenuDoorZone", _setUpActionP2);
+		$('body').on("redBlobLeftMenuDoorZone", _setUpActionP2);
 		$('body').on('heliStopRequested', thisVar._resetControls);
 		$('body').on('bridgeStopRequested', thisVar._resetControls);
 		$('body').on('sphereStopRequested', thisVar._resetControls);
@@ -33,6 +35,11 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on('startSphere', thisVar.initSphere);
 
 		$('body').on('startSlingshot', thisVar.initSlingshot);
+		$('body').on('onSlingshotRelease', function() {
+			isSlingshotActive = false;
+			isSlingshotLeft = false;
+			isSlingshotRight = false;
+		});
 	},
 
 	this.tryToInit = function(skill) {
@@ -60,6 +67,10 @@ BlobApp.BlobPlayer2 = (function() {
 			break;
 
 			case "slingshotLeft":
+				thisVar.setIdle(skill);
+			break;
+
+			case "slingshotRight":
 				thisVar.setIdle(skill);
 			break;
 		}
@@ -91,11 +102,18 @@ BlobApp.BlobPlayer2 = (function() {
 	},
 
 	_setUpActionP2 = function(event, IDS) {
-		if(IDS != undefined){
-			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(IDS.lvlID, IDS.owID);});
-		} else {
+		if(IDS==undefined){
 			prototypeVar.setFunction("upPressed", function(){});
+		} else if(IDS == EntityConfig.NEWGAMEDOOR || IDS == EntityConfig.CONTINUEDOOR) {
+			prototypeVar.setFunction
+			("upPressed", function(){thisVar.reactOnMenuDoor(IDS);});
+		} else{
+			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(IDS.lvlID, IDS.owID);});
 		}
+	},
+
+	this.reactOnMenuDoor = function(IDS){
+		prototypeVar.reactOnMenuDoor(IDS);
 	},
 
 	this.tryLevelLoad = function(levelID, owID) {
@@ -158,11 +176,11 @@ BlobApp.BlobPlayer2 = (function() {
 
 		function restore() {			
 			$('body').trigger("onPlayerWaitingChange", {"playerName" : "p2", "waiting" : false});
+			$('body').trigger("animateHintBubble", {animationKey: AnimationKeys.PRESSBUTTON, blobID: "p2"});
 
 			prototypeVar.setFunction("currentUp", prototypeVar._jump);
 			prototypeVar.setFunction("currentLeft", prototypeVar._moveLeft);
 			prototypeVar.setFunction("currentRight", prototypeVar._moveRight);
-
 		}
 
 		prototypeVar.setFunction("currentUp", restore);
@@ -170,6 +188,7 @@ BlobApp.BlobPlayer2 = (function() {
 		prototypeVar.setFunction("currentRight", restore);
 		
 		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p2", "waiting" : skill});
+		$('body').trigger("animateHintBubble", {animationKey: AnimationKeys.WAITING, blobID: "p2"});
 	},
 
 	// START: Teleportation special skill
@@ -252,9 +271,16 @@ BlobApp.BlobPlayer2 = (function() {
 	//END: Sphere
 
 	// START: Slingshot
-	this.initSlingshot = function() {
-		prototypeVar.setSingleSpecialAllowed(false);
+	isSlingshotActive = false;
+	isSlingshotLeft = false;
+	isSlingshotRight = false;
+
+	this.initSlingshot = function(event, data) {
+		console.log("RED BLOCH SL INIT");
+		data.direction == "left" ? isSlingshotLeft = true : isSlingshotRight = true;
 		slingshotAngle = 30;
+
+		prototypeVar.setSingleSpecialAllowed(false);
 
 		prototypeVar.setFunction("currentUp", function(){});
 		prototypeVar.setFunction("currentDown", function(){});
@@ -267,17 +293,11 @@ BlobApp.BlobPlayer2 = (function() {
 
 	this.increaseSlingshotAngle = function() {
 			slingshotAngle != 60 ? slingshotAngle += 15 : slingshotAngle += 0;
-			
-			console.log("increase angle", slingshotAngle);
-
 			$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
 	},
 
 	this.decreaseSlingshotAngle = function() {
 		slingshotAngle != 30 ? slingshotAngle -= 15 : slingshotAngle += 0;
-
-		console.log("decrease angle", slingshotAngle);
-
 		$('body').trigger('onSlingshotAngleChange', {"angle": slingshotAngle});
 	},
 

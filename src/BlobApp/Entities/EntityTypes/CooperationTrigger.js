@@ -30,8 +30,8 @@ BlobApp.CooperationTrigger = (function CooperationTrigger(x_pos, y_pos, sizeX, s
 			},
 
 			animations: {
-				smallShine : [0,17,"smallShine",0.3],
-				bigShine : [18,35,"bigShine",0.3],
+				smallShine : [0,75,"smallShine",1],
+				bigShine : [76,88,"bigShine",1],
 			}
 		}
 
@@ -63,12 +63,13 @@ BlobApp.CooperationTrigger = (function CooperationTrigger(x_pos, y_pos, sizeX, s
 	},
 
 	_animate = function(event, data) {	
+		if(data.triggerID != coopID) return;
 		switch(data.animationKey) {
 			case AnimationKeys.SMALLSHINE:
 				sprite.gotoAndPlay("smallShine");
 			break;
 
-			case AnimationKeys.MOVELEFT:
+			case AnimationKeys.BIGSHINE:
 				sprite.gotoAndPlay("bigShine");
 			break;
 		}

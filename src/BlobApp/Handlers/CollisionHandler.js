@@ -154,23 +154,19 @@ BlobApp.CollisionHandler = (function() {
 				}
 				break;
 
-			//MenuNavigation
-			case EntityConfig.NEWGAMEDOOR:
-				_newGameRequested(EntityConfig.GREENBLOBID);
-				return;
-
-			case EntityConfig.CONTINUEDOOR:
-				_continueRequested();
-				return;
-
-
 			case EntityConfig.SPIKEID:
 				_playerOnSpikes("greenBlob");
 			break;
 
+			//MenuNavigation
+			case EntityConfig.NEWGAMEDOOR:
+			case EntityConfig.CONTINUEDOOR:
+				_playerInMenuDoorZone("greenBlob", bodyB);
+				return;
+
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
-				_levelLoadRequested("greenBlob", bodyB);
+				_playerEnteredLevelLoadZone("greenBlob", bodyB);
 				return;
 		}
 
@@ -246,22 +242,19 @@ BlobApp.CollisionHandler = (function() {
 				}
 				break;
 
-			//MenuNavigation
-			case EntityConfig.NEWGAMEDOOR:
-				_newGameRequested(EntityConfig.REDBLOBID);
-				return;
-
-			case EntityConfig.CONTINUEDOOR:
-				_continueRequested();
-				return;
-
 			case EntityConfig.SPIKEID:
 				_playerOnSpikes("redBlob");
 			break;
 
+			//MenuNavigation
+			case EntityConfig.NEWGAMEDOOR:
+			case EntityConfig.CONTINUEDOOR:
+				_playerInMenuDoorZone("redBlob", bodyB);
+				return;
+
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
-				_levelLoadRequested("redBlob", bodyB);
+				_playerEnteredLevelLoadZone("redBlob", bodyB);
 				return;
 		}
 
@@ -357,9 +350,16 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.SLINGSHOTTRIGGERLEFT :
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
 
-				_playerLeftTriggerZone("redBlob");
+				_playerLeftTriggerZone("redBlob", bodyB);
+			break;
+
 			case EntityConfig.LEVELDOOR:
 				_playerLeftLevelLoadTriggerZone("redBlob");
+			break;
+
+			case EntityConfig.NEWGAMEDOOR:
+			case EntityConfig.CONTINUEDOOR:
+				_playerLeftMenuDoorZone("greenBlob");
 			break;
 
 			case EntityConfig.MOVINGGROUNDID:
@@ -380,10 +380,16 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.SLINGSHOTTRIGGERLEFT :
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
 			
-				_playerLeftTriggerZone("greenBlob");
+				_playerLeftTriggerZone("greenBlob", bodyB);
 			break;
+
 			case EntityConfig.LEVELDOOR:
 				_playerLeftLevelLoadTriggerZone("greenBlob");
+			break;
+
+			case EntityConfig.NEWGAMEDOOR:
+			case EntityConfig.CONTINUEDOOR:
+				_playerLeftMenuDoorZone("greenBlob");
 			break;
 
 			case EntityConfig.MOVINGGROUNDID:
@@ -396,11 +402,13 @@ BlobApp.CollisionHandler = (function() {
 
 	_playerInTriggerZone = function(player, zoneName, bodyB) {
 			$('body').trigger(player+"InTriggerZone", {name: zoneName});
+			$('body').trigger("coopTriggerAnimationChanged", {animationKey: AnimationKeys.BIGSHINE, triggerID: bodyB.GetUserData()});
 			_showHintBubble(bodyB, player);
 	},
 
-	_playerLeftTriggerZone = function(player) {
-			$('body').trigger(player+"LeftTriggerZone");
+	_playerLeftTriggerZone = function(player, bodyB) {
+			$('body').trigger(player+"LeftTriggerZone");			
+			$('body').trigger("coopTriggerAnimationChanged", {animationKey: AnimationKeys.SMALLSHINE, triggerID: bodyB.GetUserData()});
 			// removes the hint bubble.
 			$('body').trigger("juiceRequested", {removeByName : ["bubble"+player]});
 	},
@@ -421,7 +429,7 @@ BlobApp.CollisionHandler = (function() {
 		$('body').trigger('continueRequest');
 	},
 
-	_levelLoadRequested = function(player, bodyB) {
+	_playerEnteredLevelLoadZone = function(player, bodyB) {
 		if(bodyB.GetUserData()[3]){
 			var levelID = bodyB.GetUserData()[1];
 			var overID = bodyB.GetUserData()[2];
@@ -434,6 +442,15 @@ BlobApp.CollisionHandler = (function() {
 
 	_playerLeftLevelLoadTriggerZone = function(player) {
 		$('body').trigger(player + 'LeftLevelLoadTriggerZone');
+	},
+
+	_playerInMenuDoorZone = function(player, bodyB){
+		var doorType = bodyB.GetUserData()[0];
+		$('body').trigger(player+'InMenuDoorZone', doorType);
+	},
+
+	_playerLeftMenuDoorZone = function(player, bodyB) {
+		$('body').trigger(player + 'LeftMenuDoorZone');
 	},
 
 	_pickUpKey = function(bodyA, bodyB) {

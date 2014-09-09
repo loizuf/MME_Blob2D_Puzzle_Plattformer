@@ -19,6 +19,8 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on("greenBlobLeftTriggerZone", _setDownActionP1);
 		$('body').on("greenBlobInLevelLoadTriggerZone", _setUpActionP1);
 		$('body').on("greenBlobLeftLevelLoadTriggerZone", _setUpActionP1);
+		$('body').on("greenBlobInMenuDoorZone", _setUpActionP1);
+		$('body').on("greenBlobLeftMenuDoorZone", _setUpActionP1);
 		$('body').on('heliStopRequested', thisVar._resetControls);
 		$('body').on('bridgeStopRequested', thisVar._resetControls);
 		$('body').on('sphereStopRequested', thisVar._resetControls);
@@ -95,11 +97,17 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	_setUpActionP1 = function(event, IDS) {
-		if(IDS != undefined){
-			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(IDS.lvlID, IDS.owID);});
-		} else {
+		if(IDS==undefined){
 			prototypeVar.setFunction("upPressed", function(){});
+		} else if(IDS == EntityConfig.NEWGAMEDOOR || IDS == EntityConfig.CONTINUEDOOR) {
+			prototypeVar.setFunction("upPressed", function(){thisVar.reactOnMenuDoor(IDS);});
+		} else{
+			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(IDS.lvlID, IDS.owID);});
 		}
+	},
+
+	this.reactOnMenuDoor = function(IDS){
+		prototypeVar.reactOnMenuDoor(IDS);
 	},
 
 	this.tryLevelLoad = function(levelID, owID) {
@@ -161,7 +169,8 @@ BlobApp.BlobPlayer1 = (function() {
 
 		function restore() {
 			$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : false});
-			
+			$('body').trigger("animateHintBubble", {animationKey: AnimationKeys.PRESSBUTTON, blobID: "p1"});
+				
 			prototypeVar.setFunction("currentUp", prototypeVar._jump);
 			prototypeVar.setFunction("currentLeft", prototypeVar._moveLeft);
 			prototypeVar.setFunction("currentRight", prototypeVar._moveRight);
@@ -171,7 +180,9 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setFunction("currentLeft", restore);
 		prototypeVar.setFunction("currentRight", restore);
 
-		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : skill});		
+		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : skill});	
+		$('body').trigger("animateHintBubble", {animationKey: AnimationKeys.WAITING, blobID: "p1"});
+		
 	},
 
 	// START: Teleportation special skill
@@ -253,9 +264,15 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	isSlingshotActive = false;
+	isSlingshotLeft = false;
+	isSlingshotRight = false;
 
-	this.initSlingshot = function() {
-		$('body').trigger('animateSlingshot', {animationKey : AnimationKeys.LOAD});
+	this.initSlingshot = function(event, data) {
+		console.log("sl init");
+		data.direction == "left" ? isSlingshotLeft = true : isSlingshotRight = true;
+
+		$('body').trigger('animateSlingshot', {animationKey : AnimationKeys.LOAD});		
+		
 		slingshotTension = 7;
 
 		prototypeVar.setSingleSpecialAllowed(false);
@@ -277,6 +294,8 @@ BlobApp.BlobPlayer1 = (function() {
 		if(isSlingshotActive) {
 			$('body').trigger('onSlingshotRelease');
 			isSlingshotActive = false;
+			isSlingshotLeft = false;
+			isSlingshotRight = false;
 		}
 	},
 
@@ -289,8 +308,6 @@ BlobApp.BlobPlayer1 = (function() {
 			slingshotTension > 8 ? slingshotTension = 8 : slingshotTension += 0;
 			slingshotTension != 8 ? slingshotTension += 0.2 : slingshotTension += 0;
 			
-			console.log("clutch slingshot", slingshotTension);
-
 			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});		
 			$('body').trigger('animateSlingshot', {"animationKey" : AnimationKeys.CLUTCH});	
 		}		
@@ -302,8 +319,6 @@ BlobApp.BlobPlayer1 = (function() {
 			slingshotTension < 7 ? slingshotTension = 7 : slingshotTension += 0;
 			slingshotTension != 7 ? slingshotTension -= 0.2 : slingshotTension += 0;
 			
-			console.log("loosen slingshot", slingshotTension);
-
 			$('body').trigger('onSlingshotTensionChange', {"tension": slingshotTension});	
 			$('body').trigger('animateSlingshot', {"animationKey" : AnimationKeys.LOOSEN});	
 		}		
