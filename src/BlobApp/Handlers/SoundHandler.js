@@ -10,6 +10,11 @@ BlobApp.SoundHandler = (function() {
     debug = true,
     soundActive = true,
 
+    /*sound ui? or leave it here*/
+    $stopSound = $('#stop-sound'),
+    $resumeSound = $('#resume-sound'),
+
+
     heliActive = false;
     init = function() {
         var assetsPath = "res/sound/";
@@ -38,6 +43,7 @@ BlobApp.SoundHandler = (function() {
             {id:"backGround", src:"Shakeandbake.ogg"},
         ];
         //console.log(manifest);
+       
 
         createjs.Sound.alternateExtensions = ["mp3"];
          //TODO: maybe exract this to a preload module
@@ -48,7 +54,7 @@ BlobApp.SoundHandler = (function() {
         preload.removeEventListener('complete',_doneLoading);
         preload.addEventListener("complete", _doneLoading);
         createjs.Sound.setMute(false);
-
+        createjs.Sound.stop();
         _listeners();
 
         return that;
@@ -99,14 +105,21 @@ BlobApp.SoundHandler = (function() {
 
         $('body').on("onCameraShakeRequested",_playShakeSound);
 
-        //$('body').on('soundPause',_soundPause);
+        $('body').on('soundPause',_soundPause);
         $('body').on('soundResume',_resumeSound);
 
         $('body').on('restartPhys',_resumeSound);
+        $('body').on('destroyPhysics',_stopAllSounds);
         $('body').on('resetGame',_stopAllSounds);
 
 
         $('body').on('onPause',_soundPause);
+
+        $stopSound.unbind("click");
+        $stopSound.on('click', _soundPause);
+
+        $resumeSound.unbind("click");
+        $resumeSound.on('click', _resumeSound);
         
     }, 
 
@@ -118,11 +131,11 @@ BlobApp.SoundHandler = (function() {
     },
 
     _playSplatSound = function() {
-        if(soundActive){
+        //if(soundActive){
             _logg("playSplat");
             /*currently not playing due to problems regarding stretch/trampolin (multiple triggers of reallow jump)*/
             // createjs.Sound.play("splat", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
-            }
+       //     }
     },
 
     _playHeliSound = function() {  
@@ -228,6 +241,7 @@ BlobApp.SoundHandler = (function() {
         }
     },
 
+
     _stopHeliSound = function() {  
       //  if(soundActive){
             _logg("heli stop");
@@ -282,10 +296,10 @@ BlobApp.SoundHandler = (function() {
         _logg("stop ALL"); 
         createjs.Sound.stop();
     },
+
     _resumeSound = function(){
         _logg("res S");
         createjs.Sound.setMute(false);
-        soundActive = true;
        // _playBackground();
     },
 
