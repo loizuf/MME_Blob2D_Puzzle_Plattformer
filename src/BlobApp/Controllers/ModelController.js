@@ -28,7 +28,7 @@ BlobApp.ModelController = (function() {
 		//_blobPlayerTwo = BlobApp.BlobTwo.init();
 		_screenStateHandler = BlobApp.ScreenState.init();
 		_inputHandler = BlobApp.InputHandler.init(p1ControlsID, p2ControlsID);
-		_soundHandler.init();
+		//_soundHandler.init();
 
 		_blobPlayerOne = new BlobApp.BlobPlayer1();
 		_blobPlayerTwo = new BlobApp.BlobPlayer2();
