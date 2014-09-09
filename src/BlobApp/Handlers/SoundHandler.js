@@ -44,17 +44,17 @@ BlobApp.SoundHandler = (function() {
         ];
         //console.log(manifest);
        
-
-        createjs.Sound.alternateExtensions = ["mp3"];
+        soundSlave = createjs.Sound;
+        soundSlave.alternateExtensions = ["mp3"];
          //TODO: maybe exract this to a preload module
         preload = new createjs.LoadQueue(true, assetsPath);
-        preload.installPlugin(createjs.Sound);
+        preload.installPlugin(soundSlave);
         preload.loadManifest(manifest2);
         //preload.loadFile("Shakeandbake.ogg");
         preload.removeEventListener('complete',_doneLoading);
         preload.addEventListener("complete", _doneLoading);
-        createjs.Sound.setMute(false);
-        createjs.Sound.stop();
+        soundSlave.setMute(false);
+        soundSlave.stop();
         _listeners();
 
         return that;
@@ -70,7 +70,7 @@ BlobApp.SoundHandler = (function() {
     _playBackground = function(){
         //if(!backGroundSoud.isActive()){
             _logg("_playBackground");
-            backGroundSoud = createjs.Sound.play("backGround", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:-1, volume:0.1});
+            backGroundSoud = soundSlave.play("backGround", {interrupt:soundSlave.INTERRUPT_ANY , loop:-1, volume:0.1});
        // }
     },
 
@@ -110,7 +110,7 @@ BlobApp.SoundHandler = (function() {
 
         $('body').on('restartPhys',_resumeSound);
         $('body').on('destroyPhysics',_stopAllSounds);
-        $('body').on('resetGame',_stopAllSounds);
+     // $('body').on('resetGame',_stopAllSounds);
 
 
         $('body').on('onPause',_soundPause);
@@ -126,7 +126,7 @@ BlobApp.SoundHandler = (function() {
     _playJumpSound = function() {
       //  if(soundActive){
             _logg("playJump");
-            createjs.Sound.play("jump", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
+            soundSlave.play("jump", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
       //  }
     },
 
@@ -134,7 +134,7 @@ BlobApp.SoundHandler = (function() {
         //if(soundActive){
             _logg("playSplat");
             /*currently not playing due to problems regarding stretch/trampolin (multiple triggers of reallow jump)*/
-            // createjs.Sound.play("splat", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
+            // soundSlave.play("splat", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
        //     }
     },
 
@@ -142,7 +142,7 @@ BlobApp.SoundHandler = (function() {
       //  if(soundActive){
             _logg("helistarts");
             heliActive = true;
-            helisound = createjs.Sound.play("startHeli", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
+            helisound = soundSlave.play("startHeli", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
             helisound.addEventListener("complete", _handleHeliSound);
        // }
     },
@@ -150,43 +150,43 @@ BlobApp.SoundHandler = (function() {
     _playTeleSound = function() {  
        // if(soundActive){
             _logg("tele");
-            createjs.Sound.play("tele", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
+            soundSlave.play("tele", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
        // }
     },
 
     _playBridgeSound = function() { 
      //   if(soundActive){
             _logg("bridgestart"); 
-            createjs.Sound.play(/*"startBridge"*/"startSling", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
+            soundSlave.play(/*"startBridge"*/"startSling", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
       //  }
     },
 
     _playSphereAssembleSound = function() {
       //  if(soundActive){
             _logg("sphere start");
-            createjs.Sound.play("startSphere", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.8});
+            soundSlave.play("startSphere", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.8});
       //  }
     },
 
     _playSlingshotStartSound= function() {  
       //  if(soundActive){
-            createjs.Sound.play("startSling", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
+            soundSlave.play("startSling", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
       //  }
     },
     _playSlingshotClutchSound= function() {  
      //   if(soundActive){
-            createjs.Sound.play("clutchSling", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
+            soundSlave.play("clutchSling", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
       //  }
     },
     _playSlingshotLoosenSound= function() {  
       //  if(soundActive){
-            createjs.Sound.play("loosenSling", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
+            soundSlave.play("loosenSling", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
       //  }
     },
 
     _playSlingShotFireSound= function() {  
      //   if(soundActive){
-            createjs.Sound.play("finishSling", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
+            soundSlave.play("finishSling", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
        // }
     },
      
@@ -194,28 +194,28 @@ BlobApp.SoundHandler = (function() {
     _playTrampActSound = function() {  
       //  if(soundActive){
             _logg("tramp start");
-            createjs.Sound.play("skweak2", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.5});
+            soundSlave.play("skweak2", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.5});
       //  }
     },
 
     _playTrampDeactSound = function() {
       //  if(soundActive){
             _logg("tramp stop");  
-            createjs.Sound.play("skweak3", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.5});
+            soundSlave.play("skweak3", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.5});
       //  }
     },
 
     _playStretchActSound = function() {  
       //  if(soundActive){
             _logg("stretch start");
-            createjs.Sound.play("skweak1", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.5});
+            soundSlave.play("skweak1", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.5});
      //   }
     },
 
     _playStretchDeactSound = function() { 
      //   if(soundActive){
             _logg("stretch stop");
-            createjs.Sound.play("skweak3", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.5});
+            soundSlave.play("skweak3", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.5});
      //   }
     },
 
@@ -258,21 +258,21 @@ BlobApp.SoundHandler = (function() {
     _stopBridgeSound = function() {  
        // if(soundActive){
             _logg("bridge stop");
-            createjs.Sound.play(/*"finishBridge"*/"clutchSling", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.3});
+            soundSlave.play(/*"finishBridge"*/"clutchSling", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.3});
        // }
     },
 
     _stopSphereSound = function() { 
       //  if(soundActive){
             _logg("sphere stop");
-            createjs.Sound.play("finishSphere", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.8});
+            soundSlave.play("finishSphere", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.8});
       //  }
     },
 
     _handleHeliSound = function (){
       //  if(soundActive){
             if(heliActive){
-                helisound = createjs.Sound.play("startHeli", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1});
+                helisound = soundSlave.play("startHeli", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
                 helisound.addEventListener("complete", _handleHeliSound);
             }else{
 
@@ -283,23 +283,24 @@ BlobApp.SoundHandler = (function() {
     _playShakeSound = function() {
       //  if(soundActive){
             _logg("shake");
-            createjs.Sound.play("shake", {interrupt:createjs.Sound.INTERRUPT_ANY , loop:0, volume:0.1}); 
+            soundSlave.play("shake", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1}); 
       //  }
     },
 
     _soundPause = function() {
         _logg("stop S"); 
-        createjs.Sound.setMute(true);
+        soundSlave.setMute(true);
     },
 
      _stopAllSounds = function() {
         _logg("stop ALL"); 
-        createjs.Sound.stop();
+        soundSlave.stop();
+        soundSlave.removeAllSounds();
     },
 
     _resumeSound = function(){
         _logg("res S");
-        createjs.Sound.setMute(false);
+        soundSlave.setMute(false);
        // _playBackground();
     },
 
