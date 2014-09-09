@@ -7,8 +7,8 @@
          "opacity":1,
          "properties":
             {
-             "Buttons":[31,32,33,34],
-             "Doors":[32,31,33,34]
+             "Buttons":"",
+             "Doors":""
             },
          "type":"tilelayer",
          "visible":true,
@@ -25,7 +25,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/..\/img\/Tileset.png",
+         "image":"..\/..\/..\/img\/Tileset.png",
          "imageheight":250,
          "imagewidth":400,
          "margin":0,
