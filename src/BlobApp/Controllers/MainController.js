@@ -17,6 +17,8 @@ BlobApp.MainController = (function() {
 	p1ID,
 	p2ID,
 
+	debug = true,
+
 	init = function(lvlID, overID, p1ControlsID, p2ControlsID) {
 
 		lID = lvlID;
@@ -76,7 +78,14 @@ BlobApp.MainController = (function() {
 
 	_saveGameProgress = function() {
 		_globalStateHandler.onFinishLevel(lID, overwID);
-		lID = 0;
+		if(!debug){
+			lID++;
+			if(lID==6){
+				lID=0;
+			}
+		} else {
+			lID = 0;
+		}
 	},
 
 	_onLevelLoadRequest = function(event, IDS) {
