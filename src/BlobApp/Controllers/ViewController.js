@@ -230,6 +230,7 @@ BlobApp.ViewController = (function() {
 		$('body').trigger(onTickRequest);		
 	},
 
+	//Doesn't really get used anymore since Level finish to Overworld
 	_onLevelFinished = function() {
 		$gamecanvas.css('display', 'none');
 		_showMenu();
@@ -289,7 +290,7 @@ BlobApp.ViewController = (function() {
 
 		$('body').on('backgroundAdded', applyBackground);
 		$('body').on('onPause', _displayPauseScreen);
-		$('body').on('levelFinished', _onLevelFinished);
+		$('body').on('levelFinished', _onLevelLoadRequest);
 
 		$('body').on('levelLoadRequest', _onLevelLoadRequest);
 
