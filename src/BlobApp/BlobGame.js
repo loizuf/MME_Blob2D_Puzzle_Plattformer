@@ -66,13 +66,15 @@ BlobApp.BlobGame = (function() {
 		$keyboard2.on('click', function() {
 			p2Controls = 1;
 			$p2SelectionContainer.css('display', 'none');
-			_enableLevelSelection();
+			//_enableLevelSelection();
+			_startActualGame();
 		});
 
 		$controller2.on('click', function() {
 			p2Controls = 2;
 			$p2SelectionContainer.css('display', 'none');
-			_enableLevelSelection();
+			//_enableLevelSelection();
+			_startActualGame();
 		});
 	},
 
@@ -118,6 +120,19 @@ BlobApp.BlobGame = (function() {
 	_startGame = function(event) {
 		lvlID = event.data.lvlID;
 		owID = event.data.owID;
+
+
+		$('body').unbind();
+		
+		$levelSelectContainer.css('display', 'none');	
+		$gamecanvas.css('display', 'block');
+
+		BlobApp.MainController.init(lvlID, owID, p1Controls, p2Controls);
+	},
+
+	_startActualGame = function(){
+		lvlID = 0;
+		owID = 0;
 
 
 		$('body').unbind();
