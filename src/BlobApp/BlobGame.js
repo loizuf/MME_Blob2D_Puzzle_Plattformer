@@ -5,6 +5,7 @@ BlobApp.BlobGame = (function() {
 	p2Controls,
 
 	worldToTest = 2,
+	debug = true,
 
 	$selectLevel1 = $('#level1'),
 	$selectLevel2 = $('#level2'),
@@ -68,15 +69,21 @@ BlobApp.BlobGame = (function() {
 		$keyboard2.on('click', function() {
 			p2Controls = 1;
 			$p2SelectionContainer.css('display', 'none');
-			//_enableLevelSelection();
-			_startActualGame();
+			if(debug) {
+				_enableLevelSelection();
+			} else {
+				_startActualGame();
+			}
 		});
 
 		$controller2.on('click', function() {
 			p2Controls = 2;
 			$p2SelectionContainer.css('display', 'none');
-			//_enableLevelSelection();
-			_startActualGame();
+			if(debug) {
+				_enableLevelSelection();
+			} else {
+				_startActualGame();
+			}
 		});
 	},
 
