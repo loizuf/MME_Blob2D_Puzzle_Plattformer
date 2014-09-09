@@ -99,7 +99,7 @@ BlobApp.BlobGame = (function() {
 		$selectLevel13.unbind("click");
 		$selectLevel14.unbind("click");*/
 
-		var worldToTest = 1;
+		var worldToTest = 5;
 		$selectLevel1.on('click', {lvlID:0, owID:worldToTest}, _startGame);
 		$selectLevel2.on('click', {lvlID:1, owID:worldToTest}, _startGame);
 		$selectLevel3.on('click', {lvlID:2, owID:worldToTest}, _startGame);
