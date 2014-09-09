@@ -11,6 +11,7 @@ BlobApp.ModelController = (function() {
 	_blobPlayerTwo,
 	_screenStateHandler,
 	_inputHandler,
+	_soundHandler,
 
 	player1BridgeDisassemblyDirection,
 	player2BridgeDisassemblyDirection,
@@ -18,7 +19,7 @@ BlobApp.ModelController = (function() {
 	slingshotAbilityAngle = 1,
 	slingshotAbilityTension = 0,
 
-	init = function(p1ControlsID, p2ControlsID) {
+	init = function(p1ControlsID, p2ControlsID, _soundHandler) {
 		//Initialize all Modules from Model
 		//Initialize Box2D Engine
 		//Inform Maincontroller when finished
@@ -27,7 +28,7 @@ BlobApp.ModelController = (function() {
 		//_blobPlayerTwo = BlobApp.BlobTwo.init();
 		_screenStateHandler = BlobApp.ScreenState.init();
 		_inputHandler = BlobApp.InputHandler.init(p1ControlsID, p2ControlsID);
-		_soundHandler = BlobApp.SoundHandler.init();
+		_soundHandler.init();
 
 		_blobPlayerOne = new BlobApp.BlobPlayer1();
 		_blobPlayerTwo = new BlobApp.BlobPlayer2();

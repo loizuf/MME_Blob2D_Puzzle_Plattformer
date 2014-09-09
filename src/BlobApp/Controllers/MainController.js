@@ -10,6 +10,7 @@ BlobApp.MainController = (function() {
 	_viewController = null,
 	_physicsHandler = null,
 	_levelloader = null,
+	_soundHandler = null,
 	
 	lID,
 	overwID,
@@ -24,14 +25,21 @@ BlobApp.MainController = (function() {
 		p2ID = p2ControlsID;
 		Controls.p1 = p1ControlsID;
 		Controls.p2 = p2ControlsID;
+		$('body').on("doneLoading", continueWithStuff);
+		_soundHandler = BlobApp.SoundHandler;
+		_soundHandler.loadAssets();
+		
+		
+	},
 
-		_initModules();
+	continueWithStuff = function(){
+		console.log('meep');
+		_initModules(_soundHandler);
 		_registerListeners();
-
 		state = _globalStateHandler.getGameState();
 	},
 
-	_initModules = function() {
+	_initModules = function(_soundHandler) {
 		_modelController = BlobApp.ModelController;
 		_viewController = BlobApp.ViewController;
 		_physicsHandler = BlobApp.PhysicsHandler;
@@ -39,7 +47,7 @@ BlobApp.MainController = (function() {
 		_globalStateHandler = BlobApp.GlobalState;
 
 		_globalStateHandler.init();
-		_modelController.init(p1ID, p2ID);
+		_modelController.init(p1ID, p2ID, _soundHandler);
 		_viewController.init();
 		_physicsHandler.init();
 		_levelloader.init(lID, overwID, _globalStateHandler);		
@@ -80,7 +88,7 @@ BlobApp.MainController = (function() {
 		$('body').unbind();
 		_registerListeners();
 
-		setTimeout(function(){_initModules();}, 1);
+		setTimeout(function(){_initModules(_soundHandler);}, 1);
 	},
 
 	_reset = function() {

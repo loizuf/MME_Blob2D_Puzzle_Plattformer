@@ -6,6 +6,9 @@ BlobApp.SoundHandler = (function() {
     var that = {},
     helisound,
     backGroundSoud,
+    preload1,
+    preload2,
+    soundSlave,
 
     debug = true,
     soundActive = true,
@@ -16,7 +19,19 @@ BlobApp.SoundHandler = (function() {
 
 
     heliActive = false;
+
+
     init = function() {
+        console.log("hoot");
+        soundSlave.setMute(false);
+        soundSlave.stop();
+        _listeners();
+        _playBackground();
+        return that;
+    },
+
+    loadAssets = function(){
+        console.log("woot");
         var assetsPath = "res/sound/";
         //TODO: add files here, id is given manually
         manifest1 = [ 
@@ -29,7 +44,7 @@ BlobApp.SoundHandler = (function() {
            // {id:"finishBridge", src:"test.ogg"},
             /*sphere*/
             {id:"startSphere", src:"nom.ogg"},
-            {id:"finishSphere", src:"nom.ogg"},
+           //{id:"finishSphere", src:"nom.ogg"},
            /*slingshot*/
             {id:"startSling", src:"skweak1.ogg"},
             {id:"clutchSling", src:"skweak2.ogg"},
@@ -37,45 +52,33 @@ BlobApp.SoundHandler = (function() {
             {id:"finishSling", src:"slingPew.ogg"},
            //{id:"finishHeli", src:"test.ogg"},
             {id:"shake", src:"rumble.ogg"},
-            
+            {id:"backGround", src:"Shakeandbake.ogg"} 
         ];
-        manifest2 = [
-            {id:"backGround", src:"Shakeandbake.ogg"},
-        ];
-        //console.log(manifest);
-       
+          
         soundSlave = createjs.Sound;
         soundSlave.alternateExtensions = ["mp3"];
          //TODO: maybe exract this to a preload module
-        preload = new createjs.LoadQueue(true, assetsPath);
-        preload.installPlugin(soundSlave);
-        preload.loadManifest(manifest2);
-        //preload.loadFile("Shakeandbake.ogg");
-        preload.removeEventListener('complete',_doneLoading);
-        preload.addEventListener("complete", _doneLoading);
-        soundSlave.setMute(false);
-        soundSlave.stop();
-        _listeners();
-
-        return that;
+        preload1 = new createjs.LoadQueue(true, assetsPath);
+        preload1.installPlugin(soundSlave);
+        preload1.addEventListener('complete', _doneLoading);
+        preload1.loadManifest(manifest1);
+       
     },
 
     _doneLoading = function() {
         //TODO: maybe check if already loaded before game starts?
-        preload.removeEventListener('complete',_doneLoading);
-        preload.loadManifest(manifest1);
-        _playBackground();
+        $('body').trigger("doneLoading");
     },
     
     _playBackground = function(){
         //if(!backGroundSoud.isActive()){
             _logg("_playBackground");
             backGroundSoud = soundSlave.play("backGround", {interrupt:soundSlave.INTERRUPT_ANY , loop:-1, volume:0.1});
-       // }
+        //}
     },
 
     _listeners = function(){
-        _logg("listeners");
+         console.log("fuckenlisteners");
         //TODO: register events fired for the sound handler
         //jump sound for both players
         $('body').on('soundJump', _playJumpSound);
@@ -132,10 +135,10 @@ BlobApp.SoundHandler = (function() {
 
     _playSplatSound = function() {
         //if(soundActive){
-            _logg("playSplat");
+        //   _logg("playSplat");
             /*currently not playing due to problems regarding stretch/trampolin (multiple triggers of reallow jump)*/
             // soundSlave.play("splat", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
-       //     }
+        //}
     },
 
     _playHeliSound = function() {  
@@ -155,39 +158,39 @@ BlobApp.SoundHandler = (function() {
     },
 
     _playBridgeSound = function() { 
-     //   if(soundActive){
+        //   if(soundActive){
             _logg("bridgestart"); 
             soundSlave.play(/*"startBridge"*/"startSling", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
-      //  }
+        //  }
     },
 
     _playSphereAssembleSound = function() {
-      //  if(soundActive){
+        //  if(soundActive){
             _logg("sphere start");
             soundSlave.play("startSphere", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.8});
-      //  }
+        //  }
     },
 
     _playSlingshotStartSound= function() {  
-      //  if(soundActive){
+        //  if(soundActive){
             soundSlave.play("startSling", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
-      //  }
+        //  }
     },
     _playSlingshotClutchSound= function() {  
-     //   if(soundActive){
+        //   if(soundActive){
             soundSlave.play("clutchSling", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
-      //  }
+        //  }
     },
     _playSlingshotLoosenSound= function() {  
-      //  if(soundActive){
+        //  if(soundActive){
             soundSlave.play("loosenSling", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
-      //  }
+        //  }
     },
 
     _playSlingShotFireSound= function() {  
-     //   if(soundActive){
+        //   if(soundActive){
             soundSlave.play("finishSling", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.1});
-       // }
+        // }
     },
      
 
@@ -265,7 +268,7 @@ BlobApp.SoundHandler = (function() {
     _stopSphereSound = function() { 
       //  if(soundActive){
             _logg("sphere stop");
-            soundSlave.play("finishSphere", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.8});
+            soundSlave.play("startSphere", {interrupt:soundSlave.INTERRUPT_ANY , loop:0, volume:0.8});
       //  }
     },
 
@@ -295,13 +298,14 @@ BlobApp.SoundHandler = (function() {
      _stopAllSounds = function() {
         _logg("stop ALL"); 
         soundSlave.stop();
-        soundSlave.removeAllSounds();
+      // soundSlave.removeAllSounds();
+      //  preload1.removeAll ();
     },
 
     _resumeSound = function(){
         _logg("res S");
         soundSlave.setMute(false);
-       // _playBackground();
+        _playBackground();
     },
 
 
@@ -313,5 +317,6 @@ BlobApp.SoundHandler = (function() {
 
 
     that.init = init;
+    that.loadAssets = loadAssets;
     return that;
 })();
