@@ -576,8 +576,9 @@ LevelConfig = {
 	         "opacity":1,
 	         "properties":
 			{
-				"OverWorldID":1,
-				"LevelDoorID":[5, 6, 4, 3, 1, 2]
+				"CurrentOverID":1,
+				"OverWorldID":[1, 2, 1, 1, 1, 1],
+				"LevelDoorID":[5, 0, 4, 3, 1, 2]
 			},
 	         "type":"tilelayer",
 	         "visible":true,
@@ -623,8 +624,9 @@ LevelConfig = {
 	         "opacity":1,
 	         "properties":
 			{
-				"OverWorldID":2,
-				"LevelDoorID":[0, 1, 2, 4, 3, 5, 6]
+				"CurrentOverID":2,
+				"OverWorldID":[1, 2, 2, 2, 2, 2, 3],
+				"LevelDoorID":[0, 1, 2, 4, 3, 5, 0]
 			},
 	         "type":"tilelayer",
 	         "visible":true,

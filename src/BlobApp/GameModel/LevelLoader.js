@@ -73,7 +73,7 @@ BlobApp.LevelLoader = (function() {
 		var doorCount = 0, buttonCount = 0, levelDoorCount = 0, movingGroundCount = 0;
 
 		if(layerData.hasOwnProperty('properties') && layerData.properties.hasOwnProperty('OverWorldID')) {
-			currentLoadedOverID = layerData.properties.OverWorldID;
+			currentLoadedOverID = layerData.properties.CurrentOverID;
 		}
 
 		for ( var y = 0; y < layerData.height; y++) {
@@ -395,7 +395,7 @@ BlobApp.LevelLoader = (function() {
 
 	_createLevelDoor = function(x, y, layerData, levelDoorCount) {
 		var levelDoorLevelID = layerData.properties.LevelDoorID[levelDoorCount];
-		var levelDoorOverID = layerData.properties.OverWorldID;
+		var levelDoorOverID = layerData.properties.OverWorldID[levelDoorCount];
 		var entity = new BlobApp.LevelDoor(x, y+10, 50, 60, levelDoorLevelID, levelDoorOverID);
 		_createRequestObject["sprite"] = entity.sprite;
 		if(currentLoadedOverID<_gameState.currentOverworldMapID){
