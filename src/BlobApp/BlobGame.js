@@ -10,14 +10,14 @@ BlobApp.BlobGame = (function() {
 	$selectLevel4 = $('#level4'),
 	$selectLevel5 = $('#level5'),
 	$selectLevel6 = $('#level6'),
-	$selectLevel7 = $('#level7'),
+	/*$selectLevel7 = $('#level7'),
 	$selectLevel8 = $('#level8'),
 	$selectLevel9 = $('#level9'),
 	$selectLevel10 = $('#level10'),
 	$selectLevel11 = $('#level11'),
 	$selectLevel12 = $('#level12'),
 	$selectLevel13 = $('#level13'),
-	$selectLevel14 = $('#level14'),
+	$selectLevel14 = $('#level14'),*/
 
 	$keyboard1 = $('#keyboard1');
 	$keyboard2 = $('#keyboard2');
@@ -90,29 +90,30 @@ BlobApp.BlobGame = (function() {
 		$selectLevel4.unbind("click");
 		$selectLevel5.unbind("click");
 		$selectLevel6.unbind("click");
-		$selectLevel7.unbind("click");
+		/*$selectLevel7.unbind("click");
 		$selectLevel8.unbind("click");
 		$selectLevel9.unbind("click");
 		$selectLevel10.unbind("click");
 		$selectLevel11.unbind("click");
 		$selectLevel12.unbind("click");
 		$selectLevel13.unbind("click");
-		$selectLevel14.unbind("click");
+		$selectLevel14.unbind("click");*/
 
-		$selectLevel1.on('click', {lvlID:1, owID:1}, _startGame);
-		$selectLevel2.on('click', {lvlID:2, owID:1}, _startGame);
-		$selectLevel3.on('click', {lvlID:3, owID:1}, _startGame);
-		$selectLevel4.on('click', {lvlID:4, owID:1}, _startGame);
-		$selectLevel5.on('click', {lvlID:5, owID:1}, _startGame);
-		$selectLevel6.on('click', {lvlID:1, owID:2}, _startGame);
-		$selectLevel7.on('click', {lvlID:2, owID:2}, _startGame);
+		var worldToTest = 1;
+		$selectLevel1.on('click', {lvlID:0, owID:worldToTest}, _startGame);
+		$selectLevel2.on('click', {lvlID:1, owID:worldToTest}, _startGame);
+		$selectLevel3.on('click', {lvlID:2, owID:worldToTest}, _startGame);
+		$selectLevel4.on('click', {lvlID:3, owID:worldToTest}, _startGame);
+		$selectLevel5.on('click', {lvlID:4, owID:worldToTest}, _startGame);
+		$selectLevel6.on('click', {lvlID:5, owID:worldToTest}, _startGame);
+		/*$selectLevel7.on('click', {lvlID:2, owID:2}, _startGame);
 		$selectLevel8.on('click', {lvlID:3, owID:2}, _startGame);
 		$selectLevel9.on('click', {lvlID:4, owID:2}, _startGame);
 		$selectLevel10.on('click', {lvlID:5, owID:2}, _startGame);
 		$selectLevel11.on('click', {lvlID:0, owID:0}, _startGame);
 		$selectLevel12.on('click', {lvlID:0, owID:1}, _startGame);
 		$selectLevel13.on('click', {lvlID:0, owID:2}, _startGame);
-		$selectLevel14.on('click', {lvlID:1, owID:3}, _startGame);
+		$selectLevel14.on('click', {lvlID:1, owID:3}, _startGame);*/
 	},
 
 	_startGame = function(event) {
