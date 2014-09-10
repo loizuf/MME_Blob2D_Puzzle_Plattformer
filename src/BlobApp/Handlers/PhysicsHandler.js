@@ -273,7 +273,7 @@ BlobApp.PhysicsHandler = (function() {
 			}
 		}
 
-		if(trampolinSize >= 1) {
+		if(trampolinSize >= 1 && greenBlobEntity != undefined) {
 			var fixture = createDefaultBoxFixture(trampolinSize * (TILESIZEX - 1) / SCALE, (TILESIZEY - 1) / SCALE);
 
 			greenBlobEntity.DestroyFixture(greenBlobEntity.GetFixtureList());
@@ -315,7 +315,7 @@ BlobApp.PhysicsHandler = (function() {
 			}
 		}
 
-		if(stretchSize >= 2) {
+		if(stretchSize >= 2 && redBlobEntity != undefined) {
 			var fixture = createDefaultBoxFixture((TILESIZEX - 1) / SCALE, stretchSize * (TILESIZEY - 1) / SCALE);
 
 			redBlobEntity.DestroyFixture(redBlobEntity.GetFixtureList());
@@ -1031,6 +1031,8 @@ BlobApp.PhysicsHandler = (function() {
 		heliIsActive = false;
 		sphereIsActive = false;
 		bridgeIsActive = false;
+		isTrampolinActive = false;
+		isStretchActive = false;
 	};
 
 	that.init = init;
