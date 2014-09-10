@@ -58,5 +58,9 @@ LevelIDConfig = {
 	Fifteen : {
 		LvlID : 5,
 		OWID : 3
-	}	
+	},
+	SpecialTest : {
+		LvlID : 9001,
+		OWID : 3
+	}
 }

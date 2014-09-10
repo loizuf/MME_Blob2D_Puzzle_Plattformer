@@ -476,6 +476,7 @@ BlobApp.LevelLoader = (function() {
 
 	_getLevelMapData = function(levelNumber, overworldNumber) {
 		var levelName = "_"+overworldNumber+levelNumber;
+		console.log(levelName);
 		mapDataJson = LevelConfig[levelName];
 	},
 
