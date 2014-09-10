@@ -13,8 +13,6 @@ BlobApp.InputHandler = (function() {
     isHeliActive = false,
     isLeftActiveButton = false,
     isRightActiveButton = true,
-    isP1XPressed = true,
-    isP2XPressed = false,
 
     controller1,
     controller2,
@@ -69,6 +67,22 @@ BlobApp.InputHandler = (function() {
         p2Trigger : 40,
 
         pause : 27
+    },
+
+    controller1ButtonsPressed = {
+        left_pressed: false,
+        right_pressed: false,
+        a_pressed: false,
+        x_pressed: false
+    },
+
+    controller2ButtonsPressed = {
+        left_pressed: false,
+        right_pressed: false,
+        a_pressed: false,
+        x_pressed: false,
+        lb_pressed: false,
+        rb_pressed: false
     },
 
     init = function(p1ControlsID, p2ControlsID) {
@@ -178,15 +192,74 @@ BlobApp.InputHandler = (function() {
 
     _checkGamepad1StickAxes = function() {
         for (var axePos = 0; axePos < controller1.axes.length; axePos++) {
+            _releaseSticksInput(ID_CONTROLLER_ONE, axePos);            
             _handleGamepadsSticksInput(ID_CONTROLLER_ONE, axePos);
         }
     },
 
     _checkGamepad2StickAxes = function() {
         for (axePos = 0; axePos < controller2.axes.length; axePos++) {
+            _releaseSticksInput(ID_CONTROLLER_TWO, axePos);
             _handleGamepadsSticksInput(ID_CONTROLLER_TWO, axePos);
         }
     },
+
+    _releaseSticksInput = function(id, position) {
+        switch(position) {
+            case XBOX_AXES.LEFT_STICK_X:
+                if(id == ID_CONTROLLER_ONE) {
+                    if(controller1ButtonsPressed.left_pressed == true) {
+                        if(controller1.axes[position] >= -GAMEPAD_ANALOG_STICK_DEADZONE) {
+                            _onKeyUp({keyCode:keyMap.p1Left});
+                            controller1ButtonsPressed.left_pressed = false;
+                        }                
+                    }
+
+                    if(controller1ButtonsPressed.right_pressed == true) {
+                        if(controller1.axes[position] <= GAMEPAD_ANALOG_STICK_DEADZONE) {
+                            _onKeyUp({keyCode:keyMap.p1Right});
+                            controller1ButtonsPressed.right_pressed = false;
+                        }
+                    }
+                } else if(id == ID_CONTROLLER_TWO) {
+                    if(controller2ButtonsPressed.left_pressed == true && !isHeliActive) {
+                        if(controller2.axes[position] >= -GAMEPAD_ANALOG_STICK_DEADZONE) {
+                            _onKeyUp({keyCode:keyMap.p2Left});
+                            controller2ButtonsPressed.left_pressed = false;
+                        }
+                    }
+
+                    if(controller2ButtonsPressed.right_pressed == true && !isHeliActive) {
+                        if(controller2.axes[position] <= GAMEPAD_ANALOG_STICK_DEADZONE) {
+                            _onKeyUp({keyCode:keyMap.p2Right});
+                            controller2ButtonsPressed.right_pressed = false;
+                        }
+                    }
+                }
+            break;
+
+            case XBOX_AXES.LEFT_STICK_Y:
+                if(id == ID_CONTROLLER_TWO) {
+                    if(isSlingshot) {
+                        if(controller2ButtonsPressed.x_pressed == true) {
+                            if(controller2.axes[position] <= GAMEPAD_ANALOG_STICK_DEADZONE) {
+                                _onKeyUp({keyCode:keyMap.p2Trigger});
+                                controller2ButtonsPressed.x_pressed = false;
+                            }
+                        }
+
+                        if(controller2ButtonsPressed.a_pressed == true) {
+                            if(controller2.axes[position] >= -GAMEPAD_ANALOG_STICK_DEADZONE) {
+                                _onKeyUp({keyCode:keyMap.p2Jump});
+                                controller2ButtonsPressed.a_pressed = false;
+                            }
+                        }
+                    }
+                }
+            break;
+        }
+        
+    },  
 
     _handleGamepadsSticksInput = function(id, position) {
         switch (position) {
@@ -194,18 +267,32 @@ BlobApp.InputHandler = (function() {
                 switch(id) {
                     case ID_CONTROLLER_ONE: 
                         if(controller1.axes[position] > GAMEPAD_ANALOG_STICK_DEADZONE) {
-                            _onKeyDown({keyCode:keyMap.p1Right});
+                            if(controller1ButtonsPressed.right_pressed == false) {
+                                _onKeyDown({keyCode:keyMap.p1Right});
+                                controller1ButtonsPressed.right_pressed = true;
+                            }
+                            
                         } else if(controller1.axes[position] < -GAMEPAD_ANALOG_STICK_DEADZONE) { 
-                            _onKeyDown({keyCode:keyMap.p1Left});
+                            if(controller1ButtonsPressed.left_pressed == false) {
+                                _onKeyDown({keyCode:keyMap.p1Left});
+                                controller1ButtonsPressed.left_pressed = true;
+                            }
                         } 
                     break;
 
                     case ID_CONTROLLER_TWO: 
-                        if(controller2.axes[position] > GAMEPAD_ANALOG_STICK_DEADZONE) {
-                            _onKeyDown({keyCode:keyMap.p2Right});
+                       if(controller2.axes[position] > GAMEPAD_ANALOG_STICK_DEADZONE) {
+                            if(controller2ButtonsPressed.right_pressed == false) {
+                                _onKeyDown({keyCode:keyMap.p2Right});
+                                controller2ButtonsPressed.right_pressed = true;
+                            }
+                            
                         } else if(controller2.axes[position] < -GAMEPAD_ANALOG_STICK_DEADZONE) { 
-                            _onKeyDown({keyCode:keyMap.p2Left});
-                        } 
+                            if(controller2ButtonsPressed.left_pressed == false) {
+                                _onKeyDown({keyCode:keyMap.p2Left});
+                                controller2ButtonsPressed.left_pressed = true;
+                            }
+                        }
                     break;
                 }       
             break;
@@ -213,10 +300,16 @@ BlobApp.InputHandler = (function() {
             case XBOX_AXES.LEFT_STICK_Y:
                 if(id == ID_CONTROLLER_TWO) {
                     if(isSlingshot) {
-                         if(controller2.axes[position] > GAMEPAD_ANALOG_STICK_DEADZONE) {
-                            _onKeyDown({keyCode:keyMap.p2Trigger});
+                         if(controller2.axes[position] > GAMEPAD_ANALOG_STICK_DEADZONE) {   
+                             if(controller2ButtonsPressed.x_pressed == false) {                         
+                                _onKeyDown({keyCode:keyMap.p2Trigger});
+                                controller2ButtonsPressed.x_pressed = true;
+                            }
                         } else if(controller2.axes[position] < -GAMEPAD_ANALOG_STICK_DEADZONE) { 
-                            _onKeyDown({keyCode:keyMap.p2Jump});
+                            if(controller2ButtonsPressed.a_pressed == false) {                         
+                                _onKeyDown({keyCode:keyMap.p2Jump});
+                                controller2ButtonsPressed.a_pressed = true;
+                            }
                         } 
                     }
                 }
@@ -228,69 +321,57 @@ BlobApp.InputHandler = (function() {
         switch(position) {
             case XBOX_BUTTONS.A:
                 switch(id) {
-                    case ID_CONTROLLER_ONE: _onKeyUp({keyCode:keyMap.p1Jump});
+                    case ID_CONTROLLER_ONE: 
+                        if(controller1ButtonsPressed.a_pressed == true) {
+                            _onKeyUp({keyCode:keyMap.p1Jump});
+                            controller1ButtonsPressed.a_pressed = false;
+                        }                        
                     break;
 
-                    case ID_CONTROLLER_TWO: _onKeyUp({keyCode:keyMap.p2Jump});
-                    break;
-                } 
-            break;
-
-            case XBOX_BUTTONS.DPAD_LEFT:
-                switch(id) {
-                    case ID_CONTROLLER_ONE: _onKeyUp({keyCode:keyMap.p1Left});
-                    break;
-
-                    case ID_CONTROLLER_TWO: _onKeyUp({keyCode:keyMap.p2Left});
-                    break;
-                }
-            break;
-
-            case XBOX_BUTTONS.DPAD_RIGHT:
-                switch(id) {
-                    case ID_CONTROLLER_ONE: _onKeyUp({keyCode:keyMap.p1Right});
-                    break;
-
-                    case ID_CONTROLLER_TWO: _onKeyUp({keyCode:keyMap.p2Right});
+                    case ID_CONTROLLER_TWO: 
+                        if(controller2ButtonsPressed.a_pressed == true) {
+                            _onKeyUp({keyCode:keyMap.p2Jump});
+                            controller2ButtonsPressed.a_pressed = false;
+                        }                        
                     break;
                 } 
-            break;
-
-            case XBOX_BUTTONS.DPAD_UP:
-                if(id == ID_CONTROLLER_TWO) {
-                    if(isSlingshot) {
-                        _onKeyUp({keyCode:keyMap.p2Jump});
-                    }
-                }
-            break;
-
-            case XBOX_BUTTONS.DPAD_DOWN:
-                if(id == ID_CONTROLLER_TWO) {
-                    if(isSlingshot) {
-                        _onKeyUp({keyCode: keyMap.p2Trigger});
-                    }
-                }
             break;
 
             case XBOX_BUTTONS.X:
                 switch(id) {
-                    case ID_CONTROLLER_ONE: _onKeyUp({keyCode:keyMap.p1Trigger});                                            
+                    case ID_CONTROLLER_ONE: 
+                        if(controller1ButtonsPressed.x_pressed == true) {
+                            _onKeyUp({keyCode:keyMap.p1Trigger});
+                            controller1ButtonsPressed.x_pressed = false;
+                        }
+                                                                    
                     break;
 
-                    case ID_CONTROLLER_TWO: _onKeyUp({keyCode:keyMap.p2Trigger});
+                    case ID_CONTROLLER_TWO: 
+                        if(controller2ButtonsPressed.x_pressed == true) {
+                            _onKeyUp({keyCode:keyMap.p2Trigger});
+                            controller2ButtonsPressed.x_pressed = false;
+                        }
+                        
                     break;
                 }
             break;
 
             case XBOX_BUTTONS.RB:
-                if(id == ID_CONTROLLER_TWO) {
-                    _onKeyUp({keyCode:keyMap.p2Right});
+                if(id == ID_CONTROLLER_TWO && isHeliActive) {
+                    if(controller2ButtonsPressed.right_pressed == true) {
+                        _onKeyUp({keyCode:keyMap.p2Right});
+                        controller2ButtonsPressed.right_pressed = false;
+                    }                    
                 }
             break;
 
             case XBOX_BUTTONS.LB:
-                if(id == ID_CONTROLLER_TWO) {
-                    _onKeyUp({keyCode:keyMap.p2Left});
+                if(id == ID_CONTROLLER_TWO && isHeliActive) {
+                    if(controller2ButtonsPressed.left_pressed == true) {
+                        _onKeyUp({keyCode:keyMap.p2Left});
+                        controller2ButtonsPressed.left_pressed = false;
+                    }                    
                 }
             break;
         }
@@ -300,57 +381,36 @@ BlobApp.InputHandler = (function() {
        switch (position) {
             case XBOX_BUTTONS.A:
                 switch(id) {
-                    case ID_CONTROLLER_ONE: _onKeyDown({keyCode:keyMap.p1Jump});
+                    case ID_CONTROLLER_ONE: 
+                        if(controller1ButtonsPressed.a_pressed == false) {
+                            _onKeyDown({keyCode:keyMap.p1Jump});
+                            controller1ButtonsPressed.a_pressed = true;
+                        }                        
                     break;
 
-                    case ID_CONTROLLER_TWO: _onKeyDown({keyCode:keyMap.p2Jump});
+                    case ID_CONTROLLER_TWO: 
+                        if(controller2ButtonsPressed.a_pressed == false) {
+                            _onKeyDown({keyCode:keyMap.p2Jump});
+                            controller2ButtonsPressed.a_pressed = true;
+                        }                        
                     break;
-                }
-            break;
-
-            case XBOX_BUTTONS.DPAD_LEFT:
-                switch(id) {
-                    case ID_CONTROLLER_ONE: _onKeyDown({keyCode:keyMap.p1Left});
-                    break;
-
-                    case ID_CONTROLLER_TWO: _onKeyDown({keyCode:keyMap.p2Left});
-                    break;
-                }   
-            break;
-
-            case XBOX_BUTTONS.DPAD_RIGHT:
-                switch(id) {
-                    case ID_CONTROLLER_ONE: _onKeyDown({keyCode:keyMap.p1Right});
-                    break;
-
-                    case ID_CONTROLLER_TWO: _onKeyDown({keyCode:keyMap.p2Right});
-                    break;
-                }        
-
-            break;
-
-            case XBOX_BUTTONS.DPAD_UP:
-                if(id == ID_CONTROLLER_TWO) {
-                    if(isSlingshot) {
-                        _onKeyDown({keyCode:keyMap.p2Jump});
-                    }
-                }
-            break;
-
-            case XBOX_BUTTONS.DPAD_DOWN:
-                if(id == ID_CONTROLLER_TWO) {
-                    if(isSlingshot) {
-                        _onKeyDown({keyCode: keyMap.p2Trigger});
-                    }
                 }
             break;
 
             case XBOX_BUTTONS.X:
                 switch(id) {
-                    case ID_CONTROLLER_ONE: _onKeyDown({keyCode:keyMap.p1Trigger});                             
+                    case ID_CONTROLLER_ONE: 
+                        if(controller1ButtonsPressed.x_pressed == false) {
+                            _onKeyDown({keyCode:keyMap.p1Trigger});
+                            controller1ButtonsPressed.x_pressed = true;
+                        } 
                     break;
 
-                    case ID_CONTROLLER_TWO: _onKeyDown({keyCode:keyMap.p2Trigger});
+                    case ID_CONTROLLER_TWO:
+                        if(controller2ButtonsPressed.x_pressed == false) {
+                            _onKeyDown({keyCode:keyMap.p2Trigger});
+                            controller2ButtonsPressed.x_pressed = true;
+                        } 
                     break;
                 }
             break;
@@ -358,18 +418,23 @@ BlobApp.InputHandler = (function() {
 
             case XBOX_BUTTONS.RB:
                 if(id == ID_CONTROLLER_TWO && isHeliActive) {
-                    _onKeyDown({keyCode:keyMap.p2Right});
+                    if(controller2ButtonsPressed.right_pressed == false) {
+                        console.log("down mash right");
+                        _onKeyDown({keyCode:keyMap.p2Right});
+                        controller2ButtonsPressed.right_pressed = true;
+                    }                    
                 }
             break;
 
             case XBOX_BUTTONS.LB:
                 if(id == ID_CONTROLLER_TWO && isHeliActive) {
-                    _onKeyDown({keyCode:keyMap.p2Left});
+                    if(controller2ButtonsPressed.left_pressed == false) {
+                        console.log("down mash left");
+                        _onKeyDown({keyCode:keyMap.p2Left});
+                        controller2ButtonsPressed.left_pressed = true;
+                    }
                 }
-            break;
-
-            case XBOX_BUTTONS.START:
-                _onKeyDown({keyCode:keyMap.pause});
+                    
             break;
         }
     },
@@ -399,7 +464,6 @@ BlobApp.InputHandler = (function() {
 
             case keyMap.p1Trigger:
                 $(that).trigger('p1ArrowDownStarted');
-                console.log("called p1");
             break;
 
             case keyMap.p2Jump:
@@ -424,7 +488,6 @@ BlobApp.InputHandler = (function() {
 
             case keyMap.p2Trigger:
                 $(that).trigger('p2ArrowDownStarted');
-                console.log("called p2");
             break;
 
             case keyMap.pause:
@@ -441,8 +504,8 @@ BlobApp.InputHandler = (function() {
     },
 
     /*stopMovement left/right*/
-    _onKeyUp = function(e){
-        switch(e.keyCode){
+    _onKeyUp = function(e) {
+        switch(e.keyCode) {
             case keyMap.p1Jump:
                 $(that).trigger('p1ArrowUpStopped');
             break;
