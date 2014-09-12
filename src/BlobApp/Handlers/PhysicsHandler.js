@@ -39,7 +39,10 @@ BlobApp.PhysicsHandler = (function() {
 	var heliIsActive = false, heliBody = undefined;
 	var sphereIsActive = false,	sphereBody = undefined;
 
-	init = function(){
+	init = function(){		
+		bodies.length = 0;
+		actors.length = 0;
+
 		_setupPhysics();
 		_registerListener();
 
@@ -56,6 +59,7 @@ BlobApp.PhysicsHandler = (function() {
 		}
 
 		bodies.length = 0;
+		actors.length = 0;
 
 
 		$('body').trigger('onResetGame');
@@ -73,6 +77,17 @@ BlobApp.PhysicsHandler = (function() {
 
 		world = new b2World(new b2Vec2(0, 10), true);
 		world.SetDebugDraw(debugDraw);
+	},
+
+	createActors = function(actorObjects) {
+		for(var i = 0; i < actorObjects.length; i++) {
+			var newActor = new _actorObject(actorObjects[i].body, actorObjects[i].sprite);
+			actors.push(newActor);
+		}
+	},
+
+	getBodies = function() {
+		return bodies;
 	},
 
 	createDefaultBoxEntity = function(x, y, width, height, sensor) {
@@ -169,19 +184,17 @@ BlobApp.PhysicsHandler = (function() {
 	},
 
 	applyBlobEntity = function(event, data) {
-		sprite = data["sprite"];
 		userData = data["userData"][0];
 
-		
-		var width = (TILESIZEX - 1) / SCALE,
-			height = (userData == EntityConfig.REDBLOBID) ? ((TILESIZEY * 2) - 3 )/ SCALE : (TILESIZEY - 1) / SCALE;
+		var width = (data.width - 1) / SCALE / 2,
+			height = (data.height - 2) / SCALE / 2;
 
 		var fixture = createDefaultBoxFixture(width, height);
 		var bodyDef = new b2BodyDef;
 
 		bodyDef.type = b2Body.b2_dynamicBody;
-		bodyDef.position.x = (sprite.x) / SCALE;
-		bodyDef.position.y = (sprite.y) / SCALE;
+		bodyDef.position.x = (data.x) / SCALE;
+		bodyDef.position.y = (data.y) / SCALE;
 		bodyDef.fixedRotation = true;
 
 		var entity = world.CreateBody(bodyDef);
@@ -190,7 +203,6 @@ BlobApp.PhysicsHandler = (function() {
 
 		entity.SetUserData([userData,undefined]);
 		
-		var actor = new _actorObject(entity, sprite);
 		var blobEntityCreated = $.Event('blobEntityCreated');
 
 		$("body").trigger(blobEntityCreated, entity);
@@ -546,10 +558,10 @@ BlobApp.PhysicsHandler = (function() {
 		sprite1Y = (yPos * SCALE) - 3;
 		sprite2Y = (yPos * SCALE) - 3;		
 
-		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, 50, 50, EntityConfig.REDBLOBID);
+		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, EntityConfig.REDBLOBID);
 		var sprite1 = blob1.sprite;		
 
-		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, 50, 25, EntityConfig.GREENBLOBID);
+		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, EntityConfig.GREENBLOBID);
 		var sprite2 = blob2.sprite;
 
 		userData1 = (sprite1.name=="blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
@@ -670,10 +682,10 @@ BlobApp.PhysicsHandler = (function() {
 		}
 	
 
-		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, 50, 50, EntityConfig.REDBLOBID);
+		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, EntityConfig.REDBLOBID);
 		var sprite1 = blob1.sprite;		
 
-		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, 50, 25, EntityConfig.GREENBLOBID);
+		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, EntityConfig.GREENBLOBID);
 		var sprite2 = blob2.sprite;
 
 		userData1 = (sprite1.name == "blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
@@ -723,10 +735,10 @@ BlobApp.PhysicsHandler = (function() {
 		sprite1Y = (yPos * SCALE) - 3;
 		sprite2Y = (yPos * SCALE) - 3;		
 
-		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, 50, 50, EntityConfig.REDBLOBID);
+		var blob1 = new BlobApp.Blob(sprite1X, sprite1Y, EntityConfig.REDBLOBID);
 		var sprite1 = blob1.sprite;		
 
-		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, 50, 25, EntityConfig.GREENBLOBID);
+		var blob2 = new BlobApp.Blob(sprite2X, sprite2Y, EntityConfig.GREENBLOBID);
 		var sprite2 = blob2.sprite;
 
 		userData1 = (sprite1.name == "blobRed") ? EntityConfig.REDBLOBID : EntityConfig.GREENBLOBID;
@@ -1046,7 +1058,9 @@ BlobApp.PhysicsHandler = (function() {
 
 	that.init = init;
 	that.SCALE = SCALE;
-	that.update = update;
+	that.update = update;	
+	that.getBodies = getBodies;
+	that.createActors = createActors;
 
 	return that;
 })();

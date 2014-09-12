@@ -1,19 +1,67 @@
+/* The ViewController really is a connection between our App, Easel and the different EntityTypes */
 BlobApp.ViewController = (function() {
 	var that = {},
 	canvas, context, debugCanvas, debugContext, stage,
-
+	// Array of all view entities.
+	viewEntities = [],
+	// If this is "true", parts of the app will stop working! (some events are and must be dependant of the visualisation) 
 	b2ddebug = false,
+	tilesetSheet,
+
 
 	init = function() {
+		viewEntities.length = 0;
 		_initView();
 		_ticker();
 		_listener();
+		_initGenericDataHandler();
 
 		return that;
 	},
 
 	resetGame = function() {
 		init();
+	},
+
+	_initGenericDataHandler = function() {			
+		var tileset = new Image();
+
+		// getting imagefile from first tileset
+		tileset.src = "res/img/Tileset.png";
+
+		var imageData = {
+			images : [ tileset ],
+			frames : {
+				width : DEFAULT_TILE_SIZE,
+				height : DEFAULT_TILE_SIZE
+			}
+		};
+
+		// create spritesheet for generic objects (ground e.g.)
+		tilesetSheet = new createjs.SpriteSheet(imageData);
+	},
+
+	createGenericEntity = function(x, y, positionInSprite) {
+		var newEntity = new BlobApp.GenericEntity(tilesetSheet, x, y, positionInSprite);
+		stage.addChild(newEntity.sprite);
+		viewEntities.push(newEntity);
+	},
+
+	createEntity = function(xPos, yPos, entityID) {
+		var entity;
+		switch(entityID) {
+			case EntityConfig.GREENBLOBID :
+			case EntityConfig.REDBLOBID:
+				entity = new BlobApp.Blob(xPos, yPos, entityID);
+				break;
+		}
+		if(entity == undefined) return;
+		viewEntities.push(entity);
+		stage.addChild(entity.sprite);
+	},
+
+	getViewEntities = function() {
+		return viewEntities;
 	},
 
 	applyEntity = function(event, data) {
@@ -304,6 +352,11 @@ BlobApp.ViewController = (function() {
 	that.init = init;
 	that.applyEntity = applyEntity;
 	that.update = update;
+	that.createGenericEntity = createGenericEntity;
+	that.createEntity = createEntity;
+	that.getViewEntities = getViewEntities;
 
 	return that;
 })();
+
+DEFAULT_TILE_SIZE = 25;

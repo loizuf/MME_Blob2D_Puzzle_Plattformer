@@ -1,4 +1,4 @@
-BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
+BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 
 	var that = this,
 
@@ -8,7 +8,7 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 	tileset,
 	animateBlobs = true;
 
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 2*DEFAULT_TILE_SIZE, (blobID == EntityConfig.REDBLOBID)? 2*DEFAULT_TILE_SIZE : DEFAULT_TILE_SIZE);
 	
 	this.prototype.init =function() {
 		tileset = new Image();
@@ -17,17 +17,17 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 
 		if(blobID == EntityConfig.REDBLOBID) {
 			tileset.src = "res/img/redBlobMove.png"//mapData.tilesets[0].image;
-			height = sizeY;
+			height = 2*DEFAULT_TILE_SIZE;
 		} else {
 			tileset.src = "res/img/greenBlobMove.png"//mapData.tilesets[0].image;
-			height = sizeY;
+			height = DEFAULT_TILE_SIZE;
 		}
 
 		// getting imagefile from first tileset
 		_listeners();
 
 		// callback for loading layers after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		tileset.onLoad = _initSprite(tileset, 2*DEFAULT_TILE_SIZE, height);		
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -72,10 +72,6 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, sizeX, sizeY, blobID) {
 		sprite.x = x_pos;
 		sprite.y = y_pos;
 
-		/* setzen auf höhe/2, breite /2 */
-		sprite.regX = imageData.frames.width/2;
-		sprite.regY = imageData.frames.height/2;
-		
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("jumpRight");

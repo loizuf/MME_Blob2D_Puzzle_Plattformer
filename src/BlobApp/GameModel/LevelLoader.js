@@ -168,7 +168,7 @@ BlobApp.LevelLoader = (function() {
 
 						default:
 							borders[y][x] = true;
-							_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
+							_loadOnlyViewData(layerData, tilesetSheet, xcoords, ycoords, idx);
 						break;
 					}
 				}
@@ -296,46 +296,67 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_loadGenericData = function(layerData, tilesetSheet, x, y, idx) {
-		var cellBitmap = new createjs.Sprite(tilesetSheet);
-		// layer data has single dimension array
+		var messageToView = {
+			generic : true,
+			x : x,
+			y : y,
+			positionInSprite : layerData.data[idx] - 1
+		};
 
-		// tilemap data uses 1 as first value, EaselJS uses 0 (sub 1 to load correct tile)
-		cellBitmap.gotoAndStop(layerData.data[idx] - 1);
+		$('body').trigger("requestViewEntity", messageToView);
+	},
 
-		// isometrix tile positioning based on X Y order from Tile
-		cellBitmap.x = x;
-		cellBitmap.y = y;
+	_loadOnlyViewData = function(layerData, tilesetSheet, x, y, idx) {
+		var messageToView = {
+			generic : true,
+			x : x,
+			y : y,
+			positionInSprite : layerData.data[idx] - 1
+		};
 
-		cellBitmap.regX = 12;
-		cellBitmap.regY = 12;
-		// add bitmap to stage
-
-		_createRequestObject["sprite"] = cellBitmap;
-		/*if(layerData.data[]){
-
-		} else {*/
-			_createRequestObject["userData"] = [idx, undefined];
-		//}
-		$('body').trigger('genericRequested',_createRequestObject);
+		$('body').trigger("requestViewEntity", messageToView);
 	},
 
 
 	_createRedBlob = function(x, y) {
-		var blob1 = new BlobApp.Blob(x, y, 50, 50, EntityConfig.REDBLOBID);
-
-		_createRequestObject["sprite"] = blob1.sprite;
-		_createRequestObject["userData"] = [EntityConfig.REDBLOBID, undefined];
+		_createRequestObject["userData"] = [EntityConfig.REDBLOBID,undefined];
+		_createRequestObject["width"] = 25;
+		_createRequestObject["height"] = 50;
+		_createRequestObject["x"] = x;
+		_createRequestObject["y"] = y;
 
 		$('body').trigger('blobRequested', _createRequestObject);
+
+		var messageToView = {
+			generic : false,
+			x : x,
+			y : y+14,
+			entityID : EntityConfig.REDBLOBID
+		};
+
+		$('body').trigger("requestViewEntity", messageToView);
+
+		_createRequestObject["width"] = 1;
 	},
 
 	_createGreenBlob = function(x, y) {
-		var blob2 = new BlobApp.Blob(x, y, 50, 25, EntityConfig.GREENBLOBID);
-
-		_createRequestObject["sprite"] = blob2.sprite;
 		_createRequestObject["userData"] = [EntityConfig.GREENBLOBID,undefined];
+		_createRequestObject["width"] = 25;
+		_createRequestObject["height"] = 25;
+		_createRequestObject["x"] = x;
+		_createRequestObject["y"] = y;
 
 		$('body').trigger('blobRequested', _createRequestObject);
+
+			var messageToView = {
+			generic : false,
+			x : x,
+			y : y+2,
+			entityID : EntityConfig.GREENBLOBID
+		};
+
+		_createRequestObject["width"] = 1;
+		$('body').trigger("requestViewEntity", messageToView);
 	},
 
 
@@ -377,6 +398,7 @@ BlobApp.LevelLoader = (function() {
 			_createRequestObject["userData"] = [EntityConfig.CONTINUEDOOR];
 		}
 		_createRequestObject["height"] = 2;
+		_createRequestObject["width"] = 1;
 
 		$('body').trigger('sensorRequested', _createRequestObject);
 		$('body').trigger('genericRequested', _createRequestObject);
