@@ -81,7 +81,6 @@ BlobApp.CollisionHandler = (function() {
 			if(bID === "Sphere") {
 				_handleSphereCollisionEnd(bodyB, bodyA, aID, contact);
 			}
-
 		};
 	},
 
@@ -182,8 +181,7 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.GREENBLOBID:							
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 					y = contact.m_fixtureA.m_body.GetLinearVelocity().y;					
-					$('body').trigger("onTrampolinContact", {body: bodyA, yVel: y});
-					
+					$('body').trigger("onTrampolinContact", {body: bodyA, yVel: y});	
 				}
 			break;
 
@@ -297,6 +295,7 @@ BlobApp.CollisionHandler = (function() {
 		var xVelocityBorder = 6, yVelocityBorder = 5;
 
 		_enableCameraShaking(bodyA, xVelocityBorder, yVelocityBorder, contact);
+		
 		switch(bID) {
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -306,6 +305,10 @@ BlobApp.CollisionHandler = (function() {
 
 			case EntityConfig.KEYID:
 				_pickUpKey(bodyA, bodyB);
+			break;
+
+			case EntityConfig.BUTTONID:
+				_handleButtonCollison(bodyB, contact);
 			break;
 		}
 	},
