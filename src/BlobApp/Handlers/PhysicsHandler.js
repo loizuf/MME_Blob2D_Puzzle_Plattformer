@@ -772,9 +772,9 @@ BlobApp.PhysicsHandler = (function() {
 			greenBlobEntity.SetPosition(new b2Vec2((slingX - 1.5 * TILESIZEX) / SCALE, (slingY - TILESIZEY) / SCALE ));
 			redBlobEntity.SetPosition(new b2Vec2((slingX - 0.5 * TILESIZEX) / SCALE, (slingY) / SCALE ));
 
-			var radians = (90 - angle) * Math.PI / 180;
+			var radians = angle * Math.PI / 180;
 
-			greenBlobEntity.ApplyImpulse(new b2Vec2(-Math.cos(radians) * tension, -Math.cos(radians) * tension), greenBlobEntity.GetPosition());
+			greenBlobEntity.ApplyImpulse(new b2Vec2(-Math.cos(radians) * tension, -Math.sin(radians) * tension), greenBlobEntity.GetPosition());
 			$('body').trigger('onSlingshotFinished');
 		}		
 	},
