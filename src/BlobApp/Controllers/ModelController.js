@@ -110,8 +110,8 @@ BlobApp.ModelController = (function() {
 		slingshotAbilityTension = data.tension;	
 	},
 
-	_setSlingshotReleaseForce = function() {
-		$('body').trigger('onSlingshotShot', {"force": slingshotAbilityTension, "angle": slingshotAbilityAngle});
+	_setSlingshotReleaseForce = function(event, data) {
+		$('body').trigger('onSlingshotShot', {"force": slingshotAbilityTension, "angle": slingshotAbilityAngle, "direction": data.direction});
 	},
 
 	_setBridgeDisassemblyDirectionPlayer1 = function(event, data) {

@@ -7,7 +7,8 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 	blobSprites,
 	stopStarted,
 	strength,
-	angle;
+	angle,
+	direction;
 
 	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
 
@@ -171,6 +172,8 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 	_shootSlingshot = function(event, data) {
 		strength = data.force;
 		angle = data.angle;	
+		direction = data.direction;
+
 		if(!stopStarted) {	
 			stopStarted = true;
 			sprite.gotoAndPlay("stop");
@@ -183,7 +186,8 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 			$('body').trigger('slingshotFinished', {'xPos' : x_pos,
 												    'yPos' : y_pos,
 													'force' : strength,
-													'angle' : angle});
+													'angle' : angle,
+													'direction' : direction});
 			$('body').trigger('slingshotStopRequested', {"sprites" : blobSprites});
 
 			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)

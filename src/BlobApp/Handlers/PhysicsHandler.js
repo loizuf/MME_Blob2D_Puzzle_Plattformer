@@ -746,7 +746,8 @@ BlobApp.PhysicsHandler = (function() {
 		var slingX = data.xPos,
 			slingY = data.yPos,
 			angle = data.angle,
-			tension = data.force;
+			tension = data.force,
+			direction = data.direction;
 
 		greenBlobEntity = undefined;
 		redBlobEntity = undefined;
@@ -759,15 +760,23 @@ BlobApp.PhysicsHandler = (function() {
 			}
 		}
 
-		greenBlobEntity.SetPosition(new b2Vec2((slingX+1.5*TILESIZEX) / SCALE, (slingY-TILESIZEY) / SCALE ));
+		if(direction == "left") {
+			greenBlobEntity.SetPosition(new b2Vec2((slingX + 1.5 * TILESIZEX) / SCALE, (slingY-TILESIZEY) / SCALE ));
+			redBlobEntity.SetPosition(new b2Vec2((slingX + 0.5 * TILESIZEX) / SCALE, (slingY) / SCALE ));
 
-		redBlobEntity.SetPosition(new b2Vec2((slingX+0.5*TILESIZEX) / SCALE, (slingY) / SCALE ));
+			var radians = angle * Math.PI / 180;
 
-		var radians = angle * Math.PI / 180;
+			greenBlobEntity.ApplyImpulse(new b2Vec2(Math.cos(radians) * tension, -Math.sin(radians) * tension), greenBlobEntity.GetPosition());
+			$('body').trigger('onSlingshotFinished');
+		} else if(direction == "right") {
+			greenBlobEntity.SetPosition(new b2Vec2((slingX - 1.5 * TILESIZEX) / SCALE, (slingY - TILESIZEY) / SCALE ));
+			redBlobEntity.SetPosition(new b2Vec2((slingX - 0.5 * TILESIZEX) / SCALE, (slingY) / SCALE ));
 
-		greenBlobEntity.ApplyImpulse(new b2Vec2(Math.cos(radians) * tension, -Math.sin(radians) * tension), greenBlobEntity.GetPosition());
+			var radians = (90 + angle) * Math.PI / 180;
 
-		$('body').trigger('onSlingshotFinished');
+			greenBlobEntity.ApplyImpulse(new b2Vec2(-Math.cos(radians) * tension, -Math.cos(radians) * tension), greenBlobEntity.GetPosition());
+			$('body').trigger('onSlingshotFinished');
+		}		
 	},
 
 	_recreateBlob = function(sprite, userData) {

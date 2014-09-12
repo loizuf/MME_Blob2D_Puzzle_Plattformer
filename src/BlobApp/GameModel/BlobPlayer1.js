@@ -268,7 +268,6 @@ BlobApp.BlobPlayer1 = (function() {
 	isSlingshotRight = false;
 
 	this.initSlingshot = function(event, data) {
-		console.log("sl init");
 		data.direction == "left" ? isSlingshotLeft = true : isSlingshotRight = true;
 
 		$('body').trigger('animateSlingshot', {animationKey : AnimationKeys.LOAD});		
@@ -283,8 +282,14 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setFunction("currentLeft", function(){});
 		prototypeVar.setFunction("currentRight", function(){});
 
-		prototypeVar.setFunction("leftPressed", thisVar.clutchSlingshot);
-		prototypeVar.setFunction("rightPressed", thisVar.loosenSlingshot);
+		if(isSlingshotLeft) {
+			prototypeVar.setFunction("leftPressed", thisVar.clutchSlingshot);
+			prototypeVar.setFunction("rightPressed", thisVar.loosenSlingshot);
+		} else if(isSlingshotRight) {
+			prototypeVar.setFunction("leftPressed", thisVar.loosenSlingshot);
+			prototypeVar.setFunction("rightPressed", thisVar.clutchSlingshot);
+		}
+		
 		prototypeVar.setFunction("downPressed", thisVar.shootSlingshot);
 
 		isSlingshotActive = true;
@@ -292,7 +297,12 @@ BlobApp.BlobPlayer1 = (function() {
 
 	this.shootSlingshot = function() {
 		if(isSlingshotActive) {
-			$('body').trigger('onSlingshotRelease');
+			if(isSlingshotLeft) {
+				$('body').trigger('onSlingshotRelease', {direction: "left"});
+			} else if(isSlingshotRight) {
+				$('body').trigger('onSlingshotRelease', {direction: "right"});
+			}
+			
 			isSlingshotActive = false;
 			isSlingshotLeft = false;
 			isSlingshotRight = false;
@@ -301,8 +311,7 @@ BlobApp.BlobPlayer1 = (function() {
 
 	isNextTensionSelected = true;
 
-	this.clutchSlingshot = function() {
-		
+	this.clutchSlingshot = function() {		
 		if(isNextTensionSelected) {
 			isNextAngleSelected = false;
 			slingshotTension > 8 ? slingshotTension = 8 : slingshotTension += 0;
