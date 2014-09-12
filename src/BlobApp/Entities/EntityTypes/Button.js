@@ -1,11 +1,11 @@
-BlobApp.TriggerButton = (function Button(x_pos, y_pos, sizeX, sizeY) {
+BlobApp.TriggerButton = (function Button(x_pos, y_pos, buttonID) {
 	var that = this,
 
 	sprite, 
 	tilesetSheet,
-	userData;
+	buttonID;
 
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 25 , 25);
 	
 	this.prototype.init =function() {
 		tileset = new Image();
@@ -15,7 +15,7 @@ BlobApp.TriggerButton = (function Button(x_pos, y_pos, sizeX, sizeY) {
 		_listeners();
 
 		// callback for loading layers after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		tileset.onLoad = _initSprite(tileset, 25, 25);		
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -38,6 +38,8 @@ BlobApp.TriggerButton = (function Button(x_pos, y_pos, sizeX, sizeY) {
 
 		sprite = new createjs.Sprite(tilesetSheet);
 
+		sprite.name = "generic";
+
 		/* koordinaten kommen aus dem levelloader */
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
@@ -55,18 +57,13 @@ BlobApp.TriggerButton = (function Button(x_pos, y_pos, sizeX, sizeY) {
 	},
 
 	_animate = function(event, data){
-		if(data.userData == userData) {
+		if(data.userData == buttonID) {
 			sprite.gotoAndPlay("press");
 		}
-	},
-
-	setUserData = function(data) {
-		userData = data;
 	};
 
 	this.prototype.init();
 	this.sprite = sprite;
-	this.setUserData = setUserData;
 });
 
 

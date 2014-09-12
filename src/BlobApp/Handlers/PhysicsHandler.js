@@ -138,32 +138,14 @@ BlobApp.PhysicsHandler = (function() {
 
 	/*das muss vom levelloader aufgerufen werden!*/
 	applyEntity = function(event, data) {
-		sprite = data["sprite"];
 		userData = data["userData"];
 		entityID = userData[0];
 
-		var x = (sprite.x) / SCALE,
-			y = (sprite.y) / SCALE,
-			width = TILESIZEX / SCALE,
-			height = TILESIZEY / SCALE;
+		var x = (data.x) / SCALE,
+			y = (data.y) / SCALE,
+			width = data.width / SCALE,
+			height = data.height / SCALE;
 
-		switch(entityID){
-
-			case EntityConfig.MOVINGGROUNDID:
-				width = TILESIZEX*3 / SCALE;
-				break;
-
-			case EntityConfig.DOORID:
-			case EntityConfig.NEWGAMEDOOR:
-			case EntityConfig.CONTINUEDOOR:
-				height = TILESIZEY*2 / SCALE;
-				break;
-
-			case EntityConfig.SPIKEID:
-				width = TILESIZEX*0.5 / SCALE;
-				height = TILESIZEY*0.5 / SCALE;
-				break;
-		}
 		if(entityID==EntityConfig.MOVINGGROUNDID){
 			var entity = createDynamicBoxEntity(x, y, width, height);
 		}else{
@@ -172,9 +154,7 @@ BlobApp.PhysicsHandler = (function() {
 		
 
 		entity.SetUserData(userData);  
-		
-		var actor = new _actorObject(entity, sprite);
-		
+				
 		bodies.push(entity); 
 
 		if(entityID == EntityConfig.MOVINGGROUNDID){
@@ -186,8 +166,9 @@ BlobApp.PhysicsHandler = (function() {
 	applyBlobEntity = function(event, data) {
 		userData = data["userData"][0];
 
-		var width = (data.width - 1) / SCALE / 2,
-			height = (data.height - 2) / SCALE / 2;
+		var width = (data.width - 2) / SCALE / 2,
+			height = (data.height - 3) / SCALE / 2;
+		if(data.height > 20) data.height = 21;
 
 		var fixture = createDefaultBoxFixture(width, height);
 		var bodyDef = new b2BodyDef;
@@ -363,12 +344,10 @@ BlobApp.PhysicsHandler = (function() {
 	}, 
 
 	_applySensor = function(event, data) {
-		var sprite = data.sprite;
-
-		var x = (sprite.x) / SCALE,
-			y = (sprite.y) / SCALE,
-			width = (data.width) ? data.width * TILESIZEX/SCALE : TILESIZEX/SCALE,
-			height = (data.height * TILESIZEY)/SCALE;
+		var x = (data.x) / SCALE,
+			y = (data.y) / SCALE,
+			width = (data.width) / SCALE,
+			height = (data.height) / SCALE;
 
 		var entity = createDefaultBoxEntity(x, y, width, height, true);		
 

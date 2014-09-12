@@ -1,16 +1,13 @@
-BlobApp.CooperationTrigger = (function CooperationTrigger(x_pos, y_pos, sizeX, sizeY, coopID) {
+BlobApp.CooperationTrigger = (function CooperationTrigger(x_pos, y_pos, coopID) {
 	var that = this,
 
 	sprite, 
 	tilesetSheet, 
 	tileset;
 
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 60, 60);
 	
 	this.prototype.init =function() {
-		var height;
-		height = sizeY;
-
 		tileset = new Image();
 		tileset.src = "res/img/cooptrigger.png";//mapData.tilesets[0].image;
 		
@@ -18,7 +15,7 @@ BlobApp.CooperationTrigger = (function CooperationTrigger(x_pos, y_pos, sizeX, s
 		_listeners();
 
 		// callback for loading layers after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		tileset.onLoad = _initSprite(tileset, 60, 60);		
 	},
 
 	_initSprite = function(tileset, width, height) {

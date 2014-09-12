@@ -1,5 +1,5 @@
-BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, sizeX, sizeY, LevelID, owID) {
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
+BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, LevelID, owID) {
+	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 50, 60);
 
 	var sprite, tilesetSheet, LvlID;
 	var thisVar = this;
@@ -12,7 +12,7 @@ BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, sizeX, sizeY, LevelID, owI
 		tileset.src = "res/img/levelDoor.png";
 
 		// callback for loading sprite after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		tileset.onLoad = _initSprite(tileset, 50, 60);		
 		_listeners();
 	},
 

@@ -1,9 +1,9 @@
-BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY, doorID) {
+BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, doorID) {
 	var that = this,
 
 	sprite, tilesetSheet, doorID, easleID, isOpening;
 
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 50, 75);
 	
 	this.prototype.init =function() {
 		this.doorID  = doorID;
@@ -13,7 +13,7 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, sizeX, sizeY, doorID) 
 		tileset.src = "res/img/DoorAnim.png"
 
 		// callback for loading sprite after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		tileset.onLoad = _initSprite(tileset, 50, 75);		
 		_listeners();
 	},
 

@@ -117,7 +117,7 @@ BlobApp.MainController = (function() {
 		if(data.generic) {
 			_viewController.createGenericEntity(data.x, data.y, data.positionInSprite);
 		} else {
-			_viewController.createEntity(data.x, data.y, data.entityID);
+			_viewController.createEntity(data.x, data.y, data.entityID, data);
 		}
 	},
 
@@ -128,10 +128,13 @@ BlobApp.MainController = (function() {
 		connectedEntities = [];
 
 		for(var i = 0; i < viewEntities.length; i++) {
-			if(viewEntities[i].sprite.name == "generic") {
+			if(viewEntities[i].sprite.name == "generic" || !viewEntities[i].sprite.name) {
 				continue;
 			}
-			connectedEntities.push(_getCorrespondingEntites(viewEntities[i].sprite, physicsEntities));
+			var connectedEntity = _getCorrespondingEntites(viewEntities[i].sprite, physicsEntities);
+			if(connectedEntity) {
+				connectedEntities.push(connectedEntity);
+			}
 		}
 		_physicsHandler.createActors(connectedEntities);
 	},
@@ -147,6 +150,9 @@ BlobApp.MainController = (function() {
 			case "blobGreen" :
 				expectedUserData = EntityConfig.GREENBLOBID;
 				break;
+			case "movingGround" :
+				expectedUserData = EntityConfig.MOVINGGROUNDID;
+				break;
 		}
 
 		for(var i = 0; i < physicsEntities.length; i++) {
@@ -155,7 +161,7 @@ BlobApp.MainController = (function() {
 				break;
 			}
 		}
-
+		if(!physicsBody) return false;
 		return {
 			body: physicsBody,
 			sprite: viewEntity

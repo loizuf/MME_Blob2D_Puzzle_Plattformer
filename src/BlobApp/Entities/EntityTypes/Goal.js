@@ -1,5 +1,5 @@
-BlobApp.Goal = (function Goal(x_pos, y_pos, sizeX, sizeY, GOALID) {
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
+BlobApp.Goal = (function Goal(x_pos, y_pos, GOALID) {
+	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 50, 60);
 
 	var sprite, tilesetSheet;
 
@@ -9,7 +9,7 @@ BlobApp.Goal = (function Goal(x_pos, y_pos, sizeX, sizeY, GOALID) {
 		tileset.src = "res/img/levelDoor.png"
 
 		// callback for loading sprite after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		tileset.onLoad = _initSprite(tileset, 50, 60);		
 		_listeners();
 	},	
 

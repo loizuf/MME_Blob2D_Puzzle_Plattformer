@@ -1,4 +1,4 @@
-BlobApp.MovingGround = (function MovingGround(x_pos, y_pos, sizeX, sizeY,num) {
+BlobApp.MovingGround = (function MovingGround(x_pos, y_pos, num) {
 
 var that = this,
 	MOVINGRANGE = 50, /*for each 25 its moving 1 tile to left and right of the starting position*/
@@ -12,7 +12,7 @@ var that = this,
 	started,
 	userData;
 
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 75, 25);
 	
 	this.prototype.init =function() {
 		tileset = new Image();
@@ -22,7 +22,7 @@ var that = this,
 		myNum = num;
 		started = false;
 		// callback for loading layers after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		tileset.onLoad = _initSprite(tileset, 75, 25);		
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -41,6 +41,8 @@ var that = this,
 		/* koordinaten kommen aus dem levelloader */
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
+
+		sprite.name = "movingGround";
 		
 		sprite.x = x_pos;
 		sprite.y = y_pos;
@@ -62,9 +64,9 @@ var that = this,
 
 	_animate = function(event, data){
 		// not working atm o0
-		var x_pos = body.m_xf.position.x;
 		//var y_pos = body.m_xf.position.y;
 		if(started){
+	  		var x_pos = body.m_xf.position.x;
 			if(movedBy == MOVINGRANGE){
 				movingRight  = false;
 			}
@@ -86,6 +88,7 @@ var that = this,
 			
 		}
 	},
+	
 	_startAnimation = function(event,data){
 		if(data.cont[0] == myNum){
 			body = data.cont[1];

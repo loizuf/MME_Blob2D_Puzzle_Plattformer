@@ -177,23 +177,22 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_loadSpikes = function(layerData, tilesetSheet, x, y, idx) {
-		var cellBitmap = new createjs.Sprite(tilesetSheet);
-		cellBitmap.gotoAndStop(layerData.data[idx] - 1);
-
-		cellBitmap.x = x;
-		cellBitmap.y = y;
-
-		cellBitmap.regX = 12;
-		cellBitmap.regY = 12;
-
-		_createRequestObject["sprite"] = cellBitmap;
 		_createRequestObject["userData"] = [EntityConfig.SPIKEID];
-
-		_createRequestObject["height"] = 0.5;
-		_createRequestObject["width"] = 0.5;
+		_createRequestObject["x"] = x;
+		_createRequestObject["y"] = y;
+		_createRequestObject["height"] = 6;
+		_createRequestObject["width"] = 6;
 
 		$('body').trigger('entityRequested', _createRequestObject);
-		$('body').trigger('genericRequested',_createRequestObject);
+
+		var messageToView = {
+			generic : true,
+			x : x,
+			y : y,
+			positionInSprite : layerData.data[idx] - 1
+		};
+
+		$('body').trigger("requestViewEntity", messageToView);
 	},
 
 	_informModel = function(layerData, doorCount) {
@@ -361,16 +360,25 @@ BlobApp.LevelLoader = (function() {
 
 
 	_createButton = function(x, y,layerData,buttonCount){
-		var entity = new BlobApp.TriggerButton(x, y, 25, 25, EntityConfig.BUTTONID);
 		var buttonNumber = layerData.properties.Buttons[buttonCount];
 
-		_createRequestObject["sprite"] = entity.sprite;
+		_createRequestObject["width"] = 12.5;
+		_createRequestObject["height"] = 12.5;
+		_createRequestObject["x"] = x;
+		_createRequestObject["y"] = y;
 		_createRequestObject["userData"] = [EntityConfig.BUTTONID, buttonNumber, layerData.properties.Doors[buttonCount]];
 
-		entity.setUserData(_createRequestObject["userData"]);
-
 		$('body').trigger('entityRequested', _createRequestObject);
-		$('body').trigger('genericRequested', _createRequestObject);
+		_createRequestObject["width"] = 1;
+
+		var messageToView = {
+			generic : false,
+			x : x,
+			y : y,
+			entityID : EntityConfig.BUTTONID,
+			buttonID : buttonNumber
+		};
+		$('body').trigger("requestViewEntity", messageToView);
 	},
 
 	_createDoor = function(x, y, layerData, doorCount){
@@ -378,95 +386,161 @@ BlobApp.LevelLoader = (function() {
 		
 		_informModel(layerData, doorCount);
 
-		var entity = new BlobApp.DynamicDoor(x, y, 50, 75, doorNumber);
-
-		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.DOORID, doorNumber];
-		_createRequestObject["height"] = 2;
-		
+		_createRequestObject["width"] = 12.5;
+		_createRequestObject["height"] = 25;
+		_createRequestObject["x"] = x;
+		_createRequestObject["y"] = y+12.5;
+	
 		$('body').trigger('entityRequested', _createRequestObject);
-		$('body').trigger('genericRequested', _createRequestObject);
+
+		_createRequestObject["width"] = 1;
+
+		var messageToView = {
+			generic : false,
+			x : x,
+			y : y,
+			entityID : EntityConfig.DOORID,
+			doorID : doorNumber
+		};
+		$('body').trigger("requestViewEntity", messageToView);
 	},
 
 	_createMenuDoor = function(x, y, type){
-		var entity = new BlobApp.MenuDoor(x, y+12.5, 25, 50, type);
+		_createRequestObject["width"] = 12.5;
+		_createRequestObject["height"] = 25;
+		_createRequestObject["x"] = x;
+		_createRequestObject["y"] = y+12.5;
 
-		_createRequestObject["sprite"] = entity.sprite;
 		if(type == 0){
 			_createRequestObject["userData"] = [EntityConfig.NEWGAMEDOOR];
 		} else if (type == 1){
 			_createRequestObject["userData"] = [EntityConfig.CONTINUEDOOR];
 		}
-		_createRequestObject["height"] = 2;
-		_createRequestObject["width"] = 1;
 
 		$('body').trigger('sensorRequested', _createRequestObject);
-		$('body').trigger('genericRequested', _createRequestObject);
+
+		var messageToView = {
+			generic : false,
+			x : x,
+			y : y+12.5,
+			entityID : _createRequestObject["userData"]
+		};
+
+		$('body').trigger("requestViewEntity", messageToView);
 	},
 
 	_createMovingGround = function(x, y, movingGroundCount){
-		var entity = new BlobApp.MovingGround(x+27.5, y, 75, 25, movingGroundCount);
-
-		_createRequestObject["sprite"] = entity.sprite;
-		_createRequestObject["userData"] = [EntityConfig.MOVINGGROUNDID, movingGroundCount];
-		_createRequestObject["num"] = movingGroundCount
+		var messageToView = {
+			generic : false,
+			x : x,
+			y : y,
+			entityID : EntityConfig.MOVINGGROUNDID,
+			num : movingGroundCount
+		};
+		$('body').trigger("requestViewEntity", messageToView);
 		
+
+		_createRequestObject["width"] = 37.5;
+		_createRequestObject["height"] = 12.5;
+		_createRequestObject["x"] = x;
+		_createRequestObject["y"] = y;
+
+		_createRequestObject["userData"] = [EntityConfig.MOVINGGROUNDID, movingGroundCount];
+		_createRequestObject["num"] = movingGroundCount;
+
 		$('body').trigger('entityRequested', _createRequestObject);
-		$('body').trigger('genericRequested', _createRequestObject);
+
+		_createRequestObject["width"] = 1;
 	},
 
 	_createLevelDoor = function(x, y, layerData, levelDoorCount) {
 		var levelDoorLevelID = layerData.properties.LevelDoorID[levelDoorCount];
 		var levelDoorOverID = layerData.properties.OverWorldID[levelDoorCount];
-		var entity = new BlobApp.LevelDoor(x, y+10, 50, 60, levelDoorLevelID, levelDoorOverID);
-		_createRequestObject["sprite"] = entity.sprite;
-		if(currentLoadedOverID<_gameState.currentOverworldMapID){
+
+		_createRequestObject["width"] = 12.5;
+		_createRequestObject["height"] = 25;
+		_createRequestObject["x"] = x;
+		_createRequestObject["y"] = y+12.5;
+
+		if(currentLoadedOverID < _gameState.currentOverworldMapID){
 			_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, levelDoorOverID, true];
 		} else {
-			if(levelDoorLevelID<=_gameState.currentLevel){
+			if(levelDoorLevelID <= _gameState.currentLevel){
 				_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, levelDoorOverID, true];
 			} else {
 				_createRequestObject["userData"] = [EntityConfig.LEVELDOOR, levelDoorLevelID, levelDoorOverID, false];
 			}
 		}
-		_createRequestObject["height"] = 2;
-		
+
 		$('body').trigger('sensorRequested', _createRequestObject);
-		$('body').trigger('genericRequested', _createRequestObject);
+
+		_createRequestObject["width"] = 1;
+
+		var messageToView = {
+			generic : false,
+			x : x,
+			y : y+12.5,
+			entityID : EntityConfig.LEVELDOOR,
+			levelID : levelDoorLevelID,
+			owID : levelDoorOverID
+		};
+		$('body').trigger("requestViewEntity", messageToView);
 	},
 	
 	_createKey = function(x, y) {
-		var entity = new BlobApp.Key(x, y, 30, 30, EntityConfig.KEYID);
 
-		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.KEYID];
-		_createRequestObject["height"] = 1;
+
+		_createRequestObject["width"] = 15;
+		_createRequestObject["height"] = 15;
+		_createRequestObject["x"] = x;
+		_createRequestObject["y"] = y;
 
 		$('body').trigger("sensorRequested", _createRequestObject);
-		$('body').trigger('genericRequested', _createRequestObject);
+
+		var messageToView = {
+			generic : false,
+			x : x,
+			y : y,
+			entityID : EntityConfig.KEYID,
+			keyID : 0
+		};
+		$('body').trigger("requestViewEntity", messageToView);
 	},
 
 	_createGoal = function(x, y) {
-		var entity = new BlobApp.Goal(x, y+10, 50, 60, EntityConfig.GOALID);
+		_createRequestObject["width"] = 12.5;
+		_createRequestObject["height"] = 30;
+		_createRequestObject["x"] = x;
+		_createRequestObject["y"] = y+10;
 
-		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [EntityConfig.GOALID];
-		_createRequestObject["height"] = 2;
 
 		$('body').trigger("sensorRequested", _createRequestObject);
-		$('body').trigger('genericRequested', _createRequestObject);
+
+		_createRequestObject["width"] = 1;
+
+		var messageToView = {
+			generic : false,
+			x : x,
+			y : y+10,
+			entityID : EntityConfig.GOALID,
+			goalID : 0
+		};
+		$('body').trigger("requestViewEntity", messageToView);
 	},
 
 	_createTriggerZone = function(x, y, entityID) {
-		var entity = new BlobApp.CooperationTrigger(x, y-25, 60, 60, entityID);
 
-		_createRequestObject["sprite"] = entity.sprite;
 		_createRequestObject["userData"] = [entityID];
-		_createRequestObject["height"] = 1.2;
-		_createRequestObject["width"] = 1.2;
+
+		_createRequestObject["width"] = 15;
+		_createRequestObject["height"] = 15;
+		_createRequestObject["x"] = x;
+		_createRequestObject["y"] = y-25;
 
 		$("body").trigger("sensorRequested", _createRequestObject);
-		$('body').trigger('genericRequested', _createRequestObject);
 
 		_createRequestObject["width"] = 1.0;
 
@@ -479,6 +553,14 @@ BlobApp.LevelLoader = (function() {
 		if(entityID == EntityConfig.SLINGSHOTTRIGGERRIGHT) {
 			
 		}
+
+		var messageToView = {
+			generic : false,
+			x : x,
+			y : y-25,
+			entityID : entityID
+		};
+		$('body').trigger("requestViewEntity", messageToView);
 	},
 
 	// utility function for loading assets from server

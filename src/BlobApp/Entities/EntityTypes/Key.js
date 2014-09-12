@@ -1,5 +1,5 @@
-BlobApp.Key = (function Key(x_pos, y_pos, sizeX, sizeY, keyID) {
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
+BlobApp.Key = (function Key(x_pos, y_pos, keyID) {
+	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 30, 30);
 
 	var sprite, tilesetSheet;
 
@@ -8,7 +8,7 @@ BlobApp.Key = (function Key(x_pos, y_pos, sizeX, sizeY, keyID) {
 		tileset.src = "res/img/key.png"
 
 		// callback for loading sprite after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		tileset.onLoad = _initSprite(tileset, 30, 30);		
 	},	
 	
 	_initSprite = function(tileset, width, height) {

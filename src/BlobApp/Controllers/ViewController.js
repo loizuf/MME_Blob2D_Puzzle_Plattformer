@@ -47,12 +47,44 @@ BlobApp.ViewController = (function() {
 		viewEntities.push(newEntity);
 	},
 
-	createEntity = function(xPos, yPos, entityID) {
+	createEntity = function(xPos, yPos, entityID, data) {
 		var entity;
 		switch(entityID) {
 			case EntityConfig.GREENBLOBID :
-			case EntityConfig.REDBLOBID:
+			case EntityConfig.REDBLOBID :
 				entity = new BlobApp.Blob(xPos, yPos, entityID);
+				break;
+			case EntityConfig.BUTTONID :
+				entity = new BlobApp.TriggerButton(xPos, yPos, entityID);
+				break;
+			case EntityConfig.HELITRIGGER :
+			case EntityConfig.HELISTOPTRIGGER :
+			case EntityConfig.BRIDGELEFTTRIGGER :
+			case EntityConfig.BRIDGERIGHTTRIGGER :
+			case EntityConfig.TELETRIGGER :
+			case EntityConfig.SLINGSHOTTRIGGERLEFT :
+			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
+			case EntityConfig.SPHERETRIGGER :
+				entity = new BlobApp.CooperationTrigger(xPos, yPos, entityID);
+				break;
+			case EntityConfig.DOORID : 
+				entity = new BlobApp.DynamicDoor(xPos, yPos, data.doorID);
+				break;
+			case EntityConfig.GOALID :
+				entity = new BlobApp.Goal(xPos, yPos, data.goalID);
+				break;
+			case EntityConfig.KEYID :
+				entity = new BlobApp.Key(xPos, yPos, data.keyID);
+				break
+			case EntityConfig.LEVELDOOR :
+				entity = new BlobApp.LevelDoor(xPos, yPos, data.levelID, data.owID);
+				break;
+			case EntityConfig.MOVINGGROUNDID : 
+				entity = new BlobApp.MovingGround(xPos, yPos, data.num);
+				break;
+			case EntityConfig.NEWGAMEDOOR :
+			case EntityConfig.CONTINUEDOOR : 
+				entity = new BlobApp.MenuDoor(xPos, yPos, entityID);
 				break;
 		}
 		if(entity == undefined) return;

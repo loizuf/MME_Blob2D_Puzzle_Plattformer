@@ -1,5 +1,5 @@
-BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, sizeX, sizeY, doorType) {
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
+BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, doorType) {
+	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 25, 50);
 
 	var sprite, tilesetSheet;
 
@@ -10,7 +10,7 @@ BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, sizeX, sizeY, doorType) {
 		tileset.src = _getTileset(tileset, doorType);
 
 		// callback for loading sprite after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		tileset.onLoad = _initSprite(tileset, 25, 50);		
 	},
 
 	_initSprite = function(tileset, width, height) {
