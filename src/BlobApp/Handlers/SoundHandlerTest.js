@@ -1,13 +1,14 @@
 BlobApp.SoundHandlerTest = (function() {
 
-	var sound = createjs.Sound;	
+	
 	var that = {};
+	var sound = createjs.Sound;	
 	var manifest = [];
-	var assetsPath = "res/sound/"
+	var assetsPath = "res/sound/";
 
 	init = function() {
-		_createSoundManifest();
-		_registerListeners();
+		_eventListeners();
+		_createSoundManifest();		
 		_playBackgroundMusic();
 	},
 
@@ -36,8 +37,7 @@ BlobApp.SoundHandlerTest = (function() {
 		sound.registerManifest(manifest, assetsPath);
 	},
 
-	_registerListeners = function() {
-		//$('body').on('soundBackground', _playBackgroundMusic);
+	_eventListeners = function() {
 		$('body').on('soundJump', _playGenericSound);
         $('body').on('onReAllowJump', _playGenericSound);
 
@@ -73,7 +73,7 @@ BlobApp.SoundHandlerTest = (function() {
 	},
 
 	_playGenericSound = function(event, data) {
-
+		sound.play("jump");
 	},
 
 	_playHeliSound = function(event, data) {
@@ -81,7 +81,6 @@ BlobApp.SoundHandlerTest = (function() {
 	},
 
 	_stopSound = function() {
-		console.log("called");
 		sound.removeAllSounds();
 	};
 
