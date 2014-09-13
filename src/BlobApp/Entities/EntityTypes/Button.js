@@ -57,7 +57,7 @@ BlobApp.TriggerButton = (function Button(x_pos, y_pos, buttonID) {
 	},
 
 	_animate = function(event, data){
-		if(data.userData == buttonID) {
+		if(data.userData[0] == buttonID) {
 			sprite.gotoAndPlay("press");
 		}
 	};
