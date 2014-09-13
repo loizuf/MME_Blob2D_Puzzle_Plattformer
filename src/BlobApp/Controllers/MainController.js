@@ -27,11 +27,7 @@ BlobApp.MainController = (function() {
 		p2ID = p2ControlsID;
 		Controls.p1 = p1ControlsID;
 		Controls.p2 = p2ControlsID;
-		$('body').on("doneLoading", continueWithStuff);
-		_soundHandler = BlobApp.SoundHandler;
-		_soundHandler.loadAssets();
-		
-		
+		continueWithStuff();	
 	},
 
 	continueWithStuff = function(){
@@ -47,7 +43,7 @@ BlobApp.MainController = (function() {
 		_physicsHandler = BlobApp.PhysicsHandler;
 		_levelloader = BlobApp.LevelLoader;
 		_globalStateHandler = BlobApp.GlobalState;
-		_soundHandler = BlobApp.SoundHandler;
+		_soundHandler = BlobApp.SoundHandlerTest;
 
 		_globalStateHandler.init();
 		_modelController.init(p1ID, p2ID, _soundHandler);
