@@ -3,14 +3,12 @@ BlobApp.SoundHandlerTest = (function() {
 	var sound = createjs.Sound;	
 	var that = {};
 	var manifest = [];
+	var assetsPath = "res/sound/"
 
 	init = function() {
 		_createSoundManifest();
 		_registerListeners();
-	},
-
-	playSound = function(event, data) {
-
+		_playBackgroundMusic();
 	},
 
 	_createSoundManifest = function() {
@@ -34,41 +32,60 @@ BlobApp.SoundHandlerTest = (function() {
             
             {id:"backGround", src:"Shakeandbake.ogg"} 
 		];
+
+		sound.registerManifest(manifest, assetsPath);
 	},
 
 	_registerListeners = function() {
-		$('body').on('soundJump', _playJumpSound);
-        $('body').on('onReAllowJump', _playSplatSound);
+		//$('body').on('soundBackground', _playBackgroundMusic);
+		$('body').on('soundJump', _playGenericSound);
+        $('body').on('onReAllowJump', _playGenericSound);
 
-        $('body').on("startHeli",_playHeliSound);
-        $('body').on("startTele",_playTeleSound);
-        $('body').on("startBridge",_playBridgeSound);
+        $('body').on("startHeli", _playHeliSound);
+        $('body').on("startTele", _playGenericSound);
+        $('body').on("startBridge", _playGenericSound);
 
-        $('body').on("startSphere",_playSphereAssembleSound);
+        $('body').on("startSphere", _playGenericSound);
 
-        $('body').on('startSlingshot',_playSlingshotStartSound);
-        $('body').on('soundSlingshotClutched',_playSlingshotClutchSound);
-        $('body').on('soundSlingshotLoosened',_playSlingshotLoosenSound);
+        $('body').on('startSlingshot', _playGenericSound);
+        $('body').on('soundSlingshotClutched', _playGenericSound);
+        $('body').on('soundSlingshotLoosened', _playGenericSound);
         
-        $('body').on('specialFinished',_stopSpecial);
+        //$('body').on('specialFinished', _stopSpecial);
 
-        $('body').on("onTrampolinActive", _playTrampActSound );
-        $('body').on("onTrampolinInactive",_playTrampDeactSound);
+        $('body').on("onTrampolinActive", _playGenericSound);
+        $('body').on("onTrampolinInactive", _playGenericSound);
 
-        $('body').on("onStretchActive",_playStretchActSound);
-        $('body').on("onStretchInactive",_playStretchDeactSound);
+        $('body').on("onStretchActive", _playGenericSound);
+        $('body').on("onStretchInactive", _playGenericSound);
 
-        $('body').on("onCameraShakeRequested",_playShakeSound);
+        $('body').on("onCameraShakeRequested", _playGenericSound);
 
-        $('body').on('soundPause',_soundPause);
-        $('body').on('soundResume',_resumeSound);
+        /*$('body').on('soundPause', _soundPause);
+        $('body').on('soundResume', _resumeSound);
+		*/
+        $('body').on('destroyPhysics', _stopSound);
+	},
 
-        $('body').on('restartPhys',_resumeSound);
-        $('body').on('destroyPhysics',_stopAllSounds);
+	_playBackgroundMusic = function() {
+		sound.play("backGround", {loop : -1});
+		sound.volume = 0.2;
+	},
+
+	_playGenericSound = function(event, data) {
+
+	},
+
+	_playHeliSound = function(event, data) {
+
+	},
+
+	_stopSound = function() {
+		console.log("called");
+		sound.removeAllSounds();
 	};
 
 	that.init = init;
-	that.playSound = playSound;
 
 	return that;
 })();

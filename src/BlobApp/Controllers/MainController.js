@@ -30,8 +30,7 @@ BlobApp.MainController = (function() {
 		continueWithStuff();	
 	},
 
-	continueWithStuff = function(){
-		console.log('meep');
+	continueWithStuff = function() { 
 		_registerListeners();
 		_initModules(_soundHandler);
 		state = _globalStateHandler.getGameState();
@@ -100,7 +99,7 @@ BlobApp.MainController = (function() {
 		$('body').unbind();
 		_registerListeners();
 
-		setTimeout(function(){_initModules(_soundHandler);}, 1);
+		setTimeout(function(){_initModules();}, 1);
 	},
 
 	_reset = function() {
