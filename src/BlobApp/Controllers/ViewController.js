@@ -55,7 +55,7 @@ BlobApp.ViewController = (function() {
 				entity = new BlobApp.Blob(xPos, yPos, entityID);
 				break;
 			case EntityConfig.BUTTONID :
-				entity = new BlobApp.TriggerButton(xPos, yPos, entityID, data.buttonID);
+				entity = new BlobApp.TriggerButton(xPos, yPos, data.buttonID);
 				break;
 			case EntityConfig.HELITRIGGER :
 			case EntityConfig.HELISTOPTRIGGER :
