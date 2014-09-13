@@ -18,17 +18,12 @@ BlobApp.CollisionHandler = (function() {
 		contactListener = new Box2D.Dynamics.b2ContactListener;
 
 		_handleContacts();
-		_registerListeners();
 
 		keyPickedUp = false;
 	},
 
 	getContactListener = function() {
 		return contactListener;
-	},
-
-	_registerListeners = function() {
-
 	},
 
 	_handleContacts = function() {
