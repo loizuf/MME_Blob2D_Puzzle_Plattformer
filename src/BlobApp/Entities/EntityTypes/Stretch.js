@@ -1,4 +1,4 @@
-BlobApp.Stretch = (function Stretch (x_pos, y_pos, sizeX, sizeY, redBlobEntity) {
+BlobApp.Stretch = (function Stretch (x_pos, y_pos) {
 
 	var that = this,
 
@@ -9,7 +9,7 @@ BlobApp.Stretch = (function Stretch (x_pos, y_pos, sizeX, sizeY, redBlobEntity) 
 	actor, 
 	removedSprite;
 
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 25, 100);
 
 	this.prototype.init = function() {
 		tileset = new Image();
@@ -18,7 +18,7 @@ BlobApp.Stretch = (function Stretch (x_pos, y_pos, sizeX, sizeY, redBlobEntity) 
 
 		_listeners();
 
-		tileset.onLoad = _initSprite(tileset, sizeX, sizeY);
+		tileset.onLoad = _initSprite(tileset, 25, 100);
 	}
 
 	_initSprite = function(tileset, width, height) {
@@ -65,6 +65,11 @@ BlobApp.Stretch = (function Stretch (x_pos, y_pos, sizeX, sizeY, redBlobEntity) 
 		$('body').on('onTick', _checkIfInitFinished);
 	},
 
+	this.onRecreate = function() {
+		sprite.gotoAndPlay("init");
+		removedSprite = false;
+	},
+
 	_animate = function(event, data) {
 		switch(data.animationKey) {
 			case AnimationKeys.IDLE1:
@@ -81,8 +86,7 @@ BlobApp.Stretch = (function Stretch (x_pos, y_pos, sizeX, sizeY, redBlobEntity) 
 
 	_checkIfStopFinished = function() {
 		if(!removedSprite && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 19) {
-			actor.skin = oldSprite;
-			$('body').trigger('stretchStopRequested', {"sprite" : oldSprite});
+			$('body').trigger('stretchStopRequested');
 			sprite.stop();
 			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)
 			removedSprite = true;
@@ -94,14 +98,6 @@ BlobApp.Stretch = (function Stretch (x_pos, y_pos, sizeX, sizeY, redBlobEntity) 
 		if(sprite.currentAnimation == "init" && sprite.currentAnimationFrame == 19) {
 			$('body').trigger('stretchInitRequested');
 		}
-	},
-
-	this.setActor = function(actorVar) {
-		actor = actorVar;
-	},
-
-	this.setOldSprite = function(spriteVar) {
-		oldSprite = spriteVar;
 	};
 
 	this.prototype.init();

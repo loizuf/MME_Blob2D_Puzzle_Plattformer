@@ -1,4 +1,4 @@
-BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEntity) {
+BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, greenBlobEntity) {
 
 	var that = this,
 
@@ -9,7 +9,7 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 	actor, 
 	removedSpriteStop;
 
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 50, 25);
 	
 	this.prototype.init = function() {
 		tileset = new Image();
@@ -20,7 +20,7 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 		_listeners();
 
 		// callback for loading layers after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX, sizeY);		
+		tileset.onLoad = _initSprite(tileset, 50, 25);		
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -62,6 +62,11 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 		sprite.gotoAndPlay("init");
 	},
 
+	this.onRecreate = function() {
+		sprite.gotoAndPlay("init");
+		removedSpriteStop = false;
+	},
+
 	_listeners = function() {
 		$('body').on('trampolinAnimationChanged', _animate);
 		$('body').on('onTick', _checkIfStopFinished);
@@ -84,8 +89,7 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 
 	_checkIfStopFinished = function() {
 		if(!removedSpriteStop && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 19) {
-			actor.skin = oldSprite;
-			$('body').trigger('trampolinStopRequested', {"sprite" : oldSprite});
+			$('body').trigger('trampolinStopRequested');
 			sprite.stop();
 			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)
 			removedSpriteStop = true;
@@ -97,14 +101,6 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, sizeX, sizeY, greenBlobEnt
 		if(sprite.currentAnimation == "init" && sprite.currentAnimationFrame == 19) {
 			$('body').trigger('trampolinInitRequested');
 		}
-	},
-
-	this.setActor = function(actorVar) {
-		actor = actorVar;
-	},
-
-	this.setOldSprite = function(spriteVar) {
-		oldSprite = spriteVar;
 	};
 
 	this.prototype.init();

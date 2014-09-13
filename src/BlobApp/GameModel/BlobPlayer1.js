@@ -143,7 +143,8 @@ BlobApp.BlobPlayer1 = (function() {
 			prototypeVar.setFunction("currentRight", prototypeVar._moveRight);
 			prototypeVar.setFunction("currentLeft", prototypeVar._moveLeft);			
 
-			$('body').trigger("onTrampolinInactive");
+			$('body').trigger("onTrampolinInactive");		
+			$('body').trigger("trampolinAnimationChanged", {"animationKey" : AnimationKeys.STOP});
 			isTrampolin = false;	
 		}
 	},

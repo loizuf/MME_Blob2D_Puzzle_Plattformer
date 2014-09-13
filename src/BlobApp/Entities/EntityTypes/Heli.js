@@ -1,4 +1,4 @@
-BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
+BlobApp.Heli = (function Heli(x_pos, y_pos) {
 
 	var that = this,
 
@@ -8,22 +8,17 @@ BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 	blobSprites,
 	removedSprite;
 
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 50, 50);
 	
 	this.prototype.init = function() {
 		tileset = new Image();
 		tileset.src = "res/img/Heli.png";//mapData.tilesets[0].image;
 
-		var height;		
-		height = sizeY;
-
 		// getting imagefile from first tileset
 		_listeners();
 
 		// callback for loading layers after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
-
-
+		tileset.onLoad = _initSprite(tileset, 50, 50);		
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -40,11 +35,7 @@ BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 				moveLeft: [40, 59],
 				stop: [60, 79]
 			}
-
-			
 		}
-
-
 
 		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
@@ -66,9 +57,12 @@ BlobApp.Heli = (function Heli(x_pos, y_pos, sizeX, sizeY) {
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("startAni");
-		console.log(sprite);
 	},
 
+	this.onRecreate = function() {
+		sprite.gotoAndPlay("startAni");
+		removedSprite = false;
+	},
 
 	_listeners = function() {
 		$('body').on('heliAnimationChanged', _animate);

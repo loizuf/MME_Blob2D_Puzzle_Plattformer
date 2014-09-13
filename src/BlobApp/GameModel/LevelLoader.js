@@ -247,7 +247,7 @@ BlobApp.LevelLoader = (function() {
 		}
 
 		for(var i = 0; i < hBorders.length; i++) {
-			$('body').trigger('borderRequested', hBorders[i]);
+			$('body').trigger('entityRequested', hBorders[i]);
 		}
 
 		// Vertical borders
@@ -290,7 +290,7 @@ BlobApp.LevelLoader = (function() {
 		}
 
 		for(var i = 0; i < vBorders.length; i++) {
-			$('body').trigger('borderRequested', vBorders[i]);
+			$('body').trigger('entityRequested', vBorders[i]);
 		}
 	},
 

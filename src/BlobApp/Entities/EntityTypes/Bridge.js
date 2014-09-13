@@ -1,4 +1,4 @@
-BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY, direction) {
+BlobApp.Bridge = (function Bridge(x_pos, y_pos, direction) {
 
 	var that = this,
 
@@ -8,17 +8,15 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY, direction) {
 	blobSprites,
 	removedSprite;
 
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 275, 75);
 
 	this.prototype.init = function() {
 		tileset = new Image();
 		tileset.src = "res/img/bridge.png"; // mapdata.tilesets[0].image
 
-		var height = sizeY;
-
 		_listeners();
 
-		tileset.onLoad = _initSprite(tileset, sizeX, sizeY);
+		tileset.onLoad = _initSprite(tileset, 275, 75);
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -60,6 +58,17 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, sizeX, sizeY, direction) {
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("startAni");
+	},
+
+	this.onRecreate = function(data) {
+		sprite.gotoAndPlay("startAni");
+		removedSprite = false;
+		direction = data.direction;
+		if(data.direction == "left") {
+			sprite.scaleX = -1;
+		} else {
+			sprite.scaleX = 1;
+		}
 	},
 
 	_listeners = function() {

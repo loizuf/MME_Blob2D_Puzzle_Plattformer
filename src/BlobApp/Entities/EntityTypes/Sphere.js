@@ -1,4 +1,4 @@
-BlobApp.Sphere = (function Sphere(x_pos, y_pos, sizeX, sizeY) {
+BlobApp.Sphere = (function Sphere(x_pos, y_pos) {
 
 	var that = this,
 
@@ -9,7 +9,7 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos, sizeX, sizeY) {
 	removedSprite,
 	stopStarted;
 
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 50, 50);
 
 	this.prototype.init = function() {
 		tileset = new Image();
@@ -17,7 +17,7 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos, sizeX, sizeY) {
 
 		_listeners();
 
-		tileset.onLoad = _initSprite(tileset, sizeX, sizeY);
+		tileset.onLoad = _initSprite(tileset, 50, 50);
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -55,6 +55,12 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos, sizeX, sizeY) {
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("startAni");
+	},
+
+	this.onRecreate = function() {
+		sprite.gotoAndPlay("startAni");
+		removedSprite = false;
+		stopStarted = false;
 	},
 
 	_listeners = function() {

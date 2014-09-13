@@ -67,6 +67,7 @@ BlobApp.MainController = (function() {
 		$('body').on('onContinueGameRequested', _continueGame);
 		// Connection between model and view:
 		$('body').on('requestViewEntity', _onViewEntityRequested);
+		$('body').on('connectToView', _connectSingleBodyToView);
 	},
 
 	_continueGame = function() {
@@ -127,45 +128,68 @@ BlobApp.MainController = (function() {
 
 		connectedEntities = [];
 
-		for(var i = 0; i < viewEntities.length; i++) {
-			if(viewEntities[i].sprite.name == "generic" || !viewEntities[i].sprite.name) {
-				continue;
-			}
-			var connectedEntity = _getCorrespondingEntites(viewEntities[i].sprite, physicsEntities);
+		for(var i = 0; i < physicsEntities.length; i++) {
+			var connectedEntity = _connectBodyToView(physicsEntities[i], physicsEntities[i].GetUserData()[0], viewEntities);
 			if(connectedEntity) {
 				connectedEntities.push(connectedEntity);
 			}
 		}
+
 		_physicsHandler.createActors(connectedEntities);
 	},
 
-	_getCorrespondingEntites = function(viewEntity, physicsEntities) {
-		var physicsBody;
-		
-		var expectedUserData;
-		switch(viewEntity.name) {
-			case "blobRed" :
-				expectedUserData = EntityConfig.REDBLOBID;
+	_connectSingleBodyToView = function(event, data) {
+		physicsBody = data.body;
+		userData = physicsBody.GetUserData()[0];
+		if(data.special) {
+			userData = data.special;
+		}
+		viewEntities = _viewController.getViewEntities();
+		_physicsHandler.createActors([_connectBodyToView(physicsBody, userData, viewEntities)]);
+	},
+
+	_connectBodyToView = function(physicsBody, userData, viewEntities) {
+		var viewEntity;
+		var expectedSpriteName;
+		switch(userData) {
+			case EntityConfig.REDBLOBID:
+				expectedSpriteName = "blobRed";
 				break;
-			case "blobGreen" :
-				expectedUserData = EntityConfig.GREENBLOBID;
+			case EntityConfig.GREENBLOBID:
+				expectedSpriteName = "blobGreen";
 				break;
-			case "movingGround" :
-				expectedUserData = EntityConfig.MOVINGGROUNDID;
+			case EntityConfig.MOVINGGROUNDID:
+				expectedSpriteName = "movingGround";
+				break;
+			case "Heli":
+				expectedSpriteName = "heli";
+				break;
+			case "Sphere":
+				expectedSpriteName = "sphere";
+				break;
+			case "Bridge":
+				expectedSpriteName = "bridge";
+				break;
+			case "Trampolin":
+				expectedSpriteName = "trampolin";
+				break;
+			case "Stretch":
+				expectedSpriteName = "stretch";
 				break;
 		}
+		if(expectedSpriteName == undefined) return false;
 
-		for(var i = 0; i < physicsEntities.length; i++) {
-			if(physicsEntities[i].GetUserData()[0] == expectedUserData) {
-				physicsBody = physicsEntities[i];
+		for(var i = 0; i < viewEntities.length; i++) {
+			if(viewEntities[i].sprite.name == expectedSpriteName) {				
+				viewEntity = viewEntities[i];
 				break;
 			}
 		}
-		if(!physicsBody) return false;
+		if(!viewEntity) return false;
 		return {
 			body: physicsBody,
-			sprite: viewEntity
-		};
+			sprite: viewEntity.sprite
+		}
 	};
 
 	that.init = init;

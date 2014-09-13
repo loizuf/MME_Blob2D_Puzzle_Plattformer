@@ -495,7 +495,12 @@ BlobApp.CollisionHandler = (function() {
 		}else{
 			$('body').trigger("entityLeftMe",{cont:[bodyB.GetUserData()[1],bodyA]});
 		}
+	},
+
+	_stopHeli = function() {
+		$('body').trigger('heliAnimationChanged', {"animationKey" : AnimationKeys.STOP});
 	};
+
 	
 	that.init = init;
 	that.getContactListener = getContactListener;

@@ -8,7 +8,6 @@ BlobApp.ViewController = (function() {
 	b2ddebug = false,
 	tilesetSheet,
 
-
 	init = function() {
 		viewEntities.length = 0;
 		_initView();
@@ -48,48 +47,94 @@ BlobApp.ViewController = (function() {
 	},
 
 	createEntity = function(xPos, yPos, entityID, data) {
-		var entity;
-		switch(entityID) {
-			case EntityConfig.GREENBLOBID :
-			case EntityConfig.REDBLOBID :
-				entity = new BlobApp.Blob(xPos, yPos, entityID);
-				break;
-			case EntityConfig.BUTTONID :
-				entity = new BlobApp.TriggerButton(xPos, yPos, data.buttonID);
-				break;
-			case EntityConfig.HELITRIGGER :
-			case EntityConfig.HELISTOPTRIGGER :
-			case EntityConfig.BRIDGELEFTTRIGGER :
-			case EntityConfig.BRIDGERIGHTTRIGGER :
-			case EntityConfig.TELETRIGGER :
-			case EntityConfig.SLINGSHOTTRIGGERLEFT :
-			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
-			case EntityConfig.SPHERETRIGGER :
-				entity = new BlobApp.CooperationTrigger(xPos, yPos, entityID);
-				break;
-			case EntityConfig.DOORID : 
-				entity = new BlobApp.DynamicDoor(xPos, yPos, data.doorID);
-				break;
-			case EntityConfig.GOALID :
-				entity = new BlobApp.Goal(xPos, yPos, data.goalID);
-				break;
-			case EntityConfig.KEYID :
-				entity = new BlobApp.Key(xPos, yPos, data.keyID);
-				break
-			case EntityConfig.LEVELDOOR :
-				entity = new BlobApp.LevelDoor(xPos, yPos, data.levelID, data.owID);
-				break;
-			case EntityConfig.MOVINGGROUNDID : 
-				entity = new BlobApp.MovingGround(xPos, yPos, data.num);
-				break;
-			case EntityConfig.NEWGAMEDOOR :
-			case EntityConfig.CONTINUEDOOR : 
-				entity = new BlobApp.MenuDoor(xPos, yPos, entityID);
-				break;
+		var entity = _justRecreate(entityID, data);
+		if(!entity) {
+			switch(entityID) {
+				case EntityConfig.GREENBLOBID :
+				case EntityConfig.REDBLOBID :
+					entity = new BlobApp.Blob(xPos, yPos, entityID);
+					break;
+				case EntityConfig.BUTTONID :
+					entity = new BlobApp.TriggerButton(xPos, yPos, data.buttonID);
+					break;
+				case EntityConfig.HELITRIGGER :
+				case EntityConfig.HELISTOPTRIGGER :
+				case EntityConfig.BRIDGELEFTTRIGGER :
+				case EntityConfig.BRIDGERIGHTTRIGGER :
+				case EntityConfig.TELETRIGGER :
+				case EntityConfig.SLINGSHOTTRIGGERLEFT :
+				case EntityConfig.SLINGSHOTTRIGGERRIGHT :
+				case EntityConfig.SPHERETRIGGER :
+					entity = new BlobApp.CooperationTrigger(xPos, yPos, entityID);
+					break;
+				case EntityConfig.DOORID : 
+					entity = new BlobApp.DynamicDoor(xPos, yPos, data.doorID);
+					break;
+				case EntityConfig.GOALID :
+					entity = new BlobApp.Goal(xPos, yPos, data.goalID);
+					break;
+				case EntityConfig.KEYID :
+					entity = new BlobApp.Key(xPos, yPos, data.keyID);
+					break
+				case EntityConfig.LEVELDOOR :
+					entity = new BlobApp.LevelDoor(xPos, yPos, data.levelID, data.owID);
+					break;
+				case EntityConfig.MOVINGGROUNDID : 
+					entity = new BlobApp.MovingGround(xPos, yPos, data.num);
+					break;
+				case EntityConfig.NEWGAMEDOOR :
+				case EntityConfig.CONTINUEDOOR : 
+					entity = new BlobApp.MenuDoor(xPos, yPos, entityID);
+					break;
+				case "Heli" :
+					entity = new BlobApp.Heli(xPos, yPos);
+					break;
+				case "Sphere" :
+					entity = new BlobApp.Sphere(xPos, yPos);
+					break;
+				case "Bridge" :
+					entity = new BlobApp.Bridge(xPos, yPos, data.direction);
+					break;
+				case "Trampolin" :
+					entity = new BlobApp.Trampolin(xPos, yPos);
+					break;
+				case "Stretch" :
+					entity = new BlobApp.Stretch(xPos, yPos);
+					break;
+			}
 		}
-		if(entity == undefined) return;
+		if(entity == undefined || entity == false) return;
 		viewEntities.push(entity);
 		stage.addChild(entity.sprite);
+
+		if(data.remove) {
+			for(var i = 0; i < data.remove.length; i++) {
+				stage.removeChild(stage.getChildByName(data.remove[i]));
+			}
+		}
+	},
+
+	_justRecreate = function(entityID, data) {
+		var entityName;
+		if(entityID == EntityConfig.GREENBLOBID) entityName = "blobGreen";
+		if(entityID == EntityConfig.REDBLOBID) entityName = "blobRed";
+		if(entityID == "Heli") entityName = "heli";
+		if(entityID == "Sphere") entityName = "sphere";
+		if(entityID == "Bridge") entityName = "bridge";
+		if(entityID == "Trampolin") entityName = "trampolin";
+		if(entityID == "Stretch") entityName = "stretch";
+
+		if(!entityName) return false;
+
+		for(var i = 0; i < viewEntities.length; i++) {
+			if(viewEntities[i].sprite.name == entityName) {
+				if(viewEntities[i].onRecreate) {
+					viewEntities[i].onRecreate(data);
+				}
+				return viewEntities[i];
+			}
+		}
+		return false;
 	},
 
 	getViewEntities = function() {
@@ -106,7 +151,6 @@ BlobApp.ViewController = (function() {
 			}
 			if(data.removeByName) {
 				for(var i = 0; i < data.removeByName.length; i++) {
-			console.log(data.removeByName[i]);	
 					stage.removeChild(stage.getChildByName(data.removeByName[i]));
 				}
 			}
@@ -363,10 +407,8 @@ BlobApp.ViewController = (function() {
 		$('body').on('removeSphereFromView', removeSphere);
 
 		$('body').on('trampolinEntityRequested', applyTrampolin);
-		$('body').on('trampolinStopRequested', removeTrampolin);
 
 		$('body').on('stretchEntityRequested', applyStretch);
-		$('body').on('stretchStopRequested', removeStretch);
 
 		$('body').on('backgroundAdded', applyBackground);
 		$('body').on('onPause', _displayPauseScreen);

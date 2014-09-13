@@ -74,7 +74,11 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
-		sprite.gotoAndPlay("jumpRight");
+		sprite.gotoAndPlay("idle1");
+	},
+
+	this.onRecreate = function() {
+		sprite.gotoAndPlay("idle1");
 	},
 
 	_listeners = function() {
