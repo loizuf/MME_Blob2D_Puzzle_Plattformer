@@ -47,12 +47,14 @@ BlobApp.MainController = (function() {
 		_physicsHandler = BlobApp.PhysicsHandler;
 		_levelloader = BlobApp.LevelLoader;
 		_globalStateHandler = BlobApp.GlobalState;
+		_soundHandler = BlobApp.SoundHandler;
 
 		_globalStateHandler.init();
 		_modelController.init(p1ID, p2ID, _soundHandler);
 		_viewController.init();
 		_physicsHandler.init();
 		_levelloader.init(lID, overwID, _globalStateHandler);	
+		_soundHandler.init();
 
 		_connectModelAndViewEntities();	
 	},
