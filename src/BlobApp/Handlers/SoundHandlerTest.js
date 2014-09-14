@@ -6,7 +6,7 @@ BlobApp.SoundHandlerTest = (function() {
 	var manifest = [];
 	var assetsPath = 'res/sound/';
 	var helisound;
-	var SOUNDVOLUME = 0.05;
+	var SOUNDVOLUME = 0.1;
 
 	init = function() {
 		_eventListeners();
@@ -67,7 +67,7 @@ BlobApp.SoundHandlerTest = (function() {
 	},
 
 	_playBackgroundMusic = function() {
-		sound.play('backGround', {loop : -1,volume:SOUNDVOLUME});
+		sound.play('backGround', {loop : -1,volume:SOUNDVOLUME/2});
 	},
 
 	_playJumpSound = function(){ 
