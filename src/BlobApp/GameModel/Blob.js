@@ -178,6 +178,7 @@ BlobApp.BlobSuperClass = function() {
 	},
 
 	this.reactOnMenuDoor = function(doorType) {
+			$('body').trigger("soundDoorOpen");
 		if(doorType == EntityConfig.NEWGAMEDOOR){
 			$('body').trigger("onNewGameRequested");
 		} else {

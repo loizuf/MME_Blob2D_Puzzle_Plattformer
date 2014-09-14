@@ -79,7 +79,7 @@ BlobApp.SoundHandlerTest = (function() {
 	},
 
 	_playHeliSound = function(){ 
-		helisound = sound.play('heli',{volume:SOUNDVOLUME}); 
+		helisound = sound.play('heli',{loop : -1,volume:SOUNDVOLUME}); 
 	},
 
 	_playTeleSound = function(){ 
