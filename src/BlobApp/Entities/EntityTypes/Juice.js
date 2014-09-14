@@ -1,9 +1,9 @@
-BlobApp.Juice = (function Juice(x_pos, y_pos, sizeX, sizeY) {
+BlobApp.Juice = (function Juice(x_pos, y_pos) {
 	var that = this,
 
-	sprite, tilesetSheet;
+	sprite, tilesetSheet, removed = false;
 
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 50, 50);
 	
 	this.prototype.init =function() {
 		var tileset = new Image();
@@ -11,7 +11,7 @@ BlobApp.Juice = (function Juice(x_pos, y_pos, sizeX, sizeY) {
 		tileset.src = "res/img/dust.png"
 
 		// callback for loading sprite after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, sizeX,sizeY);		
+		tileset.onLoad = _initSprite(tileset, 50, 50);		
 		_listeners();
 	},
 
@@ -51,9 +51,10 @@ BlobApp.Juice = (function Juice(x_pos, y_pos, sizeX, sizeY) {
 	},
 
 	_checkIfFinished = function() {
-		if(sprite.currentAnimationFrame == 15) {		
-			$('body').trigger('juiceRequested', {remove: [sprite]});
+		if(!removed && sprite.currentAnimationFrame == 15) {		
+			$('body').trigger('requestViewEntity', {generic: false, removeBySprite: [sprite]});
 			sprite.stop();
+			removed = true;
 		}
 	};
 	

@@ -101,15 +101,27 @@ BlobApp.ViewController = (function() {
 				case "Stretch" :
 					entity = new BlobApp.Stretch(xPos, yPos);
 					break;
+				case "Juice" :
+					entity = new BlobApp.Juice(xPos, yPos);
+					break;
+				case "Bubble" :
+					entity = new BlobApp.HintBubble(xPos, yPos, data.bubbleInfo);
+					break;
 			}
 		}
-		if(entity == undefined || entity == false) return;
-		viewEntities.push(entity);
-		stage.addChild(entity.sprite);
+		if(entity != undefined && entity != false) {
+			viewEntities.push(entity);
+			stage.addChild(entity.sprite);
+		}	
 
 		if(data.remove) {
 			for(var i = 0; i < data.remove.length; i++) {
 				stage.removeChild(stage.getChildByName(data.remove[i]));
+			}
+		}
+		if(data.removeBySprite) {
+			for(var i = 0; i < data.removeBySprite.length; i++) {
+				stage.removeChild(data.removeBySprite[i]);
 			}
 		}
 	},
