@@ -53,7 +53,8 @@ BlobApp.SoundHandlerTest = (function() {
         $('body').on('onCameraShakeRequested', _playShakeSound);
         $('body').on('playerOnSpikes',_playSplatSound);
         $('body').on('onKeyPickedUp',_playUnlockSound);
-        $('body').on('soundDoorOpen',_playDoorOpenedSound);
+        $('body').on('levelFinished',_playDoorOpenedSound);
+        $('body').on('animateLevelDoor',_playDoorOpenedSound);
         $('body').on('soundPause', _pauseSound);
         $('body').on('soundResume', _resumeSound);
         $('body').on('destroyPhysics', _stopSound);
@@ -135,6 +136,7 @@ BlobApp.SoundHandlerTest = (function() {
 	},
 
 	_playDoorOpenedSound = function(){ 
+		console.log('opendoor');
 		sound.play('openDoor',{volume:SOUNDVOLUME}); 
 	},
 
