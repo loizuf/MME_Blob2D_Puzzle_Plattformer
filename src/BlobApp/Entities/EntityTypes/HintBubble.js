@@ -1,5 +1,5 @@
-BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, sizeX, sizeY, additionalInfo) {
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
+BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 100, 75);
 	var thisVar = this,
 		sprite,
 		tilesetSheet,
@@ -14,7 +14,7 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, sizeX, sizeY, additional
 		_listeners();
 
 		// callback for loading sprite after tileset is loaded
-		tileset.onLoad = thisVar._initSprite(tileset, sizeX, sizeY);		
+		tileset.onLoad = thisVar._initSprite(tileset, 100, 75);		
 		thisVar._listeners();
 	},	
 

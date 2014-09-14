@@ -37,6 +37,7 @@ BlobApp.Key = (function Key(x_pos, y_pos, keyID) {
 		/* koordinaten kommen aus dem levelloader */
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
+		sprite.name = "key";
 		
 		sprite.x = x_pos;
 		sprite.y = y_pos;

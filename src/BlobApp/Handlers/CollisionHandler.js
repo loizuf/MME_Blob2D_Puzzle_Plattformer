@@ -1,5 +1,8 @@
+// This was removed from the physics handler because the physics handler became too "big"
+// It is essentially a wrapper class for the b2ContactListener and not a module.
 BlobApp.CollisionHandler = (function() {
 	var that = {};
+	var private = {};
 
 	var b2Vec2 = Box2D.Common.Math.b2Vec2;
 	var b2BodyDef = Box2D.Dynamics.b2BodyDef;
@@ -14,19 +17,20 @@ BlobApp.CollisionHandler = (function() {
 	var contactListener;
 	var keyPickedUp;
 
-	init = function() {
+	this.init = function() {
 		contactListener = new Box2D.Dynamics.b2ContactListener;
 
-		_handleContacts();
+		private._handleContacts();
 
 		keyPickedUp = false;
 	},
 
-	getContactListener = function() {
+	this.getContactListener = function() {
 		return contactListener;
 	},
 
-	_handleContacts = function() {
+	/*	ALl of the functionality in this class has its start in here. */
+	private._handleContacts = function() {
 		contactListener.BeginContact = function(contact) {
 			aID = contact.GetFixtureA().GetBody().GetUserData()[0];
 			bID = contact.GetFixtureB().GetBody().GetUserData()[0];
@@ -36,20 +40,20 @@ BlobApp.CollisionHandler = (function() {
 
 			switch(aID){
 				case EntityConfig.GREENBLOBID: 
-					_handleGreenBlobCollision(bodyA,bodyB, bID, contact);
+					private._handleGreenBlobCollision(bodyA,bodyB, bID, contact);
 				break;
 
 				case EntityConfig.REDBLOBID: 
-					_handleRedBlobCollision(bodyA,bodyB, bID, contact);
+					private._handleRedBlobCollision(bodyA,bodyB, bID, contact);
 				break;
 
 				case "Heli":
-					_handleHeliCollision(bodyA, bodyB, bID, contact);
+					private._handleHeliCollision(bodyA, bodyB, bID, contact);
 				break;
 			} 
-
+			// For whatever reason, the sphere is not the first object in a contact (usually, it should be the one that's moving, i.e. the sphere.)
 			if(bID === "Sphere") {
-				_handleSphereCollision(bodyB, bodyA, aID, contact);
+				private._handleSphereCollision(bodyB, bodyA, aID, contact);
 			}
 		},
 
@@ -63,32 +67,24 @@ BlobApp.CollisionHandler = (function() {
 
 			switch(aID){
 				case EntityConfig.GREENBLOBID: 
-					_handleGreenBlobEndCollision(bodyA,bodyB, bID, contact);
+					private._handleGreenBlobEndCollision(bodyA,bodyB, bID, contact);
 				break;
 				case EntityConfig.REDBLOBID: 
-					_handleRedBlobEndCollision(bodyA,bodyB, bID, contact);
+					private._handleRedBlobEndCollision(bodyA,bodyB, bID, contact);
 				break;
 				case "Heli":
-					_handleHeliCollisionEnd(bodyA, bodyB, bID, contact);
+					private._handleHeliCollisionEnd(bodyA, bodyB, bID, contact);
 				break;
 			} 
 
 			if(bID === "Sphere") {
-				_handleSphereCollisionEnd(bodyB, bodyA, aID, contact);
+				private._handleSphereCollisionEnd(bodyB, bodyA, aID, contact);
 			}
 		};
 	},
 
-	_handleButtonCollison = function(bodyB, contact) {
-		var buttonID = bodyB.GetUserData()[1];
-
-		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-			$('body').trigger('doorOpenRequested', buttonID);
-			$('body').trigger('buttonActivated', {userData : bodyB.GetUserData(), body: bodyB});
-		}
-	},
-
-	_handleGreenBlobCollision = function(bodyA, bodyB, bID, contact) {
+	/* called when the green blob touches something. */
+	private._handleGreenBlobCollision = function(bodyA, bodyB, bID, contact) {
 		switch(bID){
 			case EntityConfig.REDBLOBID:
 			break;
@@ -100,78 +96,78 @@ BlobApp.CollisionHandler = (function() {
 			break;			
 
 			case EntityConfig.BUTTONID:
-				_handleButtonCollison(bodyB, contact);
+				private._handleButtonCollison(bodyB, contact);
 			break;
 			
 			case EntityConfig.KEYID:
-				_pickUpKey(bodyA, bodyB);
+				private._pickUpKey(bodyA, bodyB);
 				return;
 			
 			case EntityConfig.GOALID:
-				_attemptFinish(EntityConfig.GREENBLOBID);
+				private._attemptFinish(EntityConfig.GREENBLOBID);
 				return;
 			
 			case EntityConfig.HELITRIGGER:
-				_playerInTriggerZone("greenBlob", "heli", bodyB);
+				private._playerInTriggerZone("greenBlob", "heli", bodyB);
 				return;
 
 			case EntityConfig.HELISTOPTRIGGER:
 				return;
 			
 			case EntityConfig.TELETRIGGER:
-				_playerInTriggerZone("greenBlob", "tele", bodyB);
+				private._playerInTriggerZone("greenBlob", "tele", bodyB);
 				return;
 
 			case EntityConfig.BRIDGELEFTTRIGGER:
-				_playerInTriggerZone("greenBlob", "bridgeLeft", bodyB);
+				private._playerInTriggerZone("greenBlob", "bridgeLeft", bodyB);
 				return;
 
 			case EntityConfig.BRIDGERIGHTTRIGGER:
-				_playerInTriggerZone("greenBlob", "bridgeRight", bodyB);
+				private._playerInTriggerZone("greenBlob", "bridgeRight", bodyB);
 				return;
 
 			case EntityConfig.SPHERETRIGGER:
-				_playerInTriggerZone("greenBlob", "sphere", bodyB);
+				private._playerInTriggerZone("greenBlob", "sphere", bodyB);
 				return;
 
 			case EntityConfig.SLINGSHOTTRIGGERLEFT:
-				_playerInTriggerZone("greenBlob", "slingshotLeft", bodyB);
+				private._playerInTriggerZone("greenBlob", "slingshotLeft", bodyB);
 				return;
 
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT:
-				_playerInTriggerZone("greenBlob", "slingshotRight", bodyB);
+				private._playerInTriggerZone("greenBlob", "slingshotRight", bodyB);
 				return;
 
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-					_movingGroundEntered(bodyA,bodyB,true);
+					private._movingGroundEntered(bodyA,bodyB,true);
 				}
 				break;
 
 			case EntityConfig.SPIKEID:
-				_playerOnSpikes("greenBlob");
+				private._playerOnSpikes("greenBlob");
 			break;
 
 			//MenuNavigation
 			case EntityConfig.NEWGAMEDOOR:
 			case EntityConfig.CONTINUEDOOR:
-				_playerInMenuDoorZone("greenBlob", bodyB);
+				private._playerInMenuDoorZone("greenBlob", bodyB);
 				return;
 
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
-				_playerEnteredLevelLoadZone("greenBlob", bodyB);
+				private._playerEnteredLevelLoadZone("greenBlob", bodyB);
 				return;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 			$('body').trigger('onReAllowJump', bodyA);
-			// TODO put this somewhere where it belongs
-			_addJuice(bodyA, 1);
+			private._addJuice(bodyA, 1);
 		}
 	},
 
-	_handleRedBlobCollision = function(bodyA,bodyB, bID, contact) {
+	/*	called when the red blob touches something. */
+	private._handleRedBlobCollision = function(bodyA,bodyB, bID, contact) {
 		switch(bID) {
 			case EntityConfig.GREENBLOBID:							
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -187,144 +183,221 @@ BlobApp.CollisionHandler = (function() {
 			break;
 
 			case EntityConfig.BUTTONID:
-				_handleButtonCollison(bodyB, contact);
+				private._handleButtonCollison(bodyB, contact);
 			break;
 
 			case EntityConfig.KEYID:
-				_pickUpKey(bodyA, bodyB);
+				private._pickUpKey(bodyA, bodyB);
 				return;
 
 			case EntityConfig.GOALID:
-				_attemptFinish(EntityConfig.REDBLOBID);
+				private._attemptFinish(EntityConfig.REDBLOBID);
 				return;
 			
 			case EntityConfig.HELITRIGGER:
-				_playerInTriggerZone("redBlob", "heli", bodyB);
+				private._playerInTriggerZone("redBlob", "heli", bodyB);
 				return;
 
 			case EntityConfig.HELISTOPTRIGGER:
 				return;
 			
 			case EntityConfig.TELETRIGGER:
-				_playerInTriggerZone("redBlob", "tele", bodyB);
+				private._playerInTriggerZone("redBlob", "tele", bodyB);
 				return;
 			
 			case EntityConfig.BRIDGELEFTTRIGGER:
-				_playerInTriggerZone("redBlob", "bridgeLeft", bodyB);
+				private._playerInTriggerZone("redBlob", "bridgeLeft", bodyB);
 				return;
 
 			case EntityConfig.BRIDGERIGHTTRIGGER:
-				_playerInTriggerZone("redBlob", "bridgeRight", bodyB);
+				private._playerInTriggerZone("redBlob", "bridgeRight", bodyB);
 				return;
 
 			case EntityConfig.SPHERETRIGGER:
-				_playerInTriggerZone("redBlob", "sphere", bodyB);
+				private._playerInTriggerZone("redBlob", "sphere", bodyB);
 				return;
 
 			case EntityConfig.SLINGSHOTTRIGGERLEFT:
-				_playerInTriggerZone("redBlob", "slingshotLeft", bodyB);
+				private._playerInTriggerZone("redBlob", "slingshotLeft", bodyB);
 				return;
 
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT:
-				_playerInTriggerZone("redBlob", "slingshotRight", bodyB);
+				private._playerInTriggerZone("redBlob", "slingshotRight", bodyB);
 				return;
 
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-					_movingGroundEntered(bodyA,bodyB,true);
+					private._movingGroundEntered(bodyA,bodyB,true);
 				}
 				break;
 
 			case EntityConfig.SPIKEID:
-				_playerOnSpikes("redBlob");
+				private._playerOnSpikes("redBlob");
 			break;
 
 			//MenuNavigation
 			case EntityConfig.NEWGAMEDOOR:
 			case EntityConfig.CONTINUEDOOR:
-				_playerInMenuDoorZone("redBlob", bodyB);
+				private._playerInMenuDoorZone("redBlob", bodyB);
 				return;
 
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
-				_playerEnteredLevelLoadZone("redBlob", bodyB);
+				private._playerEnteredLevelLoadZone("redBlob", bodyB);
 				return;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 			$('body').trigger('onReAllowJump', bodyA);
-			// TODO put this somewhere where it belongs
-			_addJuice(bodyA, 2);
+			private._addJuice(bodyA, 2);
 		}
 	},
 
-	_playerOnSpikes = function(playerName) {
-		$('body').trigger('playerOnSpikes', playerName);
+	/* called when the green blob stops touching something. */
+	private._handleGreenBlobEndCollision = function(bodyA, bodyB, bID, contact) {
+		switch(bID) {
+			case EntityConfig.HELITRIGGER : 
+			case EntityConfig.TELETRIGGER :
+			case EntityConfig.BRIDGELEFTTRIGGER :
+			case EntityConfig.BRIDGERIGHTTRIGGER :
+			case EntityConfig.SPHERETRIGGER :
+			case EntityConfig.SLINGSHOTTRIGGERLEFT :
+			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
+			
+				private._playerLeftTriggerZone("greenBlob", bodyB);
+			break;
+
+			case EntityConfig.LEVELDOOR:
+				private._playerLeftLevelLoadTriggerZone("greenBlob");
+			break;
+
+			case EntityConfig.NEWGAMEDOOR:
+			case EntityConfig.CONTINUEDOOR:
+				private._playerLeftMenuDoorZone("greenBlob");
+			break;
+
+			case EntityConfig.MOVINGGROUNDID:
+				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+					private._movingGroundEntered(bodyA,bodyB,false);
+				}
+			return;
+		}
 	},
 
-	_handleHeliCollision = function(bodyA, bodyB, bID, contact) {
+	/* called when the red blob stops touching something. */
+	private._handleRedBlobEndCollision = function(bodyA, bodyB, bID, contact) {
+		switch(bID) {
+			case EntityConfig.HELITRIGGER : 
+			case EntityConfig.TELETRIGGER :
+			case EntityConfig.BRIDGELEFTTRIGGER :
+			case EntityConfig.BRIDGERIGHTTRIGGER :
+			case EntityConfig.SPHERETRIGGER :
+			case EntityConfig.SLINGSHOTTRIGGERLEFT :
+			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
+
+				private._playerLeftTriggerZone("redBlob", bodyB);
+			break;
+
+			case EntityConfig.LEVELDOOR:
+				private._playerLeftLevelLoadTriggerZone("redBlob");
+			break;
+
+			case EntityConfig.NEWGAMEDOOR:
+			case EntityConfig.CONTINUEDOOR:
+				private._playerLeftMenuDoorZone("greenBlob");
+			break;
+
+			case EntityConfig.MOVINGGROUNDID:
+				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+					private._movingGroundEntered(bodyA,bodyB,false);
+				}
+			return;
+		}
+	},
+
+	/* called when the heli touches something. */
+	private._handleHeliCollision = function(bodyA, bodyB, bID, contact) {
 		switch(bID) {
 			case EntityConfig.HELISTOPTRIGGER:
-				_stopHeli();
+				private._stopHeli();
 			break;
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-					_movingGroundEntered(bodyA,bodyB,true);
+					private._movingGroundEntered(bodyA,bodyB,true);
 				}
 			break;
 
 			case EntityConfig.SPIKEID:
-				_playerOnSpikes("heli");
+				private._playerOnSpikes("heli");
 			break;
 
 			case EntityConfig.KEYID:
-				_pickUpKey(bodyA, bodyB);
+				private._pickUpKey(bodyA, bodyB);
 		}
 
 		var xVelocityBorder = 6, yVelocityBorder = 6;
 
-		_enableCameraShaking(bodyA, xVelocityBorder, yVelocityBorder, contact);
+		private._enableCameraShaking(bodyA, xVelocityBorder, yVelocityBorder, contact);
 	},
 
-	_handleSphereCollision = function(bodyA, bodyB, bID, contact) {
+	/* called when the sphere touches something. */
+	private._handleSphereCollision = function(bodyA, bodyB, bID, contact) {
 		var xVelocityBorder = 6, yVelocityBorder = 5;
 
-		_enableCameraShaking(bodyA, xVelocityBorder, yVelocityBorder, contact);
+		private._enableCameraShaking(bodyA, xVelocityBorder, yVelocityBorder, contact);
 		
 		switch(bID) {
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-					_movingGroundEntered(bodyA,bodyB,true);
+					private._movingGroundEntered(bodyA,bodyB,true);
 				}
 			break;
 
 			case EntityConfig.KEYID:
-				_pickUpKey(bodyA, bodyB);
+				private._pickUpKey(bodyA, bodyB);
 			break;
 
 			case EntityConfig.BUTTONID:
-				_handleButtonCollison(bodyB, contact);
+				private._handleButtonCollison(bodyB, contact);
 			break;
 		}
 	},
 
-	_handleHeliCollisionEnd = function(bodyA, bodyB, bID, contact) {
+	/* called when the heli stops touching something. */
+	private._handleHeliCollisionEnd = function(bodyA, bodyB, bID, contact) {
 		switch(bID) {
 			case EntityConfig.MOVINGGROUNDID:
-				_movingGroundEntered(bodyA,bodyB,false);	
+				private._movingGroundEntered(bodyA,bodyB,false);	
 			break;
 		}
 	},
 
-	_handleSphereCollisionEnd = function(bodyA, bodyB, bID, contact) {
+	/* called when the sphere stops touching something. */
+	private._handleSphereCollisionEnd = function(bodyA, bodyB, bID, contact) {
 		switch(bID) {
 			case EntityConfig.MOVINGGROUNDID:
-				_movingGroundEntered(bodyA,bodyB,false);
+				private._movingGroundEntered(bodyA,bodyB,false);
 			break;
 		}
 	},
 
-	_enableCameraShaking = function(bodyA, xVelocityBorder, yVelocityBorder, contact) {
+	/* Triggers events that open a door and "destroys" the button */
+	private._handleButtonCollison = function(bodyB, contact) {
+		var buttonID = bodyB.GetUserData()[1];
+
+		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+			$('body').trigger('doorOpenRequested', buttonID);
+			$('body').trigger('buttonActivated', {userData : bodyB.GetUserData(), body: bodyB});
+		}
+	},
+
+	/* Triggers an event that kills a player */
+	private._playerOnSpikes = function(playerName) {
+		$('body').trigger('playerOnSpikes', playerName);
+	},
+
+	/* If the speed of the bodies involved was high enough, this triggers events that shake the screen */
+	private._enableCameraShaking = function(bodyA, xVelocityBorder, yVelocityBorder, contact) {
 		if((contact.m_manifold.m_localPlaneNormal.x < 0 
 				|| contact.m_manifold.m_localPlaneNormal.x > 0) 
 			&& (bodyA.GetLinearVelocity().x > xVelocityBorder
@@ -338,80 +411,27 @@ BlobApp.CollisionHandler = (function() {
 		}
 	},
 
-	_handleRedBlobEndCollision = function(bodyA, bodyB, bID, contact) {
-		switch(bID) {
-			case EntityConfig.HELITRIGGER : 
-			case EntityConfig.TELETRIGGER :
-			case EntityConfig.BRIDGELEFTTRIGGER :
-			case EntityConfig.BRIDGERIGHTTRIGGER :
-			case EntityConfig.SPHERETRIGGER :
-			case EntityConfig.SLINGSHOTTRIGGERLEFT :
-			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
-
-				_playerLeftTriggerZone("redBlob", bodyB);
-			break;
-
-			case EntityConfig.LEVELDOOR:
-				_playerLeftLevelLoadTriggerZone("redBlob");
-			break;
-
-			case EntityConfig.NEWGAMEDOOR:
-			case EntityConfig.CONTINUEDOOR:
-				_playerLeftMenuDoorZone("greenBlob");
-			break;
-
-			case EntityConfig.MOVINGGROUNDID:
-				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-					_movingGroundEntered(bodyA,bodyB,false);
-				}
-			return;
-		}
-	},
-
-	_handleGreenBlobEndCollision = function(bodyA, bodyB, bID, contact) {
-		switch(bID) {
-			case EntityConfig.HELITRIGGER : 
-			case EntityConfig.TELETRIGGER :
-			case EntityConfig.BRIDGELEFTTRIGGER :
-			case EntityConfig.BRIDGERIGHTTRIGGER :
-			case EntityConfig.SPHERETRIGGER :
-			case EntityConfig.SLINGSHOTTRIGGERLEFT :
-			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
-			
-				_playerLeftTriggerZone("greenBlob", bodyB);
-			break;
-
-			case EntityConfig.LEVELDOOR:
-				_playerLeftLevelLoadTriggerZone("greenBlob");
-			break;
-
-			case EntityConfig.NEWGAMEDOOR:
-			case EntityConfig.CONTINUEDOOR:
-				_playerLeftMenuDoorZone("greenBlob");
-			break;
-
-			case EntityConfig.MOVINGGROUNDID:
-				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
-					_movingGroundEntered(bodyA,bodyB,false);
-				}
-			return;
-		}
-	},
-
-	_playerInTriggerZone = function(player, zoneName, bodyB) {
+	/* Triggers events that make the blobs behave differently when the "action button"/down key is pressed. Also some visualisation. */
+	private._playerInTriggerZone = function(player, zoneName, bodyB) {
 			$('body').trigger(player+"InTriggerZone", {name: zoneName});
 			$('body').trigger("coopTriggerAnimationChanged", {animationKey: AnimationKeys.BIGSHINE, triggerID: bodyB.GetUserData()});
-			_showHintBubble(bodyB, player);
+			private._showHintBubble(bodyB, player);
 	},
 
-	_playerLeftTriggerZone = function(player, bodyB) {
+	/* Triggers events that reset what happens when the down key is pressed. Also some visualisation. */
+	private._playerLeftTriggerZone = function(player, bodyB) {
 			$('body').trigger(player+"LeftTriggerZone");			
 			$('body').trigger("coopTriggerAnimationChanged", {animationKey: AnimationKeys.SMALLSHINE, triggerID: bodyB.GetUserData()});
 			// removes the hint bubble.
-			$('body').trigger("juiceRequested", {removeByName : ["bubble"+player]});
+			var messageToView = {
+				generic: false,
+				remove: ["bubble"+player]
+			};
+			$('body').trigger("requestViewEntity", messageToView);
 	},
 
-	_attemptFinish = function(blobID) {
+	/* Called when the players reach the goal. */
+	private._attemptFinish = function(blobID) {
 		if(blobID == EntityConfig.REDBLOBID) {
 			$('body').trigger('blobFinishAttempt', PLAYER_ONE_NAME);
 		} else if(blobID == EntityConfig.GREENBLOBID) {
@@ -419,72 +439,82 @@ BlobApp.CollisionHandler = (function() {
 		}
 	},
 
-	_newGameRequested = function(blobID) {
+	/* Starts a new game. */
+	private._newGameRequested = function(blobID) {
 		$('body').trigger('newGameRequest', blobID);
 	},
 
-	_continueRequested = function() {
+	/* Continues from the saved state. */
+	private._continueRequested = function() {
 		$('body').trigger('continueRequest');
 	},
 
-	_playerEnteredLevelLoadZone = function(player, bodyB) {
+	/* Overrides what happens when the "up" key is pressed (the level will be laoded) */
+	private._playerEnteredLevelLoadZone = function(player, bodyB) {
 		if(bodyB.GetUserData()[3]){
 			var levelID = bodyB.GetUserData()[1];
 			var overID = bodyB.GetUserData()[2];
 			$('body').trigger(player+'InLevelLoadTriggerZone', {lvlID: levelID, owID: overID});
 		}
-
-		//_showHintBubble(bodyB, player);
-		//$('body').trigger('levelLoadRequest', levelID);
 	},
 
-	_playerLeftLevelLoadTriggerZone = function(player) {
+	/* Resets what happens when the "up" key is pressed. (the blob will jump) */
+	private._playerLeftLevelLoadTriggerZone = function(player) {
 		$('body').trigger(player + 'LeftLevelLoadTriggerZone');
 	},
 
-	_playerInMenuDoorZone = function(player, bodyB){
+	private._playerInMenuDoorZone = function(player, bodyB){
 		var doorType = bodyB.GetUserData()[0];
 		$('body').trigger(player+'InMenuDoorZone', doorType);
 	},
 
-	_playerLeftMenuDoorZone = function(player, bodyB) {
+	private._playerLeftMenuDoorZone = function(player, bodyB) {
 		$('body').trigger(player + 'LeftMenuDoorZone');
 	},
 
-	_pickUpKey = function(bodyA, bodyB) {
+	/* Triggers events that make the players pick up the key. */
+	private._pickUpKey = function(bodyA, bodyB) {
 		if(!keyPickedUp) {
 			keyPickedUp = true;
 			$('body').trigger('onKeyPickedUp', {body:bodyB});
 			$('body').trigger("animateGoal", {animationKey: AnimationKeys.UNLOCK});
+
+			var messageToView = {
+				generic: false,
+				remove: ["key"]
+			};
+
+			$('body').trigger("requestViewEntity", messageToView);
 		}
 	},
 
-	_addJuice = function(bodyA, blobHeight) {
-		var xPos = bodyA.m_xf.position.x,
-			yPos = (blobHeight == 1)? bodyA.m_xf.position.y-+12.5/30 : bodyA.m_xf.position.y,
-			width = 50,
-			height = 50;
-		var sprite = new BlobApp.Juice(xPos*30, yPos*30, width, height).sprite;
-
-		$('body').trigger('juiceRequested', {sprite: sprite});
+	/* Juice = dust :) */
+	private._addJuice = function(bodyA, blobHeight) {
+		var messageToView = {
+			generic: false,
+			x: bodyA.m_xf.position.x * 30,
+			y: ((blobHeight == 1)? bodyA.m_xf.position.y-12.5/30 : bodyA.m_xf.position.y)*30,
+			entityID: "Juice"
+		};
+		$('body').trigger("requestViewEntity", messageToView);
 	},
 
-	_showHintBubble = function(body, player) {
-		var bubbleX = bodyB.m_xf.position.x * 30,
-			bubbleY = bodyB.m_xf.position.y * 30 - 75,
-			width = 100,
-			height = 75;
-		var bubbleID = "bubble"+player;
-		var bubble = new BlobApp.HintBubble(bubbleX, bubbleY, width, height, 
-			{
+	private._showHintBubble = function(body, player) {
+		var messageToView = {
+			generic: false,
+			x: bodyB.m_xf.position.x * 30,
+			y: bodyB.m_xf.position.y * 30 - 75,
+			entityID: "Bubble",
+			bubbleInfo : {
 				bubbleType : "down",
-				id : bubbleID
-			});
+				id : "bubble"+player
+			}
+		};
 
-		$('body').trigger('juiceRequested', {sprite : bubble.sprite});
+		$('body').trigger("requestViewEntity", messageToView);
 	},
 
-	_movingGroundEntered = function(bodyA, bodyB, entered){
+	private._movingGroundEntered = function(bodyA, bodyB, entered){
 		if(entered){
 			$('body').trigger("entityLandedOnMe",{cont:[bodyB.GetUserData()[1],bodyA]});
 		}else{
@@ -492,13 +522,9 @@ BlobApp.CollisionHandler = (function() {
 		}
 	},
 
-	_stopHeli = function() {
+	private._stopHeli = function() {
 		$('body').trigger('heliAnimationChanged', {"animationKey" : AnimationKeys.STOP});
 	};
 
-	
-	that.init = init;
-	that.getContactListener = getContactListener;
-
-	return that;
+	return this;
 });
