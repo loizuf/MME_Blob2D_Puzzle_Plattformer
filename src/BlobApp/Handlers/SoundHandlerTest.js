@@ -6,6 +6,7 @@ BlobApp.SoundHandlerTest = (function() {
 	var manifest = [];
 	var assetsPath = 'res/sound/';
 	var helisound;
+	var SOUNDVOLUME = 0.05;
 
 	init = function() {
 		_eventListeners();
@@ -17,13 +18,13 @@ BlobApp.SoundHandlerTest = (function() {
 		manifest = [
 			{id:'jump', src:'jump.ogg'},
             {id:'splat', src:'splat.ogg'},
-            {id:'startHeli', src:'heli.ogg'},
+            {id:'heli', src:'heli.ogg'},
             {id:'tele', src:'teleport.ogg'},
-            {id:'startSphere', src:'nom.ogg'},
-            {id:'startSling', src:'skweak1.ogg'},
-            {id:'clutchSling', src:'skweak2.ogg'},
-            {id:'loosenSling', src:'skweak3.ogg'},
-            {id:'finishSling', src:'slingPew.ogg'},
+            {id:'nom', src:'nom.ogg'},
+            {id:'skweak1', src:'skweak1.ogg'},
+            {id:'skweak2', src:'skweak2.ogg'},
+            {id:'skweak3', src:'skweak3.ogg'},
+            {id:'slingPew', src:'slingPew.ogg'},
             {id:'shake', src:'rumble.ogg'},
             {id:'backGround', src:'Shakeandbake.ogg'},
             {id:'openDoor', src:'doorOpen.ogg'},
@@ -31,11 +32,12 @@ BlobApp.SoundHandlerTest = (function() {
 		];
 
 		sound.registerManifest(manifest, assetsPath);
+		sound.volume = 2;
 	},
 
 	_eventListeners = function() {
 		$('body').on('soundJump', _playJumpSound);
-        $('body').on('onReAllowJump', _playSplatSound);
+        //$('body').on('onReAllowJump', _playSplatSound);
         $('body').on('startHeli', _playHeliSound);
         $('body').on('startTele', _playTeleSound);
         $('body').on('startBridge', _playBridgeSound);
@@ -65,77 +67,75 @@ BlobApp.SoundHandlerTest = (function() {
 	},
 
 	_playBackgroundMusic = function() {
-		sound.play('backGround', {loop : -1});
-		sound.volume = 0.2;
+		sound.play('backGround', {loop : -1,volume:SOUNDVOLUME});
 	},
 
 	_playJumpSound = function(){ 
-		sound.play('jump'); 
+		sound.play('jump',{volume:SOUNDVOLUME}); 
 	},
 
 	_playSplatSound = function(){ 
-		sound.play('splat'); 
+		sound.play('splat',{volume:SOUNDVOLUME}); 
 	},
 
 	_playHeliSound = function(){ 
-		console.log('heli sound play');
-		helisound = sound.play('heli'); 
+		helisound = sound.play('heli',{volume:SOUNDVOLUME}); 
 	},
 
 	_playTeleSound = function(){ 
-		sound.play('teleport'); 
+		sound.play('tele',{volume:SOUNDVOLUME}); 
 	},
 
 	_playBridgeSound = function(){ 
-		sound.play('skweak1'); 
+		sound.play('skweak1',{volume:SOUNDVOLUME}); 
 	},
 
 	_playSphereAssembleSound = function(){ 
-		sound.play('nom'); 
+		sound.play('nom',{volume:SOUNDVOLUME}); 
 	},
 
 	_playSlingshotStartSound = function(){ 
-		sound.play('skweak3'); 
+		sound.play('skweak3',{volume:SOUNDVOLUME}); 
 	},
 
 	_playSlingshotClutchSound = function(){
-		sound.play('skweak1'); 
+		sound.play('skweak1',{volume:SOUNDVOLUME}); 
 	},
 
 	_playSlingshotLoosenSound = function(){
-		sound.play('skweak2'); 
+		sound.play('skweak2',{volume:SOUNDVOLUME}); 
 	},
 
 	_playSlingShotFireSound = function(){ 
-		sound.play('slingPew'); 
+		sound.play('slingPew',{volume:SOUNDVOLUME}); 
 	},
 
 	_playTrampActSound = function(){ 
-		sound.play('skweak2'); 
+		sound.play('skweak2',{volume:SOUNDVOLUME}); 
 	},
 
 	_playTrampDeactSound = function(){ 
-		sound.play('skweak3'); 
+		sound.play('skweak3',{volume:SOUNDVOLUME}); 
 	},
 
 	_playStretchActSound = function(){ 
-		sound.play('skweak2'); 
+		sound.play('skweak2',{volume:SOUNDVOLUME}); 
 	},
 
 	_playStretchDeactSound = function(){ 
-		sound.play('skweak1'); 
+		sound.play('skweak1',{volume:SOUNDVOLUME}); 
 	},
 
 	_playShakeSound = function(){ 
-		sound.play('shake'); 
+		sound.play('shake',{volume:SOUNDVOLUME}); 
 	},
 
 	_playUnlockSound = function(){ 
-		sound.play('unlockDoor'); 
+		sound.play('unlockDoor',{volume:SOUNDVOLUME}); 
 	},
 
 	_playDoorOpenedSound = function(){ 
-		sound.play('openDoor'); 
+		sound.play('openDoor',{volume:SOUNDVOLUME}); 
 	},
 
 	_stopSpecial = function(event, data) {  
@@ -164,11 +164,11 @@ BlobApp.SoundHandlerTest = (function() {
     },
 
     _stopBridgeSound = function() {
-    	sound.play('skweak1'); 	
+    	sound.play('skweak1',{volume:SOUNDVOLUME}); 	
     },
 
 	_stopSphereSound = function() {
-		sound.play('nom'); 
+		sound.play('nom',{volume:SOUNDVOLUME}); 
 	},
 
 	_pauseSound = function() {
@@ -176,7 +176,7 @@ BlobApp.SoundHandlerTest = (function() {
 	},
 
 	_resumeSound = function() {
-		sound.setMute(true);
+		sound.setMute(false);
 	},
 
 	_stopSound = function() {
