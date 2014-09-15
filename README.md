@@ -70,3 +70,5 @@ jQuery wird herangezogen um die DOM-Elemente der zu Grunde liegenden Website eff
 jQuerUI dient lediglich dem Zweck den Canvas zu schütteln. Diese Library ermöglicht diesen Shake-Effect bequem ohne eigenen CSS-Code produzieren zu müssen.
 
 soundJS vertont das Spiel. 
+
+####4.2 Verwendete Patterns
