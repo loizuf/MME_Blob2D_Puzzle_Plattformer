@@ -41,9 +41,17 @@ Obwohl der rote Blob sowieso am höchsten springt, reicht ihm das nicht und desw
 Als Ausgleich kann der rote Blob sich zu doppelter Größe strecken. Damit der grüne auch mal hoch hinaus kommt. Allerdings gilt auch hier: Wenn der rote nicht mag, bleibt der grüne unten.
 
 ###3. Steuerung
-Für die Steuerung kann entweder die Tastatur für beide Spieler oder jeweils ein XBox360-Controller verwendet werden. Alternativ kann auch ein Spieler mit Controller und der andere auf der Tastatur spielen. Jeder Spieler wird nach seiner präferierten Eingabemethode gefragt. 
-Die Steuerung des grünen Blob(Tastatur/XBox360-Controller):
-  * Springen:      W oder A
-  * Links/Rechts:  A/D oder Analog Stick
-  * Aktion:        Spezialfähigkeit
+Für die Steuerung kann entweder die Tastatur für beide Spieler oder jeweils ein XBox360-Controller verwendet werden. Alternativ kann auch ein Spieler mit Controller und der andere auf der Tastatur spielen. Jeder Spieler wird nach seiner präferierten Eingabemethode gefragt.
+
+Die Steuerung des grünen Blob(Tastatur | XBox360-Controller):
+  * Springen:      W | A
+  * Links/Rechts:  A/D | Analog Stick
+  * Aktion:        S | X
   
+Die Steuerung des roten Blob(Tastatur | XBox360-Controller):
+  * Springen:        Pfeiltaste oben | A
+  * Links/Rechts:    Pfeiltaste links/Pfeiltaste rechts | Analog Stick
+  * Aktion:          Pfeiltaste unten | X
+  * Spezialsteuerung Heli: LB/RB für Höhengewinnung
+ 
+Aktion ermöglich die Spezialfähigkeiten. Wenn keine Umgebungsobjekte, wie ein Baum für die Slingshot, vorhanden sind, dann wird anhand des Blobs das Trampolin oder Stretching verwendet.
