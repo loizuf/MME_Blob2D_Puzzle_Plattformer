@@ -43,7 +43,7 @@ Als Ausgleich kann der rote Blob sich zu doppelter Größe strecken. Damit der g
 ###3. Steuerung
 Für die Steuerung kann entweder die Tastatur für beide Spieler oder jeweils ein XBox360-Controller verwendet werden. Alternativ kann auch ein Spieler mit Controller und der andere auf der Tastatur spielen. Jeder Spieler wird nach seiner präferierten Eingabemethode gefragt. 
 Die Steuerung des grünen Blob(Tastatur/XBox360-Controller):
-  *Springen:      W oder A
-  *Links/Rechts:  A/D oder Analog Stick
-  *Aktion:        Spezialfähigkeit
+  * Springen:      W oder A
+  * Links/Rechts:  A/D oder Analog Stick
+  * Aktion:        Spezialfähigkeit
   
