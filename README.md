@@ -15,7 +15,7 @@ A simple browser puzzle-game
 ####2.7 Stretching
 ###3. Steuerung
 ###4. Technische Details
-####4.1 Engines
+####4.1 Engines und Libraries
 ####4.2 Verwendete Patterns
 
 
@@ -57,4 +57,16 @@ Die Steuerung des roten Blob(Tastatur | XBox360-Controller):
 Aktion ermöglich die Spezialfähigkeiten. Wenn keine Umgebungsobjekte, wie ein Baum für die Slingshot, vorhanden sind, dann wird anhand des Blobs das Trampolin oder Stretching verwendet. Analog werden alle Spezialfähigkeiten, abgesehen vom Helicopter und Bridge durch erneutes betätigen des Aktionsknopfes abgebrochen.
 Der Helicopter wird an seinem Landeplatz zerlegt und die Brücke wird automatisch aufgelöst, sobald sich die Spieler per Richtungstasten für eine Richtung zum Hochklettern geeinigt haben.
 
-###4.
+###4. Technische Details
+####4.1 Engines und Libraries
+Für die Umsetzung des Spiels werden die GraphicsEngine easelJS, die PhysicsEngine Box2D, jQuery, jQueryUI und soundJS. 
+
+EaselJS übernimmt sämtliche Visualisierungsaspekte des Spiels. Das erstreckt sich von der Darstellung der Spielwelt, über die Blobs bis hin zu jeder auftretenden Animation. Spiellogisch trägt diese Engine keine Relevanz. Dafür dient Box2D. 
+
+Diese PhysicsEngine wird verwendet, um Kollisionsabfragen und Fallphysik zu berechnen. Mit deren Hilfe ist die Spiellogik umgesetzt, da zum Beispiel die Kollision mit einer Tür, ein Level beendet.
+
+jQuery wird herangezogen um die DOM-Elemente der zu Grunde liegenden Website effizienter und präziser manipulieren zu könnnen.
+
+jQuerUI dient lediglich dem Zweck den Canvas zu schütteln. Diese Library ermöglicht diesen Shake-Effect bequem ohne eigenen CSS-Code produzieren zu müssen.
+
+soundJS vertont das Spiel. 
