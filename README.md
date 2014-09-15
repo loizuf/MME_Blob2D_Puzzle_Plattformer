@@ -1,13 +1,12 @@
 MME_Blob2D_Puzzle_Plattformer
 =============================
 
+
 A simple browser puzzle-game
 
-## Test for readme.md
+#Überblick
+#1. Starten des Spiels
+#2. Darlegen der Spezialfähigkeiten
+#3. Steuerung
+#4. Technische Details
 
-### Third-degree heading
-
-This is regular text.
-
-* This is a point in a list
-* This is another one
