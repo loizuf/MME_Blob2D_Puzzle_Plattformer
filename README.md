@@ -34,7 +34,7 @@ Ein Pfahl und zwei Blobs ergeben ein windiges, brückenähnliches Gebilde, dass 
 ####2.4 Slingshot
 Wenn zwei Bäume verdächtig nahe beieinander stehen, heißt das garantiert, dass man hier den grünen Blob per Luftpost verschicken kann. Entscheiden sich die Blobs eine Slingshot zu bilden, hängt sich der rote Blob zwischen die Bäume und der grüne Blob spannt sich dann ein und wird herauskatapultiert. Dabei müssen beide zusammenarbeiten, damit Abschusswinkel und -stärke ausreichen, um mögliche Landungen in Stacheln zu vermeiden.
 ####2.5 Teleport
-Alte Steingebilde vermögen es die Standorte der Blobs zu vertauschen. Deren Ursprung ist unbekannt. Deren Funktionsweise ist unbekannt. Sie beamen lediglich Blobs durch die Gegend.
+Seltsame, lilafarbene Portale vermögen es die Standorte der Blobs zu vertauschen. Deren Ursprung ist unbekannt. Deren Funktionsweise ist unbekannt. Sie beamen lediglich Blobs durch die Gegend.
 ####2.6 Trampolin
 Obwohl der rote Blob sowieso am höchsten springt, reicht ihm das nicht und deswegen kann der grüne Blob sich in ein Trampolin verwandeln. Allerdings nur, wenn der grüne Blob das auch will und sich sonst nichts in der Nähe befindet. Also sollte der rote Blob ein wenig aufpassen, nicht dass das Trampolin auf einmal fehlt und er stattdessen in Stacheln rutscht.
 ####2.7 Stretching
