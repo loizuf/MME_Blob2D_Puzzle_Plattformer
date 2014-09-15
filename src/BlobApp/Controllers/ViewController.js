@@ -163,6 +163,15 @@ BlobApp.ViewController = (function() {
 			case EntityConfig.TELETRIGGER :
 				entity = new BlobApp.Teleport(xPos, yPos-12.5);
 				break;
+			case EntityConfig.HELISTOPTRIGGER :
+				entity = new BlobApp.Helistop(xPos, yPos-12.5);
+				break;
+			case EntityConfig.BRIDGERIGHTTRIGGER :
+				entity = new BlobApp.BridgePost(xPos-5, yPos+2.5);
+				break;
+			case EntityConfig.BRIDGELEFTTRIGGER :
+				entity = new BlobApp.BridgePost(xPos+5, yPos+2.5);
+				break;
 		}
 
 		if(entity != undefined && entity != false) {

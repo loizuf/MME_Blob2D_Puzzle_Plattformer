@@ -1,18 +1,18 @@
-BlobApp.Tornado = (function Tornado(x_pos, y_pos) {
+BlobApp.BridgePost = (function BridgePost(x_pos, y_pos) {
 	var that = this,
 
 	sprite, 
 	tilesetSheet, 
 	tileset;
 
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, 50, 50);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 25, 25);
 	
 	this.prototype.init =function() {
 		tileset = new Image();
-		tileset.src = "res/img/tornado.png";//mapData.tilesets[0].image;
+		tileset.src = "res/img/Post.png";//mapData.tilesets[0].image;
 		
 		// callback for loading layers after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, 50, 50);		
+		tileset.onLoad = _initSprite(tileset, 25, 25);		
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -28,7 +28,7 @@ BlobApp.Tornado = (function Tornado(x_pos, y_pos) {
 		tilesetSheet = new createjs.SpriteSheet(imageData);
 
 		sprite = new createjs.Sprite(tilesetSheet);
-		sprite.name = "tornado";
+		sprite.name = "bridgepost";
 
 		/* koordinaten kommen aus dem levelloader */
 		sprite.regX = width / 2;
@@ -43,7 +43,6 @@ BlobApp.Tornado = (function Tornado(x_pos, y_pos) {
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
-		sprite.gotoAndPlay("");
 	};
 
 	this.prototype.init();
