@@ -65,6 +65,7 @@ BlobApp.ViewController = (function() {
 				case EntityConfig.SLINGSHOTTRIGGERLEFT :
 				case EntityConfig.SLINGSHOTTRIGGERRIGHT :
 				case EntityConfig.SPHERETRIGGER :
+					_createSpecialAbilitySprite(entityID, xPos, yPos);
 					entity = new BlobApp.CooperationTrigger(xPos, yPos, entityID);
 					break;
 				case EntityConfig.DOORID : 
@@ -151,6 +152,23 @@ BlobApp.ViewController = (function() {
 
 	getViewEntities = function() {
 		return viewEntities;
+	},
+
+	_createSpecialAbilitySprite = function(entityID, xPos, yPos) {
+		var entity;
+		switch(entityID){
+			case EntityConfig.HELITRIGGER :
+				entity = new BlobApp.Tornado(xPos, yPos-10);
+				break;
+			case EntityConfig.TELETRIGGER :
+				entity = new BlobApp.Teleport(xPos, yPos-12.5);
+				break;
+		}
+
+		if(entity != undefined && entity != false) {
+			viewEntities.push(entity);
+			stage.addChild(entity.sprite);
+		}	
 	},
 
 	applyEntity = function(event, data) {
