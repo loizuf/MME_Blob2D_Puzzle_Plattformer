@@ -18,6 +18,8 @@ A simple browser puzzle-game
 ####4.1 Engines
 ####4.2 Verwendete Patterns
 
+
+
 ###1. Starten des Spiels
 
 Um mit dem Spiel loslegen zu können, muss einfach die index.html-Datei im Projektordner mit dem Google Chrome Browser geöffnet werden.
@@ -39,3 +41,9 @@ Obwohl der rote Blob sowieso am höchsten springt, reicht ihm das nicht und desw
 Als Ausgleich kann der rote Blob sich zu doppelter Größe strecken. Damit der grüne auch mal hoch hinaus kommt. Allerdings gilt auch hier: Wenn der rote nicht mag, bleibt der grüne unten.
 
 ###3. Steuerung
+Für die Steuerung kann entweder die Tastatur für beide Spieler oder jeweils ein XBox360-Controller verwendet werden. Alternativ kann auch ein Spieler mit Controller und der andere auf der Tastatur spielen. Jeder Spieler wird nach seiner präferierten Eingabemethode gefragt. 
+Die Steuerung des grünen Blob(Tastatur/XBox360-Controller):
+  *Springen:      W oder A
+  *Links/Rechts:  A/D oder Analog Stick
+  *Aktion:        Spezialfähigkeit
+  
