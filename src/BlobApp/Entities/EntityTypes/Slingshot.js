@@ -1,5 +1,5 @@
-BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
-	var that = this,
+BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, direction) {
+	var thisVar = this,
 
 	sprite,
 	tilesetSheet,
@@ -7,10 +7,10 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 	blobSprites,
 	stopStarted,
 	strength,
-	angle,
-	direction;
+	angle;
+	this.direction = direction;
 
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, sizeX, sizeY);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 75, 75);
 
 	this.prototype.init = function() {
 		tileset = new Image();
@@ -18,7 +18,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 
 		_listeners();
 
-		tileset.onLoad = _initSprite(tileset, sizeX, sizeY);
+		tileset.onLoad = _initSprite(tileset, 75, 75);
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -74,6 +74,11 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
+
+		thisVar.direction = direction;
+		if(thisVar.direction == "right") {
+			sprite.scaleX = -1;
+		}
 
 		sprite.x = x_pos;
 		sprite.y = y_pos;
@@ -166,7 +171,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, sizeX, sizeY) {
 	},
 
 	_triggerSlingshotStart = function() {
-		$('body').trigger('onStartSlingshot', {slingshotEntity : that});
+		$('body').trigger('onStartSlingshot', {slingshotEntity : thisVar});
 	},
 
 	_shootSlingshot = function(event, data) {
