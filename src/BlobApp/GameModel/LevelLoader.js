@@ -295,24 +295,26 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_loadGenericData = function(layerData, tilesetSheet, x, y, idx) {
+		entityID = layerData.data[idx];
+
 		if(layerData.data[idx] == EntityConfig.HELITILE || layerData.data[idx] == EntityConfig.HELISTOPTILE
 			//|| layerData.data[idx] == EntityConfig.SPHERETILE 
 			|| layerData.data[idx] == EntityConfig.TELE
 			|| layerData.data[idx] == EntityConfig.SLINGSHOTTILELEFT 
-			//|| layerData.data[idx] == EntityConfig.SLINGSHOTTILERIGHT
+			|| layerData.data[idx] == EntityConfig.SLINGSHOTTILERIGHT
 			) {
-			layerData.data[idx] = 2;
+			entityID = 2;
 		} else if(layerData.data[idx] == EntityConfig.BRIDGELEFTTILE) {
-			layerData.data[idx] = 88;
+			entityID = 88;
 		} else if(layerData.data[idx] == EntityConfig.BRIDGERIGHTTILE) {
-			layerData.data[idx] = 84;
+			entityID = 84;
 		}
 
 		var messageToView = {
 			generic : true,
 			x : x,
 			y : y,
-			positionInSprite : layerData.data[idx] - 1
+			positionInSprite : entityID - 1
 		};
 
 		$('body').trigger("requestViewEntity", messageToView);
@@ -556,16 +558,6 @@ BlobApp.LevelLoader = (function() {
 		$("body").trigger("sensorRequested", _createRequestObject);
 
 		_createRequestObject["width"] = 1.0;
-
-		if(entityID == EntityConfig.SLINGSHOTTRIGGERLEFT) {
-			var entity = new BlobApp.Slingshot(x, y-50, 75, 75);
-			_createRequestObject["sprite"] = entity.sprite;
-			$('body').trigger('genericRequested', _createRequestObject);
-		}
-
-		if(entityID == EntityConfig.SLINGSHOTTRIGGERRIGHT) {
-			
-		}
 
 		var messageToView = {
 			generic : false,

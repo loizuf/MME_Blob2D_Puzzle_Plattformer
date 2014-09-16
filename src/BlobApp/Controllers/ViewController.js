@@ -172,110 +172,17 @@ BlobApp.ViewController = (function() {
 			case EntityConfig.BRIDGELEFTTRIGGER :
 				entity = new BlobApp.BridgePost(xPos+5, yPos+2.5);
 				break;
+			case EntityConfig.SLINGSHOTTRIGGERLEFT :
+				entity = new BlobApp.Slingshot(xPos, yPos-25, "left");
+				break;
+			case EntityConfig.SLINGSHOTTRIGGERRIGHT:	
+				entity = new BlobApp.Slingshot(xPos, yPos-25, "right");
+				break;
 		}
 
 		if(entity != undefined && entity != false) {
 			viewEntities.push(entity);
 			stage.addChild(entity.sprite);
-		}	
-	},
-
-	applyEntity = function(event, data) {
-		if(!b2ddebug){
-			stage.addChild(data.sprite);
-			if(data.remove) {
-				for(var i = 0; i < data.remove.length; i++) {
-					stage.removeChild(data.remove[i]);
-				}
-			}
-			if(data.removeByName) {
-				for(var i = 0; i < data.removeByName.length; i++) {
-					stage.removeChild(stage.getChildByName(data.removeByName[i]));
-				}
-			}
-		}
-	},
-
-	// TODO: The view Controller should not have to know that such a thing as "heli" exists, it should just be told "remove blobs, add sprite" in a more general way!!
-	applyHeli = function(event, data) {
-		stage.removeChild(stage.getChildByName("blobRed"));
-		stage.removeChild(stage.getChildByName("blobGreen"));
-
-		$('body').trigger("blobSpritesRemoved");
-		if(!b2ddebug){
-			stage.addChild(data.sprite);
-		}
-	},
-
-	removeHeli = function(event, data) {
-		stage.removeChild(stage.getChildByName("heli"));
-
-		$('body').trigger("blobSpritesAdded");
-		if(!b2ddebug){
-			stage.addChild(data.sprites[0]);
-			stage.addChild(data.sprites[1]);
-		}
-	},
-
-	applyBridge = function(event, data) {
-		stage.removeChild(stage.getChildByName("blobRed"));
-		stage.removeChild(stage.getChildByName("blobGreen"));
-
-		$('body').trigger("blobSpritesRemoved");
-		if(!b2ddebug){
-			stage.addChild(data.sprite);
-		}
-	},
-
-	removeBridge = function(event, data) {
-		stage.removeChild(stage.getChildByName("bridge"));
-
-		$('body').trigger("blobSpritesAdded");
-		if(!b2ddebug){
-			stage.addChild(data.sprites[0]);
-			stage.addChild(data.sprites[1]);
-		}
-	},
-
-	removeSphere = function(event, data) {
-		stage.removeChild(stage.getChildByName("sphere"));
-
-		$('body').trigger("blobSpritesAdded");
-		if(!b2ddebug){
-			stage.addChild(data.sprites[0]);
-			stage.addChild(data.sprites[1]);
-		}
-	},
-
-	applyTrampolin = function(event, data) {
-		stage.removeChild(stage.getChildByName("blobGreen"));
-		
-		if(!b2ddebug){
-			stage.addChild(data.sprite);
-		}
-	},
-
-	removeTrampolin = function(event, data) {
-		stage.removeChild(stage.getChildByName("trampolin"));
-
-		if(!b2ddebug){
-			stage.addChild(data.sprite);
-		}	
-	},
-
-	applyStretch = function(event, data) {
-		stage.removeChild(stage.getChildByName("blobRed"));
-		
-		if(!b2ddebug){
-			stage.addChild(data.sprite);
-		}
-	},
-
-	removeStretch = function(event, data) {
-		stage.removeChild(stage.getChildByName("stretch"));
-		
-		if(!b2ddebug){
-			stage.addChild(data.sprite);
 		}	
 	},
 	
@@ -394,12 +301,16 @@ BlobApp.ViewController = (function() {
 	},
 
 	//Doesn't really get used anymore since Level finish to Overworld
-	_onLevelFinished = function() {
+	_onLevelFinished = function() {		
+		iewEntities.length = 0;
+
 		$gamecanvas.css('display', 'none');
 		_showMenu();
 	},
 
-	_onLevelLoadRequest = function() {
+	_onLevelLoadRequest = function() {		
+		viewEntities.length = 0;
+
 		$gamecanvas.fadeOut(1250, function() {
 			_clearScene();
 
@@ -411,44 +322,43 @@ BlobApp.ViewController = (function() {
 	},
 
 	_onSlingshotStarted = function(event, data) {
-		data.slingshotEntity.setBlobSprites([stage.getChildByName("blobRed"), stage.getChildByName("blobGreen")]);
-
 		stage.removeChild(stage.getChildByName("blobRed"));
 		stage.removeChild(stage.getChildByName("blobGreen"));
+		stage.removeChild(stage.getChildByName("bubblegreenBlob"));
+		stage.removeChild(stage.getChildByName("bubbleredBlob"));
+
+		_addDirectionIndicator(data.slingshotEntity);
 
 		$('body').trigger("blobSpritesRemoved");
 	},
 
+	_addDirectionIndicator = function(slingshotEntity) {
+		var xPos, yPos;
+
+		if(slingshotEntity.direction == "left") {
+			xPos = slingshotEntity.prototype.x_coordinate + 75;
+		} else {
+			xPos = slingshotEntity.prototype.x_coordinate - 75;
+		}
+		yPos = slingshotEntity.prototype.y_coordinate - 35;
+
+		var directionIndicator = new BlobApp.DirectionIndicator(xPos, yPos,	slingshotEntity.direction);
+		stage.addChild(directionIndicator.sprite);
+	},
+
 	_onSlingshotStopped = function(event, data) {
-		stage.addChild(data.sprites[0]);
-		stage.addChild(data.sprites[1]);
-		$('body').trigger("blobSpritesAdded");
+		createEntity(0, 0, EntityConfig.REDBLOBID, {}); // will definitely go into the "justRecreate"-case
+		createEntity(0, 0, EntityConfig.GREENBLOBID, {}); // this will do the same thing.
+		
+		$('body').trigger("blobSpritesAdded");		
+		stage.removeChild(stage.getChildByName("directionIndicator"));
 	},
 
 	_shakeCanvas = function(event, data) {
 		$gamecanvas.effect("shake",{direction: data.direction, distance:8}, 220);
 	},
 
-	_listener = function(){
-		// TODO change all the other requests to this one, then rename it!!
-		$('body').on('juiceRequested', applyEntity);
-
-		$('body').on('genericRequested', applyEntity);
-		$('body').on('blobRequested', applyEntity);
-
-		$('body').on('heliEntityRequested', applyHeli);
-		$('body').on('removeHeliFromView', removeHeli);
-
-		$('body').on('bridgeEntityRequested', applyBridge);
-		$('body').on('removeBridgeFromView', removeBridge);
-
-		$('body').on('sphereEntityRequested', applyHeli);
-		$('body').on('removeSphereFromView', removeSphere);
-
-		$('body').on('trampolinEntityRequested', applyTrampolin);
-
-		$('body').on('stretchEntityRequested', applyStretch);
-
+	_listener = function(){		
 		$('body').on('backgroundAdded', applyBackground);
 		$('body').on('onPause', _displayPauseScreen);
 		$('body').on('levelFinished', _onLevelLoadRequest);

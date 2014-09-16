@@ -59,9 +59,11 @@ Der Helicopter wird an seinem Landeplatz zerlegt und die Brücke wird automatisc
 
 ###4. Technische Details
 ####4.1 Engines und Libraries
-Für die Umsetzung des Spiels werden die GraphicsEngine easelJS, die PhysicsEngine Box2D, jQuery, jQueryUI und soundJS. 
+Für die Umsetzung des Spiels werden die GraphicsEngine easelJS, der Tilemapping-Editor Tiled, die PhysicsEngine Box2D, jQuery, jQueryUI und soundJS verwendet. 
 
-EaselJS übernimmt sämtliche Visualisierungsaspekte des Spiels. Das erstreckt sich von der Darstellung der Spielwelt, über die Blobs bis hin zu jeder auftretenden Animation. Spiellogisch trägt diese Engine keine Relevanz. Dafür dient Box2D. 
+EaselJS übernimmt sämtliche Visualisierungsaspekte des Spiels. Das erstreckt sich von der Darstellung der Spielwelt, über die Blobs bis hin zu jeder auftretenden Animation. Spiellogisch trägt diese Engine keine Relevanz. Dafür dient Box2D.
+
+Tiled erstellt aus einem Tileset (.png) einzelne verwendbare Tiles aus denen die Level zusammengebaut werden. Das Ergebnis wird als JSON exportiert ,vom Spiel eingelesen und interpretiert.
 
 Diese PhysicsEngine wird verwendet, um Kollisionsabfragen und Fallphysik zu berechnen. Mit deren Hilfe ist die Spiellogik umgesetzt, da zum Beispiel die Kollision mit einer Tür, ein Level beendet.
 
