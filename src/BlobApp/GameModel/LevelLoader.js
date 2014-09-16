@@ -295,6 +295,19 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_loadGenericData = function(layerData, tilesetSheet, x, y, idx) {
+		if(layerData.data[idx] == EntityConfig.HELITILE || layerData.data[idx] == EntityConfig.HELISTOPTILE
+			//|| layerData.data[idx] == EntityConfig.SPHERETILE 
+			|| layerData.data[idx] == EntityConfig.TELE
+			|| layerData.data[idx] == EntityConfig.SLINGSHOTTILELEFT 
+			//|| layerData.data[idx] == EntityConfig.SLINGSHOTTILERIGHT
+			) {
+			layerData.data[idx] = 2;
+		} else if(layerData.data[idx] == EntityConfig.BRIDGELEFTTILE) {
+			layerData.data[idx] = 88;
+		} else if(layerData.data[idx] == EntityConfig.BRIDGERIGHTTILE) {
+			layerData.data[idx] = 84;
+		}
+
 		var messageToView = {
 			generic : true,
 			x : x,
