@@ -24,6 +24,37 @@ File(s):
     * Common_Controller_4.png
 
 
+Title:
+    Arrow keys, wsad, mouse icon
+
+Author:
+    InanZen
+
+URL:
+    http://creativecommons.org/publicdomain/zero/1.0/
+
+License(s):
+    * CC0 1.0  http://creativecommons.org/publicdomain/zero/1.0/
+
+File(s):
+    * keys-arrow-wsad-mouse_0.png
+
+
+Title:
+    10 8bit coin sounds
+
+Author:
+    Luke.RUSTLTD
+
+URL:
+    http://opengameart.org/content/10-8bit-coin-sounds
+
+License(s):
+    * CC0 1.0  http://creativecommons.org/publicdomain/zero/1.0/
+
+File(s):
+    * coin1.wav
+
 
 Title:
     skweaks
