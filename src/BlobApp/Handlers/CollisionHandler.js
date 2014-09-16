@@ -173,6 +173,7 @@ BlobApp.CollisionHandler = (function() {
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 					y = contact.m_fixtureA.m_body.GetLinearVelocity().y;					
 					$('body').trigger("onTrampolinContact", {body: bodyA, yVel: y});	
+					return;
 				}
 			break;
 

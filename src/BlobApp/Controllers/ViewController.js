@@ -125,6 +125,7 @@ BlobApp.ViewController = (function() {
 				stage.removeChild(data.removeBySprite[i]);
 			}
 		}
+		_sortSprites();
 	},
 
 	_justRecreate = function(entityID, data) {
@@ -177,6 +178,9 @@ BlobApp.ViewController = (function() {
 				break;
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT:	
 				entity = new BlobApp.Slingshot(xPos, yPos-25, "right");
+				break;
+			case EntityConfig.SPHERETRIGGER:	
+				entity = new BlobApp.Orb(xPos, yPos-5);
 				break;
 		}
 
@@ -356,6 +360,27 @@ BlobApp.ViewController = (function() {
 
 	_shakeCanvas = function(event, data) {
 		$gamecanvas.effect("shake",{direction: data.direction, distance:8}, 220);
+	},
+
+	_sortSprites = function() {
+		var triggerCounter = 0;
+
+		for(var i = 0; i < stage.getNumChildren(); i++) {
+			var currentChild = stage.getChildAt(i);
+			if(currentChild.name == "generic") {
+				stage.setChildIndex(currentChild, 1);
+			} else if (currentChild.name == "trigger") {
+				stage.setChildIndex(currentChild, stage.getNumChildren()-1);
+				triggerCounter++;
+			}
+		}
+
+		if(stage.getChildByName("blobRed")) {
+			stage.setChildIndex(stage.getChildByName("blobRed"), stage.getNumChildren()-triggerCounter-1);
+		}	
+		if(stage.getChildByName("blobGreen")) {
+			stage.setChildIndex(stage.getChildByName("blobGreen"), stage.getNumChildren()-triggerCounter-1);
+		}
 	},
 
 	_listener = function(){		
