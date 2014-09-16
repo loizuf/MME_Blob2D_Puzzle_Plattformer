@@ -25,6 +25,39 @@ File(s):
 
 
 Title:
+    Dirt Platformer Tiles
+
+Author:
+    Sharm
+
+URL:
+    http://opengameart.org/content/dirt-platformer-tiles
+
+License(s):
+    * CC-BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+    * OGA-BY 3.0 (http://opengameart.org/content/oga-by-30-faq)
+
+File(s):
+    * skytiles.png
+
+
+Title:
+    Platform tileset nature
+
+Author:
+    Eris
+
+URL:
+    http://opengameart.org/content/platform-tileset-nature
+
+License(s):
+    * CC0 1.0  http://creativecommons.org/publicdomain/zero/1.0/
+
+File(s):
+    * keys-arrow-wsad-mouse_0.png
+
+
+Title:
     Arrow keys, wsad, mouse icon
 
 Author:
@@ -53,7 +86,7 @@ License(s):
     * CC0 1.0  http://creativecommons.org/publicdomain/zero/1.0/
 
 File(s):
-    * coin1.wav
+    * BackgroundGradient.png
 
 
 Title:
