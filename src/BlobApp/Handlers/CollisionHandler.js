@@ -385,8 +385,11 @@ BlobApp.CollisionHandler = (function() {
 	/* Triggers events that open a door and "destroys" the button */
 	private._handleButtonCollison = function(bodyB, contact) {
 		var buttonID = bodyB.GetUserData()[1];
-
-		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
+		var contactDirection = contact.m_manifold.m_localPlaneNormal.y;
+		if(contact.m_fixtureB.m_body.GetUserData()[0]=="Sphere"){
+			contactDirection = -contactDirection;
+		}
+		if(contactDirection > 0) {
 			$('body').trigger('doorOpenRequested', buttonID);
 			$('body').trigger('buttonActivated', {userData : bodyB.GetUserData(), body: bodyB});
 		}
