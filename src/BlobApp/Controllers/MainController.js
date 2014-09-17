@@ -20,7 +20,7 @@ BlobApp.MainController = (function() {
 	p1ID,
 	p2ID,
 
-	debug = true,
+	debug = false,
 
 	init = function(lvlID, overID, p1ControlsID, p2ControlsID) {
 
