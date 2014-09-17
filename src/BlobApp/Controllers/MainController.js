@@ -58,6 +58,7 @@ BlobApp.MainController = (function() {
 		$("body").on('onTick', _sceneUpdate);
 		$("body").on('onReloadGame', _reload);
 		$('body').on('onResetGame', _reset);
+		$('body').on('menuRequest', _setLevelIDToMenu);
 		$('body').on('levelLoadRequest', _onLevelLoadRequest);
 		$('body').on('levelFinished', _saveGameProgress);
 		$('body').on('onNewGameRequested', _startNewGame);
@@ -65,6 +66,11 @@ BlobApp.MainController = (function() {
 		// Connection between model and view:
 		$('body').on('requestViewEntity', _onViewEntityRequested);
 		$('body').on('connectToView', _connectSingleBodyToView);
+	},
+
+	_setLevelIDToMenu = function() {
+		lID = 0;
+		overwID = 0;
 	},
 
 	_continueGame = function() {

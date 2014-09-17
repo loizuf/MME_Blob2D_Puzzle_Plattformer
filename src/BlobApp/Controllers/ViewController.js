@@ -260,17 +260,17 @@ BlobApp.ViewController = (function() {
 
 	_showMenu = function() {
 		// needs unload everything (world, physics, level etc.)
-		var $pauseContainer = $('#pause-container');
-		$pauseContainer.css('display', 'none');
+		var $gamecanvas = $('#canvas-container');
+		$gamecanvas.css('display', 'block');
 
-		var menu = $('#menu-container');
-		menu.css('display', 'block');
-
+		_hidePauseScreen();
 		_clearScene();
 
-		$('body').trigger("resetGame");
+		$('body').trigger("destroyPhysics");
+		$('body').trigger("menuRequest");
 
 		_tick();
+		_resumeGame();
 	},
 
 	_proceedGame = function() {
