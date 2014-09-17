@@ -40,10 +40,10 @@ BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, doorType) {
 
 	_getTileset = function(tileset, doorType) {
 		switch (doorType){
-			case 0:
+			case EntityConfig.NEWGAMEDOOR:
 				return "res/img/newGameDoor.png";
 			break;
-			case 1:
+			case EntityConfig.CONTINUEDOOR:
 				return "res/img/continueDoor.png";
 			break;
 		}

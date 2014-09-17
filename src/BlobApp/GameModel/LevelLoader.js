@@ -439,7 +439,7 @@ BlobApp.LevelLoader = (function() {
 			generic : false,
 			x : x,
 			y : y+12.5,
-			entityID : _createRequestObject["userData"]
+			entityID : _createRequestObject["userData"][0]
 		};
 
 		$('body').trigger("requestViewEntity", messageToView);
