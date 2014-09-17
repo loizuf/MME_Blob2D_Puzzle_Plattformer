@@ -13,10 +13,10 @@ BlobApp.SoundHandler = (function() {
     debug = true,
     soundActive = true,
 
-    /*sound ui? or leave it here*/
+    /*taken out!
     $stopSound = $('#stop-sound'),
     $resumeSound = $('#resume-sound'),
-
+    */
 
     heliActive = false;
 

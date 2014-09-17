@@ -11,7 +11,10 @@ BlobApp.MainController = (function() {
 	_physicsHandler = null,
 	_levelloader = null,
 	_soundHandler = null,
-	
+	_hintHandler = null,
+	/*needs to be removed!*/
+	NUMHINTS = 4,
+
 	lID,
 	overwID,
 	p1ID,
@@ -43,6 +46,7 @@ BlobApp.MainController = (function() {
 		_levelloader = BlobApp.LevelLoader;
 		_globalStateHandler = BlobApp.GlobalState;
 		_soundHandler = BlobApp.SoundHandlerTest;
+		_hintHandler = BlobApp.HintHandler;
 
 		_globalStateHandler.init();
 		_modelController.init(p1ID, p2ID, _soundHandler);
@@ -50,6 +54,11 @@ BlobApp.MainController = (function() {
 		_physicsHandler.init();
 		_levelloader.init(lID, overwID, _globalStateHandler);	
 		_soundHandler.init();
+		if(debug){
+			_hintHandler.init(NUMHINTS);
+		}else{
+			_hintHandler.init(overwID);
+		}
 
 		_connectModelAndViewEntities();	
 	},
@@ -89,6 +98,7 @@ BlobApp.MainController = (function() {
 			if(lID==6){
 				lID=0;
 				overwID++;
+				_hintHandler.showHints(overwID);
 			}
 		} else {
 			lID = 0;

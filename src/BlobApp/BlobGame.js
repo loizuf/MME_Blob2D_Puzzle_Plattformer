@@ -150,7 +150,7 @@ BlobApp.BlobGame = (function() {
 		$('body').unbind();
 		
 		$levelSelectContainer.css('display', 'none');	
-		$gamecanvas.css('display', 'block');
+		$gamecanvas.css('display', 'inline-block');
 
 		BlobApp.MainController.init(lvlID, owID, p1Controls, p2Controls);
 	};

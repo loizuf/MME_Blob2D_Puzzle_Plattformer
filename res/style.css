@@ -124,14 +124,34 @@ h1 {
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
+
 .ingame{
 	margin-top: 30px;
 	font-size: 230%;
 }
+
 .center{
 	width: 100%;
 	text-align: center;
 }
+
 .controll-hint{
 	width: 100px;
+}
+
+.hidden{
+	display: none;
+}
+
+.hint-img{
+	width : 100%;
+	height: 50px;
+}
+
+.offset{
+	/*add background image offset!*/
+	background-position: 50% 50%;
+}
+#player-two-controls{
+	float: right;
 }

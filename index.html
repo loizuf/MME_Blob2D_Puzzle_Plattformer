@@ -16,10 +16,22 @@
 </div>
 
 <div id="canvas-container">
-	<div id="player-one-controls" class="controll-hint"></div>
+	<!-- needs to be styled by sb who is actually able to display these left/right of the canvas
+	<div id="player-one-controls" class="controll-hint">
+		<div class="hint-img p1 hidden ht-1"><img src="res/img/hint/p1Tramp.png"></div>
+		<div class="hint-img p1 hidden ht-2"><img src="res/img/hint/p1Bridge.png"></div>
+		<div class="hint-img p1 hidden ht-3"><img src="res/img/hint/p1Heli.png"></div>
+	</div>
+	-->
 	<canvas width="800" height="600" id="gameCanvas"></canvas>
 	<canvas width="800" height="600" id="debugCanvas"></canvas>
-	<div id="player-two-controls" class="controll-hint"></div>
+	<!-- look up
+	<div id="player-two-controls" class="controll-hint">
+		<div class="hint-img p2 hidden ht-1"><img src="res/img/hint/p2Stretch.png"></div>
+		<div class="hint-img p2 hidden ht-2"><img src="res/img/hint/p2Bridge.png"></div>
+		<div class="hint-img p2 hidden ht-3"><img src="res/img/hint/p2Heli.png"></div>
+	</div>
+	-->
 </div>
 
 <div id="pause-container">
@@ -61,10 +73,12 @@
 	</div>
 </div>
 
+<!--
 <div class="center">
 	<div class="menu-div menu-item" id="stop-sound">Stop Sound</div>
 	<div class="menu-div menu-item" id="resume-sound">Resume Sound</div>
 </div>
+-->
 
 <!-- engines, jQuery and jQueryui-->
 <script type="text/javascript" src="libs/Box2dWeb-2.1.a.3.min.js"></script>
@@ -136,7 +150,7 @@
 <script type="text/javascript" src="src/BlobApp/Handlers/InputHandler.js"></script>
 <script type="text/javascript" src="src/BlobApp/Handlers/ScreenStateHandler.js"></script>
 <script type="text/javascript" src="src/BlobApp/Handlers/SoundHandlerTest.js"></script>
-
+<script type="text/javascript" src="src/BlobApp/Handlers/HintHandler.js"></script>
 
 <script>
 	$(function() {

@@ -230,7 +230,7 @@ BlobApp.ViewController = (function() {
 
 	_restartGame = function() {
 		var $gamecanvas = $('#canvas-container');
-		$gamecanvas.css('display', 'block');
+		$gamecanvas.css('display', 'inline-block');
 
 		_hidePauseScreen();
 		_clearScene();

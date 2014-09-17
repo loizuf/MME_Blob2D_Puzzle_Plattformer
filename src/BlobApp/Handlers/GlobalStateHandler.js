@@ -34,6 +34,7 @@ BlobApp.GlobalState = (function() {
 		_gameState.currentOverworldMapID = 1;
 		_gameState.currentLevel = 1;
 		_save();
+		return _gameState;
 	},
 
 	_setNewGameState = function(levelId, overworldID) {
