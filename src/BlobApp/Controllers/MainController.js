@@ -80,10 +80,15 @@ BlobApp.MainController = (function() {
 
 	_saveGameProgress = function() {
 		_globalStateHandler.onFinishLevel(lID, overwID);
+		_proceedLevelStatus();
+	},
+
+	_proceedLevelStatus = function() {
 		if(!debug){
 			lID++;
 			if(lID==6){
 				lID=0;
+				overwID++;
 			}
 		} else {
 			lID = 0;
