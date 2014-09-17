@@ -298,7 +298,7 @@ BlobApp.LevelLoader = (function() {
 		entityID = layerData.data[idx];
 
 		if(layerData.data[idx] == EntityConfig.HELITILE || layerData.data[idx] == EntityConfig.HELISTOPTILE
-			//|| layerData.data[idx] == EntityConfig.SPHERETILE 
+			|| layerData.data[idx] == EntityConfig.SPHERETILE 
 			|| layerData.data[idx] == EntityConfig.TELE
 			|| layerData.data[idx] == EntityConfig.SLINGSHOTTILELEFT 
 			|| layerData.data[idx] == EntityConfig.SLINGSHOTTILERIGHT

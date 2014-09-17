@@ -24,6 +24,70 @@ File(s):
     * Common_Controller_4.png
 
 
+Title:
+    Dirt Platformer Tiles
+
+Author:
+    Sharm
+
+URL:
+    http://opengameart.org/content/dirt-platformer-tiles
+
+License(s):
+    * CC-BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+    * OGA-BY 3.0 (http://opengameart.org/content/oga-by-30-faq)
+
+File(s):
+    * skytiles.png
+
+
+Title:
+    Platform tileset nature
+
+Author:
+    Eris
+
+URL:
+    http://opengameart.org/content/platform-tileset-nature
+
+License(s):
+    * CC0 1.0  http://creativecommons.org/publicdomain/zero/1.0/
+
+File(s):
+    * keys-arrow-wsad-mouse_0.png
+
+
+Title:
+    Arrow keys, wsad, mouse icon
+
+Author:
+    InanZen
+
+URL:
+    http://creativecommons.org/publicdomain/zero/1.0/
+
+License(s):
+    * CC0 1.0  http://creativecommons.org/publicdomain/zero/1.0/
+
+File(s):
+    * keys-arrow-wsad-mouse_0.png
+
+
+Title:
+    10 8bit coin sounds
+
+Author:
+    Luke.RUSTLTD
+
+URL:
+    http://opengameart.org/content/10-8bit-coin-sounds
+
+License(s):
+    * CC0 1.0  http://creativecommons.org/publicdomain/zero/1.0/
+
+File(s):
+    * BackgroundGradient.png
+
 
 Title:
     skweaks

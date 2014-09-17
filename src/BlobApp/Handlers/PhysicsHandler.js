@@ -517,7 +517,7 @@ BlobApp.PhysicsHandler = (function() {
 		fixture.density = 1;
 		fixture.restitution = 0.5;
 		fixture.friction = 0.1;
-		fixture.shape = new b2CircleShape(25 / SCALE);
+		fixture.shape = new b2CircleShape(23 / SCALE);
 
 		var bodyDef = new b2BodyDef;
 
