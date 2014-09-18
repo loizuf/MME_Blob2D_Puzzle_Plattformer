@@ -39,8 +39,18 @@
 		<div id="resume" class="menu-div menu-item">Resume</div>
 		<div id="restart" class="menu-div menu-item">Restart</div>
 		<div id="retreat" class="menu-div menu-item">Menu</div>
+		<input type="submit" id="w8-d-blue" name="w8-d-blue" class="w8-button iconize" value="" />
 	</div>
 </div>
+
+<script type="text/javascript">
+	document.getElementById("w8-d-blue").addEventListener("click", function (e) {
+	    var target = e.target;
+
+	    target.classList.toggle("iconize");
+	    target.classList.toggle("iconize2");
+	}, false);
+</script>
 
 <div id="levelselect-container">
 	<div id="selection">
@@ -159,3 +169,7 @@
 </script>
 </body>
 </html>
+
+<!-- This is some code for a toggle function for the sound icon
+
+-->
