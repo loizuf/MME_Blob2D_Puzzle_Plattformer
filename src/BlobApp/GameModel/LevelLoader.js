@@ -37,7 +37,7 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_initBackground = function(){
-		var background = new createjs.Bitmap("res/img/thingy.png");
+		var background = new createjs.Bitmap("res/img/LevelBackground/NightBackground.png");
 		$('body').trigger('backgroundAdded', background);
 	}
 
