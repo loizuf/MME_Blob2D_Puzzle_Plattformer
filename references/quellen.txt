@@ -2,6 +2,8 @@ http://www.luxanimals.com/blog/article/combining_easel_box2d
 easeljs dokumentation
 http://stackoverflow.com/questions/3779534/how-to-disable-text-selection-with-css-or-js
 disable selection
+http://stackoverflow.com/questions/17354549/how-to-change-button-icon-on-click
+icon toggle
 
 
 Title:
@@ -22,6 +24,22 @@ File(s):
     * Common_Controller_2.png
     * Common_Controller_3.png
     * Common_Controller_4.png
+
+
+Title:
+    Jolly UI Free – free hand-drawn vector UI elements
+
+Author:
+    Hand-Drawn Goods
+
+URL:
+    http://ui-cloud.com/jolly-ui-free-free-hand-drawn-vector-ui-elements/
+
+License(s):
+    * CC-BY 3.0 ( http://creativecommons.org/licenses/by/3.0/legalcode )
+
+File(s):
+    * jolly-ui-free.psd
 
 
 Title:
