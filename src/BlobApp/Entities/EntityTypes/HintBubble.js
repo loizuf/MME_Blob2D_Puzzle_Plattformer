@@ -67,7 +67,6 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 		sprite.mouseEnabled = false;
 
 		var aniName;
-		console.log(thisVar.bubbleType);
 		if(thisVar.hintID == "bubblegreenBlob") {
 			if(thisVar.bubbleType == "down"){
 				if(Controls.p1 == 1) {
@@ -93,7 +92,7 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 			}
 			if(thisVar.bubbleType == "up") {
 				if(Controls.p1 == 1) {
-					aniName = "levelLoadPlayer1";
+					aniName = "levelLoadPlayer2";
 				} else {
 					aniName = "blinkControllerUp";
 				}
