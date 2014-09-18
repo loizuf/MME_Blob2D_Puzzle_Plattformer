@@ -419,7 +419,7 @@ BlobApp.CollisionHandler = (function() {
 	private._playerInTriggerZone = function(player, zoneName, bodyB) {
 			$('body').trigger(player+"InTriggerZone", {name: zoneName, triggerID: bodyB.GetUserData()[1]});
 			$('body').trigger("coopTriggerAnimationChanged", {animationKey: AnimationKeys.BIGSHINE, name: zoneName, triggerID: bodyB.GetUserData()});
-			private._showHintBubble(bodyB, player);
+			private._showHintBubble(bodyB, player, "down");
 	},
 
 	/* Triggers events that reset what happens when the down key is pressed. Also some visualisation. */
@@ -459,7 +459,7 @@ BlobApp.CollisionHandler = (function() {
 			var levelID = bodyB.GetUserData()[1];
 			var overID = bodyB.GetUserData()[2];
 			$('body').trigger(player+'InLevelLoadTriggerZone', {lvlID: levelID, owID: overID});
-			private._showHintBubble(bodyB, player);
+			private._showHintBubble(bodyB, player, "up");
 		}
 	},
 
@@ -509,14 +509,14 @@ BlobApp.CollisionHandler = (function() {
 		$('body').trigger("requestViewEntity", messageToView);
 	},
 
-	private._showHintBubble = function(body, player) {
+	private._showHintBubble = function(body, player, type) {
 		var messageToView = {
 			generic: false,
 			x: bodyB.m_xf.position.x * 30,
 			y: bodyB.m_xf.position.y * 30 - 75,
 			entityID: "Bubble",
 			bubbleInfo : {
-				bubbleType : "down",
+				bubbleType : type,
 				id : "bubble"+player
 			}
 		};

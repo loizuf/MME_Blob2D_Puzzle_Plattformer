@@ -42,7 +42,10 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 				blinkPlayer1: [4, 5, "blinkPlayer1", 0.035],
 				blinkPlayer2: [2, 3, "blinkPlayer2", 0.035],
 				waitingForPlayer2: [6, 7, "waitingForPlayer2", 0.035],
-				waitingForPlayer1: [8, 9, "waitingForPlayer1", 0.035]
+				waitingForPlayer1: [8, 9, "waitingForPlayer1", 0.035],
+				levelLoadPlayer1: [12,13,"levelLoadPlayer1", 0.035],
+				levelLoadPlayer2: [10,11,"levelLoadPlayer2", 0.035],
+				blinkControllerUp: [12,13, "blinkControllerUp", 0.035]
 			}
 		}
 
@@ -65,16 +68,34 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 
 		var aniName;
 		if(thisVar.hintID == "bubblegreenBlob") {
-			if(Controls.p1 == 1) {
-				aniName = "blinkPlayer1";
-			} else {
-				aniName = "blinkController";
+			if(thisVar.bubbleType = "down"){
+				if(Controls.p1 == 1) {
+					aniName = "blinkPlayer1";
+				} else {
+					aniName = "blinkController";
+				}
+			} 
+			if(thisVar.bubbleType = "up") {
+				if(Controls.p1 == 1) {
+					aniName = "levelLoadPlayer1";
+				} else {
+					aniName = "blinkControllerUp";
+				}
 			}
 		} else {
-			if(Controls.p2 == 1) {
-				aniName = "blinkPlayer2";
-			} else {
-				aniName = "blinkController";
+			if(thisVar.bubbleType = "down"){
+				if(Controls.p2 == 1) {
+					aniName = "blinkPlayer2";
+				} else {
+					aniName = "blinkController";
+				}
+			}
+			if(thisVar.bubbleType = "up") {
+				if(Controls.p1 == 1) {
+					aniName = "levelLoadPlayer1";
+				} else {
+					aniName = "blinkControllerUp";
+				}
 			}
 		}
  
@@ -86,16 +107,35 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 		switch(data.animationKey) {
 			case AnimationKeys.PRESSBUTTON:
 				if(thisVar.hintID == "bubblegreenBlob" && data.blobID =="p1") {
-					if(Controls.p1 == 1) {
-						aniName = "blinkPlayer1";
-					} else {
-						aniName = "blinkController";
+					if(thisVar.bubbleType = "down"){
+						if(Controls.p1 == 1) {
+							aniName = "blinkPlayer1";
+						} else {
+							aniName = "blinkController";
+						}
+					} 
+					if(thisVar.bubbleType = "up") {
+						if(Controls.p1 == 1) {
+							aniName = "levelLoadPlayer1";
+						} else {
+							aniName = "blinkControllerUp";
+						}
 					}
+					
 				} else if(thisVar.hintID == "bubbleredBlob" && data.blobID =="p2"){
-					if(Controls.p2 == 1) {
-						aniName = "blinkPlayer2";
-					} else {
-						aniName = "blinkController";
+					if(thisVar.bubbleType = "down"){
+						if(Controls.p2 == 1) {
+							aniName = "blinkPlayer2";
+						} else {
+							aniName = "blinkController";
+						}
+					}
+					if(thisVar.bubbleType = "up") {
+						if(Controls.p1 == 1) {
+							aniName = "levelLoadPlayer1";
+						} else {
+							aniName = "blinkControllerUp";
+						}
 					}
 				}
 			break;
