@@ -7,6 +7,22 @@ icon toggle
 
 
 Title:
+    hand drawn Icon Pack
+
+Author:
+    Freepik
+
+URL:
+    http://www.flaticon.com/packs/hand-drawn
+
+License(s):
+    * CC-BY 3.0 ( http://creativecommons.org/licenses/by/3.0/legalcode )
+
+File(s):
+    * musical66.png
+
+
+Title:
     Common Controller
 
 Author:
@@ -39,7 +55,7 @@ License(s):
     * CC-BY 3.0 ( http://creativecommons.org/licenses/by/3.0/legalcode )
 
 File(s):
-    * jolly-ui-free.psd
+    * jolly-ui-free.psd (partly used)
 
 
 Title:
