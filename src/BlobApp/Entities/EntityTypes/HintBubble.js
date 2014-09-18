@@ -9,7 +9,7 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 
 	this.prototype.init = function() {
 		var tileset = new Image();
-		tileset.src = "res/img/sign.png";
+		tileset.src = "res/img/sign_alt.png";
 
 		_listeners();
 

@@ -459,12 +459,18 @@ BlobApp.CollisionHandler = (function() {
 			var levelID = bodyB.GetUserData()[1];
 			var overID = bodyB.GetUserData()[2];
 			$('body').trigger(player+'InLevelLoadTriggerZone', {lvlID: levelID, owID: overID});
+			private._showHintBubble(bodyB, player);
 		}
 	},
 
 	/* Resets what happens when the "up" key is pressed. (the blob will jump) */
 	private._playerLeftLevelLoadTriggerZone = function(player) {
 		$('body').trigger(player + 'LeftLevelLoadTriggerZone');
+		var messageToView = {
+				generic: false,
+				remove: ["bubble"+player]
+			};
+			$('body').trigger("requestViewEntity", messageToView);
 	},
 
 	private._playerInMenuDoorZone = function(player, bodyB){
