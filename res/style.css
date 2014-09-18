@@ -79,7 +79,7 @@ h1 {
 	width: 800px;
 	height: 600px;
 	display:inline-block;
-	background-image: url(img/menudummy.png);
+	background-image: url(img/fancypausesketch.png);
 }
 
 #debugCanvas {
@@ -112,7 +112,8 @@ h1 {
 .menu-item{
 	width: 150px;
 	height: 30px;
-	background-image: url(img/menuitembg.png);	
+	/*background-image: url(img/menuitembg.png);	*/
+	background-color: white;
 }
 
 .control{

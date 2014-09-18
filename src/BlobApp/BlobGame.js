@@ -4,7 +4,7 @@ BlobApp.BlobGame = (function() {
 	p1Controls,
 	p2Controls,
 
-	worldToTest = 4,
+	worldToTest = 6,
 	debug = true,
 
 	$selectLevel1 = $('#level1'),
