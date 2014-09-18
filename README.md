@@ -74,3 +74,13 @@ jQuerUI dient lediglich dem Zweck den Canvas zu schütteln. Diese Library ermög
 soundJS vertont das Spiel. 
 
 ####4.2 Verwendete Patterns
+
+Das Spiel verwendet soweit wie möglich das Module Pattern: Elemente, die nur einmal vorkommen, sind als Module umgesetzt. Beispielsweise gibt es ein Modul, das für die Physik zuständig ist (den PhysicsHandler).
+
+Die Grafiken (EntityTypes) und GameModel-Blobs sind jeweils als Klassen mit einer einfachen Vererbungshierarchie umgesetzt. Hierbei ergeben sich Probleme, die im Module Pattern nicht auftauchen; es sind z.B. alle Methoden, die in einer Klasse stehen, aber nicht dem "this"-Objekt oder einem anderen Objekt zugehörig sind, "global" definiert. Sie überschreiben sich damit gegenseitig über mehrere Klassen hinweg.
+Aus diesem Grund sind die Methoden zum Großteil bestimmten Variablen zugeordnet (entweder "this" oder einem dafür eigens angelegten Objekt, wie der "private"-Variable im CollisionHandler).
+Vererbung wird über die prototype-Variable gelöst, über die alle Variablen in JavaScript verfügen. Dadurch können Methoden von Superklassen aufgerufen oder überschrieben werden. Die "Schlüsselzeile" für die Vererbung ist 
+
+    this.prototype = new Superclass();
+
+Grundsätzlich hält sich das Spiel an die Trennung von Model, View/Sound und Controller, zumindest soweit, wie das für ein Spiel praktikabel ist. Grafiken werden nur im ViewController erstellt und der MainController verbindet Model und View. Die verwendeten Engines machen die vollständige Unabhängigkeit von Phsyik und Visualisierung praktisch unmöglich und es ist bei einem Spiel auch nicht sinnvoll, das anzustreben.
