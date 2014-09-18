@@ -45,7 +45,7 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 				waitingForPlayer1: [8, 9, "waitingForPlayer1", 0.035],
 				levelLoadPlayer1: [12,13,"levelLoadPlayer1", 0.035],
 				levelLoadPlayer2: [10,11,"levelLoadPlayer2", 0.035],
-				blinkControllerUp: [12,13, "blinkControllerUp", 0.035]
+				blinkControllerUp: [14,15, "blinkControllerUp", 0.035]
 			}
 		}
 
@@ -67,15 +67,16 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 		sprite.mouseEnabled = false;
 
 		var aniName;
+		console.log(thisVar.bubbleType);
 		if(thisVar.hintID == "bubblegreenBlob") {
-			if(thisVar.bubbleType = "down"){
+			if(thisVar.bubbleType == "down"){
 				if(Controls.p1 == 1) {
 					aniName = "blinkPlayer1";
 				} else {
 					aniName = "blinkController";
 				}
 			} 
-			if(thisVar.bubbleType = "up") {
+			if(thisVar.bubbleType == "up") {
 				if(Controls.p1 == 1) {
 					aniName = "levelLoadPlayer1";
 				} else {
@@ -83,14 +84,14 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 				}
 			}
 		} else {
-			if(thisVar.bubbleType = "down"){
+			if(thisVar.bubbleType == "down"){
 				if(Controls.p2 == 1) {
 					aniName = "blinkPlayer2";
 				} else {
 					aniName = "blinkController";
 				}
 			}
-			if(thisVar.bubbleType = "up") {
+			if(thisVar.bubbleType == "up") {
 				if(Controls.p1 == 1) {
 					aniName = "levelLoadPlayer1";
 				} else {
@@ -107,14 +108,14 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 		switch(data.animationKey) {
 			case AnimationKeys.PRESSBUTTON:
 				if(thisVar.hintID == "bubblegreenBlob" && data.blobID =="p1") {
-					if(thisVar.bubbleType = "down"){
+					if(thisVar.bubbleType == "down"){
 						if(Controls.p1 == 1) {
 							aniName = "blinkPlayer1";
 						} else {
 							aniName = "blinkController";
 						}
 					} 
-					if(thisVar.bubbleType = "up") {
+					if(thisVar.bubbleType == "up") {
 						if(Controls.p1 == 1) {
 							aniName = "levelLoadPlayer1";
 						} else {
@@ -123,14 +124,14 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 					}
 					
 				} else if(thisVar.hintID == "bubbleredBlob" && data.blobID =="p2"){
-					if(thisVar.bubbleType = "down"){
+					if(thisVar.bubbleType == "down"){
 						if(Controls.p2 == 1) {
 							aniName = "blinkPlayer2";
 						} else {
 							aniName = "blinkController";
 						}
 					}
-					if(thisVar.bubbleType = "up") {
+					if(thisVar.bubbleType == "up") {
 						if(Controls.p1 == 1) {
 							aniName = "levelLoadPlayer1";
 						} else {
