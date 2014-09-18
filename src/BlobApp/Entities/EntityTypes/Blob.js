@@ -50,7 +50,9 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 				afterTeleport: {
 					frames : [139,138,137,136,135,134,133,132,131,130,129,128,127,126,125,124,123,122,121,120], 
 					next: "idle1"
-				}
+				},
+				death: [140, 151, "afterDeath"],
+				afterDeath: [152, 152, "afterDeath"]
 			}
 		}
 
@@ -98,9 +100,10 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 		sprite.gotoAndPlay("jumpLeft");
 	},
 
-	_animate = function(event, data) {					
-		if(sprite.currentAnimation == "teleport" || sprite.currentAnimation == "afterTeleport") return;
-		if(animateBlobs && blobID==data.blobID) {				
+	_animate = function(event, data) {		
+		if(sprite.currentAnimation == "teleport" || sprite.currentAnimation == "afterTeleport"
+			|| sprite.currentAnimation == "death") return;
+		if(animateBlobs && blobID == data.blobID) {				
 			switch(data.animationKey) {
 				case AnimationKeys.IDLE1:
 					sprite.gotoAndPlay("idle1");
@@ -124,6 +127,10 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 
 				case AnimationKeys.TELEPORT:
 					sprite.gotoAndPlay("teleport");
+				break;
+
+				case AnimationKeys.DEATH:
+					sprite.gotoAndPlay("death");
 				break;
 			}
 		}

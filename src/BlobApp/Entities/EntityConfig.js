@@ -63,7 +63,8 @@ AnimationKeys = {
 	LOOSEN: 13,
 	OPEN: 14,
 	PRESSBUTTON: 15,
-	WAITING: 16
+	WAITING: 16,
+	DEATH: 17
 },
 
 // 1 = keyboard, 2 = controller

@@ -495,7 +495,7 @@ BlobApp.LevelLoader = (function() {
 		var messageToView = {
 			generic : false,
 			x : x,
-			y : y+12.5,
+			y : y+10,
 			entityID : EntityConfig.LEVELDOOR,
 			levelID : levelDoorLevelID,
 			owID : levelDoorOverID
