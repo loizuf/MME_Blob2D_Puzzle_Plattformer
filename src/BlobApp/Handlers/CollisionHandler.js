@@ -417,8 +417,8 @@ BlobApp.CollisionHandler = (function() {
 
 	/* Triggers events that make the blobs behave differently when the "action button"/down key is pressed. Also some visualisation. */
 	private._playerInTriggerZone = function(player, zoneName, bodyB) {
-			$('body').trigger(player+"InTriggerZone", {name: zoneName});
-			$('body').trigger("coopTriggerAnimationChanged", {animationKey: AnimationKeys.BIGSHINE, triggerID: bodyB.GetUserData()});
+			$('body').trigger(player+"InTriggerZone", {name: zoneName, triggerID: bodyB.GetUserData()[1]});
+			$('body').trigger("coopTriggerAnimationChanged", {animationKey: AnimationKeys.BIGSHINE, name: zoneName, triggerID: bodyB.GetUserData()});
 			private._showHintBubble(bodyB, player);
 	},
 

@@ -153,7 +153,7 @@ BlobApp.LevelLoader = (function() {
 						case EntityConfig.BRIDGERIGHTTILE:
 						case EntityConfig.SLINGSHOTTILELEFT:
 						case EntityConfig.SLINGSHOTTILERIGHT:
-							_createTriggerZone(xcoords, ycoords, layerData.data[idx]+1000);
+							_createTriggerZone(xcoords, ycoords, layerData.data[idx]+1000, idx);
 							borders[y][x] = true;
 							_loadGenericData(layerData, tilesetSheet, xcoords, ycoords, idx);
 						break;
@@ -546,9 +546,9 @@ BlobApp.LevelLoader = (function() {
 		$('body').trigger("requestViewEntity", messageToView);
 	},
 
-	_createTriggerZone = function(x, y, entityID) {
+	_createTriggerZone = function(x, y, entityID, idx) {
 
-		_createRequestObject["userData"] = [entityID];
+		_createRequestObject["userData"] = [entityID, idx];
 
 		_createRequestObject["width"] = 15;
 		_createRequestObject["height"] = 15;
@@ -563,7 +563,8 @@ BlobApp.LevelLoader = (function() {
 			generic : false,
 			x : x,
 			y : y-25,
-			entityID : entityID
+			entityID : entityID,
+			uniqueID : idx
 		};
 		$('body').trigger("requestViewEntity", messageToView);
 	},

@@ -37,36 +37,36 @@ BlobApp.BlobPlayer1 = (function() {
 		$('body').on('startSlingshot', thisVar.initSlingshot);
 	},
 
-	this.tryToInit = function(skill) {
+	this.tryToInit = function(skill, triggerZoneID) {
 		_preventUniqueAbilityTriggerActivationP1();
 
 		switch(skill) {
 			case "heli":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 
 			case "tele":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 
 			case "bridgeLeft":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 
 			case "bridgeRight":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 
 			case "sphere":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 
 			case "slingshotLeft":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 
 			case "slingshotRight":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 		}
 	},
@@ -93,7 +93,7 @@ BlobApp.BlobPlayer1 = (function() {
 			return;
 		} 
 					
-		prototypeVar.setFunction("downPressed", function(){thisVar.tryToInit(what.name);});
+		prototypeVar.setFunction("downPressed", function(){thisVar.tryToInit(what.name, what.triggerID);});
 	},
 
 	_setUpActionP1 = function(event, IDS) {
@@ -166,7 +166,7 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	// For when the blob is waiting for the other blob to do something
-	this.setIdle = function(skill) {
+	this.setIdle = function(skill, triggerZoneID) {
 
 		function restore() {
 			$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : false});
@@ -181,7 +181,7 @@ BlobApp.BlobPlayer1 = (function() {
 		prototypeVar.setFunction("currentLeft", restore);
 		prototypeVar.setFunction("currentRight", restore);
 
-		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : skill});	
+		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p1", "waiting" : skill, "triggerID" : triggerZoneID});	
 		$('body').trigger("animateHintBubble", {animationKey: AnimationKeys.WAITING, blobID: "p1"});
 		
 	},

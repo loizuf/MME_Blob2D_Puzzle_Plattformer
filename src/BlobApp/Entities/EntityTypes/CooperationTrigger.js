@@ -1,4 +1,4 @@
-BlobApp.CooperationTrigger = (function CooperationTrigger(x_pos, y_pos, coopID) {
+BlobApp.CooperationTrigger = (function CooperationTrigger(x_pos, y_pos, coopID, triggerID) {
 	var that = this,
 
 	sprite, 
@@ -60,15 +60,17 @@ BlobApp.CooperationTrigger = (function CooperationTrigger(x_pos, y_pos, coopID) 
 	},
 
 	_animate = function(event, data) {	
-		if(data.triggerID != coopID) return;
-		switch(data.animationKey) {
-			case AnimationKeys.SMALLSHINE:
-				sprite.gotoAndPlay("smallShine");
-			break;
+		if(data.triggerID[0] != coopID) return;
+		if(data.triggerID[1] == triggerID || data.triggerID[0] == EntityConfig.TELETRIGGER) {
+			switch(data.animationKey) {
+				case AnimationKeys.SMALLSHINE:
+					sprite.gotoAndPlay("smallShine");
+				break;
 
-			case AnimationKeys.BIGSHINE:
-				sprite.gotoAndPlay("bigShine");
-			break;
+				case AnimationKeys.BIGSHINE:
+					sprite.gotoAndPlay("bigShine");
+				break;
+			}
 		}
 	};
 

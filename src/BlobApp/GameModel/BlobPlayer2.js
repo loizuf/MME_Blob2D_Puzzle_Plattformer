@@ -43,36 +43,36 @@ BlobApp.BlobPlayer2 = (function() {
 		});
 	},
 
-	this.tryToInit = function(skill) {
+	this.tryToInit = function(skill, triggerZoneID) {
 		_preventUniqueAbilityTriggerActivationP2();
 
 		switch(skill) {
 			case "heli":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 
 			case "tele":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 
 			case "bridgeLeft":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 
 			case "bridgeRight":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 
 			case "sphere":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 
 			case "slingshotLeft":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 
 			case "slingshotRight":
-				thisVar.setIdle(skill);
+				thisVar.setIdle(skill, triggerZoneID);
 			break;
 		}
 	},
@@ -99,7 +99,7 @@ BlobApp.BlobPlayer2 = (function() {
 			return;
 		} 
 		
-		prototypeVar.setFunction("downPressed", function(){thisVar.tryToInit(what.name);});
+		prototypeVar.setFunction("downPressed", function(){thisVar.tryToInit(what.name, what.triggerID);});
 	},
 
 	_setUpActionP2 = function(event, IDS) {
@@ -173,7 +173,7 @@ BlobApp.BlobPlayer2 = (function() {
 	},
 
 	// For when the blob is waiting for the other blob to do something
-	this.setIdle = function(skill) {
+	this.setIdle = function(skill, triggerZoneID) {
 
 		function restore() {			
 			$('body').trigger("onPlayerWaitingChange", {"playerName" : "p2", "waiting" : false});
@@ -188,7 +188,7 @@ BlobApp.BlobPlayer2 = (function() {
 		prototypeVar.setFunction("currentLeft", restore);
 		prototypeVar.setFunction("currentRight", restore);
 		
-		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p2", "waiting" : skill});
+		$('body').trigger("onPlayerWaitingChange", {"playerName" : "p2", "waiting" : skill, "triggerID" : triggerZoneID});
 		$('body').trigger("animateHintBubble", {animationKey: AnimationKeys.WAITING, blobID: "p2"});
 	},
 

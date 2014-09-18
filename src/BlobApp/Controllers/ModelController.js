@@ -249,20 +249,28 @@ BlobApp.ModelController = (function() {
 	},
 
 	_onPlayerWaitingChange = function(event, data) {
-		console.log("onPlayerWaitingChange", data);
 		player = (data.playerName == "p1") ? _blobPlayerOne : _blobPlayerTwo;
-		waiting = data.waiting;
+		waiting = {
+			name: data.waiting,
+			triggerID: data.triggerID
+		};
 
 		player.prototype.setWaitingForOther(waiting);
 
 		if(waiting != false) {
 			if(player == _blobPlayerOne) {
-				if(waiting == _blobPlayerTwo.prototype.getWaitingForOther()) {
-					_startSpecial(waiting);
+				waitingP2 = _blobPlayerTwo.prototype.getWaitingForOther();
+
+				if(waitingP2 && waiting.name == waitingP2.name && 
+					(waiting.name == "tele" || waiting.triggerID == waitingP2.triggerID)) {
+					_startSpecial(waiting.name);
 				}
 			} else {
-				if(waiting == _blobPlayerOne.prototype.getWaitingForOther()) {	
-					_startSpecial(waiting);			
+				waitingP1 = _blobPlayerOne.prototype.getWaitingForOther();
+
+				if(waitingP1 && waiting.name == waitingP1.name && 
+					(waiting.name == "tele" || waiting.triggerID == waitingP1.triggerID)) {
+					_startSpecial(waiting.name);
 				}
 			}
 		}

@@ -66,7 +66,7 @@ BlobApp.ViewController = (function() {
 				case EntityConfig.SLINGSHOTTRIGGERRIGHT :
 				case EntityConfig.SPHERETRIGGER :
 					_createSpecialAbilitySprite(entityID, xPos, yPos);
-					entity = new BlobApp.CooperationTrigger(xPos, yPos, entityID);
+					entity = new BlobApp.CooperationTrigger(xPos, yPos, entityID, data.uniqueID);
 					break;
 				case EntityConfig.DOORID : 
 					entity = new BlobApp.DynamicDoor(xPos, yPos, data.doorID);
