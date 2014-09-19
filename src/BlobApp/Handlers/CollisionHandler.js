@@ -386,7 +386,7 @@ BlobApp.CollisionHandler = (function() {
 	private._handleButtonCollison = function(bodyB, contact) {
 		var buttonID = bodyB.GetUserData()[1];
 		var contactDirection = contact.m_manifold.m_localPlaneNormal.y;
-		if(contact.m_fixtureB.m_body.GetUserData()[0]=="Sphere"){
+		if(contact.m_fixtureB.m_body.GetUserData()[0] == "Sphere"){
 			contactDirection = -contactDirection;
 		}
 		if(contactDirection > 0) {
@@ -403,6 +403,8 @@ BlobApp.CollisionHandler = (function() {
 			$('body').trigger("blobanimationChanged", {blobID: EntityConfig.REDBLOBID, animationKey: AnimationKeys.DEATH});
 		}
 		$('body').trigger('playerOnSpikes', playerName);
+		$('body').trigger('disableAllMovements');
+		$('body').trigger('unbindForces');
 	},
 
 	/* If the speed of the bodies involved was high enough, this triggers events that shake the screen */

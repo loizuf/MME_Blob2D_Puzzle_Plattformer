@@ -783,6 +783,7 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('onKeyPickedUp', _pickUpKeyPhysics);
 		$('body').on('buttonActivated', _removeButtonBody);
 		$('body').on('onTrampolinContact', _handleTrampolinContact);
+		$('body').on('unbindForces', _unbindForces);
 		
 		// START: DUMMY HELI
 		$('body').on('startHeli', _initHeli);
@@ -805,12 +806,30 @@ BlobApp.PhysicsHandler = (function() {
 
 		//DUMMY SLINGSHOT
 		$('body').on('slingshotFinished', _fireSlingshot);
+
 		// DESTRUCTION
 		$('body').on("restartPhys", _restartPhys);
 		$('body').on("destroyPhysics", _destroyWorld);
 		$('body').on("resetGame", _resetGame);
 
 		_registerCollisionHandler();
+	},
+
+	_unbindForces = function() {
+		var greenBlobEntity = undefined;
+		var redBlobEntity = undefined;
+
+		greenBlobEntity = _getBody(EntityConfig.GREENBLOBID);
+		redBlobEntity = _getBody(EntityConfig.REDBLOBID);
+
+		if(greenBlobEntity == undefined || redBlobEntity == undefined) return;
+
+		greenBlobEntity.m_linearVelocity.x = 0;
+		redBlobEntity.m_linearVelocity.x = 0;
+
+		greenBlobEntity.DestroyFixture(greenBlobEntity.GetFixtureList());
+		redBlobEntity.DestroyFixture(redBlobEntity.GetFixtureList());
+		console.log("called", greenBlobEntity.GetFixtureList(), redBlobEntity.GetFixtureList())
 	},
 
 	_setBridgeClimbDirection = function(event, data) {
