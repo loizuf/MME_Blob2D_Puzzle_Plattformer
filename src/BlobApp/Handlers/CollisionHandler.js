@@ -51,6 +51,7 @@ BlobApp.CollisionHandler = (function() {
 					private._handleHeliCollision(bodyA, bodyB, bID, contact);
 				break;
 			} 
+
 			// For whatever reason, the sphere is not the first object in a contact (usually, it should be the one that's moving, i.e. the sphere.)
 			if(bID === "Sphere") {
 				private._handleSphereCollision(bodyB, bodyA, aID, contact);
@@ -86,63 +87,52 @@ BlobApp.CollisionHandler = (function() {
 	/* called when the green blob touches something. */
 	private._handleGreenBlobCollision = function(bodyA, bodyB, bID, contact) {
 		switch(bID){
-			case EntityConfig.REDBLOBID:
-			break;
-
-			case EntityConfig.VERTICALBORDERID:
-			break;		
-
-			case EntityConfig.HORIZONTALBORDERID:	
-			break;			
-
 			case EntityConfig.BUTTONID:
 				private._handleButtonCollison(bodyB, contact);
 			break;
 			
 			case EntityConfig.KEYID:
 				private._pickUpKey(bodyA, bodyB);
-				return;
+			break;
 			
 			case EntityConfig.GOALID:
 				private._attemptFinish(EntityConfig.GREENBLOBID);
-				return;
+			break;
 			
 			case EntityConfig.HELITRIGGER:
 				private._playerInTriggerZone("greenBlob", "heli", bodyB);
-				return;
+			break;
 
-			case EntityConfig.HELISTOPTRIGGER:
-				return;
-			
 			case EntityConfig.TELETRIGGER:
 				private._playerInTriggerZone("greenBlob", "tele", bodyB);
-				return;
+			break;
 
 			case EntityConfig.BRIDGELEFTTRIGGER:
 				private._playerInTriggerZone("greenBlob", "bridgeLeft", bodyB);
-				return;
+			break;
 
 			case EntityConfig.BRIDGERIGHTTRIGGER:
 				private._playerInTriggerZone("greenBlob", "bridgeRight", bodyB);
-				return;
+			break;
 
 			case EntityConfig.SPHERETRIGGER:
 				private._playerInTriggerZone("greenBlob", "sphere", bodyB);
-				return;
+			break;
 
 			case EntityConfig.SLINGSHOTTRIGGERLEFT:
 				private._playerInTriggerZone("greenBlob", "slingshotLeft", bodyB);
-				return;
+			break;
 
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT:
 				private._playerInTriggerZone("greenBlob", "slingshotRight", bodyB);
-				return;
+			break;
 
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 					private._movingGroundEntered(bodyA,bodyB,true);
 				}
-				break;
+
+			break;
 
 			case EntityConfig.SPIKEID:
 				private._playerOnSpikes("greenBlob");
@@ -152,12 +142,12 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.NEWGAMEDOOR:
 			case EntityConfig.CONTINUEDOOR:
 				private._playerInMenuDoorZone("greenBlob", bodyB);
-				return;
+			break;
 
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
 				private._playerEnteredLevelLoadZone("greenBlob", bodyB);
-				return;
+			break;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -281,7 +271,8 @@ BlobApp.CollisionHandler = (function() {
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 					private._movingGroundEntered(bodyA,bodyB,false);
 				}
-			return;
+
+			break;
 		}
 	},
 
@@ -322,6 +313,7 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.HELISTOPTRIGGER:
 				private._stopHeli();
 			break;
+
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
 					private._movingGroundEntered(bodyA,bodyB,true);
@@ -334,6 +326,7 @@ BlobApp.CollisionHandler = (function() {
 
 			case EntityConfig.KEYID:
 				private._pickUpKey(bodyA, bodyB);
+			break;
 		}
 
 		var xVelocityBorder = 6, yVelocityBorder = 6;
@@ -386,9 +379,11 @@ BlobApp.CollisionHandler = (function() {
 	private._handleButtonCollison = function(bodyB, contact) {
 		var buttonID = bodyB.GetUserData()[1];
 		var contactDirection = contact.m_manifold.m_localPlaneNormal.y;
+		
 		if(contact.m_fixtureB.m_body.GetUserData()[0] == "Sphere"){
 			contactDirection = -contactDirection;
 		}
+
 		if(contactDirection > 0) {
 			$('body').trigger('doorOpenRequested', buttonID);
 			$('body').trigger('buttonActivated', {userData : bodyB.GetUserData(), body: bodyB});
@@ -402,6 +397,7 @@ BlobApp.CollisionHandler = (function() {
 		} else {
 			$('body').trigger("blobanimationChanged", {blobID: EntityConfig.REDBLOBID, animationKey: AnimationKeys.DEATH});
 		}
+
 		$('body').trigger('playerOnSpikes', playerName);
 		$('body').trigger('disableAllMovements');
 		$('body').trigger('unbindForces', playerName);
@@ -426,6 +422,7 @@ BlobApp.CollisionHandler = (function() {
 	private._playerInTriggerZone = function(player, zoneName, bodyB) {
 			$('body').trigger(player+"InTriggerZone", {name: zoneName, triggerID: bodyB.GetUserData()[1]});
 			$('body').trigger("coopTriggerAnimationChanged", {animationKey: AnimationKeys.BIGSHINE, name: zoneName, triggerID: bodyB.GetUserData()});
+			
 			private._showHintBubble(bodyB, player, "down");
 	},
 
@@ -438,6 +435,7 @@ BlobApp.CollisionHandler = (function() {
 				generic: false,
 				remove: ["bubble"+player]
 			};
+
 			$('body').trigger("requestViewEntity", messageToView);
 	},
 
@@ -465,7 +463,9 @@ BlobApp.CollisionHandler = (function() {
 		if(bodyB.GetUserData()[3]){
 			var levelID = bodyB.GetUserData()[1];
 			var overID = bodyB.GetUserData()[2];
+			
 			$('body').trigger(player+'InLevelLoadTriggerZone', {lvlID: levelID, owID: overID});
+			
 			private._showHintBubble(bodyB, player, "up");
 		}
 	},
@@ -473,11 +473,13 @@ BlobApp.CollisionHandler = (function() {
 	/* Resets what happens when the "up" key is pressed. (the blob will jump) */
 	private._playerLeftLevelLoadTriggerZone = function(player) {
 		$('body').trigger(player + 'LeftLevelLoadTriggerZone');
+		
 		var messageToView = {
 				generic: false,
 				remove: ["bubble"+player]
 			};
-			$('body').trigger("requestViewEntity", messageToView);
+
+		$('body').trigger("requestViewEntity", messageToView);
 	},
 
 	private._playerInMenuDoorZone = function(player, bodyB){
@@ -510,9 +512,10 @@ BlobApp.CollisionHandler = (function() {
 		var messageToView = {
 			generic: false,
 			x: bodyA.m_xf.position.x * 30,
-			y: ((blobHeight == 1)? bodyA.m_xf.position.y-12.5/30 : bodyA.m_xf.position.y)*30,
+			y: ((blobHeight == 1) ? bodyA.m_xf.position.y - 12.5 / 30 : bodyA.m_xf.position.y) * 30,
 			entityID: "Juice"
 		};
+
 		$('body').trigger("requestViewEntity", messageToView);
 	},
 
@@ -524,7 +527,7 @@ BlobApp.CollisionHandler = (function() {
 			entityID: "Bubble",
 			bubbleInfo : {
 				bubbleType : type,
-				id : "bubble"+player
+				id : "bubble" + player
 			}
 		};
 

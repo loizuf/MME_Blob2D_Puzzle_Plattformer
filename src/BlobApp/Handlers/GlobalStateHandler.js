@@ -4,7 +4,6 @@ BlobApp.GlobalState = (function() {
 	
 	_gameStateKey = "gameState",
 
-	
 	_gameState = {
 		currentOverworldMapID : 1, //integer
 		currentLevel : 1
@@ -12,6 +11,7 @@ BlobApp.GlobalState = (function() {
 
 	init = function() {
 		_load();
+
 		return that;
 	},
 
@@ -34,15 +34,17 @@ BlobApp.GlobalState = (function() {
 		_gameState.currentOverworldMapID = 1;
 		_gameState.currentLevel = 1;
 		_save();
+
 		return _gameState;
 	},
 
 	_setNewGameState = function(levelId, overworldID) {
 		levelId++;
-		if(levelId==6){
+		if(levelId == 6){
 			overworldID++;
-			levelId=1;
+			levelId =1 ;
 		}
+		
 		_gameState.currentOverworldMapID = overworldID;
 		_gameState.currentLevel = levelId;
 		_save();

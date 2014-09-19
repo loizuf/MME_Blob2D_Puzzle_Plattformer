@@ -173,6 +173,7 @@ BlobApp.LevelLoader = (function() {
 					}
 				}
 			}
+
 		_initBorders(borders);
 	},
 
@@ -344,7 +345,7 @@ BlobApp.LevelLoader = (function() {
 		var messageToView = {
 			generic : false,
 			x : x,
-			y : y+14,
+			y : y + 14,
 			entityID : EntityConfig.REDBLOBID
 		};
 
@@ -365,7 +366,7 @@ BlobApp.LevelLoader = (function() {
 			var messageToView = {
 			generic : false,
 			x : x,
-			y : y+2,
+			y : y + 2,
 			entityID : EntityConfig.GREENBLOBID
 		};
 
@@ -393,6 +394,7 @@ BlobApp.LevelLoader = (function() {
 			entityID : EntityConfig.BUTTONID,
 			buttonID : buttonNumber
 		};
+
 		$('body').trigger("requestViewEntity", messageToView);
 	},
 
@@ -418,6 +420,7 @@ BlobApp.LevelLoader = (function() {
 			entityID : EntityConfig.DOORID,
 			doorID : doorNumber
 		};
+
 		$('body').trigger("requestViewEntity", messageToView);
 	},
 
@@ -453,6 +456,7 @@ BlobApp.LevelLoader = (function() {
 			entityID : EntityConfig.MOVINGGROUNDID,
 			num : movingGroundCount
 		};
+
 		$('body').trigger("requestViewEntity", messageToView);
 		
 
@@ -500,6 +504,7 @@ BlobApp.LevelLoader = (function() {
 			levelID : levelDoorLevelID,
 			owID : levelDoorOverID
 		};
+
 		$('body').trigger("requestViewEntity", messageToView);
 	},
 	
@@ -521,6 +526,7 @@ BlobApp.LevelLoader = (function() {
 			entityID : EntityConfig.KEYID,
 			keyID : 0
 		};
+
 		$('body').trigger("requestViewEntity", messageToView);
 	},
 
@@ -528,7 +534,7 @@ BlobApp.LevelLoader = (function() {
 		_createRequestObject["width"] = 12.5;
 		_createRequestObject["height"] = 30;
 		_createRequestObject["x"] = x;
-		_createRequestObject["y"] = y+10;
+		_createRequestObject["y"] = y + 10;
 
 		_createRequestObject["userData"] = [EntityConfig.GOALID];
 
@@ -543,6 +549,7 @@ BlobApp.LevelLoader = (function() {
 			entityID : EntityConfig.GOALID,
 			goalID : 0
 		};
+
 		$('body').trigger("requestViewEntity", messageToView);
 	},
 
@@ -553,7 +560,7 @@ BlobApp.LevelLoader = (function() {
 		_createRequestObject["width"] = 15;
 		_createRequestObject["height"] = 15;
 		_createRequestObject["x"] = x;
-		_createRequestObject["y"] = y-25;
+		_createRequestObject["y"] = y - 25;
 
 		$("body").trigger("sensorRequested", _createRequestObject);
 
@@ -562,31 +569,34 @@ BlobApp.LevelLoader = (function() {
 		var messageToView = {
 			generic : false,
 			x : x,
-			y : y-25,
+			y : y - 25,
 			entityID : entityID,
 			uniqueID : idx
 		};
+
 		$('body').trigger("requestViewEntity", messageToView);
 	},
 
 	// utility function for loading assets from server
 	_httpGet = function(theUrl) {
 		var xmlHttp = null;
+
 		xmlHttp = new XMLHttpRequest();
 		xmlHttp.open("GET", theUrl, false);
 		xmlHttp.send(null);
+
 		return xmlHttp.responseText;
 	},
 
 	// utility function for loading json data from server
 	_httpGetData = function(theUrl) {
 		var responseText = httpGet(theUrl);
+		
 		return JSON.parse(responseText);
 	},
 
 	_getLevelMapData = function(levelNumber, overworldNumber) {
-		var levelName = "_"+overworldNumber+levelNumber;
-		console.log(levelName);
+		var levelName = "_" + overworldNumber + levelNumber;
 		mapDataJson = LevelConfig[levelName];
 	},
 

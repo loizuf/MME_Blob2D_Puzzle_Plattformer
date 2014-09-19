@@ -73,7 +73,6 @@ BlobApp.BlobSuperClass = function() {
 
 		thisVar.setupMovementFunctions();
 
-		// listener methods
 		$("body").on("onTick", _callDirections);
 		$("body").on("disableAllMovements", _disableAllMovements);
 	},
@@ -91,12 +90,6 @@ BlobApp.BlobSuperClass = function() {
 		_currentUp = thisVar._jump;
 		_currentDown = thisVar._triggerSpecial;
 	},
-
-	this.killBlob = function(startpX, startpY) {
-		//_setPropertiesOfBlob(startpX, startpY, 0, 0);
-		// Trigger something to kill other blob, wait some time, reset positions
-	},
-
 
 	// Manipulates the movement direction so that the blob moves to the left
 	this._moveLeft = function() {
@@ -118,6 +111,7 @@ BlobApp.BlobSuperClass = function() {
 
 	// Makes the Blob jump
 	this._jump = function() {
+
 		// TODO, impossible with easel?? switch between animations mid-jump
 		if(_jumpAllowed) {
 			$('body').trigger('soundJump');
@@ -183,7 +177,6 @@ BlobApp.BlobSuperClass = function() {
 		} else {
 			$('body').trigger("onContinueGameRequested");
 		}
-		console.log('menuDoor');
 	},
 
 	this.startNewGame = function() {

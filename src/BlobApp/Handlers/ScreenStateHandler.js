@@ -56,7 +56,6 @@ BlobApp.ScreenState = ( function() {
 		} else {
 			player2State = PLAYER_STATES[0];
 		}
-		console.log(player1State, player2State);
 	},
 
 	onPlayerReachGoal = function(player) {
@@ -71,7 +70,6 @@ BlobApp.ScreenState = ( function() {
 
 			if(player1State == PLAYER_STATES[2] && player2State == PLAYER_STATES[2]) {
 				$("body").trigger('levelFinished');
-				console.log(player1State, player2State);
 			}
 		}
 	},

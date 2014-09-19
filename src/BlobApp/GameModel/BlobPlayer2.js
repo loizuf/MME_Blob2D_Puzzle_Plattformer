@@ -10,7 +10,6 @@ BlobApp.BlobPlayer2 = (function() {
 
 	this.setup = function() {	
 		_initListeners();
-
 		prototypeVar.setFunction("downPressed", function(){thisVar.initStretch();});
 	},
 
@@ -36,6 +35,7 @@ BlobApp.BlobPlayer2 = (function() {
 		$('body').on('startSphere', thisVar.initSphere);
 
 		$('body').on('startSlingshot', thisVar.initSlingshot);
+
 		$('body').on('onSlingshotRelease', function() {
 			isSlingshotActive = false;
 			isSlingshotLeft = false;
@@ -107,6 +107,7 @@ BlobApp.BlobPlayer2 = (function() {
 			prototypeVar.setFunction("upPressed", function(){});
 		} else if(IDS == EntityConfig.NEWGAMEDOOR || IDS == EntityConfig.CONTINUEDOOR) {
 			prototypeVar.setFunction
+
 			("upPressed", function(){thisVar.reactOnMenuDoor(IDS);});
 		} else{
 			prototypeVar.setFunction("upPressed", function(){thisVar.tryLevelLoad(IDS.lvlID, IDS.owID);});
@@ -294,13 +295,11 @@ BlobApp.BlobPlayer2 = (function() {
 	this.increaseSlingshotAngle = function() {
 		slingshotLeftStartAngle != 60 ? slingshotLeftStartAngle += 15 : slingshotLeftStartAngle += 0;
 		$('body').trigger('onSlingshotAngleChange', {"angle": slingshotLeftStartAngle});
-		console.log(slingshotLeftStartAngle);	
 	},
 
 	this.decreaseSlingshotAngle = function() {
 		slingshotLeftStartAngle != 30 ? slingshotLeftStartAngle -= 15 : slingshotLeftStartAngle += 0;
 		$('body').trigger('onSlingshotAngleChange', {"angle": slingshotLeftStartAngle});	
-		console.log(slingshotLeftStartAngle);
 	},
 
 	_resetAngleFlag = function() {
@@ -309,5 +308,4 @@ BlobApp.BlobPlayer2 = (function() {
 	// END: Slingshot
 
 	this.setup(); 
-
 });

@@ -99,6 +99,7 @@ BlobApp.InputHandler = (function() {
 
         $body.on('keyup',_onKeyUp);
         $body.on('keydown',_onKeyDown);
+
         $body.on('startSlingshot', function() {
             isSlingshot = true;
         });
@@ -109,8 +110,6 @@ BlobApp.InputHandler = (function() {
 
         _initGamepads(p1ControlsID, p2ControlsID);
 
-        
-        
         return that;
     },
 
@@ -419,7 +418,6 @@ BlobApp.InputHandler = (function() {
             case XBOX_BUTTONS.RB:
                 if(id == ID_CONTROLLER_TWO && isHeliActive) {
                     if(controller2ButtonsPressed.right_pressed == false) {
-                        console.log("down mash right");
                         _onKeyDown({keyCode:keyMap.p2Right});
                         controller2ButtonsPressed.right_pressed = true;
                     }                    
@@ -429,7 +427,6 @@ BlobApp.InputHandler = (function() {
             case XBOX_BUTTONS.LB:
                 if(id == ID_CONTROLLER_TWO && isHeliActive) {
                     if(controller2ButtonsPressed.left_pressed == false) {
-                        console.log("down mash left");
                         _onKeyDown({keyCode:keyMap.p2Left});
                         controller2ButtonsPressed.left_pressed = true;
                     }
@@ -542,5 +539,6 @@ BlobApp.InputHandler = (function() {
 
     that.init = init;
     that.changeControls = changeControls;
+    
     return that;
 })();

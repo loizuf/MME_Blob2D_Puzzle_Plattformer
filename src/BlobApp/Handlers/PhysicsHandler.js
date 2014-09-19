@@ -9,7 +9,7 @@ BlobApp.PhysicsHandler = (function() {
 		isResetted = false;
 
 	SCALE = 30, STEP = 20, TIMESTEP = 1/20,
-	PLAYER_ONE_NAME = "p1", PLAYER_TWO_NAME="p2",
+	PLAYER_ONE_NAME = "p1", PLAYER_TWO_NAME = "p2",
 	GROWTH_FACTOR = 0.1, STRETCH_HEIGHT = 4, TRAMPOLIN_WIDTH = 2;
 	
 	// box2d variables
@@ -57,7 +57,7 @@ BlobApp.PhysicsHandler = (function() {
 	_resetGame = function() {
 		var bodyList = world.GetBodyList();
 
-		while(bodyList!=null){
+		while(bodyList != null){
 			var tmpBody = bodyList.GetNext();
 			bodiesToRemove.push(bodyList);
 			bodyList = tmpBody;
@@ -158,7 +158,7 @@ BlobApp.PhysicsHandler = (function() {
 			width = data.width / SCALE,
 			height = data.height / SCALE;
 
-		if(entityID==EntityConfig.MOVINGGROUNDID){
+		if(entityID == EntityConfig.MOVINGGROUNDID){
 			var entity = createDynamicBoxEntity(x, y, width, height);
 		}else{
 			var entity = createDefaultBoxEntity(x, y, width, height);
@@ -193,11 +193,9 @@ BlobApp.PhysicsHandler = (function() {
 
 		entity.CreateFixture(fixture);
 
-		entity.SetUserData([userData,undefined]);
+		entity.SetUserData([userData, undefined]);
 		
-		var blobEntityCreated = $.Event('blobEntityCreated');
-
-		$("body").trigger(blobEntityCreated, entity);
+		$("body").trigger('blobEntityCreated', entity);
 
 		bodies.push(entity); 	
 	},
@@ -310,6 +308,7 @@ BlobApp.PhysicsHandler = (function() {
 	// Helper method, finds a body with the specified userData (returns undefined if there is no such body)
 	_getBody = function(userData) {
 		var body = undefined;
+
 		for(var i = 0; i < bodies.length; i++) {
 			if(bodies[i].GetUserData()[0] == userData) {
 				body = bodies[i];
@@ -323,8 +322,7 @@ BlobApp.PhysicsHandler = (function() {
 	_applyForce = function(event, direction) {
 		var entity = direction.entity;
 		if((entity.m_linearVelocity.x > -3) && (entity.m_linearVelocity.x < 3)) {
-			entity.ApplyImpulse(new b2Vec2(direction.directionX, 
-				direction.directionY), entity.GetPosition());
+			entity.ApplyImpulse(new b2Vec2(direction.directionX, direction.directionY), entity.GetPosition());
 		}
 	},
 
@@ -379,11 +377,13 @@ BlobApp.PhysicsHandler = (function() {
 			entityID: "Heli",
 			remove: ["blobGreen", "blobRed"]
 		};
+
 		$('body').trigger("requestViewEntity", messageToView);
 
 		heliIsActive = true;
 
 		greenBlobEntity.DestroyFixture(greenBlobEntity.GetFixtureList());
+		
 		redBlobEntity = _getBody(EntityConfig.REDBLOBID);
 		redBlobEntity.DestroyFixture(redBlobEntity.GetFixtureList());
 
@@ -466,7 +466,8 @@ BlobApp.PhysicsHandler = (function() {
 			y : sprite1Y,
 			entityID : EntityConfig.REDBLOBID,
 			remove: ["heli"]
-		};		
+		};	
+
 		$('body').trigger("requestViewEntity", messageToView);
 
 		messageToView = {
@@ -475,6 +476,7 @@ BlobApp.PhysicsHandler = (function() {
 			y : sprite2Y,
 			entityID : EntityConfig.GREENBLOBID
 		};		
+
 		$('body').trigger("requestViewEntity", messageToView);
 
 		userData1 = EntityConfig.REDBLOBID;
@@ -501,6 +503,7 @@ BlobApp.PhysicsHandler = (function() {
 			entityID: "Sphere",
 			remove: ["blobGreen", "blobRed"]
 		};
+
 		$('body').trigger("requestViewEntity", messageToView);
 
 		sphereIsActive = true;
@@ -556,7 +559,8 @@ BlobApp.PhysicsHandler = (function() {
 			y : sprite1Y,
 			entityID : EntityConfig.REDBLOBID,
 			remove: ["sphere"]
-		};		
+		};	
+
 		$('body').trigger("requestViewEntity", messageToView);
 
 		messageToView = {
@@ -565,6 +569,7 @@ BlobApp.PhysicsHandler = (function() {
 			y : sprite2Y,
 			entityID : EntityConfig.GREENBLOBID
 		};		
+
 		$('body').trigger("requestViewEntity", messageToView);
 
 		userData1 = EntityConfig.REDBLOBID;
@@ -599,6 +604,7 @@ BlobApp.PhysicsHandler = (function() {
 				break;
 
 			}
+
 			contact = contact.GetNext();
 		} while(contact);
 
@@ -610,6 +616,7 @@ BlobApp.PhysicsHandler = (function() {
 			direction : data.direction,
 			remove: ["blobGreen", "blobRed"]
 		};
+
 		$('body').trigger("requestViewEntity", messageToView);
 
 		bridgeIsActive = true;
@@ -624,6 +631,7 @@ BlobApp.PhysicsHandler = (function() {
 		
 		var x = (direction == "left") ? 
 			(triggerZoneEntity.m_xf.position.x + 100 / SCALE) : (triggerZoneEntity.m_xf.position.x - 100 / SCALE) ; 
+		
 		var y = triggerZoneEntity.m_xf.position.y
 
 		var width = TILESIZEX / SCALE;
@@ -656,6 +664,7 @@ BlobApp.PhysicsHandler = (function() {
 				sprite1Y = (yPos * SCALE) - 3;
 				sprite2Y = (yPos * SCALE) - 3;	
 			}
+
 		} else {
 			if(bridgeClimbDirection == "left") {
 				sprite1X = (xPos * SCALE) - 12.5 - 110;
@@ -679,6 +688,7 @@ BlobApp.PhysicsHandler = (function() {
 			entityID : EntityConfig.REDBLOBID,
 			remove: ["bridge"]
 		};		
+
 		$('body').trigger("requestViewEntity", messageToView);
 
 		messageToView = {
@@ -687,6 +697,7 @@ BlobApp.PhysicsHandler = (function() {
 			y : sprite2Y,
 			entityID : EntityConfig.GREENBLOBID
 		};		
+
 		$('body').trigger("requestViewEntity", messageToView);
 
 		userData1 = EntityConfig.REDBLOBID;
@@ -723,16 +734,11 @@ BlobApp.PhysicsHandler = (function() {
 		greenBlobEntity = undefined;
 		redBlobEntity = undefined;
 
-		for(var i = 0; i < bodies.length; i++) {
-			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
-				greenBlobEntity = bodies[i];
-			} else if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
-				redBlobEntity = bodies[i];
-			}
-		}
+		greenBlobEntity = _getBody(EntityConfig.GREENBLOBID);
+		redBlobEntity = _getBody(EntityConfig.REDBLOBID);
 
 		if(direction == "left") {
-			greenBlobEntity.SetPosition(new b2Vec2((slingX + 1.5 * TILESIZEX) / SCALE, (slingY-TILESIZEY) / SCALE ));
+			greenBlobEntity.SetPosition(new b2Vec2((slingX + 1.5 * TILESIZEX) / SCALE, (slingY - TILESIZEY) / SCALE ));
 			redBlobEntity.SetPosition(new b2Vec2((slingX + 0.5 * TILESIZEX) / SCALE, (slingY) / SCALE ));
 
 			var radians = angle * Math.PI / 180;
@@ -785,29 +791,22 @@ BlobApp.PhysicsHandler = (function() {
 		$('body').on('onTrampolinContact', _handleTrampolinContact);
 		$('body').on('unbindForces', _unbindForces);
 		
-		// START: DUMMY HELI
 		$('body').on('startHeli', _initHeli);
 		$('body').on('heliMove', _moveHeli);
 		$('body').on('heliStopRequested', _disassembleHeli);
-		// END: DUMMY HELI
 
-		//START: DUMMY BRIDGE
 		$('body').on('startBridge', _initBridge);
 		$('body').on('bridgeStopRequested', _disassembleBridge);
 		$('body').on('onBridgeDirectionChosen', _setBridgeClimbDirection)
 
-		//START: DUMMY  SPHERE
 		$('body').on('startSphere', _initSphere);
 		$('body').on('sphereMove', _moveSphere);
 		$('body').on('sphereStopRequested', _disassembleSphere);
 
-		//START: DUMMY TELEPORT
 		$('body').on('teleportRequested', _doTeleport);
 
-		//DUMMY SLINGSHOT
 		$('body').on('slingshotFinished', _fireSlingshot);
 
-		// DESTRUCTION
 		$('body').on("restartPhys", _restartPhys);
 		$('body').on("destroyPhysics", _destroyWorld);
 		$('body').on("resetGame", _resetGame);
@@ -846,13 +845,8 @@ BlobApp.PhysicsHandler = (function() {
 		var greenBlobEntity = undefined;
 		var redBlobEntity = undefined;
 
-		for(var i = 0; i < bodies.length; i++) {
-			if(bodies[i].GetUserData()[0] == EntityConfig.GREENBLOBID) {
-				greenBlobEntity = bodies[i];
-			} else 	if(bodies[i].GetUserData()[0] == EntityConfig.REDBLOBID) {
-				redBlobEntity = bodies[i];
-			}
-		}
+		greenBlobEntity = _getBody(EntityConfig.GREENBLOBID);
+		redBlobEntity = _getBody(EntityConfig.REDBLOBID);
 
 		redX = redBlobEntity.m_xf.position.x;
 		redY = redBlobEntity.m_xf.position.y;
@@ -875,6 +869,7 @@ BlobApp.PhysicsHandler = (function() {
 			entityID: "Trampolin",
 			remove: ["blobGreen"]
 		};
+
 		$('body').trigger("requestViewEntity", messageToView);
 
 		$('body').trigger("connectToView", {body : greenBlobEntity, special: "Trampolin"});
@@ -890,8 +885,8 @@ BlobApp.PhysicsHandler = (function() {
 			entityID: EntityConfig.GREENBLOBID,
 			remove: ["trampolin"]
 		};
-		$('body').trigger("requestViewEntity", messageToView);
 
+		$('body').trigger("requestViewEntity", messageToView);
 		$('body').trigger("connectToView", {body : _getBody(EntityConfig.GREENBLOBID)});
 	},
 
@@ -915,8 +910,8 @@ BlobApp.PhysicsHandler = (function() {
 			entityID: "Stretch",
 			remove: ["blobRed"]
 		};
-		$('body').trigger("requestViewEntity", messageToView);
-			
+
+		$('body').trigger("requestViewEntity", messageToView);	
 		$('body').trigger("connectToView", {body : redBlobEntity, special: "Stretch"});
 	},
 
@@ -931,8 +926,8 @@ BlobApp.PhysicsHandler = (function() {
 			entityID: EntityConfig.REDBLOBID,
 			remove: ["stretch"]
 		};
-		$('body').trigger("requestViewEntity", messageToView);
 
+		$('body').trigger("requestViewEntity", messageToView);
 		$('body').trigger("connectToView", {body : _getBody(EntityConfig.REDBLOBID)});
 	},
 	
@@ -958,11 +953,9 @@ BlobApp.PhysicsHandler = (function() {
 
 	_registerCollisionHandler = function() {
 		var collisionHandler = BlobApp.CollisionHandler();
-
 		collisionHandler.init();
 
 		var listener = collisionHandler.getContactListener();	
-
 		world.SetContactListener(listener);
 	},	
 
