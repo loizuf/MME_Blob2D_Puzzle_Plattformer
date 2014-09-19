@@ -27,7 +27,7 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 		_listeners();
 
 		// callback for loading layers after tileset is loaded
-		tileset.onLoad = _initSprite(tileset, 2*DEFAULT_TILE_SIZE, height);		
+		tileset.onLoad = _initSprite(tileset, 2 * DEFAULT_TILE_SIZE, height);		
 	},
 
 	_initSprite = function(tileset, width, height) {
@@ -88,7 +88,6 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 		$('body').on('onTick', _checkIfTeleAnimationFinished);
 		$('body').on('blobSpritesRemoved', _stopAnimatingBlobs);
 		$('body').on('blobSpritesAdded', _allowAnimatingBlobs);
-
 	},
 
 	_stopAnimatingBlobs = function() {
@@ -101,8 +100,11 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 	},
 
 	_animate = function(event, data) {		
-		if(sprite.currentAnimation == "teleport" || sprite.currentAnimation == "afterTeleport"
-			|| sprite.currentAnimation == "death") return;
+		if(sprite.currentAnimation == "teleport" 
+			|| sprite.currentAnimation == "afterTeleport"
+			|| sprite.currentAnimation == "death"
+			|| sprite.currentAnimation == "afterDeath") return;
+
 		if(animateBlobs && blobID == data.blobID) {				
 			switch(data.animationKey) {
 				case AnimationKeys.IDLE1:

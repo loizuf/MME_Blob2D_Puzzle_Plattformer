@@ -404,7 +404,7 @@ BlobApp.CollisionHandler = (function() {
 		}
 		$('body').trigger('playerOnSpikes', playerName);
 		$('body').trigger('disableAllMovements');
-		$('body').trigger('unbindForces');
+		$('body').trigger('unbindForces', playerName);
 	},
 
 	/* If the speed of the bodies involved was high enough, this triggers events that shake the screen */

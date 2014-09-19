@@ -815,7 +815,7 @@ BlobApp.PhysicsHandler = (function() {
 		_registerCollisionHandler();
 	},
 
-	_unbindForces = function() {
+	_unbindForces = function(playerName) {
 		var greenBlobEntity = undefined;
 		var redBlobEntity = undefined;
 
@@ -824,12 +824,14 @@ BlobApp.PhysicsHandler = (function() {
 
 		if(greenBlobEntity == undefined || redBlobEntity == undefined) return;
 
-		greenBlobEntity.m_linearVelocity.x = 0;
-		redBlobEntity.m_linearVelocity.x = 0;
+		if(playerName == "greenBlob") {
+			greenBlobEntity.m_linearVelocity.x = 0;
+		} else {
+			redBlobEntity.m_linearVelocity.x = 0;
+		}
 
 		greenBlobEntity.DestroyFixture(greenBlobEntity.GetFixtureList());
 		redBlobEntity.DestroyFixture(redBlobEntity.GetFixtureList());
-		console.log("called", greenBlobEntity.GetFixtureList(), redBlobEntity.GetFixtureList())
 	},
 
 	_setBridgeClimbDirection = function(event, data) {
