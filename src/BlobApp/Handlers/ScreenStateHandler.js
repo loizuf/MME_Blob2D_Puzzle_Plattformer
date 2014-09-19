@@ -63,8 +63,10 @@ BlobApp.ScreenState = ( function() {
 		if(keyPickedUp){
 			if(player == PLAYER_1_NAME) {
 				player1State = PLAYER_STATES[2];
+				$('body').trigger("playerReachedGoal", {which: "p1"});
 			} else {
 				player2State = PLAYER_STATES[2];
+				$('body').trigger("playerReachedGoal", {which: "p2"});
 			}
 
 			if(player1State == PLAYER_STATES[2] && player2State == PLAYER_STATES[2]) {

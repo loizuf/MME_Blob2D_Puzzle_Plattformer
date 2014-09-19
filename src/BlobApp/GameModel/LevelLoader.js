@@ -539,7 +539,7 @@ BlobApp.LevelLoader = (function() {
 		var messageToView = {
 			generic : false,
 			x : x,
-			y : y+10,
+			y : y,
 			entityID : EntityConfig.GOALID,
 			goalID : 0
 		};
