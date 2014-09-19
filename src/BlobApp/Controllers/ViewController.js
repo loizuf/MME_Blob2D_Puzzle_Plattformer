@@ -26,7 +26,7 @@ BlobApp.ViewController = (function() {
 		var tileset = new Image();
 
 		// getting imagefile from first tileset
-		tileset.src = "res/img/Tileset.png";
+		tileset.src = "res/img/Tileset_alt.png";
 
 		var imageData = {
 			images : [ tileset ],

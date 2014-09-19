@@ -28,7 +28,7 @@ BlobApp.LevelLoader = (function() {
 		tileset = new Image();
 
 		// getting imagefile from first tileset
-		tileset.src = "res/img/Tileset.png"//mapData.tilesets[0].image;
+		tileset.src = "res/img/Tileset_alt.png"//mapData.tilesets[0].image;
 
 		// callback for loading layers after tileset is loaded
 		tileset.onLoad = _initLayers();
