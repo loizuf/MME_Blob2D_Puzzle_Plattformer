@@ -6,161 +6,144 @@
 */
 BlobApp.BlobSuperClass = function() {
 
-	//var b2Vec2 = Box2D.Common.Math.b2Vec2;
-	thisVar = this;
+	/* 
+		All methods and parameters of "thisVar" or "this" are public,
+		(thisVar has to be used within function as "this" <- within a function means the function)
+		all those of private are private
+	 */
+	var thisVar = this,
+	private = {};
 
-	var _positionX = null,
-	_positionY = null,
-
-	// box2d? value
-	_velocity = null,
-
-	// Box2D vector
-	_direction = null,
-
-	// As the name suggests, 
-	_jumpAllowed,
+	// Whethter or not the blob can jump 
+	private._jumpAllowed,
 
 	// Waiting for other blob to trigger a special interaction: No interaction allowed
 	// Is false when not waiting, otherwhise contains name of the skill that the blob is waiting to use.
-	_waitingForOtherBlob,
+	private._waitingForOtherBlob,
 
 	// Box2D Entity
-	_blobEntity,
+	private._blobEntity,
 
 	REDBLOBXSPEED = 0.4,
 	GREENBLOBXSPEED = 0.15, 
 	REDBLOBYSPEED = 9.3,
 	GREENBLOBYSPEED = 3.8,
 
-	_blobID,
+	// Which blob this is (red or green)
+	private._blobID,
 
 	/* 
-		current<Direction>: Function that is called when the key is pressed
-	 	default<Direction>: Move/Jump/Trigger
-	 	can & will be overriden by subclass implementations
+		current<Direction>: Function that is called _as long as_ the key is pressed
+							(periodically)
+		<direction>Pressed/Realeased: Function that is called _when_ that happens
+									  (once)
+
+	 	can & will be overriden by subclasses!
 	 */
-	_currentLeft,
-	_currentRight,
-	_currentUp,
-	_currentDown,
-	_currentMash,
+	private._currentLeft = function(){},
+	private._currentRight = function(){},
+	private._currentUp = function(){},
+	private._currentDown = function(){},
+	private._currentMash = function(){},
 
-	_upPressed = function(){},
-	_upReleased = function(){},
-	_downPressed = function(){},
-	_downReleased = function(){},
-	_leftPressed = function(){},
-	_leftReleased = function(){},
-	_rightPressed = function(){},
-	_rightReleased = function(){},
+	private._upPressed = function(){},
+	private._upReleased = function(){},
+	private._downPressed = function(){},
+	private._downReleased = function(){},
+	private._leftPressed = function(){},
+	private._leftReleased = function(){},
+	private._rightPressed = function(){},
+	private._rightReleased = function(){},
 
-	keyUpPressed,
-	keyDownPressed,
-	keyLeftPressed,
-	keyRightPressed;
+	private.keyUpPressed,
+	private.keyDownPressed,
+	private.keyLeftPressed,
+	private.keyRightPressed;
 
-//!	 !Must be overriden by subclass!
-	this.specialSkills = null,
 	// Trampolin or stretching: Skill that a blob can use "on his own", without a trigger zone
 	this.singleSpecialAllowed = true,
 
 	// If the blobs are currently doing some fancy interaction
 	this.specialInteractionActive = null,
 
-	this.init = function(pX, pY, v, dir) {
-		_setPropertiesOfBlob(pX, pY, v, dir);
-
+	this.init = function() {
 		thisVar.setupMovementFunctions();
 
-		$("body").on("onTick", _callDirections);
-		$("body").on("disableAllMovements", _disableAllMovements);
+		// listener methods
+		$("body").on("onTick", private._callDirections);
+		$("body").on("disableAllMovements", disableAllMovements);
 	},
 
-	_setPropertiesOfBlob = function(pX, pY, v, dir) {
-		_positionX = pX;
-		_positionY = pY;
-		_velocity = v;
-		_direction = dir;
-	},
-
+	// Initialization of the default input/movement mapping
 	this.setupMovementFunctions = function() {
-		_currentLeft = thisVar._moveLeft;
-		_currentRight = thisVar._moveRight;
-		_currentUp = thisVar._jump;
-		_currentDown = thisVar._triggerSpecial;
+		private._currentLeft = thisVar._moveLeft;
+		private._currentRight = thisVar._moveRight;
+		private._currentUp = thisVar._jump;
+		private._downPressed = thisVar._triggerSpecial;
 	},
 
 	// Manipulates the movement direction so that the blob moves to the left
 	this._moveLeft = function() {
-		if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID) {
-			$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -1 * REDBLOBXSPEED, directionY: 0});	
+		if(private._blobID==EntityConfig.REDBLOBID) {
+			$('body').trigger('onInputRecieved', {entity: private._blobEntity, directionX: -1 * REDBLOBXSPEED, directionY: 0});	
 		} else {
-			$('body').trigger('onInputRecieved', {entity: _blobEntity, directionX: -1 * GREENBLOBXSPEED, directionY: 0});
+			$('body').trigger('onInputRecieved', {entity: private._blobEntity, directionX: -1 * GREENBLOBXSPEED, directionY: 0});
 		}
 	},
 
 	// Manipulates the movement direction so that the blob moves to the right
 	this._moveRight = function() {
-		if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID) {
-			$('body').trigger('onInputRecieved',{entity: _blobEntity, directionX: REDBLOBXSPEED, directionY: 0});
+		if(private._blobID==EntityConfig.REDBLOBID) {
+			$('body').trigger('onInputRecieved',{entity: private._blobEntity, directionX: REDBLOBXSPEED, directionY: 0});
 		} else {
-			$('body').trigger('onInputRecieved',{entity: _blobEntity, directionX: GREENBLOBXSPEED, directionY: 0});
+			$('body').trigger('onInputRecieved',{entity: private._blobEntity, directionX: GREENBLOBXSPEED, directionY: 0});
 		}
 	},
 
 	// Makes the Blob jump
 	this._jump = function() {
 
-		// TODO, impossible with easel?? switch between animations mid-jump
-		if(_jumpAllowed) {
+		if(private._jumpAllowed) {
 			$('body').trigger('soundJump');
-			if(!keyLeftPressed) {
+			// Animation
+			if(!private.keyLeftPressed) {
 				$('body').trigger('blobanimationChanged', {
-					"blobID" : _blobID,
+					"blobID" : private._blobID,
 					"animationKey" : AnimationKeys.JUMPRIGHT
 				});
 			} else {
 				$('body').trigger('blobanimationChanged', {
-					"blobID" : _blobID,
+					"blobID" : private._blobID,
 					"animationKey" : AnimationKeys.JUMPLEFT	
 				});	
 			}			
-		}
-
-		if(_jumpAllowed != false) {
-			if(_blobEntity.GetUserData()[0]==EntityConfig.REDBLOBID) {
-				$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*REDBLOBYSPEED});
+			// Physics
+			if(private._blobID == EntityConfig.REDBLOBID) {
+				$('body').trigger('onInputRecievedJump',{entity: private._blobEntity, directionX: 0, directionY: -1*REDBLOBYSPEED});
 			} else {
-				$('body').trigger('onInputRecievedJump',{entity: _blobEntity, directionX: 0, directionY: -1*GREENBLOBYSPEED});
+				$('body').trigger('onInputRecievedJump',{entity: private._blobEntity, directionX: 0, directionY: -1*GREENBLOBYSPEED});
 			}
 
-			_jumpAllowed = false;
+			private._jumpAllowed = false;
 		}
 	},
 
-	/*
-		Tries to trigger a special event. 
-		If the other blob is ready, it might work; otherwhise, the other player is informed via a bubble-y-thing
-	*/
-	this._triggerSpecial = function() {},
-
 	this.allowJump = function() {
-		_jumpAllowed = true;
-
-		if(keyLeftPressed) {
+		private._jumpAllowed = true;
+		// Animations
+		if(private.keyLeftPressed) {
 			$('body').trigger('blobanimationChanged', {
-				"blobID" : _blobID,
+				"blobID" : private._blobID,
 				"animationKey" : AnimationKeys.MOVELEFT
 			});
-		} else if(keyRightPressed) {
+		} else if(private.keyRightPressed) {
 			$('body').trigger('blobanimationChanged', {
-				"blobID" : _blobID,
+				"blobID" : private._blobID,
 				"animationKey" : AnimationKeys.MOVERIGHT
 			});
 		} else {
 			$('body').trigger('blobanimationChanged', {
-				"blobID" : _blobID,
+				"blobID" : private._blobID,
 				"animationKey" : AnimationKeys.IDLE1
 			});
 		}
@@ -179,191 +162,179 @@ BlobApp.BlobSuperClass = function() {
 		}
 	},
 
-	this.startNewGame = function() {
+	// Called periodically (on every engine tick)
+	private._callDirections = function() {
+		if(private.keyLeftPressed) {
+			private._currentLeft();
+		}
 
+		if(private.keyRightPressed) {
+			private._currentRight();
+		}
+
+		if(private.keyUpPressed) { 
+			private._currentUp();
+		}
+
+		if(private.keyDownPressed) {
+			private._currentDown();
+		}
 	},
 
-	_callDirections = function() {
-		if(keyLeftPressed) {
-			_currentLeft();
-		}
-
-		if(keyRightPressed) {
-			_currentRight();
-		}
-
-		if(keyUpPressed) { 
-			_currentUp();
-		}
-
-		if(keyDownPressed) {
-			_currentDown();
-		}
-
-		/*if(!keyLeftPressed && !keyUpPressed && !keyDownPressed && !keyRightPressed) {
-			$('body').trigger('blobanimationChanged', {
-				"blobID" : _blobID,
-				"animationKey" : AnimationKeys.IDLE1
-			});
-		} */
-	},
-
-	_disableAllMovements = function() {
+	// Makes the blobs completely unable to do anything (can be used for teleport, after death etc.)
+	disableAllMovements = function() {
 		emptyFunction = function(){};
-		_currentMash = _currentUp = _currentDown = _currentRight = _currentLeft = 
-		_upPressed = _upReleased = _downPressed = _downReleased = 
-		_leftPressed = _leftReleased = _rightPressed = _rightReleased = emptyFunction;
+		private._currentMash = private._currentUp = private._currentDown = private._currentRight = private._currentLeft = 
+		private._upPressed = private._upReleased = private._downPressed = private._downReleased = 
+		private._leftPressed = private._leftReleased = private._rightPressed = private._rightReleased = emptyFunction;
 	},
 
-	// These functions are called when a button is pressed
+	/*
+		the on<Direction>Pressed functions are also the functions that get called when a key is released
+		(in that case, they get called with "false" as the first parameter)
+	*/
+
 	this.onLeftPressed = function(pressed) {
 		if(pressed) {
-			if(!keyLeftPressed) {
-				keyLeftPressed = true;
-				keyRightPressed = false;
+			if(!private.keyLeftPressed) { // checks if this was already pressed or whether the input is "new"
+				private.keyLeftPressed = true;
+				private.keyRightPressed = false;
 
-				if(_jumpAllowed) {
+				if(private._jumpAllowed) {
 					$('body').trigger('blobanimationChanged', {
-						"blobID" : _blobID,
+						"blobID" : private._blobID,
 						"animationKey" : AnimationKeys.MOVELEFT
 					});
 				}
-				_leftPressed();
+				private._leftPressed();
 			}
 		} else {
-			keyLeftPressed = false;
-			_leftReleased();
-			if(!keyRightPressed && _jumpAllowed) {
+			private.keyLeftPressed = false;
+			private._leftReleased();
+			if(!private.keyRightPressed && private._jumpAllowed) {
 				$('body').trigger('blobanimationChanged', {
-					"blobID" : _blobID,
+					"blobID" : private._blobID,
 					"animationKey" : AnimationKeys.IDLE1
 				});
 			}
-		}
-
-		if(_blobID == EntityConfig.GREENBLOBID) {
-			$('body').trigger('heliAnimationChanged', {"animationKey": AnimationKeys.MOVELEFT});
 		}
 	},
 
 	this.onRightPressed = function(pressed) {
 		if(pressed) {
-			if(!keyRightPressed) {
-				keyRightPressed = true;
-				keyLeftPressed = false;
+			if(!private.keyRightPressed) {
+				private.keyRightPressed = true;
+				private.keyLeftPressed = false;
 
-				if(_jumpAllowed) {	
+				if(private._jumpAllowed) {	
 					$('body').trigger('blobanimationChanged', {
-						"blobID" : _blobID,
+						"blobID" : private._blobID,
 						"animationKey" : AnimationKeys.MOVERIGHT
 					});
 				}
 
-				_rightPressed();
+				private._rightPressed();
 			}
 		} else {
-			keyRightPressed = false;
-			_rightReleased();
-			if(!keyLeftPressed && _jumpAllowed) {
+			private.keyRightPressed = false;
+			private._rightReleased();
+			if(!private.keyLeftPressed && private._jumpAllowed) {
 				$('body').trigger('blobanimationChanged', {
-					"blobID" : _blobID,
+					"blobID" : private._blobID,
 					"animationKey" : AnimationKeys.IDLE1
 				});
 			}
-		}
-
-		if(_blobID == EntityConfig.GREENBLOBID) {
-			$('body').trigger('heliAnimationChanged', {"animationKey": AnimationKeys.MOVERIGHT});
 		}
 	},
 
 	this.onUpPressed = function(pressed) {
 		if(pressed) {
-			if(!keyUpPressed) {
-				keyUpPressed = true;
-				keyDownPressed = false;
-				_upPressed();
+			if(!private.keyUpPressed) {
+				private.keyUpPressed = true;
+				private.keyDownPressed = false;
+				private._upPressed();
 			}
 		} else {
-			keyUpPressed = false;
-			_upReleased();
+			private.keyUpPressed = false;
+			private._upReleased();
 		}
 	},
 
 	this.onDownPressed = function(pressed) {
 		if(pressed) {
-			if(!keyDownPressed) {
-				keyDownPressed = true;
-				keyUpPressed = false;
-				_downPressed();
+			if(!private.keyDownPressed) {
+				private.keyDownPressed = true;
+				private.keyUpPressed = false;
+				private._downPressed();
 			}
 		} else {
-			keyDownPressed = false;
-			_downReleased();
+			private.keyDownPressed = false;
+			private._downReleased();
 		}
 	},
 
 	this.onButtonMash = function() {
-		if(_currentMash)
-			_currentMash();
+		if(private._currentMash)
+			private._currentMash();
 	},
 
 	// This function can be called from BlobPlayer1 and BlobPlayer2 to change what happens when a button is pressed
 	this.setFunction = function(name, newFunction) {
 		switch(name) {
 			case "upPressed":
-				_upPressed = newFunction;
+				private._upPressed = newFunction;
 				break;
 			case "upReleased":
-				_upReleased = newFunction;
+				private._upReleased = newFunction;
 				break;
 			case "downPressed":
-				_downPressed = newFunction;
+				private._downPressed = newFunction;
 				break;
 			case "downReleased":
-				_downReleased = newFunction;
+				private._downReleased = newFunction;
 				break;
 			case "leftPressed":
-				_leftPressed = newFunction;
+				private._leftPressed = newFunction;
 				break;
 			case "leftReleased":
-				_leftReleased = newFunction;
+				private._leftReleased = newFunction;
 				break;
 			case "rightPressed":
-				_rightPressed = newFunction;
+				private._rightPressed = newFunction;
 				break;
 			case "rightReleased":
-				_rightReleased = newFunction;
+				private._rightReleased = newFunction;
 				break;
 			case "currentUp":
-				_currentUp = newFunction;
+				private._currentUp = newFunction;
 				break;
 			case "currentDown":
-				_currentDown = newFunction;
+				private._currentDown = newFunction;
 				break;
 			case "currentLeft":
-				_currentLeft = newFunction;
+				private._currentLeft = newFunction;
 				break;
 			case "currentRight":
-				_currentRight = newFunction;
+				private._currentRight = newFunction;
 				break;
 			case "currentMash":
-				_currentMash = newFunction;
+				private._currentMash = newFunction;
 				break;
 		}
 	},
 
+	// Required to connect this object to the phsyics.
 	this.setEntity = function(entity){
-		_blobEntity = entity;
-		_blobID = _blobEntity.GetUserData()[0];
+		private._blobEntity = entity;
+		private._blobID = private._blobEntity.GetUserData()[0];
 	},
 
 	this.setWaitingForOther = function(waiting) {
-		_waitingForOtherBlob = waiting;
+		private._waitingForOtherBlob = waiting;
 	},
 
 	this.getWaitingForOther = function() {
-		return _waitingForOtherBlob;
+		return private._waitingForOtherBlob;
 	},
 
 	this.setSingleSpecialAllowed = function(singleSpecialAllowed) {

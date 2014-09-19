@@ -1,7 +1,8 @@
 BlobApp.Goal = (function Goal(x_pos, y_pos, GOALID) {
 	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 50, 75);
 
-	var sprite, tilesetSheet;
+	var sprite, tilesetSheet,
+		thisVar = this;
 
 	this.prototype.init =function() {
 		var tileset = new Image();

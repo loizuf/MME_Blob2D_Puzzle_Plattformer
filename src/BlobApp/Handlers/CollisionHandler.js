@@ -93,39 +93,42 @@ BlobApp.CollisionHandler = (function() {
 			
 			case EntityConfig.KEYID:
 				private._pickUpKey(bodyA, bodyB);
-			break;
+			return;
 			
 			case EntityConfig.GOALID:
 				private._attemptFinish(EntityConfig.GREENBLOBID);
-			break;
+			return;
 			
 			case EntityConfig.HELITRIGGER:
 				private._playerInTriggerZone("greenBlob", "heli", bodyB);
-			break;
+			return;
+			
+			case EntityConfig.HELISTOPTRIGGER:
+				return;
 
 			case EntityConfig.TELETRIGGER:
 				private._playerInTriggerZone("greenBlob", "tele", bodyB);
-			break;
+			return;
 
 			case EntityConfig.BRIDGELEFTTRIGGER:
 				private._playerInTriggerZone("greenBlob", "bridgeLeft", bodyB);
-			break;
+			return;
 
 			case EntityConfig.BRIDGERIGHTTRIGGER:
 				private._playerInTriggerZone("greenBlob", "bridgeRight", bodyB);
-			break;
+			return;
 
 			case EntityConfig.SPHERETRIGGER:
 				private._playerInTriggerZone("greenBlob", "sphere", bodyB);
-			break;
+			return;
 
 			case EntityConfig.SLINGSHOTTRIGGERLEFT:
 				private._playerInTriggerZone("greenBlob", "slingshotLeft", bodyB);
-			break;
+			return;
 
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT:
 				private._playerInTriggerZone("greenBlob", "slingshotRight", bodyB);
-			break;
+			return;
 
 			case EntityConfig.MOVINGGROUNDID:
 				if(contact.m_manifold.m_localPlaneNormal.y > 0) {
@@ -142,12 +145,12 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.NEWGAMEDOOR:
 			case EntityConfig.CONTINUEDOOR:
 				private._playerInMenuDoorZone("greenBlob", bodyB);
-			break;
+			return;
 
 			//Overworld Navigation
 			case EntityConfig.LEVELDOOR:
 				private._playerEnteredLevelLoadZone("greenBlob", bodyB);
-			break;
+			return;
 		}
 
 		if(contact.m_manifold.m_localPlaneNormal.y > 0) {

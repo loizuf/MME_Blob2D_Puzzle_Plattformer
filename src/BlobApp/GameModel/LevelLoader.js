@@ -425,10 +425,10 @@ BlobApp.LevelLoader = (function() {
 	},
 
 	_createMenuDoor = function(x, y, type){
-		_createRequestObject["width"] = 12.5;
-		_createRequestObject["height"] = 25;
+		_createRequestObject["width"] = 15;
+		_createRequestObject["height"] = 37.5;
 		_createRequestObject["x"] = x;
-		_createRequestObject["y"] = y+12.5;
+		_createRequestObject["y"] = y;
 
 		if(type == 0){
 			_createRequestObject["userData"] = [EntityConfig.NEWGAMEDOOR];
@@ -441,7 +441,7 @@ BlobApp.LevelLoader = (function() {
 		var messageToView = {
 			generic : false,
 			x : x,
-			y : y+12.5,
+			y : y,
 			entityID : _createRequestObject["userData"][0]
 		};
 
