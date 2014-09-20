@@ -1,3 +1,4 @@
+// The shining circle that indicates special interaction triggers
 BlobApp.CooperationTrigger = (function CooperationTrigger(x_pos, y_pos, coopID, triggerID) {
 	var thisVar = this,
 
@@ -32,21 +33,11 @@ BlobApp.CooperationTrigger = (function CooperationTrigger(x_pos, y_pos, coopID, 
 			}
 		}
 
-		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet);
 		sprite.name = "trigger";
-
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
-
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
+		thisVar.prototype.setupSprite(sprite);
 		
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("smallShine");
 	},
 

@@ -1,3 +1,5 @@
+// The boxes that explode (it was hard to display doors as closed in a two-dimensional side view)
+// In the Tilesheet, they still look like doors, though.
 BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, doorID) {
 	var thisVar = this,
 
@@ -31,20 +33,10 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, doorID) {
 			}
 		}
 
-		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet);
+		thisVar.prototype.setupSprite(sprite);
 
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
-
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
 		easleID = sprite.id;
 	},
 

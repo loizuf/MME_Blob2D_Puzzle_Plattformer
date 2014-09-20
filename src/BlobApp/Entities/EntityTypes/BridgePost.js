@@ -1,3 +1,5 @@
+// Bridge post visualisation (doesn't technically need to have its own class since it
+// is not animated, but when all the other special ability indicators do have their own, so should this.)
 BlobApp.BridgePost = (function BridgePost(x_pos, y_pos) {
 	var thisVar = this,
 
@@ -24,21 +26,12 @@ BlobApp.BridgePost = (function BridgePost(x_pos, y_pos) {
 			}
 		}
 
-		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
 
 		sprite = new createjs.Sprite(tilesetSheet);
 		sprite.name = "bridgepost";
 
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
-
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
+		thisVar.prototype.setupSprite(sprite);
 	};
 
 	this.prototype.init();

@@ -1,3 +1,4 @@
+// The bubbles that indicate what button to press etc.
 BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 	this.prototype = new BlobApp.Entity(x_pos, y_pos - 75, 100, 75);
 	
@@ -50,22 +51,10 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 			}
 		}
 
-		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet);
-
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
-		
-		sprite.name= thisVar.hintID;
-
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
+		sprite.name = thisVar.hintID;
+		thisVar.prototype.setupSprite(sprite);
 
 		var aniName;
 		if(thisVar.hintID == "bubblegreenBlob") {
@@ -102,7 +91,7 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
  
 		sprite.gotoAndPlay(aniName);
 	},
-
+	
 	this._animate = function(event, data) {
 		var aniName = "";
 		switch(data.animationKey) {

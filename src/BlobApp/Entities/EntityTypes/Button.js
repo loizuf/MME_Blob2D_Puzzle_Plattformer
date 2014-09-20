@@ -1,3 +1,4 @@
+// Trigger button visualisation (the buttons that destroy doors)
 BlobApp.TriggerButton = (function Button(x_pos, y_pos, buttonID) {
 	var thisVar = this,
 
@@ -33,22 +34,11 @@ BlobApp.TriggerButton = (function Button(x_pos, y_pos, buttonID) {
 			}
 		}
 
-		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet);
-
 		sprite.name = "generic";
-
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
+		thisVar.prototype.setupSprite(sprite);
 		
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("idle");
 	},
 

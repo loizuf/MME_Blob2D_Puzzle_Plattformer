@@ -1,3 +1,4 @@
+// Key visualisation
 BlobApp.Key = (function Key(x_pos, y_pos, keyID) {
 	this.prototype = new BlobApp.Entity(x_pos, y_pos, 30, 30);
 
@@ -30,21 +31,10 @@ BlobApp.Key = (function Key(x_pos, y_pos, keyID) {
 			}
 		}
 
-		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet);
-
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
 		sprite.name = "key";
-		
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
+		thisVar.prototype.setupSprite(sprite);
 
 		sprite.gotoAndPlay("idle1");
 	},

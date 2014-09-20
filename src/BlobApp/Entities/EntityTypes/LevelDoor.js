@@ -1,3 +1,4 @@
+// The doors for the level selection (in the overworlds)
 BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, LevelID, owID) {
 	this.prototype = new BlobApp.Entity(x_pos, y_pos+10, 50, 60);
 
@@ -36,20 +37,10 @@ BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, LevelID, owID) {
 				unlock: [10, 17, "idle"]
 			}
 		}
-		// create spritesheet for generic objects (ground e.g.)
+
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet); 
-
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = imageData.frames.width / 2;
-		sprite.regY = imageData.frames.height / 2;
-
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
+		thisVar.prototype.setupSprite(sprite);
 
 		gameState = BlobApp.GlobalState.getGameState();
 

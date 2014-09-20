@@ -1,3 +1,4 @@
+// The "continue" or "new" door
 BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, doorType) {
 	this.prototype = new BlobApp.Entity(x_pos, y_pos, 50, 75);
 
@@ -22,20 +23,10 @@ BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, doorType) {
 				height : height,
 			}
 		}
-		// create spritesheet for generic objects (ground e.g.)
+
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet); 
-
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = imageData.frames.width / 2;
-		sprite.regY = imageData.frames.height / 2;
-
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
+		thisVar.prototype.setupSprite(sprite);
 	},
 
 	_getTileset = function(tileset, doorType) {

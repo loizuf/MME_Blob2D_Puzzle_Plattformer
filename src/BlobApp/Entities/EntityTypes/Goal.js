@@ -1,3 +1,4 @@
+// The Level's goal (a door with two lights on top)
 BlobApp.Goal = (function Goal(x_pos, y_pos, GOALID) {
 	this.prototype = new BlobApp.Entity(x_pos, y_pos, 50, 75);
 
@@ -39,21 +40,10 @@ BlobApp.Goal = (function Goal(x_pos, y_pos, GOALID) {
 			}
 		}
 
-		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet); 
-
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = imageData.frames.width / 2;
-		sprite.regY = imageData.frames.height / 2;
-
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
+		thisVar.prototype.setupSprite(sprite);
 		
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
-
 		sprite.gotoAndPlay("locked");
 	},
 

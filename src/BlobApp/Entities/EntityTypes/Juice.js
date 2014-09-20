@@ -1,3 +1,4 @@
+// Dust visualisation (called "juice" because its only purpose is to make the game juicy :) )
 BlobApp.Juice = (function Juice(x_pos, y_pos) {
 	var thisVar = this,
 
@@ -28,20 +29,9 @@ BlobApp.Juice = (function Juice(x_pos, y_pos) {
 			}
 		}
 
-		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet);
-
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
-
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
+		thisVar.prototype.setupSprite(sprite);
 
 		sprite.gotoAndPlay("play");
 	},
@@ -57,7 +47,6 @@ BlobApp.Juice = (function Juice(x_pos, y_pos) {
 			removed = true;
 		}
 	};
-	
 
 	this.prototype.init();
 	this.sprite = sprite;

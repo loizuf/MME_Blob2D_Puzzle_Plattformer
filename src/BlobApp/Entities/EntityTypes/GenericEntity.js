@@ -1,5 +1,6 @@
+// An entity that gets taken from the Spritesheet without alterations or any animations (ground, spikes etc.)
 BlobApp.GenericEntity = (function GenericEntity(tilesetSheet, x, y, positionInSprite) {
-	var that = this,
+	var thisVar = this,
 
 	sprite, 
 	tilesetSheet, 
@@ -9,17 +10,9 @@ BlobApp.GenericEntity = (function GenericEntity(tilesetSheet, x, y, positionInSp
 	
 	this.prototype.init =function() {
 		sprite = new createjs.Sprite(tilesetSheet);
-
 		sprite.gotoAndStop(positionInSprite);
-
 		sprite.name = "generic";
-
-		// isometrix tile positioning based on X Y order from Tile
-		sprite.x = x;
-		sprite.y = y;
-
-		sprite.regX = Math.floor(DEFAULT_TILE_SIZE/2);
-		sprite.regY = Math.floor(DEFAULT_TILE_SIZE/2);
+		thisVar.prototype.setupSprite(sprite);
 	},
 
 	this.prototype.init();

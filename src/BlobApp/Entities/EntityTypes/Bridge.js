@@ -1,3 +1,4 @@
+// Bridge special ability visualisation
 BlobApp.Bridge = (function Bridge(x_pos, y_pos, direction) {
 
 	var thisVar = this,
@@ -38,22 +39,14 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, direction) {
 		}
 
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet);
 		sprite.name = "bridge";
-
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
 
 		if(direction == "left") {
 			sprite.scaleX = -1;
 		}
 
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
+		thisVar.prototype.setupSprite(sprite);
 		sprite.gotoAndPlay("startAni");
 	},
 

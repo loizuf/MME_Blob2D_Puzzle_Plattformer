@@ -1,3 +1,5 @@
+// The tree and the slingshot animations
+// (All packed in one big spritesheet because that's the easiest way to do that)
 BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, direction) {
 	var thisVar = this,
 
@@ -72,19 +74,13 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, direction) {
 		sprite = new createjs.Sprite(tilesetSheet);
 		sprite.name = "slingshot";
 
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
+		thisVar.prototype.setupSprite(sprite);
+
 
 		thisVar.direction = direction;
 		if(thisVar.direction == "right") {
 			sprite.scaleX = -1;
 		}
-
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("stable");
 	},
 

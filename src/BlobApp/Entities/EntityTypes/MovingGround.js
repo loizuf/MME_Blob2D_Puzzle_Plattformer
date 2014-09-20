@@ -1,3 +1,4 @@
+// The floating platforms (visualisation and movement logic)
 BlobApp.MovingGround = (function MovingGround(x_pos, y_pos, num) {
 
 var thisVar = this,
@@ -33,24 +34,13 @@ var thisVar = this,
 				height : height,
 			},
 		}
-		// create spritesheet for generic objects (ground e.g.)
+
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet);
-
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
-
 		sprite.name = "movingGround";
-		
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-		startY = y_pos/30;
+		thisVar.prototype.setupSprite(sprite);
 
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
-		//sprite.gotoAndPlay(/*wepo*/);
+		startY = y_pos/30;
 	},
 
 	_listeners = function(){

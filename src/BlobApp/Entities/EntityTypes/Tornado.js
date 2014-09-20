@@ -1,3 +1,4 @@
+// The tornado indicates that the heli special ability can be triggered at this point
 BlobApp.Tornado = (function Tornado(x_pos, y_pos) {
 	var thisVar = this,
 
@@ -24,21 +25,11 @@ BlobApp.Tornado = (function Tornado(x_pos, y_pos) {
 			}
 		}
 
-		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet);
 		sprite.name = "tornado";
+		thisVar.prototype.setupSprite(sprite);
 
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
-
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("");
 	};
 

@@ -1,6 +1,7 @@
+// The trampolin visualisation (the green blob's single special ability)
 BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, greenBlobEntity) {
 
-	var that = this,
+	var thisVar = this,
 
 	sprite, 
 	tilesetSheet, 
@@ -39,26 +40,11 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, greenBlobEntity) {
 			}
 		}
 
-		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet);
-
 		sprite.name = "trampolin";
+		thisVar.prototype.setupSprite(sprite);
 
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
-
-		sprite.x = x_pos;
-		sprite.y = y_pos;
-
-		/* setzen auf höhe/2, breite /2 */
-		sprite.regX = imageData.frames.width / 2;
-		sprite.regY = imageData.frames.height / 2;
-		
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("init");
 	},
 

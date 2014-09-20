@@ -1,3 +1,4 @@
+// The Blob visualisation class
 BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 
 	var thisVar = this,
@@ -59,9 +60,7 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 			}
 		}
 
-		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet);
 
 		if(blobID == EntityConfig.REDBLOBID) {
@@ -70,15 +69,7 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 			sprite.name = "blobGreen";
 		}
 
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = width/2;
-		sprite.regY = height/2;
-
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
+		thisVar.prototype.setupSprite(sprite);
 		sprite.gotoAndPlay("idle1");
 	},
 
@@ -141,6 +132,7 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 		}
 	},
 
+	// A small piece of logic is in here, because the time when the teleport should take place really depends on the animation.
 	_checkIfTeleAnimationFinished = function() {
 		if(sprite.currentAnimation == "teleport" && blobID == EntityConfig.REDBLOBID && sprite.currentAnimationFrame == 19 ) {
 			$('body').trigger('teleportRequested');

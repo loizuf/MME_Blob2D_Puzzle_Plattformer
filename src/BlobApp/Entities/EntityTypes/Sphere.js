@@ -1,3 +1,4 @@
+// The sphere special ability visualisation
 BlobApp.Sphere = (function Sphere(x_pos, y_pos) {
 
 	var thisVar = this,
@@ -39,18 +40,10 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos) {
 		}
 
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet);
 		sprite.name = "sphere";
+		thisVar.prototype.setupSprite(sprite);
 
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
-
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-		
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("startAni");
 	},
 

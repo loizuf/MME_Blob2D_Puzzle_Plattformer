@@ -1,3 +1,4 @@
+// The rotating ball that indicates a sphere can be created at that point.
 BlobApp.Orb = (function Orb(x_pos, y_pos) {
 	var thisVar = this,
 
@@ -31,21 +32,12 @@ BlobApp.Orb = (function Orb(x_pos, y_pos) {
 			}
 		}
 
-		// create spritesheet for generic objects (ground e.g.)
 		tilesetSheet = new createjs.SpriteSheet(imageData);
-
 		sprite = new createjs.Sprite(tilesetSheet);
 		sprite.name = "orb";
-
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
-
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
+		thisVar.prototype.setupSprite(sprite);
+		// doesn't need "gotoAndPlay" because if that is left out, the animation just starts and does not stop
+		// (which is exactly what is wanted)
 	},
 
 	_rotate = function() {

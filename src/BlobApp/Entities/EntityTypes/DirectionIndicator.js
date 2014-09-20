@@ -1,3 +1,4 @@
+// The arrows that show the direction preview for the slingshot
 BlobApp.DirectionIndicator = (function DirectionIndicator(x_pos, y_pos, direction) {
 	var thisVar = this,
 
@@ -41,10 +42,6 @@ BlobApp.DirectionIndicator = (function DirectionIndicator(x_pos, y_pos, directio
 		sprite = new createjs.Sprite(tilesetSheet);
 		sprite.name = "directionIndicator";
 
-		/* koordinaten kommen aus dem levelloader */
-		sprite.regX = width / 2;
-		sprite.regY = height / 2;
-
 		sprite.scaleY = 0.5;
 		if(direction == "right") {
 			sprite.scaleX = -1;
@@ -53,11 +50,7 @@ BlobApp.DirectionIndicator = (function DirectionIndicator(x_pos, y_pos, directio
 			sprite.rotation = -30;
 		}
 
-		sprite.x = thisVar.prototype.x_coordinate;
-		sprite.y = thisVar.prototype.y_coordinate;
-
-		sprite.snapToPixel = true;
-		sprite.mouseEnabled = false;
+		thisVar.prototype.setupSprite(sprite);
 		sprite.gotoAndPlay("");
 	},
 
