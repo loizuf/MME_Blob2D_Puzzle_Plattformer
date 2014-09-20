@@ -1,5 +1,6 @@
 BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, 100, 75);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos - 75, 100, 75);
+	
 	var thisVar = this,
 		sprite,
 		tilesetSheet,
@@ -60,8 +61,8 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 		
 		sprite.name= thisVar.hintID;
 
-		sprite.x = x_pos;
-		sprite.y = y_pos;
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;

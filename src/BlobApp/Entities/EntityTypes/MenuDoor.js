@@ -1,7 +1,8 @@
 BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, doorType) {
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 50, 75);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 50, 75);
 
-	var sprite, tilesetSheet;
+	var thisVar = this,
+		sprite, tilesetSheet;
 
 	this.prototype.init =function() {
 		var tileset = new Image();
@@ -30,8 +31,8 @@ BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, doorType) {
 		sprite.regX = imageData.frames.width / 2;
 		sprite.regY = imageData.frames.height / 2;
 
-		sprite.x = x_pos;
-		sprite.y = y_pos;
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;

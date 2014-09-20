@@ -1,7 +1,8 @@
 BlobApp.Key = (function Key(x_pos, y_pos, keyID) {
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 30, 30);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 30, 30);
 
-	var sprite, tilesetSheet;
+	var thisVar = this,
+	sprite, tilesetSheet;
 
 	this.prototype.init =function() {
 		var tileset = new Image();
@@ -39,8 +40,8 @@ BlobApp.Key = (function Key(x_pos, y_pos, keyID) {
 		sprite.regY = height / 2;
 		sprite.name = "key";
 		
-		sprite.x = x_pos;
-		sprite.y = y_pos;
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;

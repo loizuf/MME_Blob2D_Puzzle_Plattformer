@@ -1,5 +1,5 @@
 BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, LevelID, owID) {
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 50, 60);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos+10, 50, 60);
 
 	var sprite, tilesetSheet, LvlID;
 	var thisVar = this;
@@ -45,8 +45,8 @@ BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, LevelID, owID) {
 		sprite.regX = imageData.frames.width / 2;
 		sprite.regY = imageData.frames.height / 2;
 
-		sprite.x = x_pos;
-		sprite.y = y_pos;
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;

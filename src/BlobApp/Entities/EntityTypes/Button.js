@@ -1,11 +1,11 @@
 BlobApp.TriggerButton = (function Button(x_pos, y_pos, buttonID) {
-	var that = this,
+	var thisVar = this,
 
 	sprite, 
 	tilesetSheet,
 	buttonID;
 
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 25 , 25);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 25 , 25);
 	
 	this.prototype.init =function() {
 		tileset = new Image();
@@ -44,8 +44,8 @@ BlobApp.TriggerButton = (function Button(x_pos, y_pos, buttonID) {
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
 		
-		sprite.x = x_pos;
-		sprite.y = y_pos;
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
@@ -57,7 +57,6 @@ BlobApp.TriggerButton = (function Button(x_pos, y_pos, buttonID) {
 	},
 
 	_animate = function(event, data){
-		console.log(data, buttonID);
 		if(data.userData[1] == buttonID) {
 			sprite.gotoAndPlay("press");
 		}

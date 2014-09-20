@@ -10,7 +10,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, direction) {
 	angle;
 	this.direction = direction;
 
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, 75, 75);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos-50, 75, 75);
 
 	this.prototype.init = function() {
 		tileset = new Image();
@@ -80,11 +80,8 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, direction) {
 			sprite.scaleX = -1;
 		}
 
-		sprite.x = x_pos;
-		sprite.y = y_pos;
-
-		sprite.regX = imageData.frames.width / 2;
-		sprite.regY = imageData.frames.height / 2;
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
@@ -188,8 +185,8 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, direction) {
 	_checkIfStopFinished = function() {
 		if(sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 1) {
 			$('body').trigger('specialFinished', {'specialName' : "slingshot"});
-			$('body').trigger('slingshotFinished', {'xPos' : x_pos,
-												    'yPos' : y_pos,
+			$('body').trigger('slingshotFinished', {'xPos' : thisVar.prototype.x_coordinate,
+												    'yPos' : thisVar.prototype.y_coordinate,
 													'force' : strength,
 													'angle' : angle,
 													'direction' : direction});

@@ -159,25 +159,25 @@ BlobApp.ViewController = (function() {
 		var entity;
 		switch(entityID){
 			case EntityConfig.HELITRIGGER :
-				entity = new BlobApp.Tornado(xPos, yPos-10);
+				entity = new BlobApp.Tornado(xPos, yPos);
 				break;
 			case EntityConfig.TELETRIGGER :
-				entity = new BlobApp.Teleport(xPos, yPos-12.5);
+				entity = new BlobApp.Teleport(xPos, yPos);
 				break;
 			case EntityConfig.HELISTOPTRIGGER :
-				entity = new BlobApp.Helistop(xPos, yPos-12.5);
+				entity = new BlobApp.Helistop(xPos, yPos);
 				break;
 			case EntityConfig.BRIDGERIGHTTRIGGER :
-				entity = new BlobApp.BridgePost(xPos-5, yPos+2.5);
+				entity = new BlobApp.BridgePost(xPos-5, yPos);
 				break;
 			case EntityConfig.BRIDGELEFTTRIGGER :
-				entity = new BlobApp.BridgePost(xPos+5, yPos+2.5);
+				entity = new BlobApp.BridgePost(xPos+5, yPos);
 				break;
 			case EntityConfig.SLINGSHOTTRIGGERLEFT :
-				entity = new BlobApp.Slingshot(xPos, yPos-25, "left");
+				entity = new BlobApp.Slingshot(xPos, yPos, "left");
 				break;
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT:	
-				entity = new BlobApp.Slingshot(xPos, yPos-25, "right");
+				entity = new BlobApp.Slingshot(xPos, yPos, "right");
 				break;
 			case EntityConfig.SPHERETRIGGER:	
 				entity = new BlobApp.Orb(xPos, yPos-5);

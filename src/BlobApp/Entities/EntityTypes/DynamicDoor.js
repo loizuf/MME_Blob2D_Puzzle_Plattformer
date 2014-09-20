@@ -1,9 +1,9 @@
 BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, doorID) {
-	var that = this,
+	var thisVar = this,
 
 	sprite, tilesetSheet, doorID, easleID, isOpening;
 
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 50, 75);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos+2.5, 50, 75);
 	
 	this.prototype.init =function() {
 		this.doorID  = doorID;
@@ -40,8 +40,8 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, doorID) {
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
 
-		sprite.x = x_pos;
-		sprite.y = y_pos+2;
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;

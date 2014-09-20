@@ -345,7 +345,7 @@ BlobApp.LevelLoader = (function() {
 		var messageToView = {
 			generic : false,
 			x : x,
-			y : y + 14,
+			y : y,
 			entityID : EntityConfig.REDBLOBID
 		};
 
@@ -366,7 +366,7 @@ BlobApp.LevelLoader = (function() {
 			var messageToView = {
 			generic : false,
 			x : x,
-			y : y + 2,
+			y : y,
 			entityID : EntityConfig.GREENBLOBID
 		};
 
@@ -499,7 +499,7 @@ BlobApp.LevelLoader = (function() {
 		var messageToView = {
 			generic : false,
 			x : x,
-			y : y+10,
+			y : y,
 			entityID : EntityConfig.LEVELDOOR,
 			levelID : levelDoorLevelID,
 			owID : levelDoorOverID
@@ -569,7 +569,7 @@ BlobApp.LevelLoader = (function() {
 		var messageToView = {
 			generic : false,
 			x : x,
-			y : y - 25,
+			y : y,
 			entityID : entityID,
 			uniqueID : idx
 		};

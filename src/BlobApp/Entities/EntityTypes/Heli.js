@@ -1,6 +1,6 @@
 BlobApp.Heli = (function Heli(x_pos, y_pos) {
 
-	var that = this,
+	var thisVar = this,
 
 	sprite, 
 	tilesetSheet, 
@@ -47,13 +47,9 @@ BlobApp.Heli = (function Heli(x_pos, y_pos) {
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
 
-		sprite.x = x_pos;
-		sprite.y = y_pos;
-
-		/* setzen auf höhe/2, breite /2 */
-		sprite.regX = imageData.frames.width/2;
-		sprite.regY = imageData.frames.height/2;
-
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
+		
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("startAni");
@@ -72,15 +68,21 @@ BlobApp.Heli = (function Heli(x_pos, y_pos) {
 	_animate = function(event, data) {	
 		switch(data.animationKey){
 			case AnimationKeys.MOVERIGHT:
-				sprite.gotoAndPlay("moveRight");
+				if(sprite.currentAnimation != "moveRight") {
+					sprite.gotoAndPlay("moveRight");
+				}
 			break;
 			
 			case AnimationKeys.MOVELEFT:
-				sprite.gotoAndPlay("moveLeft");
+				if(sprite.currentAnimation != "moveLeft") {
+					sprite.gotoAndPlay("moveLeft");
+				}
 			break;
 			
 			case AnimationKeys.STOP:
-				sprite.gotoAndPlay("stop");
+				if(sprite.currentAnimation != "stop") {
+					sprite.gotoAndPlay("stop");
+				}
 			break;
 		}
 	},

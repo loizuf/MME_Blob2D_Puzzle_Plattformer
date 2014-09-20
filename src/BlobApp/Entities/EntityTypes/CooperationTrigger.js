@@ -1,11 +1,11 @@
 BlobApp.CooperationTrigger = (function CooperationTrigger(x_pos, y_pos, coopID, triggerID) {
-	var that = this,
+	var thisVar = this,
 
 	sprite, 
 	tilesetSheet, 
 	tileset;
 
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, 60, 60);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos-25, 60, 60);
 	
 	this.prototype.init =function() {
 		tileset = new Image();
@@ -42,13 +42,9 @@ BlobApp.CooperationTrigger = (function CooperationTrigger(x_pos, y_pos, coopID, 
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
 
-		sprite.x = x_pos;
-		sprite.y = y_pos;
-
-		/* setzen auf höhe/2, breite /2 */
-		sprite.regX = imageData.frames.width/2;
-		sprite.regY = imageData.frames.height/2;
-
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
+		
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
 		sprite.gotoAndPlay("smallShine");

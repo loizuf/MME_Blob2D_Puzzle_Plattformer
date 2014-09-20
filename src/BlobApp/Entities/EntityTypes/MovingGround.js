@@ -1,6 +1,6 @@
 BlobApp.MovingGround = (function MovingGround(x_pos, y_pos, num) {
 
-var that = this,
+var thisVar = this,
 	MOVINGRANGE = 50, /*for each 25 its moving 1 tile to left and right of the starting position*/
 	sprite, 
 	tilesetSheet, 
@@ -10,7 +10,7 @@ var that = this,
 	myNum,
 	bodiesOnMe = [],
 	started,
-	userData;
+	userData;	
 
 	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 75, 25);
 	
@@ -44,10 +44,9 @@ var that = this,
 
 		sprite.name = "movingGround";
 		
-		sprite.x = x_pos;
-		sprite.y = y_pos;
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
 		startY = y_pos/30;
-		
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;

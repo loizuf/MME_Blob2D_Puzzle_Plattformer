@@ -1,5 +1,5 @@
 BlobApp.DirectionIndicator = (function DirectionIndicator(x_pos, y_pos, direction) {
-	var that = this,
+	var thisVar = this,
 
 	sprite, 
 	tilesetSheet, 
@@ -53,12 +53,8 @@ BlobApp.DirectionIndicator = (function DirectionIndicator(x_pos, y_pos, directio
 			sprite.rotation = -30;
 		}
 
-		sprite.x = x_pos;
-		sprite.y = y_pos;
-
-		/* setzen auf höhe/2, breite /2 */
-		sprite.regX = imageData.frames.width/2;
-		sprite.regY = imageData.frames.height/2;
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;

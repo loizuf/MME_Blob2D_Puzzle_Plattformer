@@ -1,11 +1,11 @@
 BlobApp.Orb = (function Orb(x_pos, y_pos) {
-	var that = this,
+	var thisVar = this,
 
 	sprite, 
 	tilesetSheet, 
 	tileset;
 
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, 25, 25);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos-25, 25, 25);
 	
 	this.prototype.init =function() {
 		tileset = new Image();
@@ -41,12 +41,8 @@ BlobApp.Orb = (function Orb(x_pos, y_pos) {
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
 
-		sprite.x = x_pos;
-		sprite.y = y_pos;
-
-		/* setzen auf höhe/2, breite /2 */
-		sprite.regX = imageData.frames.width/2;
-		sprite.regY = imageData.frames.height/2;
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;

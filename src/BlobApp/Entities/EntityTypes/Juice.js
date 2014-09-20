@@ -1,9 +1,9 @@
 BlobApp.Juice = (function Juice(x_pos, y_pos) {
-	var that = this,
+	var thisVar = this,
 
 	sprite, tilesetSheet, removed = false;
 
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 50, 50);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 50, 50);
 	
 	this.prototype.init =function() {
 		var tileset = new Image();
@@ -37,8 +37,8 @@ BlobApp.Juice = (function Juice(x_pos, y_pos) {
 		sprite.regX = width / 2;
 		sprite.regY = height / 2;
 
-		sprite.x = x_pos;
-		sprite.y = y_pos;
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;

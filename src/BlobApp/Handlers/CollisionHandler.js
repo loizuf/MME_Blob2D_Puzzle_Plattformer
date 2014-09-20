@@ -526,7 +526,7 @@ BlobApp.CollisionHandler = (function() {
 		var messageToView = {
 			generic: false,
 			x: bodyB.m_xf.position.x * 30,
-			y: bodyB.m_xf.position.y * 30 - 75,
+			y: bodyB.m_xf.position.y * 30,
 			entityID: "Bubble",
 			bubbleInfo : {
 				bubbleType : type,

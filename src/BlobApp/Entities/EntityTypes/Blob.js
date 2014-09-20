@@ -1,6 +1,6 @@
 BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 
-	var that = this,
+	var thisVar = this,
 
 	blobID = blobID,
 	sprite, 
@@ -8,7 +8,10 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 	tileset,
 	animateBlobs = true;
 
-	this.prototype = new BlobApp.Entity(x_pos, y_pos, 2*DEFAULT_TILE_SIZE, (blobID == EntityConfig.REDBLOBID)? 2*DEFAULT_TILE_SIZE : DEFAULT_TILE_SIZE);
+	this.prototype = new BlobApp.Entity(x_pos, 
+		(blobID == EntityConfig.REDBLOBID)? y_pos+14 : y_pos+2, 
+		2*DEFAULT_TILE_SIZE, 
+		(blobID == EntityConfig.REDBLOBID)? 2*DEFAULT_TILE_SIZE : DEFAULT_TILE_SIZE);
 	
 	this.prototype.init =function() {
 		tileset = new Image();
@@ -16,10 +19,10 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 		var height;
 
 		if(blobID == EntityConfig.REDBLOBID) {
-			tileset.src = "res/img/redBlobMove.png"//mapData.tilesets[0].image;
+			tileset.src = "res/img/redBlobMove.png";
 			height = 2*DEFAULT_TILE_SIZE;
 		} else {
-			tileset.src = "res/img/greenBlobMove.png"//mapData.tilesets[0].image;
+			tileset.src = "res/img/greenBlobMove.png";
 			height = DEFAULT_TILE_SIZE;
 		}
 
@@ -71,8 +74,8 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 		sprite.regX = width/2;
 		sprite.regY = height/2;
 
-		sprite.x = x_pos;
-		sprite.y = y_pos;
+		sprite.x = thisVar.prototype.x_coordinate;
+		sprite.y = thisVar.prototype.y_coordinate;
 
 		sprite.snapToPixel = true;
 		sprite.mouseEnabled = false;
@@ -149,5 +152,4 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 
 	this.prototype.init();
 	this.sprite = sprite;
-	this.blobID = blobID;
 });
