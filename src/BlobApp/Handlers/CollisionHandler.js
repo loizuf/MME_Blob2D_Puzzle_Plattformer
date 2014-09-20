@@ -397,8 +397,10 @@ BlobApp.CollisionHandler = (function() {
 	private._playerOnSpikes = function(playerName) {
 		if (playerName == "greenBlob") {
 			$('body').trigger("blobanimationChanged", {blobID: EntityConfig.GREENBLOBID, animationKey: AnimationKeys.DEATH});
-		} else {
+		} else if (playerName == "redBlob") {
 			$('body').trigger("blobanimationChanged", {blobID: EntityConfig.REDBLOBID, animationKey: AnimationKeys.DEATH});
+		} else if (playerName == "heli") {
+			$('body').trigger("heliAnimationChanged", {animationKey: AnimationKeys.DEATH});			
 		}
 
 		$('body').trigger('playerOnSpikes', playerName);

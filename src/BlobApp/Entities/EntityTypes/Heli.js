@@ -33,7 +33,9 @@ BlobApp.Heli = (function Heli(x_pos, y_pos) {
 				startAni: [0,19, "moveRight"],
 				moveRight: [20, 39],
 				moveLeft: [40, 59],
-				stop: [60, 79]
+				stop: [60, 79],
+				death: [80, 93, "afterDeath"],
+				afterDeath: [94, 94, "afterDeath"]
 			}
 		}
 
@@ -66,6 +68,7 @@ BlobApp.Heli = (function Heli(x_pos, y_pos) {
 	},
 
 	_animate = function(event, data) {	
+		if(sprite.currentAnimation == "death" || sprite.currentAnimation == "afterDeath") return;
 		switch(data.animationKey){
 			case AnimationKeys.MOVERIGHT:
 				if(sprite.currentAnimation != "moveRight") {
@@ -84,6 +87,11 @@ BlobApp.Heli = (function Heli(x_pos, y_pos) {
 					sprite.gotoAndPlay("stop");
 				}
 			break;
+
+			case AnimationKeys.DEATH:
+				if(sprite.currentAnimation != "death") {
+					sprite.gotoAndPlay("death");
+				}
 		}
 	},
 
