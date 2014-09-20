@@ -214,12 +214,12 @@ BlobApp.BlobPlayer1 = (function() {
 
 	_heliMoveRight = function() {		
 		$('body').trigger('heliMove', {"speed" : heliSpeedX, "dir" : "x"});
-		$('body').trigger('heliAnimationChanged', {"animationKey": AnimationKeys.MOVELEFT});
+		$('body').trigger('heliAnimationChanged', {"animationKey": AnimationKeys.MOVERIGHT});
 	},
 
 	_heliMoveLeft  = function() {
 		$('body').trigger('heliMove', {"speed" : -heliSpeedX, "dir" : "x"});
-		$('body').trigger('heliAnimationChanged', {"animationKey": AnimationKeys.MOVERIGHT});
+		$('body').trigger('heliAnimationChanged', {"animationKey": AnimationKeys.MOVELEFT});
 	},
 	// END: Heli */
 
