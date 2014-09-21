@@ -7,6 +7,22 @@ icon toggle
 
 
 Title:
+    Cartoon Tree
+
+Author:
+    Belohlavek
+
+URL:
+    http://opengameart.org/content/cartoon-trees
+
+License(s):
+    * CC0 1.0  http://creativecommons.org/publicdomain/zero/1.0/
+
+File(s):
+    * tree_cartoon_big.png
+
+
+Title:
     hand drawn Icon Pack
 
 Author:
@@ -88,7 +104,7 @@ License(s):
     * CC0 1.0  http://creativecommons.org/publicdomain/zero/1.0/
 
 File(s):
-    * keys-arrow-wsad-mouse_0.png
+    * BackgroundGradient.png
 
 
 Title:
