@@ -1,5 +1,5 @@
 // Trigger button visualisation (the buttons that destroy doors)
-BlobApp.TriggerButton = (function Button(x_pos, y_pos, buttonID) {
+BlobApp.TriggerButton = (function TriggerButton(x_pos, y_pos, buttonID) {
 	var thisVar = this,
 
 	sprite, 
