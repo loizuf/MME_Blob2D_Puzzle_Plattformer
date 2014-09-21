@@ -30,10 +30,10 @@ BlobApp.MainController = (function() {
 		p2ID = p2ControlsID;
 		Controls.p1 = p1ControlsID;
 		Controls.p2 = p2ControlsID;
-		continueWithStuff();	
+		launchGame();	
 	},
 
-	continueWithStuff = function() { 
+	launchGame = function() { 
 		_registerListeners();
 		_initModules(_soundHandler);
 		state = _globalStateHandler.getGameState();

@@ -335,7 +335,7 @@ BlobApp.LevelLoader = (function() {
 
 	_createRedBlob = function(x, y) {
 		_createRequestObject["userData"] = [EntityConfig.REDBLOBID,undefined];
-		_createRequestObject["width"] = 22;
+		_createRequestObject["width"] = 25;
 		_createRequestObject["height"] = 50;
 		_createRequestObject["x"] = x;
 		_createRequestObject["y"] = y;
@@ -356,7 +356,7 @@ BlobApp.LevelLoader = (function() {
 
 	_createGreenBlob = function(x, y) {
 		_createRequestObject["userData"] = [EntityConfig.GREENBLOBID,undefined];
-		_createRequestObject["width"] = 22;
+		_createRequestObject["width"] = 25;
 		_createRequestObject["height"] = 25;
 		_createRequestObject["x"] = x;
 		_createRequestObject["y"] = y;
