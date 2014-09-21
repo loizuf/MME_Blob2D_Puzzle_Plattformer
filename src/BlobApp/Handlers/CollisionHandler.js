@@ -87,6 +87,13 @@ BlobApp.CollisionHandler = (function() {
 	/* called when the green blob touches something. */
 	private._handleGreenBlobCollision = function(bodyA, bodyB, bID, contact) {
 		switch(bID){
+			case EntityConfig.REDBLOBID:
+				if(contact.m_manifold.m_localPlaneNormal.y < 0) {					
+					$('body').trigger('onReAllowJump', bodyB);
+					private._addJuice(bodyB, 1);
+				}
+			break;
+
 			case EntityConfig.BUTTONID:
 				private._handleButtonCollison(bodyB, contact);
 			break;
@@ -167,6 +174,9 @@ BlobApp.CollisionHandler = (function() {
 					y = contact.m_fixtureA.m_body.GetLinearVelocity().y;					
 					$('body').trigger("onTrampolinContact", {body: bodyA, yVel: y});	
 					return;
+				} else if(contact.m_manifold.m_localPlaneNormal.y < 0) {
+					$('body').trigger('onReAllowJump', bodyB);
+					private._addJuice(bodyB, 1);
 				}
 			break;
 
