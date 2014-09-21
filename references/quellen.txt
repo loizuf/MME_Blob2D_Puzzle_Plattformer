@@ -7,6 +7,22 @@ icon toggle
 
 
 Title:
+   A platformer in the forest
+
+Author: 
+    Buch
+
+URL:
+    http://opengameart.org/content/a-platformer-in-the-forest
+
+License(s):
+    * CC0 1.0  http://creativecommons.org/publicdomain/zero/1.0/
+
+File(s):
+    * sheet_4.png
+
+
+Title:
     Cartoon Tree
 
 Author:
