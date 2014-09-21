@@ -11,7 +11,7 @@ BlobApp.BridgePost = (function BridgePost(x_pos, y_pos) {
 	
 	this.prototype.init =function() {
 		tileset = new Image();
-		tileset.src = "res/img/Post.png";//mapData.tilesets[0].image;
+		tileset.src = "res/img/Post.png";
 		
 		// callback for loading layers after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, 25, 25);		

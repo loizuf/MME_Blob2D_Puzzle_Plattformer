@@ -3,7 +3,10 @@
 BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, doorID) {
 	var thisVar = this,
 
-	sprite, tilesetSheet, doorID, easleID, isOpening;
+	sprite, 
+	tilesetSheet, 
+	doorID, 
+	isOpening;
 
 	this.prototype = new BlobApp.Entity(x_pos, y_pos+2.5, 50, 75);
 	
@@ -36,14 +39,13 @@ BlobApp.DynamicDoor = (function DynamicDoor(x_pos, y_pos, doorID) {
 		tilesetSheet = new createjs.SpriteSheet(imageData);
 		sprite = new createjs.Sprite(tilesetSheet);
 		thisVar.prototype.setupSprite(sprite);
-
-		easleID = sprite.id;
 	},
 
 	_listeners = function() {
 		$('body').on('openDoor', _onOpenDoor);
 	},
 	
+	// Checks if this is the door that hsould be opened, if so: plays the open / explosion animation
 	_onOpenDoor = function(event, givenID) {
 		if(!isOpening && doorID == givenID && !(sprite.currentAnimation=="opened")){
 			sprite.gotoAndPlay("open");

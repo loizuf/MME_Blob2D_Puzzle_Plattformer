@@ -6,14 +6,13 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, direction) {
 	sprite,
 	tilesetSheet,
 	tileset,
-	blobSprites,
 	removedSprite;
 
 	this.prototype = new BlobApp.Entity(x_pos, y_pos, 275, 75);
 
 	this.prototype.init = function() {
 		tileset = new Image();
-		tileset.src = "res/img/bridge.png"; // mapdata.tilesets[0].image
+		tileset.src = "res/img/bridge.png";
 
 		_listeners();
 
@@ -83,16 +82,12 @@ BlobApp.Bridge = (function Bridge(x_pos, y_pos, direction) {
 			((sprite.currentAnimation == "stopSameSide" && sprite.currentAnimationFrame == 29) || 
 				(sprite.currentAnimation == "stopOtherSide" && sprite.currentAnimationFrame == 19))) {
 			$('body').trigger('specialFinished', {'specialName' : "bridge"});
-			$('body').trigger('bridgeStopRequested', {"sprites" : blobSprites});
+			$('body').trigger('bridgeStopRequested');
 			sprite.stop();
 
 			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)
 			removedSprite = true;
 		}
-	},
-
-	this.setBlobSprites = function(sprites) {
-		blobSprites = sprites;
 	};
 
 	this.prototype.init();

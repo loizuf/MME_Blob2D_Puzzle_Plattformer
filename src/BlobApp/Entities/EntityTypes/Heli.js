@@ -6,16 +6,14 @@ BlobApp.Heli = (function Heli(x_pos, y_pos) {
 	sprite, 
 	tilesetSheet, 
 	tileset,
-	blobSprites,
 	removedSprite;
 
 	this.prototype = new BlobApp.Entity(x_pos, y_pos, 50, 50);
 	
 	this.prototype.init = function() {
 		tileset = new Image();
-		tileset.src = "res/img/Heli.png";//mapData.tilesets[0].image;
+		tileset.src = "res/img/Heli.png";
 
-		// getting imagefile from first tileset
 		_listeners();
 
 		// callback for loading layers after tileset is loaded
@@ -89,16 +87,12 @@ BlobApp.Heli = (function Heli(x_pos, y_pos) {
 	_checkIfStopFinished = function() {
 		if(!removedSprite && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 19) {
 			$('body').trigger('specialFinished', {'specialName' : "heli"});
-			$('body').trigger('heliStopRequested', {"sprites" : blobSprites});
+			$('body').trigger('heliStopRequested');
 			sprite.stop();
 			
 			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)
 			removedSprite = true;
 		}
-	},
-
-	this.setBlobSprites = function(sprites) {
-		blobSprites = sprites;
 	};
 
 	this.prototype.init();

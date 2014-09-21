@@ -1,12 +1,18 @@
 // The Blob visualisation class
 BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
+	/*
+		If this is the first entity type you look at (and it might be, since it's 
+		alphabetically the first), please look at Entity.js first :)
+	*/
 
 	var thisVar = this,
 
 	blobID = blobID,
+	// Easle / CreateJS variables
 	sprite, 
 	tilesetSheet, 
 	tileset,
+
 	animateBlobs = true;
 
 	this.prototype = new BlobApp.Entity(x_pos, 
@@ -73,6 +79,9 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 		sprite.gotoAndPlay("idle1");
 	},
 
+	// Certain sprites will be removed at times, but there is a definite possibility they have to come back.
+	// So basically, they aren't really created twice but just removed from the canvas and added again.
+	// This method gets called when that happens.
 	this.onRecreate = function() {
 		sprite.gotoAndPlay("idle1");
 	},
@@ -132,8 +141,13 @@ BlobApp.Blob = (function Blob(x_pos, y_pos, blobID) {
 		}
 	},
 
-	// A small piece of logic is in here, because the time when the teleport should take place really depends on the animation.
+	/* 
+		A small piece of logic is in here, because the time when the teleport should take place 
+		really depends on the animation.
+	*/
 	_checkIfTeleAnimationFinished = function() {
+		// The check for the red blob id only makes sure that this does not happen for both blobs
+		// (i.e. they don't switch places twice)
 		if(sprite.currentAnimation == "teleport" && blobID == EntityConfig.REDBLOBID && sprite.currentAnimationFrame == 19 ) {
 			$('body').trigger('teleportRequested');
 		} else if (sprite.currentAnimation == "afterTeleport" && blobID == EntityConfig.REDBLOBID && sprite.currentAnimationFrame == 19 ) {

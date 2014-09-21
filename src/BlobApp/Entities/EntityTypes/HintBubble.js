@@ -6,6 +6,7 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 		sprite,
 		tilesetSheet,
 		tileset;
+
 	this.hintID = additionalInfo.id; // contains "bubbleGreen" or "bubbleRed"
 	this.bubbleType = additionalInfo.bubbleType; // contains "down" (blinking down key) or "redBlob" or "greenBlob"
 
@@ -56,78 +57,40 @@ BlobApp.HintBubble = (function HintBubble(x_pos, y_pos, additionalInfo) {
 		sprite.name = thisVar.hintID;
 		thisVar.prototype.setupSprite(sprite);
 
-		var aniName;
-		if(thisVar.hintID == "bubblegreenBlob") {
-			if(thisVar.bubbleType == "down"){
-				if(Controls.p1 == 1) {
-					aniName = "blinkPlayer1";
-				} else {
-					aniName = "blinkController";
-				}
-			} 
-			if(thisVar.bubbleType == "up") {
-				if(Controls.p1 == 1) {
-					aniName = "levelLoadPlayer1";
-				} else {
-					aniName = "blinkControllerUp";
-				}
-			}
-		} else {
-			if(thisVar.bubbleType == "down"){
-				if(Controls.p2 == 1) {
-					aniName = "blinkPlayer2";
-				} else {
-					aniName = "blinkController";
-				}
-			}
-			if(thisVar.bubbleType == "up") {
-				if(Controls.p1 == 1) {
-					aniName = "levelLoadPlayer2";
-				} else {
-					aniName = "blinkControllerUp";
-				}
-			}
-		}
+		var aniName = _getAnimationName (thisVar.hintID, 
+			(thisVar.hintID == "bubblegreenBlob")? "p1" : "p2", 
+			thisVar.bubbleType, 
+			(thisVar.hintID == "bubblegreenBlob")? Controls.p1 : Controls.p2);
  
 		sprite.gotoAndPlay(aniName);
 	},
+
+	_getAnimationName = function(hintID, blobID, bubbleType, controls) {
+		if (hintID == "bubblegreenBlob" && blobID != "p1") return;
+		if (hintID == "bubbleredBlob" && blobID != "p2") return;
+
+		if (bubbleType == "down") {
+			if (controls == 1) {
+				return (blobID == "p1")? "blinkPlayer1" : "blinkPlayer2"
+			} else {
+				return "blinkController";
+			}
+		} else if (bubbleType == "up") {
+			if (controls == 1) {
+				return (blobID == "p1")? "levelLoadPlayer1" : "levelLoadPlayer2"
+			} else {
+				return "blinkControllerUp";
+			}
+		}
+
+	}
 	
 	this._animate = function(event, data) {
 		var aniName = "";
-		switch(data.animationKey) {
+		switch (data.animationKey) {
 			case AnimationKeys.PRESSBUTTON:
-				if(thisVar.hintID == "bubblegreenBlob" && data.blobID =="p1") {
-					if(thisVar.bubbleType == "down"){
-						if(Controls.p1 == 1) {
-							aniName = "blinkPlayer1";
-						} else {
-							aniName = "blinkController";
-						}
-					} 
-					if(thisVar.bubbleType == "up") {
-						if(Controls.p1 == 1) {
-							aniName = "levelLoadPlayer1";
-						} else {
-							aniName = "blinkControllerUp";
-						}
-					}
-					
-				} else if(thisVar.hintID == "bubbleredBlob" && data.blobID =="p2"){
-					if(thisVar.bubbleType == "down"){
-						if(Controls.p2 == 1) {
-							aniName = "blinkPlayer2";
-						} else {
-							aniName = "blinkController";
-						}
-					}
-					if(thisVar.bubbleType == "up") {
-						if(Controls.p1 == 1) {
-							aniName = "levelLoadPlayer1";
-						} else {
-							aniName = "blinkControllerUp";
-						}
-					}
-				}
+				aniName = _getAnimationName(thisVar.hintID, data.blobID, thisVar.bubbleType, 
+					(data.blobID == "p1")? Controls.p1 : Controls.p2);
 			break;
 			case AnimationKeys.WAITING:
 				if(thisVar.hintID == "bubblegreenBlob" && data.blobID =="p1") {

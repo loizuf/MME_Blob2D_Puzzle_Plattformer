@@ -10,9 +10,8 @@ BlobApp.CooperationTrigger = (function CooperationTrigger(x_pos, y_pos, coopID, 
 	
 	this.prototype.init =function() {
 		tileset = new Image();
-		tileset.src = "res/img/cooptrigger.png";//mapData.tilesets[0].image;
+		tileset.src = "res/img/cooptrigger.png";
 		
-		// getting imagefile from first tileset
 		_listeners();
 
 		// callback for loading layers after tileset is loaded

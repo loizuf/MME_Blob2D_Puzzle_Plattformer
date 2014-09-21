@@ -10,9 +10,8 @@ BlobApp.Helistop = (function Helistop(x_pos, y_pos) {
 	
 	this.prototype.init =function() {
 		tileset = new Image();
-		tileset.src = "res/img/Helistop.png";//mapData.tilesets[0].image;
+		tileset.src = "res/img/Helistop.png";
 		
-		// getting imagefile from first tileset
 		_listeners();
 
 		// callback for loading layers after tileset is loaded

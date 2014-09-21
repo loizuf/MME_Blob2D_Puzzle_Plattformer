@@ -12,9 +12,8 @@ BlobApp.DirectionIndicator = (function DirectionIndicator(x_pos, y_pos, directio
 	
 	this.prototype.init =function() {
 		tileset = new Image();
-		tileset.src = "res/img/DirectionIndicator.png";//mapData.tilesets[0].image;
+		tileset.src = "res/img/DirectionIndicator.png";
 		
-		// getting imagefile from first tileset
 		_listeners();
 		_startX = x_pos;
 		_startY = y_pos;

@@ -2,7 +2,8 @@
 BlobApp.Goal = (function Goal(x_pos, y_pos, GOALID) {
 	this.prototype = new BlobApp.Entity(x_pos, y_pos, 50, 75);
 
-	var sprite, tilesetSheet,
+	var sprite, 
+		tilesetSheet,
 		thisVar = this;
 
 	this.prototype.init =function() {
@@ -51,7 +52,7 @@ BlobApp.Goal = (function Goal(x_pos, y_pos, GOALID) {
 		if (event.type == "animateGoal") {
 			sprite.gotoAndPlay("unlock");
 		} else if (event.type == "playerReachedGoal") {
-			if(data.which == "p1") {
+			if (data.which == "p1") {
 				sprite.gotoAndPlay("p1light");
 			} else {
 				sprite.gotoAndPlay("p2light");
