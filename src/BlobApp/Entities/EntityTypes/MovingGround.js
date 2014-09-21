@@ -13,7 +13,7 @@ var thisVar = this,
 	started,
 	userData;	
 
-	this.prototype = new BlobApp.Entity(sprite, x_pos, y_pos, 75, 25);
+	this.prototype = new BlobApp.Entity(x_pos, y_pos, 75, 25);
 	
 	this.prototype.init =function() {
 		tileset = new Image();
