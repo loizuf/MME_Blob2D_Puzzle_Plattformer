@@ -6,8 +6,6 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, greenBlobEntity) {
 	sprite, 
 	tilesetSheet, 
 	tileset,
-	oldSprite,
-	actor, 
 	removedSpriteStop;
 
 	this.prototype = new BlobApp.Entity(x_pos, y_pos, 50, 25);

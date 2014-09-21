@@ -6,8 +6,6 @@ BlobApp.Stretch = (function Stretch (x_pos, y_pos) {
 	sprite, 
 	tilesetSheet, 
 	tileset,
-	oldSprite,
-	actor, 
 	removedSprite;
 
 	this.prototype = new BlobApp.Entity(x_pos, y_pos, 25, 100);

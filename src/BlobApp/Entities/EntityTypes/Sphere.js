@@ -6,7 +6,6 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos) {
 	sprite,
 	tilesetSheet,
 	tileset,
-	blobSprites,
 	removedSprite,
 	stopStarted;
 
@@ -76,16 +75,12 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos) {
 	_checkIfStopFinished = function() {
 		if(!removedSprite && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 32) {
 			$('body').trigger('specialFinished', {'specialName' : "sphere"});
-			$('body').trigger('sphereStopRequested', {"sprites" : blobSprites});
+			$('body').trigger('sphereStopRequested');
 			sprite.stop();
 
 			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as we had hoped)
 			removedSprite = true;
 		}
-	},
-
-	this.setBlobSprites = function(sprites) {
-		blobSprites = sprites;
 	};
 
 	this.prototype.init();
