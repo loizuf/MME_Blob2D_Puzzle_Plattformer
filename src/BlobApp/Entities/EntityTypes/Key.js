@@ -7,7 +7,7 @@ BlobApp.Key = (function Key(x_pos, y_pos, keyID) {
 
 	this.prototype.init =function() {
 		var tileset = new Image();
-		tileset.src = "res/img/key.png"
+		tileset.src = "res/img/key.png";
 
 		// callback for loading sprite after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, 30, 30);		
@@ -24,10 +24,10 @@ BlobApp.Key = (function Key(x_pos, y_pos, keyID) {
 			animations : {
 				idle0 : [0, 17, "idle1"],
 				idle1 : {
-						frames : [17, 16, 15, 14, 13, 12, 11, 10,
+					frames : [17, 16, 15, 14, 13, 12, 11, 10,
 						 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], 
-						 next: "idle0"
-						}
+					next: "idle0"
+				}
 			}
 		}
 
@@ -37,7 +37,7 @@ BlobApp.Key = (function Key(x_pos, y_pos, keyID) {
 		thisVar.prototype.setupSprite(sprite);
 
 		sprite.gotoAndPlay("idle1");
-	},
+	};
 
 	this.prototype.init();
 	this.keyID = keyID;

@@ -289,7 +289,6 @@ BlobApp.CollisionHandler = (function() {
 			case EntityConfig.SPHERETRIGGER :
 			case EntityConfig.SLINGSHOTTRIGGERLEFT :
 			case EntityConfig.SLINGSHOTTRIGGERRIGHT :
-
 				private._playerLeftTriggerZone("redBlob", bodyB);
 			break;
 

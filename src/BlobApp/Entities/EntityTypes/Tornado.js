@@ -10,7 +10,7 @@ BlobApp.Tornado = (function Tornado(x_pos, y_pos) {
 	
 	this.prototype.init =function() {
 		tileset = new Image();
-		tileset.src = "res/img/tornado.png";//mapData.tilesets[0].image;
+		tileset.src = "res/img/tornado.png";
 		
 		// callback for loading layers after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, 50, 50);		

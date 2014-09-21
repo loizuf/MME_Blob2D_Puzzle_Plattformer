@@ -10,7 +10,7 @@ BlobApp.Orb = (function Orb(x_pos, y_pos) {
 	
 	this.prototype.init =function() {
 		tileset = new Image();
-		tileset.src = "res/img/Orb.png";//mapData.tilesets[0].image;
+		tileset.src = "res/img/Orb.png";
 		
 		// getting imagefile from first tileset
 		_listeners();

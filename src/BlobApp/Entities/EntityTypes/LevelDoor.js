@@ -50,7 +50,6 @@ BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, LevelID, owID) {
 		} else {
 			sprite.gotoAndPlay("locked");
 		}
-
 	},
 
 	thisVar._animate = function(event, data) {

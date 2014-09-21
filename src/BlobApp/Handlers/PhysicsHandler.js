@@ -717,6 +717,7 @@ BlobApp.PhysicsHandler = (function() {
 		for(var i = 0; i < actors.length; i++) {
 			if(actors[i].body.GetUserData()[0] == EntityConfig.GREENBLOBID
 				|| actors[i].body.GetUserData()[0] == EntityConfig.REDBLOBID) {
+					
 				sprites.push(actors[i].skin);
 			}
 		}
@@ -871,7 +872,6 @@ BlobApp.PhysicsHandler = (function() {
 		};
 
 		$('body').trigger("requestViewEntity", messageToView);
-
 		$('body').trigger("connectToView", {body : greenBlobEntity, special: "Trampolin"});
 	},
 

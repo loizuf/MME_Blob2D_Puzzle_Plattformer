@@ -14,7 +14,7 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos) {
 
 	this.prototype.init = function() {
 		tileset = new Image();
-		tileset.src = "res/img/Sphere.png"; // mapdata.tilesets[0].image
+		tileset.src = "res/img/Sphere.png";
 
 		_listeners();
 
@@ -79,7 +79,7 @@ BlobApp.Sphere = (function Sphere(x_pos, y_pos) {
 			$('body').trigger('sphereStopRequested', {"sprites" : blobSprites});
 			sprite.stop();
 
-			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)
+			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as we had hoped)
 			removedSprite = true;
 		}
 	},

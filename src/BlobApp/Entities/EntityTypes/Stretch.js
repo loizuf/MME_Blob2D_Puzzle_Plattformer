@@ -74,7 +74,7 @@ BlobApp.Stretch = (function Stretch (x_pos, y_pos) {
 		if(!removedSprite && sprite.currentAnimation == "stop" && sprite.currentAnimationFrame == 19) {
 			$('body').trigger('stretchStopRequested');
 			sprite.stop();
-			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)
+			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as we had hoped)
 			removedSprite = true;
 			$('body').trigger('stretchInitRequested');
 		}

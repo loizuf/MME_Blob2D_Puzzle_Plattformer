@@ -16,7 +16,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, direction) {
 
 	this.prototype.init = function() {
 		tileset = new Image();
-		tileset.src = "res/img/slingshot.png"; // mapdata.tilesets[0].image
+		tileset.src = "res/img/slingshot.png";
 
 		_listeners();
 
@@ -47,25 +47,29 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, direction) {
 				clutch5: [78, 81, "clutch5after"],
 				clutch5after: [81, 81],
 				loosen1 : {
-						frames: [29, 27, 28, 26],
-						next: "loaded"
-					},
+					frames: [29, 27, 28, 26],
+					next: "loaded"
+				},
+
 				loosen2 : {
-						frames: [42, 41, 40, 39],
-						next: "clutch1after"
-					},
+					frames: [42, 41, 40, 39],
+					next: "clutch1after"
+				},
+
 				loosen3 : {
-						frames: [55, 54, 53, 52],
-						next: "clutch2after"
-					},
+					frames: [55, 54, 53, 52],
+					next: "clutch2after"
+				},
+
 				loosen4 : {
-						frames: [68, 67, 66, 65],
-						next: "clutch3after"
-					},
+					frames: [68, 67, 66, 65],
+					next: "clutch3after"
+				},
+				
 				loosen5 : {
-						frames: [81, 80, 79, 78],
-						next: "clutch4after"
-					}
+					frames: [81, 80, 79, 78],
+					next: "clutch4after"
+				}
 			}
 		}
 
@@ -188,7 +192,7 @@ BlobApp.Slingshot = (function Slingshot(x_pos, y_pos, direction) {
 													'direction' : direction});
 			$('body').trigger('slingshotStopRequested', {"sprites" : blobSprites});
 
-			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as I had hoped)
+			// Without this line, the function gets called over and over ("sprite.stop()" doesn't quite work as we had hoped)
 			stopStarted = false;
 		}
 	},

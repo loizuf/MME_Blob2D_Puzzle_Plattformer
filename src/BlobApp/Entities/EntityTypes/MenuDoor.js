@@ -6,8 +6,7 @@ BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, doorType) {
 		sprite, tilesetSheet;
 
 	this.prototype.init =function() {
-		var tileset = new Image();
-		
+		var tileset = new Image();		
 
 		tileset.src = _getTileset(tileset, doorType);
 
@@ -38,7 +37,7 @@ BlobApp.MenuDoor = (function MenuDoor(x_pos, y_pos, doorType) {
 				return "res/img/continueDoor.png";
 			break;
 		}
-	},
+	};
 
 	this.prototype.init();
 	this.sprite = sprite;

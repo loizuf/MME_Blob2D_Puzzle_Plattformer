@@ -10,7 +10,7 @@ BlobApp.Teleport = (function Teleport(x_pos, y_pos) {
 	
 	this.prototype.init = function() {
 		tileset = new Image();
-		tileset.src = "res/img/teleporter.png";//mapData.tilesets[0].image;
+		tileset.src = "res/img/teleporter.png";
 		
 		// getting imagefile from first tileset
 		_listeners();

@@ -9,7 +9,7 @@ BlobApp.Juice = (function Juice(x_pos, y_pos) {
 	this.prototype.init =function() {
 		var tileset = new Image();
 
-		tileset.src = "res/img/dust.png"
+		tileset.src = "res/img/dust.png";
 
 		// callback for loading sprite after tileset is loaded
 		tileset.onLoad = _initSprite(tileset, 50, 50);		

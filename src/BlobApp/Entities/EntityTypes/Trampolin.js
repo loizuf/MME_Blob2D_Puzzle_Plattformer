@@ -15,7 +15,7 @@ BlobApp.Trampolin = (function Trampolin(x_pos, y_pos, greenBlobEntity) {
 	this.prototype.init = function() {
 		tileset = new Image();
 
-		tileset.src = "res/img/trampolin.png"//mapData.tilesets[0].image;
+		tileset.src = "res/img/trampolin.png";
 
 		// getting imagefile from first tileset
 		_listeners();
