@@ -52,7 +52,7 @@ Die Steuerung des roten Blob(Tastatur | XBox360-Controller):
   * Springen:        Pfeiltaste oben | A
   * Links/Rechts:    Pfeiltaste links/Pfeiltaste rechts | Analog Stick
   * Aktion:          Pfeiltaste unten | X
-  * Spezialsteuerung Heli: LB/RB für Höhengewinnung
+  * Spezialsteuerung Heli: Pfeiltaste links/Pfeiltaste rechts | LB/RB für Höhengewinnung
  
 Aktion ermöglich die Spezialfähigkeiten. Wenn keine Umgebungsobjekte, wie ein Baum für die Slingshot, vorhanden sind, dann wird anhand des Blobs das Trampolin oder Stretching verwendet. Analog werden alle Spezialfähigkeiten, abgesehen vom Helicopter und Bridge durch erneutes betätigen des Aktionsknopfes abgebrochen.
 Der Helicopter wird an seinem Landeplatz zerlegt und die Brücke wird automatisch aufgelöst, sobald sich die Spieler per Richtungstasten für eine Richtung zum Hochklettern geeinigt haben.
