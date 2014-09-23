@@ -18,7 +18,7 @@ BlobApp.LevelLoader = (function() {
 		_globalStateHandler = globalStateHandler;
 		_gameState = _globalStateHandler.getGameState();
 
-		_initBackground();
+		_initBackground(owID);
 		_getLevelMapData(levelID, owID);
 
 
@@ -36,8 +36,33 @@ BlobApp.LevelLoader = (function() {
 		return that;
 	},
 
-	_initBackground = function(){
-		var background = new createjs.Bitmap("res/img/LevelBackground/NightBackground.png");
+	_initBackground = function(owID){
+		var background;
+		switch(owID){
+			case 0:
+				background = new createjs.Bitmap("res/img/LevelBackground/BackgroundGreenMenu.png");
+				break;
+			
+			case 1:
+			case 2:
+				background = new createjs.Bitmap("res/img/LevelBackground/BackgroundGreen.png");
+				break;
+
+			case 3:
+			case 4:
+				background = new createjs.Bitmap("res/img/LevelBackground/BackgroundOrange.png");
+				break;
+
+			case 5:
+			case 6:
+				background = new createjs.Bitmap("res/img/LevelBackground/BackgroundNight.png");
+				break;
+
+			case 7:
+			case 8:
+				background = new createjs.Bitmap("res/img/LevelBackground/BackgroundCave.png");
+				break;
+		}
 		$('body').trigger('backgroundAdded', background);
 	}
 
