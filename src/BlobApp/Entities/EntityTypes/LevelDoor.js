@@ -53,11 +53,12 @@ BlobApp.LevelDoor = (function LevelDoor(x_pos, y_pos, LevelID, owID) {
 	},
 
 	thisVar._animate = function(event, data) {
-		if(LevelID == data.lvlID) {
+		if(LevelID == data.lvlID && owID == data.owID) {
 			sprite.gotoAndPlay("open");
 		}
 	};
 
+	this.owID = owID;
 	this.LevelID = LevelID;	
 	this.prototype.init();
 	this.sprite = sprite;
