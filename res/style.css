@@ -177,8 +177,8 @@ h1 {
     opacity: 0.9;
 }
 .w8-button.iconize {
-    background: url(img/playbutton_alt.png) no-repeat 5px center;
+    background: url(img/pausebutton_alt.png) no-repeat 5px center;
 }
 .w8-button.iconize2 {
-    background: url(img/pausebutton_alt.png) no-repeat 5px center;
+    background: url(img/playbutton_alt.png) no-repeat 5px center;
 }

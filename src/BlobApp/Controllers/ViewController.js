@@ -2,6 +2,7 @@
 BlobApp.ViewController = (function() {
 	var that = {},
 	canvas, context, debugCanvas, debugContext, stage,
+	soundOn = true,
 	// Array of all view entities.
 	viewEntities = [],
 	// If this is "true", parts of the app will stop working! (some events are and must be dependant of the visualisation) 
@@ -15,11 +16,29 @@ BlobApp.ViewController = (function() {
 		_listener();
 		_initGenericDataHandler();
 
+		_setupMuteButton();
+
 		return that;
 	},
 
 	resetGame = function() {
 		init();
+	},
+
+	_setupMuteButton = function(){
+		document.getElementById("w8-d-blue").addEventListener("click", function (e) {
+		    var target = e.target;
+
+		    target.classList.toggle("iconize");
+		    target.classList.toggle("iconize2");
+		    if(soundOn == true){
+		    	soundOn = false;
+		    	$('body').trigger("soundPause");
+		    } else {
+		    	soundOn = true;
+		    	$('body').trigger("soundResume");
+		    }
+		}, false);
 	},
 
 	_initGenericDataHandler = function() {			
