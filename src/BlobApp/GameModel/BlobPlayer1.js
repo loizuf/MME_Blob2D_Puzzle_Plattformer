@@ -107,10 +107,12 @@ BlobApp.BlobPlayer1 = (function() {
 	},
 
 	this.reactOnMenuDoor = function(IDS){
+		$('body').trigger("disableAllMovements");
 		prototypeVar.reactOnMenuDoor(IDS);
 	},
 
 	this.tryLevelLoad = function(levelID, owID) {
+		$('body').trigger("disableAllMovements");
 		prototypeVar.loadLevel(levelID, owID);
 	},
 
