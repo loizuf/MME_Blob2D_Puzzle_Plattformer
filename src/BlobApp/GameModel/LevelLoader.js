@@ -522,8 +522,6 @@ BlobApp.LevelLoader = (function() {
 
 		_createRequestObject["width"] = 1;
 
-		console.log("load: ", owID);
-
 		var messageToView = {
 			generic : false,
 			x : x,

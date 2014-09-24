@@ -97,7 +97,6 @@ BlobApp.ViewController = (function() {
 					entity = new BlobApp.Key(xPos, yPos, data.keyID);
 					break
 				case EntityConfig.LEVELDOOR :
-					console.log("View: ", data.generalOverID);
 					entity = new BlobApp.LevelDoor(xPos, yPos, data.levelID, data.owID, data.generalOverID);
 					break;
 				case EntityConfig.MOVINGGROUNDID : 
