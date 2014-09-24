@@ -6,6 +6,7 @@ BlobApp.LevelLoader = (function() {
 	currentLoadedOverID,
 	_globalStateHandler,
 	_gameState,
+	owID,
 	/* need to be extracted from json!*/
 	_createRequestObject = {
 		"sprite" : undefined,
@@ -14,7 +15,7 @@ BlobApp.LevelLoader = (function() {
 
 	init = function(lvlID, overID, globalStateHandler){
 		var levelID = lvlID;
-		var owID = overID;
+		owID = overID;
 		_globalStateHandler = globalStateHandler;
 		_gameState = _globalStateHandler.getGameState();
 
@@ -521,13 +522,16 @@ BlobApp.LevelLoader = (function() {
 
 		_createRequestObject["width"] = 1;
 
+		console.log("load: ", owID);
+
 		var messageToView = {
 			generic : false,
 			x : x,
 			y : y,
 			entityID : EntityConfig.LEVELDOOR,
 			levelID : levelDoorLevelID,
-			owID : levelDoorOverID
+			owID : levelDoorOverID,
+			generalOverID : owID
 		};
 
 		$('body').trigger("requestViewEntity", messageToView);
