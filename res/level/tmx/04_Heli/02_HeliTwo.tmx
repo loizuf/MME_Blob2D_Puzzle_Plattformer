@@ -5,7 +5,7 @@
  </tileset>
  <layer name="Kachelebene 1" width="33" height="25">
   <data encoding="base64" compression="zlib">
-   eJxrZGBgUKIANwGxEBQ3kqlfmIEyIIhkvzIQF2HBhPRTyw0gc5LI1D/qhlE38BJwgxkJZikyQPKYMolukCXgBjcSzCIGMAIxExBPgdLIeBKd3ACLL1yYGDdwDqAb2KG0JAX2hwCxNxluEGHAjDcYZibRDYUM5IUDPj2k5uXh4AZsdbEynd1AaRlKiRuQy76BcgO5gJ/GbiClDqGVG8oGgRvIBcS4YSIDpPybzIC7bKSkvCTGDeRiUPglEoFB9fYkGrkBFn6EMDH2AwCF9CwH
+   eJxrZGBgUKIANwGxEBQ3kqlfmIEyIIhkvzKZ+qnlBpA5SaNuGBRumAjEzAPsBlhYEAt4CbjBjASzFBkQ+YyUfCFLwA1uJJhFDGAEYiYgngKlkfEkOrkBOb6wYWLcwDmAbmCH0pIU2B8CxN5kuEGEATPeYJjU/FfIQF444NNDal4eDm7AVheTWjdS6gZKy1BK3AAr+8hpD1DLDeQCfhq7gZQ6hFZuKBsEbiAXEOMGUNsDVP5NZsBdNlJSXhLjBnIxKPwSicCgensSjdwACz9CmBj7Abu/KVw=
   </data>
  </layer>
 </map>
