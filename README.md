@@ -1,7 +1,8 @@
 MME_Blob2D_Puzzle_Plattformer
 =============================
 
-A simple browser puzzle-game
+A simple browser puzzle-game for 2 Players with 40 Levels in 8 Overworlds.
+Enjoy!
 
 ##Überblick
 ###1. Starten des Spiels
