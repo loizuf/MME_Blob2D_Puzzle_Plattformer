@@ -63,6 +63,10 @@ BlobApp.LevelLoader = (function() {
 			case 8:
 				background = new createjs.Bitmap("res/img/LevelBackground/BackgroundCave.png");
 				break;
+
+			case 9:
+				background = new createjs.Bitmap("res/img/LevelBackground/BackgroundOrangeVictory.png");
+				break;
 		}
 		$('body').trigger('backgroundAdded', background);
 	}
